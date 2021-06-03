@@ -1,0 +1,11 @@
+build/*.js
+src/assets
+public
+dist
+tests
+
+package.json
+webpack.*.js
+.eslintrc.js
+
+karma.conf.js
