@@ -4,7 +4,7 @@ module.exports = function(config) {
   config.set({
     frameworks: ['mocha'],
 
-    files: ['tests/**/*.spec.js'],
+    files: ['test/**/*.spec.js'],
 
     preprocessors: {
       '**/*.spec.js': ['webpack', 'sourcemap']
