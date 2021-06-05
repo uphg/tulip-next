@@ -12,25 +12,36 @@ module.exports = {
   // 配置参考：https://webpack.docschina.org/configuration/resolve/
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/')
+      '@': path.resolve(__dirname, 'src/'),
+      '~packages': path.resolve(__dirname, 'packages/'),
+      '~styles': path.resolve(__dirname, 'styles/')
     },
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        include: path.resolve(__dirname, 'src'),
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'packages')
+        ],
         loader: 'vue-loader'
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: path.resolve(__dirname, 'src'),
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'packages')
+        ],
         exclude: /node_modules/
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        include: path.resolve(__dirname, 'src'),
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'packages')
+        ],
         type: 'asset/resource',
       },
     ]
@@ -41,6 +52,6 @@ module.exports = {
       template: './public/index.html'
     }),
     // 请确保引入这个插件来施展魔法
-    new VueLoaderPlugin(),
+    new VueLoaderPlugin()
   ],
 };

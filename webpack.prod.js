@@ -11,7 +11,11 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.((c|sa|sc)ss)$/i,
-        include: path.resolve(__dirname, 'src'),
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'packages'),
+          path.resolve(__dirname, 'styles')
+        ],
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',

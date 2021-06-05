@@ -1,0 +1,100 @@
+@import "./common/variable.scss";
+
+.t-button {
+  font-size: $__font-size;
+  border: 1px solid;
+  border-radius: $__border-radius;
+  line-height: 1;
+  padding: $__button-padding;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .3s cubic-bezier(.645,.045,.355,1);
+  [class*=t-icon]+span {
+    margin-left: 5px;
+  }
+}
+
+.t-button {
+  &:focus{
+    outline: none;
+  }
+  &__default {
+    color: $__color-text-primary;
+    background-color: #fff;
+    border-color: $__border-color;
+    &:hover, &:focus {
+      color: $__color-primary;
+      border-color: $__color-primary;
+    }
+    &:active {
+      color: $__color-primary-dark;
+      border-color: $__color-primary-dark;
+    }
+    &.is-loading {
+      color: $__color-text-looming;
+      border-color: $__border-color-light;
+    }
+  }
+  &__default.is-error {
+    color: $__color-error;
+    background-color: #fff;
+    border-color: $__color-error;
+    &:hover, &:focus{
+      color: $__color-error-light;
+      border-color: $__color-error-light;
+    }
+    &:active {
+      color: $__color-error-dark;
+      border-color: $__color-error-dark;
+    }
+    &.is-loading {
+      color: $__color-error-light;
+      border-color: $__color-error-light;
+    }
+  }
+  &__primary {
+    color: #fff;
+    background-color: $__color-primary;
+    border-color: $__color-primary;
+    &:hover, &:focus {
+      background-color: $__color-primary-light;
+      border-color: $__color-primary-light;
+    }
+    &:active {
+      background-color: $__color-primary-dark;
+      border-color: $__color-primary-dark;
+    }
+    &.is-loading {
+      background-color: $__color-primary-light;
+      border-color: $__color-primary-light;
+    }
+  }
+  &__primary.is-error {
+    color: #fff;
+    background-color: $__color-error;
+    border-color: $__color-error;
+    &:hover, &:focus {
+      background-color: $__color-error-light;
+      border-color: $__color-error-light;
+    }
+    &:active {
+      background-color: $__color-error-dark;
+      border-color: $__color-error-dark;
+    }
+    &.is-loading {
+      background-color: $__color-error-light;
+      border-color: $__color-error-light;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
