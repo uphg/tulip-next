@@ -4,8 +4,10 @@
     :class="{
       'is-loading': loading,
       [`t-button__${type}`]: type,
-      'is-error': error
+      'is-error': error,
+      'is-disabled': disabled
     }"
+    :disabled="disabled"
     @click="$emit('click')"
   >
     <svg v-if="icon && !loading" :class="{ [`t-icon-${icon}`]: icon }" aria-hidden="true">
@@ -39,6 +41,10 @@ export default {
       }
     },
     error: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }

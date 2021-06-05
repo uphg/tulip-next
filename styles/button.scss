@@ -32,7 +32,7 @@
       color: $__color-primary-dark;
       border-color: $__color-primary-dark;
     }
-    &.is-loading {
+    &.is-loading, &.is-disabled {
       color: $__color-text-looming;
       border-color: $__border-color-light;
     }
@@ -49,7 +49,7 @@
       color: $__color-error-dark;
       border-color: $__color-error-dark;
     }
-    &.is-loading {
+    &.is-loading, &.is-disabled {
       color: $__color-error-light;
       border-color: $__color-error-light;
     }
@@ -66,7 +66,7 @@
       background-color: $__color-primary-dark;
       border-color: $__color-primary-dark;
     }
-    &.is-loading {
+    &.is-loading, &.is-disabled {
       background-color: $__color-primary-light;
       border-color: $__color-primary-light;
     }
@@ -83,7 +83,7 @@
       background-color: $__color-error-dark;
       border-color: $__color-error-dark;
     }
-    &.is-loading {
+    &.is-loading, &.is-disabled {
       background-color: $__color-error-light;
       border-color: $__color-error-light;
     }

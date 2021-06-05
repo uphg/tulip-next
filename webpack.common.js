@@ -13,8 +13,8 @@ module.exports = {
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
-      '~packages': path.resolve(__dirname, 'packages/'),
-      '~styles': path.resolve(__dirname, 'styles/')
+      // 'packages': path.resolve(__dirname, 'packages/'),
+      // 'styles': path.resolve(__dirname, 'styles/')
     },
   },
   module: {

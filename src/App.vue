@@ -23,6 +23,13 @@
       <t-button type="primary" icon="bug" error>警告按钮</t-button>
     </div>
     <div class="row">
+      <span class="label">禁用状态：</span>
+      <t-button disabled>默认按钮</t-button>
+      <t-button type="primary" disabled>主要按钮</t-button>
+      <t-button error disabled>警告按钮</t-button>
+      <t-button type="primary" error disabled>警告按钮</t-button>
+    </div>
+    <div class="row">
       <span class="label">Loading 按钮：</span>
       <t-button loading>默认按钮</t-button>
       <t-button type="primary" loading>主要按钮</t-button>
@@ -76,19 +83,8 @@
 </template>
 
 <script>
-import Button from '~packages/Button.vue'
-import ButtonGroup from '~packages/ButtonGroup.vue'
-import Countdown from '~packages/Countdown.vue'
-import Icon from '~packages/Icon.vue'
-
 export default {
   name: 'App',
-  components: {
-    TButton: Button,
-    TButtonGroup: ButtonGroup,
-    TCountdown: Countdown,
-    TIcon: Icon
-  },
   data() {
     return {
       isLoading: true,
