@@ -1,12 +1,16 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/index.js',
   output: {
-    filename: 'index_bundle.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
+    library: {
+      name: 'Tulip-ui',
+      type: 'umd',
+    },
     clean: true,
   },
   // 配置参考：https://webpack.docschina.org/configuration/resolve/
@@ -47,10 +51,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: 'body', // 配置 JS 文件引入到哪里
-      template: './public/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   inject: 'body', // 配置 JS 文件引入到哪里
+    //   template: './public/index.html'
+    // }),
     // 请确保引入这个插件来施展魔法
     new VueLoaderPlugin()
   ],
