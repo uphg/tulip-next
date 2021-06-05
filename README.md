@@ -1,5 +1,7 @@
 # Tulip
 
+[![Build Status](https://travis-ci.com/uphg/tulip.svg?branch=master)](https://travis-ci.com/uphg/tulip)
+
 一个 Vue 组件库，包括：
 
 - ESLint 检查
