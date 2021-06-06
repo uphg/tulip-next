@@ -10,10 +10,8 @@
     :disabled="disabled"
     @click="$emit('click')"
   >
-    <svg v-if="icon && !loading" :class="{ [`t-icon-${icon}`]: icon }" aria-hidden="true">
-      <use :xlink:href="`#icon-${icon}`" />
-    </svg>
-    <LoadingIcon v-if="loading" type="all" />
+    <t-icon v-if="icon && !loading" :name="icon" />
+    <loading-icon v-if="loading" type="all" />
     <span class="t-button__content">
       <slot />
     </span>
@@ -21,9 +19,10 @@
 </template>
 <script>
 import LoadingIcon from './LoadingIcon.vue'
+import Icon from './Icon.vue'
 export default {
   name: 'TButton',
-  components: { LoadingIcon },
+  components: { LoadingIcon, 't-icon': Icon },
   props: {
     icon: {
       type: String,

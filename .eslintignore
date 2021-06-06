@@ -3,6 +3,7 @@ src/assets
 public
 dist
 tests
+src/icon
 
 package.json
 webpack.*.js

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import '../src/icon/tulip-icon.js'
 export default {
   name: 'TIcon',
   props: {
