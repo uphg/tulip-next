@@ -4,13 +4,18 @@
   font-size: $__font-size;
   border: 1px solid;
   border-radius: $__border-radius;
-  line-height: 1;
+  // line-height: 1;
+  // line-height: $__button-line-height;
   padding: $__button-padding;
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   transition: all .3s cubic-bezier(.645,.045,.355,1);
+  &__content {
+    line-height: $__button-line-height;
+    vertical-align: middle;
+  }
   [class*=t-icon]+span {
     margin-left: 5px;
   }

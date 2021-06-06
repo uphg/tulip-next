@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './icon/import-svg'
+import './icon/tulip-icon.js'
 import './style.scss'
 import './styles/button.scss'
 

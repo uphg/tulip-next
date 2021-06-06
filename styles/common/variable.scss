@@ -21,12 +21,19 @@ $__color-text-looming: #C0C4CC;
 
 $__border-color: #cdd1e4;
 $__border-color-light: #e4e5e9;
-$__border-radius: 2px;
+$__border-radius: 3px;
 
 $__font-size: 14px;
 $__font-size-small: 12px;
 
 
 
-$__button-padding: 12px 16px;  // 默认
-// $__button-padding: 9px 14px;  // 小号
+// $__button-padding: 12px 16px;  // 默认
+// $__button-line-height: 1;
+
+// $__button-padding: 8px 14px;  // 小号
+
+// 测试号
+$__button-padding: 10px 16px;
+$__button-line-height: 1;
+// $__button-line-height: 1.45;
