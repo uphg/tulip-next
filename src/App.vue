@@ -1,5 +1,24 @@
 <template>
   <div id="app">
+
+    <h2>输入框</h2>
+    <div class="row">
+      <t-input v-model="input" value="123" />
+      <t-input disabled />
+      <t-input v-model="input2" show-password class="show-password-demo" />
+      <t-input v-model="input3" clearable />
+      <t-input v-model="input4" placeholder="请输入内容" />
+
+      <p>{{ 'input：' + input }}</p>
+      <p>{{ 'input2：' + input2 }}</p>
+      <p>{{ 'input3：' + input3 }}</p>
+      <p>{{ 'input4：' + input4 }}</p>
+      <div>
+        <t-input v-model="input5" type="textarea" placeholder="请输入内容" />
+        <p>{{ 'input5：' + input5 }}</p>
+      </div>
+    </div>
+
     <h2>按钮</h2>
     <div class="row">
       <span class="label">英文：</span>
@@ -88,7 +107,12 @@ export default {
   data() {
     return {
       isLoading: true,
-      isCount: false
+      isCount: false,
+      input: '我是input',
+      input2: '我是input',
+      input3: '我是input',
+      input4: '',
+      input5: ''
     }
   },
   methods: {
@@ -102,6 +126,13 @@ export default {
 </script>
 
 <style lang="scss">
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 #app {
   width: 670px;
   margin: 0 auto;
@@ -109,6 +140,7 @@ export default {
     left: 20px;
     right: 20px;
   }
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
 }
 h2 {
   text-align: center;
@@ -133,5 +165,11 @@ h2 {
   width: 120px;
   display: inline-block;
   padding-right: 10px;
+}
+.show-password-demo {
+  & > input {
+    line-height: 34px;
+    padding: 0 14px;
+  }
 }
 </style>

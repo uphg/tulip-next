@@ -1,5 +1,5 @@
 const path = require('path');
-// const { merge } = require('webpack-merge'); // 报错使用该配置
+// const { merge } = require('webpack-merge'); // merge 报错使用该配置
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');

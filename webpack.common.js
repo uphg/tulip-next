@@ -15,7 +15,9 @@ module.exports = {
   // 配置参考：https://webpack.docschina.org/configuration/resolve/
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/')
+      'src': path.resolve(__dirname, 'src/'),
+      'packages': path.resolve(__dirname, 'packages/'),
+      'tulip-ui': path.resolve(__dirname, '../')
     },
   },
   module: {

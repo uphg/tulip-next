@@ -1,0 +1,50 @@
+@import "./common/variable.scss";
+@mixin input {
+  border: 1px solid $__border-color;
+  border-radius: $__border-radius;
+  transition: all 0.3s $__transition;
+  &::placeholder {
+    color: $__input-placeholder-color;
+  }
+  &:hover {
+    border-color: $__border-color-dark;
+  }
+  &:focus {
+    border-color: $__color-primary;
+  }
+  &:focus, &:focus-visible {
+    outline: none;
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $__input-disabled-bg-color;
+    border-color: $__border-color;
+  }
+}
+
+.t-input {
+  display: inline-flex;
+  position: relative;
+  &__control {
+    padding: $__input-padding;
+    line-height: $__input-line-height;
+    @include input;
+  }
+  &__password-icon, &__clear-icon  {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+.t-textarea {
+  &__control {
+    padding: $__textarea-padding;
+    line-height: $__textarea-line-height;
+    resize: vertical;
+    @include input;
+  }
+}
