@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'development',
-  entry: './src/main.js',
+  entry: './example/main.js',
   devtool: 'inline-source-map', // 添加报错文件映射
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -19,6 +19,7 @@ module.exports = merge(common, {
         test: /\.((c|sa|sc)ss)$/i,
         include: [
           path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'example'),
           path.resolve(__dirname, 'packages'),
           path.resolve(__dirname, 'styles')
         ],

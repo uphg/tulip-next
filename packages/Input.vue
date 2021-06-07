@@ -1,5 +1,5 @@
 <template>
-  <div class="t-input" @mouseenter="hovering = true" @mouseleave="hovering = false">
+  <div :class="[type === 'textarea' ? 't-textarea' : 't-input', ]" @mouseenter="hovering = true" @mouseleave="hovering = false">
     <template v-if="type !== 'textarea'">
       <input
         ref="input"
@@ -67,7 +67,6 @@
       @focus="handleFocus"
       @blur="handleBlur"
     />
-
   </div>
 </template>
 

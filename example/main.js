@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './icon/tulip-icon.js'
-import './style.scss'
-import './styles/button.scss'
 
 import Button from '../packages/Button.vue'
 import ButtonGroup from '../packages/ButtonGroup.vue'

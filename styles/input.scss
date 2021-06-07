@@ -2,7 +2,7 @@
 @mixin input {
   border: 1px solid $__border-color;
   border-radius: $__border-radius;
-  transition: all 0.3s $__transition;
+  transition: color 0.3s $__transition, border-color 0.3s $__transition;
   &::placeholder {
     color: $__input-placeholder-color;
   }
@@ -42,6 +42,7 @@
 }
 .t-textarea {
   &__control {
+    min-height: 30px;
     padding: $__textarea-padding;
     line-height: $__textarea-line-height;
     resize: vertical;

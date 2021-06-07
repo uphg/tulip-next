@@ -14,6 +14,7 @@ module.exports = merge(common, {
         test: /\.((c|sa|sc)ss)$/i,
         include: [
           path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'example'),
           path.resolve(__dirname, 'packages'),
           path.resolve(__dirname, 'styles')
         ],

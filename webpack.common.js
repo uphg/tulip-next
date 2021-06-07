@@ -1,6 +1,10 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
-
+const vueInclude = [
+  path.resolve(__dirname, 'src'),
+  path.resolve(__dirname, 'example'),
+  path.resolve(__dirname, 'packages')
+]
 
 module.exports = {
   output: {
@@ -24,27 +28,18 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'packages')
-        ],
+        include: vueInclude,
         loader: 'vue-loader'
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'packages')
-        ],
+        include: vueInclude,
         exclude: /node_modules/
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'packages')
-        ],
+        include: vueInclude,
         type: 'asset/resource',
       },
     ]
