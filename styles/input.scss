@@ -1,6 +1,8 @@
 @import "./common/variable.scss";
 @mixin input {
+  min-width: 210px;
   border: 1px solid $__border-color;
+  box-sizing: border-box;
   border-radius: $__border-radius;
   transition: color 0.3s $__transition, border-color 0.3s $__transition;
   &::placeholder {
@@ -25,19 +27,27 @@
 .t-input {
   display: inline-flex;
   position: relative;
+  box-sizing: border-box;
   &__control {
     padding: $__input-padding;
     line-height: $__input-line-height;
     @include input;
   }
-  &__password-icon, &__clear-icon  {
+  &__suffix  {
     cursor: pointer;
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 12px;
+    right: 8px;
     display: inline-flex;
     align-items: center;
+    color: $__color-text-looming;
+    &:hover {
+      color: $__border-color-dark;
+    }
+  }
+  &.is-suffix > &__control {
+    padding-right: 28px;
   }
 }
 .t-textarea {
