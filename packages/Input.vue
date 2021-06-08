@@ -3,6 +3,10 @@
     :class="[
       type === 'textarea' ? 't-textarea' : 't-input',
       {
+        't-input-group-addon': $slots.before || $slots.after,
+        't-input-group-addon--before': $slots.before,
+        't-input-group-addon--after': $slots.after,
+        'exist-prefix': prefixIcon,
         'exist-suffix': showPassword || clearable,
       }
     ]"
@@ -10,7 +14,9 @@
     @mouseleave="hovering = false"
   >
     <template v-if="type !== 'textarea'">
-      <!-- <span class="t-input__prefix"></span> -->
+      <span v-if="$slots.before" class="t-input-addon t-input-addon__before">
+        <slot name="before" />
+      </span>
       <input
         ref="input"
         class="t-input__control"
@@ -23,7 +29,15 @@
         @focus="handleFocus"
         @blur="handleBlur"
       >
+      <span class="t-input__prefix">
+        <span v-if="prefixIcon" class="t-input__prefix-icon">
+          <t-icon class="t-input__icon" :name="prefixIcon" />
+        </span>
+      </span>
       <span class="t-input__suffix">
+        <span v-if="!showPasswordIcon && !showClearIcon && suffixIcon" class="t-input__suffix-icon">
+          <t-icon class="t-input__icon" :name="suffixIcon" />
+        </span>
         <span
           v-if="showPasswordIcon"
           class="t-input__password"
@@ -40,6 +54,9 @@
         >
           <t-icon class="t-input__icon" name="close-o" />
         </span>
+      </span>
+      <span v-if="$slots.after" class="t-input-addon t-input-addon__after">
+        <slot name="after" />
       </span>
     </template>
     <textarea
@@ -77,6 +94,12 @@ export default {
     readonly: {
       type: Boolean,
       default: false
+    },
+    prefixIcon: {
+      type: String
+    },
+    suffixIcon: {
+      type: String
     },
     showPassword: {
       type: Boolean,
@@ -119,6 +142,11 @@ export default {
 
   mounted() {
     this.setInputValue()
+    this.updateIconOffset()
+  },
+
+  updated() {
+    this.$nextTick(this.updateIconOffset)
   },
 
   methods: {
@@ -164,6 +192,33 @@ export default {
     },
     getInput() {
       return this.$refs.input || this.$refs.textarea
+    },
+    calcIconOffset(type) {
+      const elements = [...this.$el.querySelectorAll(`.t-input__${type}`)]
+      if (!elements.length) return
+      let el = null
+      for (const element of elements) {
+        if (element.parentNode === this.$el) {
+          el = element
+          break
+        }
+      }
+      if (!el) return
+      if (!(el.parentNode === this.$el)) return
+      const map = {
+        suffix: 'after',
+        prefix: 'before'
+      }
+      const key = map[type]
+      if (this.$slots[key]) {
+        el.style.transform = `translateX(${type === 'suffix' ? '-' : ''}${this.$el.querySelector(`.t-input-addon__${key}`).offsetWidth + 'px'}`
+      } else {
+        el.removeAttribute('style')
+      }
+    },
+    updateIconOffset() {
+      this.calcIconOffset('suffix')
+      this.calcIconOffset('prefix')
     }
   }
 }

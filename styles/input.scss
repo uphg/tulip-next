@@ -1,7 +1,6 @@
 @import "./common/variable.scss";
 @mixin input {
-  // max-width: 180px;
-  width: 100%;
+  font-size: $__font-size;
   border: 1px solid $__border-color;
   box-sizing: border-box;
   border-radius: $__border-radius;
@@ -25,27 +24,15 @@
   }
 }
 
-.t-input {
+@mixin fix {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   display: inline-flex;
-  position: relative;
-  box-sizing: border-box;
-  &__control {
-    padding: $__input-padding;
-    line-height: $__input-line-height;
-    @include input;
-  }
-  &.exist-suffix > &__control {
-    padding-right: 28px;
-  }
-  &__suffix  {
+  align-items: center;
+  color: $__color-text-looming;
+  & > .t-input__password, & > .t-input__clear {
     cursor: pointer;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 8px;
-    display: inline-flex;
-    align-items: center;
-    color: $__color-text-looming;
     &:hover {
       color: $__border-color-dark;
     }
@@ -53,10 +40,75 @@
       color: $__color-text-minor;
     }
   }
+  
+}
+
+.t-input {
+  display: inline-flex;
+  position: relative;
+  box-sizing: border-box;
+  &__control {
+    width: 100%;
+    padding: $__input-padding;
+    line-height: $__input-line-height;
+    @include input;
+  }
+  &.exist-suffix > &__control {
+    padding-right: 28px;
+  }
+  &.exist-prefix > &__control {
+    padding-left: 28px;
+  }
+  &__prefix {
+    left: 8px;
+    @include fix;
+  }
+  &__suffix  {
+    right: 8px;
+    @include fix;
+  }
   &__icon {
     transition: color 0.3s $__transition;
   }
 }
+.t-input-group-addon--before {
+  .t-input__control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.t-input-group-addon--after {
+  .t-input__control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+.t-input-addon {
+  font-size: $__font-size;
+  padding: $__input-padding;
+  line-height: $__input-line-height;
+  background-color: $__input-disabled-bg-color;
+  &__before {
+    border-top-left-radius: $__border-radius;
+    border-bottom-left-radius: $__border-radius;
+    border: {
+      left: 1px solid $__border-color;
+      top: 1px solid $__border-color;
+      bottom: 1px solid $__border-color;
+    }
+  }
+  &__after {
+    border-top-right-radius: $__border-radius;
+    border-bottom-right-radius: $__border-radius;
+    border: {
+      right: 1px solid $__border-color;
+      top: 1px solid $__border-color;
+      bottom: 1px solid $__border-color;
+    }
+  }
+}
+
 .t-textarea {
   &__control {
     min-height: 30px;

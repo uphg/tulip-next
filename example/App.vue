@@ -2,12 +2,36 @@
   <div id="app">
 
     <h2>输入框</h2>
+    <div>
+      <t-input v-model="input" prefix-icon="share" value="123" show-password>
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
+    <div class="row demo-input-addon">
+      <t-input v-model="input" value="123">
+        <template slot="before">http://</template>
+      </t-input>
+      <br>
+      <br>
+      <t-input v-model="input" value="123">
+        <template slot="after">.com</template>
+      </t-input>
+      <br>
+      <br>
+      <t-input v-model="input" value="123">
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
     <div class="row demo-input">
       <t-input v-model="input" value="123" />
-      <t-input disabled />
+      <t-input v-model="input4" placeholder="请输入内容" />
+      <t-input disabled placeholder="请输入内容" />
+      <br>
+      <br>
       <t-input v-model="input2" show-password class="show-password-demo" />
       <t-input v-model="input3" clearable />
-      <t-input v-model="input4" placeholder="请输入内容" />
 
       <p>{{ 'input：' + input }}</p>
       <p>{{ 'input2：' + input2 }}</p>
@@ -175,6 +199,11 @@ h2 {
 .demo-input {
   .t-input {
     width: 180px;
+  }
+}
+.demo-input-addon {
+  .t-input {
+    width: 360px;
   }
 }
 </style>
