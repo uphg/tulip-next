@@ -3,6 +3,7 @@
 .t-button-group {
   display: inline-flex;
   vertical-align: middle;
+  box-sizing: border-box;
   & > .t-button {
     border-radius: 0;
     &:not(:first-child) {

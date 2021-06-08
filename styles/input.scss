@@ -1,6 +1,7 @@
 @import "./common/variable.scss";
 @mixin input {
-  min-width: 210px;
+  // max-width: 180px;
+  width: 100%;
   border: 1px solid $__border-color;
   box-sizing: border-box;
   border-radius: $__border-radius;
@@ -33,6 +34,9 @@
     line-height: $__input-line-height;
     @include input;
   }
+  &.exist-suffix > &__control {
+    padding-right: 28px;
+  }
   &__suffix  {
     cursor: pointer;
     position: absolute;
@@ -45,9 +49,12 @@
     &:hover {
       color: $__border-color-dark;
     }
+    &:active {
+      color: $__color-text-minor;
+    }
   }
-  &.is-suffix > &__control {
-    padding-right: 28px;
+  &__icon {
+    transition: color 0.3s $__transition;
   }
 }
 .t-textarea {

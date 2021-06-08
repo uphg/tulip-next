@@ -2,7 +2,7 @@
   <div id="app">
 
     <h2>输入框</h2>
-    <div class="row">
+    <div class="row demo-input">
       <t-input v-model="input" value="123" />
       <t-input disabled />
       <t-input v-model="input2" show-password class="show-password-demo" />
@@ -36,10 +36,10 @@
     </div>
     <div class="row">
       <span class="label">Icon 按钮：</span>
-      <t-button icon="bug">默认按钮</t-button>
-      <t-button type="primary" icon="bug">主要按钮</t-button>
-      <t-button icon="bug" error>警告按钮</t-button>
-      <t-button type="primary" icon="bug" error>警告按钮</t-button>
+      <t-button icon="search">默认按钮</t-button>
+      <t-button type="primary" icon="calendar">主要按钮</t-button>
+      <t-button icon="share" error>警告按钮</t-button>
+      <t-button type="primary" icon="calendar-dates" error>警告按钮</t-button>
     </div>
     <div class="row">
       <span class="label">禁用状态：</span>
@@ -134,7 +134,7 @@ button, input, select, textarea {
 }
 
 #app {
-  width: 670px;
+  width: 720px;
   margin: 0 auto;
   padding: {
     left: 20px;
@@ -170,6 +170,11 @@ h2 {
   & > input {
     line-height: 34px;
     padding: 0 14px;
+  }
+}
+.demo-input {
+  .t-input {
+    width: 180px;
   }
 }
 </style>

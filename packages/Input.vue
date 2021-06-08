@@ -3,7 +3,7 @@
     :class="[
       type === 'textarea' ? 't-textarea' : 't-input',
       {
-        'is-suffix': showPasswordIcon || showClearIcon
+        'exist-suffix': showPassword || clearable,
       }
     ]"
     @mouseenter="hovering = true"
@@ -29,8 +29,8 @@
           class="t-input__password"
           @click="handlePasswordVisible"
         >
-          <t-icon v-if="passwordVisible" name="eye" />
-          <t-icon v-else name="eye-slash" />
+          <t-icon v-if="passwordVisible" class="t-input__icon" name="eye" />
+          <t-icon v-else class="t-input__icon" name="eye-slash" />
         </span>
         <span
           v-if="showClearIcon"
@@ -38,7 +38,7 @@
           @mousedown.prevent
           @click="clear"
         >
-          <t-icon name="close-o" />
+          <t-icon class="t-input__icon" name="close-o" />
         </span>
       </span>
     </template>
