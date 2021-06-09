@@ -6,8 +6,8 @@
         't-input-group-addon': $slots.before || $slots.after,
         't-input-group-addon--before': $slots.before,
         't-input-group-addon--after': $slots.after,
-        'exist-prefix': prefixIcon,
-        'exist-suffix': showPassword || clearable,
+        'exist-prefix': prefixIcon || $slots.prefix,
+        'exist-suffix': suffixIcon || $slots.suffix || showPassword || clearable,
       }
     ]"
     @mouseenter="hovering = true"
@@ -30,14 +30,18 @@
         @blur="handleBlur"
       >
       <span class="t-input__prefix">
-        <span v-if="prefixIcon" class="t-input__prefix-icon">
-          <t-icon class="t-input__icon" :name="prefixIcon" />
+        <span v-if="prefixIcon || $slots.prefix" class="t-input__prefix-icon">
+          <slot name="prefix" />
+          <t-icon v-if="prefixIcon" class="t-input__icon" :name="prefixIcon" />
         </span>
       </span>
-      <span class="t-input__suffix">
-        <span v-if="!showPasswordIcon && !showClearIcon && suffixIcon" class="t-input__suffix-icon">
-          <t-icon class="t-input__icon" :name="suffixIcon" />
-        </span>
+      <span v-if="showSuffix" class="t-input__suffix">
+        <template v-if="!showPasswordIcon && !showClearIcon">
+          <span class="t-input__suffix-icon">
+            <slot name="suffix" />
+            <t-icon v-if="suffixIcon" class="t-input__icon" :name="suffixIcon" />
+          </span>
+        </template>
         <span
           v-if="showPasswordIcon"
           class="t-input__password"
@@ -125,6 +129,9 @@ export default {
     },
     inputType() {
       return this.showPassword ? (this.passwordVisible ? 'text' : 'password') : this.type
+    },
+    showSuffix() {
+      return this.suffixIcon || this.$slots.suffix || this.showClearIcon || this.showPasswordIcon
     },
     showPasswordIcon() {
       return this.showPassword && !this.disabled && !this.readonly && (!!this.inputValue || this.focused)

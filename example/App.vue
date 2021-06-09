@@ -3,6 +3,20 @@
 
     <h2>输入框</h2>
     <div>
+      <t-input v-model="input" value="123">
+        <t-icon slot="prefix" name="close-o" />
+        <t-icon slot="suffix" name="close-o" />
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
+    <div>
+      <t-input v-model="input" prefix-icon="share" value="123" suffix-icon="share">
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
+    <div>
       <t-input v-model="input" prefix-icon="share" value="123" show-password>
         <template slot="before">http://</template>
         <template slot="after">.com</template>
