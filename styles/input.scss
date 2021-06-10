@@ -31,7 +31,7 @@
   display: inline-flex;
   align-items: center;
   color: $__color-text-looming;
-  & > .t-input__password, & > .t-input__clear {
+  & > .tulp-input__password, & > .tulp-input__clear {
     cursor: pointer;
     &:hover {
       color: $__border-color-dark;
@@ -43,7 +43,7 @@
   
 }
 
-.t-input {
+.tulp-input {
   display: inline-flex;
   position: relative;
   box-sizing: border-box;
@@ -71,20 +71,20 @@
     transition: color 0.3s $__transition;
   }
 }
-.t-input-group-addon--before {
-  .t-input__control {
+.tulp-input-group-addon--before {
+  .tulp-input__control {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 }
 
-.t-input-group-addon--after {
-  .t-input__control {
+.tulp-input-group-addon--after {
+  .tulp-input__control {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 }
-.t-input-addon {
+.tulp-input-addon {
   font-size: $__font-size;
   padding: $__input-padding;
   line-height: $__input-line-height;
@@ -109,7 +109,7 @@
   }
 }
 
-.t-textarea {
+.tulp-textarea {
   &__control {
     min-height: 30px;
     padding: $__textarea-padding;

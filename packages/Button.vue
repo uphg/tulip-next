@@ -1,9 +1,9 @@
 <template>
   <button
-    class="t-button"
+    class="tulp-button"
     :class="{
       'is-loading': loading,
-      [`t-button__${type}`]: type,
+      [`tulp-button__${type}`]: type,
       'is-error': error,
       'is-disabled': disabled
     }"
@@ -11,18 +11,17 @@
     @click="$emit('click')"
   >
     <t-icon v-if="icon && !loading" :name="icon" />
-    <loading-icon v-if="loading" type="all" />
-    <span class="t-button__content">
+    <t-icon v-if="loading" class="tulp-loading" name="spinner-alt" />
+    <span class="tulp-button__content">
       <slot />
     </span>
   </button>
 </template>
 <script>
-import LoadingIcon from './LoadingIcon.vue'
-import Icon from './Icon.vue'
+import TIcon from './Icon.vue'
 export default {
   name: 'TButton',
-  components: { LoadingIcon, 't-icon': Icon },
+  components: { TIcon },
   props: {
     icon: {
       type: String,

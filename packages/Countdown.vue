@@ -1,6 +1,6 @@
 <template>
   <span
-    class="t-countdown"
+    class="tulp-countdown"
     :class="{ disable: disable }"
     @click="$emit('click', startCount)"
   >{{ currentText }}</span>

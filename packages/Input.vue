@@ -1,11 +1,11 @@
 <template>
   <div
     :class="[
-      type === 'textarea' ? 't-textarea' : 't-input',
+      type === 'textarea' ? 'tulp-textarea' : 'tulp-input',
       {
-        't-input-group-addon': $slots.before || $slots.after,
-        't-input-group-addon--before': $slots.before,
-        't-input-group-addon--after': $slots.after,
+        'tulp-input-group-addon': $slots.before || $slots.after,
+        'tulp-input-group-addon--before': $slots.before,
+        'tulp-input-group-addon--after': $slots.after,
         'exist-prefix': prefixIcon || $slots.prefix,
         'exist-suffix': suffixIcon || $slots.suffix || showPassword || clearable,
       }
@@ -14,12 +14,12 @@
     @mouseleave="hovering = false"
   >
     <template v-if="type !== 'textarea'">
-      <span v-if="$slots.before" class="t-input-addon t-input-addon__before">
+      <span v-if="$slots.before" class="tulp-input-addon tulp-input-addon__before">
         <slot name="before" />
       </span>
       <input
         ref="input"
-        class="t-input__control"
+        class="tulp-input__control"
         :type="inputType"
         :disabled="disabled"
         :readonly="readonly"
@@ -29,44 +29,44 @@
         @focus="handleFocus"
         @blur="handleBlur"
       >
-      <span class="t-input__prefix">
-        <span v-if="prefixIcon || $slots.prefix" class="t-input__prefix-icon">
+      <span class="tulp-input__prefix">
+        <span v-if="prefixIcon || $slots.prefix" class="tulp-input__prefix-icon">
           <slot name="prefix" />
-          <t-icon v-if="prefixIcon" class="t-input__icon" :name="prefixIcon" />
+          <t-icon v-if="prefixIcon" class="tulp-input__icon" :name="prefixIcon" />
         </span>
       </span>
-      <span v-if="showSuffix" class="t-input__suffix">
+      <span v-if="showSuffix" class="tulp-input__suffix">
         <template v-if="!showPasswordIcon && !showClearIcon">
-          <span class="t-input__suffix-icon">
+          <span class="tulp-input__suffix-icon">
             <slot name="suffix" />
-            <t-icon v-if="suffixIcon" class="t-input__icon" :name="suffixIcon" />
+            <t-icon v-if="suffixIcon" class="tulp-input__icon" :name="suffixIcon" />
           </span>
         </template>
         <span
           v-if="showPasswordIcon"
-          class="t-input__password"
+          class="tulp-input__password"
           @click="handlePasswordVisible"
         >
-          <t-icon v-if="passwordVisible" class="t-input__icon" name="eye" />
-          <t-icon v-else class="t-input__icon" name="eye-slash" />
+          <t-icon v-if="passwordVisible" class="tulp-input__icon" name="eye" />
+          <t-icon v-else class="tulp-input__icon" name="eye-slash" />
         </span>
         <span
           v-if="showClearIcon"
-          class="t-input__clear"
+          class="tulp-input__clear"
           @mousedown.prevent
           @click="clear"
         >
-          <t-icon class="t-input__icon" name="close-o" />
+          <t-icon class="tulp-input__icon" name="close-o" />
         </span>
       </span>
-      <span v-if="$slots.after" class="t-input-addon t-input-addon__after">
+      <span v-if="$slots.after" class="tulp-input-addon tulp-input-addon__after">
         <slot name="after" />
       </span>
     </template>
     <textarea
       v-else
       ref="textarea"
-      class="t-textarea__control"
+      class="tulp-textarea__control"
       :disabled="disabled"
       :readonly="readonly"
       v-bind="$attrs"
@@ -201,7 +201,7 @@ export default {
       return this.$refs.input || this.$refs.textarea
     },
     calcIconOffset(type) {
-      const elements = [...this.$el.querySelectorAll(`.t-input__${type}`)]
+      const elements = [...this.$el.querySelectorAll(`.tulp-input__${type}`)]
       if (!elements.length) return
       let el = null
       for (const element of elements) {
@@ -218,7 +218,7 @@ export default {
       }
       const key = map[type]
       if (this.$slots[key]) {
-        el.style.transform = `translateX(${type === 'suffix' ? '-' : ''}${this.$el.querySelector(`.t-input-addon__${key}`).offsetWidth + 'px'}`
+        el.style.transform = `translateX(${type === 'suffix' ? '-' : ''}${this.$el.querySelector(`.tulp-input-addon__${key}`).offsetWidth + 'px'}`
       } else {
         el.removeAttribute('style')
       }

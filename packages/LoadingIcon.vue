@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="t-loading t-icon-loading"
+    class="tulp-loading t-icon-loading"
     width="24"
     height="24"
     viewBox="0 0 24 24"

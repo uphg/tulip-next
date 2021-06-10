@@ -1,5 +1,5 @@
 <template>
-  <div class="t-button-group">
+  <div class="tulp-button-group">
     <slot />
   </div>
 </template>

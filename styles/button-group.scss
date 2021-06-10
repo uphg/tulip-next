@@ -1,10 +1,10 @@
 @import "./common/variable.scss";
 
-.t-button-group {
+.tulp-button-group {
   display: inline-flex;
   vertical-align: middle;
   box-sizing: border-box;
-  & > .t-button {
+  & > .tulp-button {
     border-radius: 0;
     &:not(:first-child) {
       margin-left: -1px;

@@ -1,6 +1,6 @@
 @import "./common/variable.scss";
 
-.t-button {
+.tulp-button {
   font-size: $__font-size;
   border: 1px solid;
   box-sizing: border-box;
@@ -14,12 +14,12 @@
   &__content {
     line-height: $__button-line-height;
   }
-  [class*=t-icon]+span {
+  [class*=tulp-icon]+span {
     margin-left: 5px;
   }
 }
 
-.t-button {
+.tulp-button {
   &:focus{
     outline: none;
   }
@@ -91,6 +91,12 @@
       border-color: $__color-error-light;
     }
   }
+}
+
+.tulp-loading[class^="tulp-icon-"], .tulp-loading[class*="tulp-icon-"] {
+  width: 1em;
+  height: 1em;
+  animation: spin 1s cubic-bezier(0.6, 0, 0.4, 1) infinite;
 }
 
 @keyframes spin {
