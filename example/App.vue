@@ -1,6 +1,21 @@
 <template>
   <div id="app">
+    <h2>Icon Svg 案例</h2>
+    <div class="row demo-icon-svg">
+      <div>
+        <t-button @click="setIconNameIndex">点击切换icon</t-button>
+      </div>
+      <div style="height: 1010px;">
+        <t-icon-svg name="spinner-two" />
+        <t-icon-svg name="spinner-alt" />
+        <t-icon-svg name="eye" />
+        <t-icon-svg name="spinner-alt" />
+        <t-icon-svg name="spinner-two" />
+        <!-- <t-icon-svg v-for="item in 1000" :key="item" :name="iconSvgList[iconNameIndex]" /> -->
+        <t-icon v-for="item in 1000" :key="item" :name="iconSvgList[iconNameIndex]" />
+      </div>
 
+    </div>
     <h2>输入框</h2>
     <div>
       <t-input v-model="input" value="123">
@@ -150,7 +165,13 @@ export default {
       input2: '我是input',
       input3: '我是input',
       input4: '',
-      input5: ''
+      input5: '',
+      iconSvgList: [
+        'spinner-alt',
+        'spinner-two',
+        'eye'
+      ],
+      iconNameIndex: 0
     }
   },
   methods: {
@@ -158,6 +179,13 @@ export default {
       if (!this.isCount) {
         this.$refs['countdown'].startCount()
       }
+    },
+    setIconNameIndex() {
+      if (this.iconNameIndex >= 2) {
+        this.iconNameIndex = 0
+        return
+      }
+      this.iconNameIndex += 1
     }
   }
 }
@@ -218,6 +246,13 @@ h2 {
 .demo-input-addon {
   .t-input {
     width: 360px;
+  }
+}
+.demo-icon-svg {
+  color: blue;
+  svg {
+    width: 1em;
+    height: 1em;
   }
 }
 </style>
