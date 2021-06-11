@@ -1,6 +1,7 @@
 @import "./common/variable.scss";
 @mixin input {
   font-size: $__font-size;
+  font-family: inherit;
   border: 1px solid $__border-color;
   box-sizing: border-box;
   border-radius: $__border-radius;
