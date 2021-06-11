@@ -149,13 +149,7 @@ export default {
       input2: '我是input',
       input3: '我是input',
       input4: '',
-      input5: '',
-      iconSvgList: [
-        'spinner-alt',
-        'spinner-two',
-        'eye'
-      ],
-      iconNameIndex: 0
+      input5: ''
     }
   },
   methods: {
