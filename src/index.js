@@ -1,8 +1,9 @@
-import Button from '../packages/Button.vue'
-import ButtonGroup from '../packages/ButtonGroup.vue'
+import Button from '../packages/button/index.js'
+import ButtonGroup from '../packages/button-group/index.js'
 import Countdown from '../packages/Countdown.vue'
 import Icon from '../packages/Icon.vue'
 import Input from '../packages/Input.vue'
+
 const components = [
   Button,
   ButtonGroup,

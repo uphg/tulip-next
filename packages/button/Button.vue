@@ -18,7 +18,8 @@
   </button>
 </template>
 <script>
-import TIcon from './Icon.vue'
+import '../../styles/button.scss'
+import TIcon from '../Icon.vue'
 export default {
   name: 'TButton',
   components: { TIcon },
@@ -49,4 +50,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" src="../styles/button.scss"></style>
+<!--<style lang="scss" src="../../styles/button.scss"></style>-->

@@ -7,6 +7,7 @@
     "test:unit": "karma start",
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "build:module": "webpack --config webpack.prod-module.js",
     "lint": "eslint \"src/**/*.{js,vue}\""
   },
   "license": "MIT",

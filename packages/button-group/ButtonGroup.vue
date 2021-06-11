@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import '../../styles/button-group.scss'
 export default {
   name: 'TButtonGroup',
   mounted() {
@@ -17,4 +18,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" src="../styles/button-group.scss"></style>
+<!--<style lang="scss" src="../../styles/button-group.scss"></style>-->
