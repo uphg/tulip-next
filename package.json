@@ -1,12 +1,21 @@
 {
   "name": "tulip-ui",
   "version": "0.0.7",
+  "sideEffects": [
+    "dist/*",
+    "example/*",
+    "packages/*",
+    "src/*",
+    "styles/*",
+    "*.scss"
+  ],
   "main": "dist/tulip-ui.common.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "karma start --single-run",
     "test:unit": "karma start",
     "start": "webpack serve --open --config webpack.dev.js",
-    "build": "rm -rf dist, webpack --config webpack.prod.js, webpack --config webpack.prod-module.js",
+    "build": "webpack --config webpack.prod.js",
     "build:module": "webpack --config webpack.prod-module.js",
     "lint": "eslint \"src/**/*.{js,vue}\""
   },

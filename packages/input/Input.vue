@@ -79,7 +79,8 @@
 </template>
 
 <script>
-import Icon from './Icon.vue'
+import Icon from '../icon/Icon.vue'
+import '../../styles/input.scss'
 export default {
   name: 'TInput',
   components: { 'TIcon': Icon },
@@ -230,4 +231,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" src="../styles/input.scss"></style>

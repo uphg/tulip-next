@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import '../src/icon/tulip-icon.js'
+import '../../styles/icon.scss'
+import '../../src/icon/tulip-icon.js'
 export default {
   name: 'TIcon',
   props: {
@@ -17,4 +18,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" src="../styles/icon.scss"></style>
+<!--<style lang="scss" src="../../styles/icon.scss"></style>-->

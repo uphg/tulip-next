@@ -6,6 +6,7 @@
   >{{ currentText }}</span>
 </template>
 <script>
+import '../../styles/countdown.scss'
 export default {
   name: 'TCountdown',
   props: {
@@ -54,4 +55,4 @@ export default {
   }
 }
 </script>
-<style lang="scss" src="../styles/countdown.scss"></style>
+<!--<style lang="scss" src="../styles/countdown.scss"></style>-->

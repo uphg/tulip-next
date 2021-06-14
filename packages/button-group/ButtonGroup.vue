@@ -18,4 +18,3 @@ export default {
   }
 }
 </script>
-<!--<style lang="scss" src="../../styles/button-group.scss"></style>-->
