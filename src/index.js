@@ -18,6 +18,15 @@ const install = function(Vue, opts = {}) {
   })
 }
 
+export {
+  install,
+  Button,
+  ButtonGroup,
+  Countdown,
+  Icon,
+  Input
+}
+
 export default {
   install,
   Button,

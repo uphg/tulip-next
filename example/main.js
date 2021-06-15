@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import Button from '../packages/button/index.js'
-import ButtonGroup from '../packages/button-group/index.js'
-import Countdown from '../packages/countdown/index.js'
-import Icon from '../packages/icon/index.js'
-import Input from '../packages/input/index.js'
+import { Button, ButtonGroup, Countdown, Icon, Input } from '../src/index.js'
+
+// import Button from '../packages/button/index.js'
+// import ButtonGroup from '../packages/button-group/index.js'
+// import Countdown from '../packages/countdown/index.js'
+// import Icon from '../packages/icon/index.js'
+// import Input from '../packages/input/index.js'
 
 Vue.config.productionTip = false
 
