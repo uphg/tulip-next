@@ -8,15 +8,6 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 module.exports = merge(common, {
   mode: 'production',
   entry: './src/index.js',
-  output: {
-    filename: 'tulip-ui.common.js',
-    path: path.resolve(__dirname, 'dist'),
-    library: {
-      name: 'Tulip-ui',
-      type: 'umd',
-    },
-    // clean: true, // 打包时清空之前的文件
-  },
   module: {
     rules: [
       {

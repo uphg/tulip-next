@@ -55,4 +55,3 @@ export default {
   }
 }
 </script>
-<!--<style lang="scss" src="../styles/countdown.scss"></style>-->
