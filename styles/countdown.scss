@@ -3,7 +3,10 @@
 .tulp-countdown {
   cursor: pointer;
   font-size: $__font-size;
-  &.disable {
+  &.is-disable, &.is-loading {
     color: $__color-text-looming;
+  }
+  [class*=tulp-icon] + &__text {
+    margin-left: 5px;
   }
 }

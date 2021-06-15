@@ -1,5 +1,16 @@
 <template>
   <div id="app">
+    <div>
+      <t-countdown
+        ref="countdown2"
+        prompt="秒后重新发送"
+        :begin-second="5"
+        :loading="countLoading"
+        @count-start="isCount2 = true"
+        @count-end="isCount2 = false"
+        @click="countLoading = !countLoading"
+      />
+    </div>
     <h2>输入框</h2>
     <div>
       <t-input v-model="input" value="123">
@@ -145,6 +156,8 @@ export default {
     return {
       isLoading: true,
       isCount: false,
+      isCount2: false,
+      countLoading: false,
       input: '我是input',
       input2: '我是input',
       input3: '我是input',
@@ -156,6 +169,11 @@ export default {
     clickCount() {
       if (!this.isCount) {
         this.$refs['countdown'].startCount()
+      }
+    },
+    clickCount2() {
+      if (!this.isCount2) {
+        this.$refs['countdown2'].startCount()
       }
     },
     setIconNameIndex() {

@@ -1,15 +1,26 @@
 <template>
   <span
     class="tulp-countdown"
-    :class="{ disable: disable }"
+    :class="{ 'is-disable': disable, 'is-loading': loading }"
     @click="$emit('click', startCount)"
-  >{{ currentText }}</span>
+  >
+    <t-icon
+      v-if="loading"
+      class="tulp-loading"
+      name="spinner-alt"
+    /><span class="tulp-countdown__text">{{ currentText }}</span></span>
 </template>
 <script>
 import '../../styles/countdown.scss'
+import TIcon from '../icon/Icon.vue'
 export default {
   name: 'TCountdown',
+  components: { TIcon },
   props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
     beginSecond: {
       type: Number,
       default: 60
