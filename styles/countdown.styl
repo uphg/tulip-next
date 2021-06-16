@@ -1,12 +1,9 @@
 @require "./common/variable"
 
-.tulp-countdown {
-  cursor: pointer;
-  font-size: $__font-size;
-  &.is-disable, &.is-loading {
-    color: $__color-text-looming;
-  }
-  [class*=tulp-icon] + &__text {
-    margin-left: 5px;
-  }
-}
+.tulp-countdown 
+  cursor pointer
+  font-size $__font-size
+  &.is-disable, &.is-loading 
+    color $__color-text-looming
+  [class*=tulp-icon] + &__text 
+    margin-left 5px

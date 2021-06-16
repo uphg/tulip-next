@@ -1,118 +1,94 @@
 @require "./common/variable"
 
-input() {
-  font-size: $__font-size;
-  font-family: inherit;
-  border: 1px solid $__border-color;
-  box-sizing: border-box;
-  border-radius: $__border-radius;
-  transition: color 0.3s $__transition, border-color 0.3s $__transition;
-  &::placeholder {
-    color: $__input-placeholder-color;
-  }
-  &:hover {
-    border-color: $__border-color-dark;
-  }
-  &:focus {
-    border-color: $__color-primary;
-  }
-  &:focus, &:focus-visible {
-    outline: none;
-  }
-  &[disabled] {
-    cursor: not-allowed;
-    background-color: $__input-disabled-bg-color;
-    border-color: $__border-color;
-  }
-}
+input() 
+  font-size $__font-size
+  font-family inherit
+  border 1px solid $__border-color
+  box-sizing border-box
+  border-radius $__border-radius
+  transition color 0.3s $__transition, border-color 0.3s $__transition
+  &::placeholder 
+    color $__input-placeholder-color
+  &:hover 
+    border-color $__border-color-dark
+  &:focus 
+    border-color $__color-primary
+  &:focus, &:focus-visible 
+    outline none
+  &[disabled] 
+    cursor not-allowed
+    background-color $__input-disabled-bg-color
+    border-color $__border-color
 
-fix() {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  display: inline-flex;
-  align-items: center;
-  color: $__color-text-looming;
-  & > .tulp-input__password, & > .tulp-input__clear {
-    cursor: pointer;
-    &:hover {
-      color: $__border-color-dark;
-    }
-    &:active {
-      color: $__color-text-minor;
-    }
-  }
+fix() 
+  position absolute
+  top 0
+  bottom 0
+  display inline-flex
+  align-items center
+  color $__color-text-looming
+  & > .tulp-input__password, & > .tulp-input__clear 
+    cursor pointer
+    &:hover 
+      color $__border-color-dark
+    &:active 
+      color $__color-text-minor
+
+.tulp-input 
+  display inline-flex
+  position relative
+  box-sizing border-box
+  &__control 
+    width 100%
+    padding $__input-padding
+    line-height $__input-line-height
+    input()
+  &.exist-suffix > &__control 
+    padding-right 28px
+  &.exist-prefix > &__control 
+    padding-left 28px
+  &__prefix 
+    left 8px
+    fix()
+  &__suffix  
+    right 8px
+    fix()
+  &__icon 
+    transition color 0.3s $__transition
+
+.tulp-input-group-addon--before
+  .tulp-input__control
+    border-top-left-radius 0
+    border-bottom-left-radius 0
+
+.tulp-input-group-addon--after
+  .tulp-input__control
+    border-top-right-radius 0
+    border-bottom-right-radius 0
+
+.tulp-input-addon 
+  font-size $__font-size
+  padding $__input-padding
+  line-height $__input-line-height
+  background-color $__input-disabled-bg-color
+  &__before 
+    border-top-left-radius $__border-radius
+    border-bottom-left-radius $__border-radius
+    border-left 1px solid $__border-color
+    border-top 1px solid $__border-color
+    border-bottom 1px solid $__border-color
+  &__after 
+    border-top-right-radius $__border-radius
+    border-bottom-right-radius $__border-radius
+    border-right 1px solid $__border-color
+    border-top 1px solid $__border-color
+    border-bottom 1px solid $__border-color
+
+.tulp-textarea 
+  &__control 
+    min-height 30px
+    padding $__textarea-padding
+    line-height $__textarea-line-height
+    resize vertical
+    input()
   
-}
-
-.tulp-input {
-  display: inline-flex;
-  position: relative;
-  box-sizing: border-box;
-  &__control {
-    width: 100%;
-    padding: $__input-padding;
-    line-height: $__input-line-height;
-    input();
-  }
-  &.exist-suffix > &__control {
-    padding-right: 28px;
-  }
-  &.exist-prefix > &__control {
-    padding-left: 28px;
-  }
-  &__prefix {
-    left: 8px;
-    fix();
-  }
-  &__suffix  {
-    right: 8px;
-    fix();
-  }
-  &__icon {
-    transition: color 0.3s $__transition;
-  }
-}
-.tulp-input-group-addon--before {
-  .tulp-input__control {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
-
-.tulp-input-group-addon--after {
-  .tulp-input__control {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
-.tulp-input-addon {
-  font-size: $__font-size;
-  padding: $__input-padding;
-  line-height: $__input-line-height;
-  background-color: $__input-disabled-bg-color;
-  &__before {
-    border-top-left-radius: $__border-radius;
-    border-bottom-left-radius: $__border-radius;
-    border-left: 1px solid $__border-color;
-    border-top: 1px solid $__border-color;
-    border-bottom: 1px solid $__border-color;
-  }
-  &__after {
-    border-top-right-radius: $__border-radius;
-    border-bottom-right-radius: $__border-radius;
-    border-right: 1px solid $__border-color;
-    border-top: 1px solid $__border-color;
-    border-bottom: 1px solid $__border-color;
-  }
-}
-
-.tulp-textarea {
-  &__control {
-    min-height: 30px;
-    padding: $__textarea-padding;
-    line-height: $__textarea-line-height;
-    resize: vertical;
-    input();
-  }
-}
