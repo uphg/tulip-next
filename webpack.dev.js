@@ -16,19 +16,13 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.((c|sa|sc)ss)$/i,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'example'),
-          path.resolve(__dirname, 'packages'),
-          path.resolve(__dirname, 'styles')
-        ],
+        test: /\.styl(us)?$/,
         use: [
           'vue-style-loader',
           'css-loader',
-          'sass-loader'
-        ],
-      },
+          'stylus-loader'
+        ]
+      }      
     ]
   },
   plugins: [

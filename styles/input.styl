@@ -1,5 +1,6 @@
-@import "./common/variable.scss";
-@mixin input {
+@require "./common/variable"
+
+input() {
   font-size: $__font-size;
   font-family: inherit;
   border: 1px solid $__border-color;
@@ -25,7 +26,7 @@
   }
 }
 
-@mixin fix {
+fix() {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -52,7 +53,7 @@
     width: 100%;
     padding: $__input-padding;
     line-height: $__input-line-height;
-    @include input;
+    input();
   }
   &.exist-suffix > &__control {
     padding-right: 28px;
@@ -62,11 +63,11 @@
   }
   &__prefix {
     left: 8px;
-    @include fix;
+    fix();
   }
   &__suffix  {
     right: 8px;
-    @include fix;
+    fix();
   }
   &__icon {
     transition: color 0.3s $__transition;
@@ -93,20 +94,26 @@
   &__before {
     border-top-left-radius: $__border-radius;
     border-bottom-left-radius: $__border-radius;
-    border: {
-      left: 1px solid $__border-color;
-      top: 1px solid $__border-color;
-      bottom: 1px solid $__border-color;
-    }
+    border-left: 1px solid $__border-color;
+    border-top: 1px solid $__border-color;
+    border-bottom: 1px solid $__border-color;
+    // border: {
+    //   left: 1px solid $__border-color;
+    //   top: 1px solid $__border-color;
+    //   bottom: 1px solid $__border-color;
+    // }
   }
   &__after {
     border-top-right-radius: $__border-radius;
     border-bottom-right-radius: $__border-radius;
-    border: {
-      right: 1px solid $__border-color;
-      top: 1px solid $__border-color;
-      bottom: 1px solid $__border-color;
-    }
+    border-right: 1px solid $__border-color;
+    border-top: 1px solid $__border-color;
+    border-bottom: 1px solid $__border-color;
+    // border: {
+    //   right: 1px solid $__border-color;
+    //   top: 1px solid $__border-color;
+    //   bottom: 1px solid $__border-color;
+    // }
   }
 }
 
@@ -116,6 +123,6 @@
     padding: $__textarea-padding;
     line-height: $__textarea-line-height;
     resize: vertical;
-    @include input;
+    input();
   }
 }

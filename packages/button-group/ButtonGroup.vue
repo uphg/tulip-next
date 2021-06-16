@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import '../../styles/button-group.scss'
+import '../../styles/button-group.styl'
 export default {
   name: 'TButtonGroup',
   mounted() {

@@ -187,7 +187,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="stylus">
 *, *::after, *::before {
   box-sizing: border-box;
 }
@@ -198,10 +198,12 @@ button, input, select, textarea {
 #app {
   width: 720px;
   margin: 0 auto;
-  padding: {
-    left: 20px;
-    right: 20px;
-  }
+  padding-left: 20px;
+  padding-right: 20px;
+  // padding: {
+  //   left: 20px;
+  //   right: 20px;
+  // }
   font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
 }
 h2 {
@@ -209,10 +211,12 @@ h2 {
 }
 
 .row {
-  margin: {
-    top: 20px;
-    bottom: 20px;
-  }
+  margin-top: 20px;
+  margin-bottom: 20px;
+  // margin: {
+  //   top: 20px;
+  //   bottom: 20px;
+  // }
   &:not(.button-group) {
     button {
       margin-right: 15px;

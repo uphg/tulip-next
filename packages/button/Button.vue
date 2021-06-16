@@ -18,7 +18,7 @@
   </button>
 </template>
 <script>
-import '../../styles/button.scss'
+import '../../styles/button.styl'
 import TIcon from '../icon/index.js'
 export default {
   name: 'TButton',

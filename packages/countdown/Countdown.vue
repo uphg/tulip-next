@@ -11,7 +11,7 @@
     /><span class="tulp-countdown__text">{{ currentText }}</span></span>
 </template>
 <script>
-import '../../styles/countdown.scss'
+import '../../styles/countdown.styl'
 import TIcon from '../icon/Icon.vue'
 export default {
   name: 'TCountdown',

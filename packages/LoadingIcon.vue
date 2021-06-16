@@ -31,7 +31,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="stylus">
 .t-loading.t-icon-loading {
   width: 1em;
   height: 1em;

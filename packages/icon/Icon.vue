@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import '../../styles/icon.scss'
+import '../../styles/icon.styl'
 import '../../src/icon/tulip-icon.js'
 export default {
   name: 'TIcon',

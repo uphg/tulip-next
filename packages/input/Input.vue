@@ -80,7 +80,7 @@
 
 <script>
 import Icon from '../icon/Icon.vue'
-import '../../styles/input.scss'
+import '../../styles/input.styl'
 export default {
   name: 'TInput',
   components: { 'TIcon': Icon },
