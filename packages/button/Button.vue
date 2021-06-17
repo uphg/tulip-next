@@ -4,10 +4,10 @@
     :class="{
       'is-loading': loading,
       [`tulp-button__${type}`]: type,
-      'is-error': error,
       'is-disabled': disabled
     }"
     :disabled="disabled"
+
     @click="$emit('click')"
   >
     <t-icon v-if="icon && !loading" :name="icon" />
@@ -36,12 +36,8 @@ export default {
       type: String,
       default: 'default',
       validator(value) {
-        return value === 'default' || value === 'primary'
+        return value === 'default' || value === 'primary' || value === 'error'
       }
-    },
-    error: {
-      type: Boolean,
-      default: false
     },
     disabled: {
       type: Boolean,

@@ -72,36 +72,37 @@
       <span class="label">英文：</span>
       <t-button>Default</t-button>
       <t-button type="primary">Primary</t-button>
-      <t-button error>Error</t-button>
-      <t-button type="primary" error>Error</t-button>
+      <t-button type="error">Error</t-button>
     </div>
     <div class="row">
       <span class="label">普通按钮：</span>
       <t-button>默认按钮</t-button>
       <t-button type="primary">主要按钮</t-button>
-      <t-button error>警告按钮</t-button>
-      <t-button type="primary" error>警告按钮</t-button>
+      <t-button type="error">警告按钮</t-button>
+    </div>
+    <div class="row">
+      <span class="label">虚线按钮：</span>
+      <t-button dashed>默认按钮</t-button>
+      <t-button type="primary" dashed>主要按钮</t-button>
+      <t-button type="error" dashed>警告按钮</t-button>
     </div>
     <div class="row">
       <span class="label">Icon 按钮：</span>
       <t-button icon="search">默认按钮</t-button>
       <t-button type="primary" icon="calendar">主要按钮</t-button>
-      <t-button icon="share" error>警告按钮</t-button>
-      <t-button type="primary" icon="calendar-dates" error>警告按钮</t-button>
+      <t-button type="error" icon="calendar-dates">警告按钮</t-button>
     </div>
     <div class="row">
       <span class="label">禁用状态：</span>
       <t-button disabled>默认按钮</t-button>
       <t-button type="primary" disabled>主要按钮</t-button>
-      <t-button error disabled>警告按钮</t-button>
-      <t-button type="primary" error disabled>警告按钮</t-button>
+      <t-button type="error" disabled>警告按钮</t-button>
     </div>
     <div class="row">
       <span class="label">Loading 按钮：</span>
       <t-button loading>默认按钮</t-button>
       <t-button type="primary" loading>主要按钮</t-button>
-      <t-button loading error>警告按钮</t-button>
-      <t-button type="primary" loading error>警告按钮</t-button>
+      <t-button type="error" loading>警告按钮</t-button>
     </div>
     <h2>按钮组</h2>
     <div class="row button-group">
@@ -116,14 +117,9 @@
         <t-button type="primary">下一页</t-button>
       </t-button-group>
       <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button error>上一页</t-button>
-        <t-button error>当前页</t-button>
-        <t-button error>下一页</t-button>
-      </t-button-group>
-      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button type="primary" error>上一页</t-button>
-        <t-button type="primary" error>当前页</t-button>
-        <t-button type="primary" error>下一页</t-button>
+        <t-button type="error">上一页</t-button>
+        <t-button type="error">当前页</t-button>
+        <t-button type="error">下一页</t-button>
       </t-button-group>
       <t-button-group />
     </div>

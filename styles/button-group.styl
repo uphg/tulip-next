@@ -1,5 +1,14 @@
 @require "./common/variable"
 
+hideBorder()
+  &:not(:first-child, :last-child) 
+    border-left-color $__border-color
+    border-right-color $__border-color
+  &:first-child 
+    border-right-color $__border-color
+  &:last-child 
+    border-left-color $__border-color
+
 .tulp-button-group 
   display inline-flex
   vertical-align middle
@@ -17,11 +26,7 @@
     &:hover, &:focus 
       position relative
       z-index 1
-    &__primary 
-      &:not(:first-child, :last-child) 
-        border-left-color $__border-color
-        border-right-color $__border-color
-      &:first-child 
-        border-right-color $__border-color
-      &:last-child 
-        border-left-color $__border-color
+    &__primary
+      hideBorder()
+    &__error
+      hideBorder()
