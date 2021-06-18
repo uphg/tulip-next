@@ -24,6 +24,13 @@ export default {
   name: 'TButton',
   components: { TIcon },
   props: {
+    type: {
+      type: String,
+      default: 'default',
+      validator(value) {
+        return value === 'default' || value === 'primary' || value === 'error'
+      }
+    },
     icon: {
       type: String,
       default: ''
@@ -31,13 +38,6 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    type: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return value === 'default' || value === 'primary' || value === 'error'
-      }
     },
     disabled: {
       type: Boolean,
