@@ -70,7 +70,7 @@
     <h2>按钮</h2>
     <div class="row">
       <span class="label">英文：</span>
-      <t-button>Default</t-button>
+      <t-button @click="clickButton">Default</t-button>
       <t-button type="primary">Primary</t-button>
       <t-button type="error">Error</t-button>
     </div>
@@ -88,6 +88,7 @@
     </div>
     <div class="row">
       <span class="label">Icon 按钮：</span>
+      <t-button icon="calendar" />
       <t-button icon="search">默认按钮</t-button>
       <t-button type="primary" icon="calendar">主要按钮</t-button>
       <t-button type="error" icon="calendar-dates">警告按钮</t-button>
@@ -162,6 +163,11 @@ export default {
     }
   },
   methods: {
+    clickButton(e) {
+      console.log('我被触发了')
+      console.log('event')
+      console.log(e)
+    },
     clickCount() {
       if (!this.isCount) {
         this.$refs['countdown'].startCount()

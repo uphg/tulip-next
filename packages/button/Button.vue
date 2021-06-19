@@ -8,18 +8,18 @@
     }"
     :disabled="disabled || loading"
     @mouseup="mouseup"
-    @click="$emit('click')"
+    @click="$emit('click', $event)"
   >
-    <t-icon v-if="icon && !loading" :name="icon" />
-    <t-icon v-if="loading" class="tulp-loading" name="spinner-alt" />
-    <span class="tulp-button__content">
-      <slot />
-    </span>
     <span
       v-if="isWave"
       class="tulp-base__wave"
       :class="{ active: isWave }"
     />
+    <t-icon v-if="icon && !loading" :name="icon" />
+    <t-icon v-if="loading" class="tulp-loading" name="spinner-alt" />
+    <span v-if="$slots.default" class="tulp-button__content">
+      <slot />
+    </span>
   </button>
 </template>
 <script>
