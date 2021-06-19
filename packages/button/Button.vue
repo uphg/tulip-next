@@ -7,7 +7,7 @@
       'is-disabled': disabled
     }"
     :disabled="disabled"
-
+    @mouseup="mouseup"
     @click="$emit('click')"
   >
     <t-icon v-if="icon && !loading" :name="icon" />
@@ -15,10 +15,16 @@
     <span class="tulp-button__content">
       <slot />
     </span>
+    <span
+      v-if="isWave"
+      class="tulp-base__wave"
+      :class="{ active: isWave }"
+    />
   </button>
 </template>
 <script>
 import '../../styles/button.styl'
+import '../../styles/wave.styl'
 import TIcon from '../icon/index.js'
 export default {
   name: 'TButton',
@@ -42,6 +48,28 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      isWave: false,
+      animationTimerId: null
+    }
+  },
+  methods: {
+    mouseup() {
+      if (this.isWave) {
+        window.clearTimeout(this.animationTimerId)
+        this.isWave = false
+        this.animationTimerId = null
+      }
+      this.$nextTick(() => {
+        this.isWave = true
+        this.animationTimerId = window.setTimeout(() => {
+          this.isWave = false
+          this.animationTimerId = null
+        }, 1000)
+      })
     }
   }
 }

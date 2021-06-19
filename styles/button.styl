@@ -1,6 +1,7 @@
 @require "./common/variable"
 
 .tulp-button
+  position relative
   font-size $__font-size
   border 1px solid
   box-sizing border-box
@@ -20,6 +21,7 @@
   &:focus
     outline none
   &__default
+    --wave-color $__color-primary
     color $__color-text-primary
     background-color #fff
     border-color $__border-color
@@ -33,6 +35,7 @@
       color $__color-text-looming
       border-color $__border-color-light
   &__primary
+    --wave-color $__color-primary
     color #fff
     background-color $__color-primary
     border-color $__color-primary
@@ -46,6 +49,7 @@
       background-color $__color-primary-light
       border-color $__color-primary-light
   &__error
+    --wave-color $__color-error
     color #fff
     background-color $__color-error
     border-color $__color-error

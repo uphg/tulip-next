@@ -1,0 +1,31 @@
+@require "./common/variable"
+
+.tulp-base__wave
+  opacity 0
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  border-radius 2.8px
+  animation-iteration-count 1  // 动画执行次数
+  animation-duration .6s  // 动画持续时间
+  // animation-timing-function cubic-bezier(0.6, 0, 0.4, 1) // 更缓慢的过渡
+  animation-timing-function cubic-bezier(0, 0, 0.2, 1)  // 动画过渡效果
+  &.active
+    animation-name button-wave
+
+@keyframes button-wave
+  from
+    box-shadow 0 0 0.8px 0 var(--wave-color)
+    opacity 0.8
+  to
+    box-shadow 0 0 0.8px 6px var(--wave-color)
+    opacity 0
+
+// 更小的波动范围
+// @keyframes button-wave
+//   from
+//     box-shadow 0 0 0.5px 0 $__color-primary
+//   to
+//     box-shadow 0 0 0.5px 4.5px $__color-primary
