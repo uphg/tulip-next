@@ -6,7 +6,7 @@
       [`tulp-button__${type}`]: type,
       'is-disabled': disabled
     }"
-    :disabled="disabled"
+    :disabled="disabled || loading"
     @mouseup="mouseup"
     @click="$emit('click')"
   >

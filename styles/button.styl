@@ -1,5 +1,9 @@
 @require "./common/variable"
 
+fillTone(color)
+  background-color color
+  border-color color
+
 .tulp-button
   position relative
   font-size $__font-size
@@ -37,28 +41,20 @@
   &__primary
     --wave-color $__color-primary
     color #fff
-    background-color $__color-primary
-    border-color $__color-primary
+    fillTone($__color-primary)
     &:hover, &:focus
-      background-color $__color-primary-light
-      border-color $__color-primary-light
+      fillTone($__color-primary-light)
     &:active
-      background-color $__color-primary-dark
-      border-color $__color-primary-dark
+      fillTone($__color-primary-dark)
     &.is-loading, &.is-disabled 
-      background-color $__color-primary-light
-      border-color $__color-primary-light
+      fillTone($__color-primary-light)
   &__error
     --wave-color $__color-error
     color #fff
-    background-color $__color-error
-    border-color $__color-error
+    fillTone($__color-error)
     &:hover, &:focus 
-      background-color $__color-error-light
-      border-color $__color-error-light
+      fillTone($__color-error-light)
     &:active 
-      background-color $__color-error-dark
-      border-color $__color-error-dark
+      fillTone($__color-error-dark)
     &.is-loading, &.is-disabled 
-      background-color $__color-error-light
-      border-color $__color-error-light
+      fillTone($__color-error-light)
