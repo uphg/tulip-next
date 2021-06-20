@@ -85,6 +85,8 @@ roundShape(radius, padding)
   buttonLoading()
   &__content
     line-height $__button-line-height
+  [class*=tulp-icon] + &__content
+    margin-left 5px
   &.is-round
     roundShape($__border-radius-round, $__round-padding)
   &.is-circle
