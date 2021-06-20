@@ -66,9 +66,11 @@
 import '../../styles/button.styl'
 import '../../styles/wave.styl'
 import TIcon from '../icon/index.js'
+import loadingTransition from '../mixins/loading-transition.js'
 export default {
   name: 'TButton',
   components: { TIcon },
+  mixins: [loadingTransition],
   props: {
     type: {
       type: String,
@@ -108,28 +110,6 @@ export default {
           this.animationTimerId = null
         }, 1000)
       })
-    },
-
-    loadingTransitionEnter(el, done) {
-      let loadId = setTimeout(() => {
-        el.classList.add('active')
-        window.clearTimeout(loadId)
-        loadId = null
-        let momentId = setTimeout(() => {
-          window.clearTimeout(momentId)
-          momentId = null
-          done()
-        }, 300)
-      }, 0)
-    },
-
-    loadingTransitionLeave(el, done) {
-      el.classList.remove('active')
-      let momentId = setTimeout(() => {
-        window.clearTimeout(momentId)
-        momentId = null
-        done()
-      }, 300)
     }
   }
 }
