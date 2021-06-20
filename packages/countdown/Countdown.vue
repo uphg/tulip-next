@@ -57,9 +57,10 @@ export default {
         this.$emit('count-end')
         return false
       }
-      const timer = setTimeout(() => {
+      let timerId = setTimeout(() => {
         this.currentTime -= 1
-        window.clearTimeout(timer)
+        window.clearTimeout(timerId)
+        timerId = null
         this.clock()
       }, 1000)
     }

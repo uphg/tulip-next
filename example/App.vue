@@ -20,18 +20,21 @@
         <template slot="after">.com</template>
       </t-input>
     </div>
+    <br>
     <div>
       <t-input v-model="input" prefix-icon="share" value="123" suffix-icon="share">
         <template slot="before">http://</template>
         <template slot="after">.com</template>
       </t-input>
     </div>
+    <br>
     <div>
       <t-input v-model="input" prefix-icon="share" value="123" show-password>
         <template slot="before">http://</template>
         <template slot="after">.com</template>
       </t-input>
     </div>
+    <br>
     <div class="row demo-input-addon">
       <t-input v-model="input" value="123">
         <template slot="before">http://</template>

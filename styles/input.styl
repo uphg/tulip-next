@@ -1,19 +1,20 @@
 @require "./common/variable"
 
-input() 
+input()
   font-size $__font-size
   font-family inherit
   border 1px solid $__border-color
   box-sizing border-box
   border-radius $__border-radius
-  transition color 0.3s $__transition, border-color 0.3s $__transition
+  transition color 0.3s $__transition, border-color 0.3s $__transition, box-shadow 0.3s $__transition
   &::placeholder 
     color $__input-placeholder-color
-  &:hover 
+  &:hover
     border-color $__border-color-dark
-  &:focus 
+  &:focus
     border-color $__color-primary
-  &:focus, &:focus-visible 
+    box-shadow 0 0 0 2.2px $__input-wave
+  &:focus, &:focus-visible
     outline none
   &[disabled] 
     cursor not-allowed
@@ -55,6 +56,9 @@ fix()
     fix()
   &__icon 
     transition color 0.3s $__transition
+.tulp-input-group-addon
+  & > .tulp-input__control
+    position relative
 
 .tulp-input-group-addon--before
   .tulp-input__control

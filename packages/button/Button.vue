@@ -43,22 +43,10 @@ export default {
       type: String,
       default: ''
     },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    dashed: {
-      type: Boolean,
-      default: false
-    },
-    ghost: {
-      type: Boolean,
-      default: false
-    }
+    loading: Boolean,
+    disabled: Boolean,
+    dashed: Boolean,
+    ghost: Boolean
   },
   data() {
     return {
