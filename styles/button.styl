@@ -4,6 +4,42 @@ fillTone(color)
   background-color color
   border-color color
 
+lineTone(color)
+  color color
+  border-color color
+
+type(base, light, dark)
+  --wave-color base
+  color #fff
+  fillTone(base)
+  &:hover, &:focus
+    fillTone(light)
+  &:active
+    fillTone(dark)
+  &.is-loading, &.is-disabled 
+    fillTone(light)
+
+dashed(base, light, dark)
+  border-style dashed
+  background-color #fff
+  color base
+  &:hover, &:focus
+    lineTone(light)
+  &:active
+    lineTone(dark)
+  &.is-loading, &.is-disabled 
+    lineTone(light)
+
+ghost(base, light, dark)
+  background-color transparent
+  color base
+  &:hover, &:focus
+    lineTone(light)
+  &:active
+    lineTone(dark)
+  &.is-loading, &.is-disabled 
+    lineTone(light)
+
 .tulp-button
   position relative
   font-size $__font-size
@@ -38,23 +74,17 @@ fillTone(color)
     &.is-loading, &.is-disabled
       color $__color-text-looming
       border-color $__border-color-light
+    &.is-dashed
+      border-style dashed
   &__primary
-    --wave-color $__color-primary
-    color #fff
-    fillTone($__color-primary)
-    &:hover, &:focus
-      fillTone($__color-primary-light)
-    &:active
-      fillTone($__color-primary-dark)
-    &.is-loading, &.is-disabled 
-      fillTone($__color-primary-light)
+    type($__color-primary, $__color-primary-light, $__color-primary-dark)
+    &.is-dashed
+      dashed($__color-primary, $__color-primary-light, $__color-primary-dark)
+    &.is-ghost
+      ghost($__color-primary, $__color-primary-light, $__color-primary-dark)
   &__error
-    --wave-color $__color-error
-    color #fff
-    fillTone($__color-error)
-    &:hover, &:focus 
-      fillTone($__color-error-light)
-    &:active 
-      fillTone($__color-error-dark)
-    &.is-loading, &.is-disabled 
-      fillTone($__color-error-light)
+    type($__color-error, $__color-error-light, $__color-error-dark)
+    &.is-dashed
+      dashed($__color-error, $__color-error-light, $__color-error-dark)
+    &.is-ghost
+      ghost($__color-error, $__color-error-light, $__color-error-dark)

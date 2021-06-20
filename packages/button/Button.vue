@@ -4,7 +4,9 @@
     :class="{
       'is-loading': loading,
       [`tulp-button__${type}`]: type,
-      'is-disabled': disabled
+      'is-disabled': disabled,
+      'is-dashed': dashed,
+      'is-ghost': ghost
     }"
     :disabled="disabled || loading"
     @mouseup="mouseup"
@@ -46,6 +48,14 @@ export default {
       default: false
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    dashed: {
+      type: Boolean,
+      default: false
+    },
+    ghost: {
       type: Boolean,
       default: false
     }

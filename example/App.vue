@@ -81,10 +81,28 @@
       <t-button type="error">警告按钮</t-button>
     </div>
     <div class="row">
+      <span class="label">透明背景：</span>
+      <t-button ghost>默认按钮</t-button>
+      <t-button type="primary" ghost>主要按钮</t-button>
+      <t-button type="error" ghost>警告按钮</t-button>
+    </div>
+    <div class="row">
+      <span class="label">透明背景：</span>
+      <t-button ghost loading>默认按钮</t-button>
+      <t-button type="primary" ghost loading>主要按钮</t-button>
+      <t-button type="error" ghost loading>警告按钮</t-button>
+    </div>
+    <div class="row">
       <span class="label">虚线按钮：</span>
       <t-button dashed>默认按钮</t-button>
       <t-button type="primary" dashed>主要按钮</t-button>
       <t-button type="error" dashed>警告按钮</t-button>
+    </div>
+    <div class="row">
+      <span class="label">虚线按钮：</span>
+      <t-button dashed loading>默认按钮</t-button>
+      <t-button type="primary" dashed loading>主要按钮</t-button>
+      <t-button type="error" dashed loading>警告按钮</t-button>
     </div>
     <div class="row">
       <span class="label">Icon 按钮：</span>
