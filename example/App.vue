@@ -11,6 +11,10 @@
         @click="countLoading = !countLoading"
       />
     </div>
+    <h2>带有过渡效果的 loading</h2>
+    <div>
+      <t-button :loading="loading" @click="clickLoading">默认按钮</t-button>
+    </div>
     <h2>输入框</h2>
     <div>
       <t-input v-model="input" value="123">
@@ -190,6 +194,7 @@ export default {
   name: 'App',
   data() {
     return {
+      loading: false,
       isLoading: true,
       isCount: false,
       isCount2: false,
@@ -202,6 +207,10 @@ export default {
     }
   },
   methods: {
+    clickLoading() {
+      console.log('被点了')
+      this.loading = !this.loading
+    },
     clickButton(e) {
       console.log('我被触发了')
       console.log('event')

@@ -10,7 +10,7 @@
       'is-round': round,
       'is-circle': circle
     }"
-    :disabled="disabled || loading"
+    :disabled="disabled"
     @mouseup="mouseup"
     @click="$emit('click', $event)"
   >
@@ -20,7 +20,43 @@
       :class="{ active: isWave }"
     />
     <t-icon v-if="icon && !loading" :name="icon" />
-    <t-icon v-if="loading" class="tulp-loading" name="spinner-alt" />
+    <transition
+      appear
+      :css="false"
+      @enter="loadingTransitionEnter"
+      @leave="loadingTransitionLeave"
+    >
+      <span v-if="loading" class="tulp-button-loading">
+        <svg
+          class="tulp-button-loading__icon"
+          viewBox="0 0 200 200"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              from="0 100 100"
+              to="360 100 100"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+            <circle
+              fill="none"
+              stroke="currentColor"
+              stroke-width="20"
+              stroke-linecap="round"
+              cx="100"
+              cy="100"
+              r="90"
+              stroke-dasharray="700"
+              stroke-dashoffset="1000"
+            />
+          </g>
+        </svg>
+      </span>
+    </transition>
     <span v-if="$slots.default" class="tulp-button__content">
       <slot />
     </span>
@@ -72,6 +108,28 @@ export default {
           this.animationTimerId = null
         }, 1000)
       })
+    },
+
+    loadingTransitionEnter(el, done) {
+      let loadId = setTimeout(() => {
+        el.classList.add('active')
+        window.clearTimeout(loadId)
+        loadId = null
+        let momentId = setTimeout(() => {
+          window.clearTimeout(momentId)
+          momentId = null
+          done()
+        }, 300)
+      }, 0)
+    },
+
+    loadingTransitionLeave(el, done) {
+      el.classList.remove('active')
+      let momentId = setTimeout(() => {
+        window.clearTimeout(momentId)
+        momentId = null
+        done()
+      }, 300)
     }
   }
 }
