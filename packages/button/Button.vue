@@ -6,7 +6,9 @@
       [`tulp-button__${type}`]: type,
       'is-disabled': disabled,
       'is-dashed': dashed,
-      'is-ghost': ghost
+      'is-ghost': ghost,
+      'is-round': round,
+      'is-circle': circle
     }"
     :disabled="disabled || loading"
     @mouseup="mouseup"
@@ -46,7 +48,9 @@ export default {
     loading: Boolean,
     disabled: Boolean,
     dashed: Boolean,
-    ghost: Boolean
+    ghost: Boolean,
+    round: Boolean,
+    circle: Boolean
   },
   data() {
     return {

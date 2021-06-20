@@ -90,6 +90,19 @@
       <t-button type="error" ghost>警告按钮</t-button>
     </div>
     <div class="row">
+      <span class="label">圆角按钮：</span>
+      <t-button round>默认按钮</t-button>
+      <t-button type="primary" round>主要按钮</t-button>
+      <t-button type="error" round>警告按钮</t-button>
+    </div>
+    <div class="row">
+      <span class="label">圆角Icon：</span>
+      <t-button icon="calendar" circle />
+      <t-button icon="search" circle />
+      <t-button type="primary" icon="calendar" circle />
+      <t-button type="error" icon="calendar-dates" circle />
+    </div>
+    <div class="row">
       <span class="label">透明背景：</span>
       <t-button ghost loading>默认按钮</t-button>
       <t-button type="primary" ghost loading>主要按钮</t-button>
@@ -132,6 +145,11 @@
         <t-button>上一页</t-button>
         <t-button>当前页</t-button>
         <t-button>下一页</t-button>
+      </t-button-group>
+      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
+        <t-button round>上一页</t-button>
+        <t-button round>当前页</t-button>
+        <t-button round>下一页</t-button>
       </t-button-group>
       <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
         <t-button type="primary">上一页</t-button>

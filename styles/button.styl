@@ -56,6 +56,18 @@ ghost(base, light, dark)
     line-height $__button-line-height
   [class*=tulp-icon]+span
     margin-left 5px
+  &.is-round
+    border-radius $__border-radius-round
+    padding-left $__round-padding
+    padding-right $__round-padding
+    & > .tulp-base__wave
+      border-radius $__border-radius-round
+  &.is-circle
+    border-radius $__border-radius-round
+    padding-left $__circle-padding
+    padding-right $__circle-padding
+    & > .tulp-base__wave
+      border-radius $__border-radius-round
 
 .tulp-button
   &:focus

@@ -9,31 +9,36 @@ hideBorder()
   &:last-child 
     border-left-color $__border-color
 
+group(radius)
+  border-radius 0
+  & > .tulp-base__wave
+    border-radius 0
+  &:not(:first-child) 
+    margin-left -1px
+  &:first-child
+    border-top-left-radius radius
+    border-bottom-left-radius radius
+    & > .tulp-base__wave
+      border-top-left-radius radius
+      border-bottom-left-radius radius
+  &:last-child
+    border-top-right-radius radius
+    border-bottom-right-radius radius
+    & > .tulp-base__wave
+      border-top-right-radius radius
+      border-bottom-right-radius radius
+  &:hover, &:focus 
+    z-index 1
+  &__primary
+    hideBorder()
+  &__error
+    hideBorder()
+
 .tulp-button-group 
   display inline-flex
   vertical-align middle
   box-sizing border-box
   & > .tulp-button 
-    border-radius 0
-    & > .tulp-base__wave
-      border-radius 0
-    &:not(:first-child) 
-      margin-left -1px
-    &:first-child
-      border-top-left-radius $__border-radius
-      border-bottom-left-radius $__border-radius
-      & > .tulp-base__wave
-        border-top-left-radius $__border-radius
-        border-bottom-left-radius $__border-radius
-    &:last-child
-      border-top-right-radius $__border-radius
-      border-bottom-right-radius $__border-radius
-      & > .tulp-base__wave
-        border-top-right-radius $__border-radius
-        border-bottom-right-radius $__border-radius
-    &:hover, &:focus 
-      z-index 1
-    &__primary
-      hideBorder()
-    &__error
-      hideBorder()
+    group($__border-radius)
+  & > .is-round
+    group($__border-radius-round)
