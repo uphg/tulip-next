@@ -97,6 +97,7 @@
       <span class="label">文本按钮：</span>
       <t-button text>默认按钮</t-button>
       <t-button type="primary" text>主要按钮</t-button>
+      <t-button type="primary" text loading>主要按钮</t-button>
       <t-button type="success" text>成功按钮</t-button>
       <t-button type="info" text>信息按钮</t-button>
       <t-button type="warning" text>警告按钮</t-button>

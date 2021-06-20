@@ -1,4 +1,5 @@
 @require "./common/variable"
+@require "./mixins/mixins"
 
 fillTone(color)
   background-color color
@@ -62,6 +63,13 @@ typeStyle(base, light, dark)
   &.is-text
     text(base, light, dark)
 
+roundShape(radius, padding)
+  border-radius radius
+  padding-left padding
+  padding-right padding
+  & > .tulp-base__wave
+    border-radius radius
+
 .tulp-button
   position relative
   font-size $__font-size
@@ -74,33 +82,13 @@ typeStyle(base, light, dark)
   justify-content center
   align-items center
   transition all .3s $__transition
+  buttonLoading()
   &__content
     line-height $__button-line-height
-  .tulp-button-loading
-    transition width 0.3s, opacity 0.3s
-    opacity 0
-    width 0
-    height 14px
-    position relative
-    box-sizing border-box
-    &__icon
-      margin-right 5px
-    &.active
-      position relative
-      width 19px
-      opacity 1
   &.is-round
-    border-radius $__border-radius-round
-    padding-left $__round-padding
-    padding-right $__round-padding
-    & > .tulp-base__wave
-      border-radius $__border-radius-round
+    roundShape($__border-radius-round, $__round-padding)
   &.is-circle
-    border-radius $__border-radius-round
-    padding-left $__circle-padding
-    padding-right $__circle-padding
-    & > .tulp-base__wave
-      border-radius $__border-radius-round
+    roundShape($__border-radius-round, $__circle-padding)
 
 .tulp-button
   &:focus
@@ -134,7 +122,6 @@ typeStyle(base, light, dark)
         color $__color-primary-dark
       &.is-loading, &.is-disabled
         color $__color-primary
-      
   &__primary
     typeStyle($__color-primary, $__color-primary-light, $__color-primary-dark)
   &__success
