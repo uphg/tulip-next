@@ -79,19 +79,37 @@
       <span class="label">英文：</span>
       <t-button @click="clickButton">Default</t-button>
       <t-button type="primary">Primary</t-button>
+      <t-button type="success">Success</t-button>
+      <t-button type="info">Info</t-button>
+      <t-button type="warning">Warning</t-button>
       <t-button type="error">Error</t-button>
     </div>
     <div class="row">
       <span class="label">普通按钮：</span>
       <t-button>默认按钮</t-button>
       <t-button type="primary">主要按钮</t-button>
-      <t-button type="error">警告按钮</t-button>
+      <t-button type="success">成功按钮</t-button>
+      <t-button type="info">信息按钮</t-button>
+      <t-button type="warning">警告按钮</t-button>
+      <t-button type="error">危险按钮</t-button>
+    </div>
+    <div class="row">
+      <span class="label">文本按钮：</span>
+      <t-button text>默认按钮</t-button>
+      <t-button type="primary" text>主要按钮</t-button>
+      <t-button type="success" text>成功按钮</t-button>
+      <t-button type="info" text>信息按钮</t-button>
+      <t-button type="warning" text>警告按钮</t-button>
+      <t-button type="error" text>危险按钮</t-button>
     </div>
     <div class="row">
       <span class="label">透明背景：</span>
       <t-button ghost>默认按钮</t-button>
       <t-button type="primary" ghost>主要按钮</t-button>
-      <t-button type="error" ghost>警告按钮</t-button>
+      <t-button type="success" ghost>成功按钮</t-button>
+      <t-button type="info" ghost>信息按钮</t-button>
+      <t-button type="warning" ghost>警告按钮</t-button>
+      <t-button type="error" ghost>危险按钮</t-button>
     </div>
     <div class="row">
       <span class="label">圆角按钮：</span>
@@ -246,7 +264,7 @@ button, input, select, textarea {
 }
 
 #app {
-  width: 720px;
+  width: 820px;
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px;

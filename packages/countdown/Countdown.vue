@@ -11,45 +11,19 @@
       @leave="loadingTransitionLeave"
     >
       <span v-if="loading" class="tulp-button-loading">
-        <svg
-          class="tulp-button-loading__icon"
-          viewBox="0 0 200 200"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g>
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              from="0 100 100"
-              to="360 100 100"
-              dur="1s"
-              repeatCount="indefinite"
-            />
-            <circle
-              fill="none"
-              stroke="currentColor"
-              stroke-width="20"
-              stroke-linecap="round"
-              cx="100"
-              cy="100"
-              r="90"
-              stroke-dasharray="700"
-              stroke-dashoffset="1000"
-            />
-          </g>
-        </svg>
+        <LoadingIcon />
       </span>
     </transition>
     <span class="tulp-countdown__text">{{ currentText }}</span></span>
 </template>
 <script>
 import '../../styles/countdown.styl'
-import TIcon from '../icon/Icon.vue'
+// import TIcon from '../icon/Icon.vue'
+import LoadingIcon from '../loading-icon/LoadingIcon.vue'
 import loadingTransition from '../mixins/loading-transition.js'
 export default {
   name: 'TCountdown',
-  components: { TIcon },
+  components: { LoadingIcon },
   mixins: [loadingTransition],
   props: {
     loading: {

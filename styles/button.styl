@@ -40,6 +40,28 @@ ghost(base, light, dark)
   &.is-loading, &.is-disabled 
     lineTone(light)
 
+text(base, light, dark)
+  --wave-color none
+  background-color transparent
+  border none
+  padding 6px 0
+  color base
+  &:hover, &:focus
+    color light
+  &:active
+    color dark
+  &.is-loading, &.is-disabled
+    color light
+
+typeStyle(base, light, dark)
+  type(base, light, dark)
+  &.is-dashed
+    dashed(base, light, dark)
+  &.is-ghost
+    ghost(base, light, dark)
+  &.is-text
+    text(base, light, dark)
+
 .tulp-button
   position relative
   font-size $__font-size
@@ -101,15 +123,25 @@ ghost(base, light, dark)
       border-style dashed
     &.is-ghost
       background-color transparent
+    &.is-text
+      --wave-color none
+      background-color transparent
+      border none
+      padding 6px 0
+      &:hover, &:focus
+        color $__color-primary
+      &:active
+        color $__color-primary-dark
+      &.is-loading, &.is-disabled
+        color $__color-primary
+      
   &__primary
-    type($__color-primary, $__color-primary-light, $__color-primary-dark)
-    &.is-dashed
-      dashed($__color-primary, $__color-primary-light, $__color-primary-dark)
-    &.is-ghost
-      ghost($__color-primary, $__color-primary-light, $__color-primary-dark)
+    typeStyle($__color-primary, $__color-primary-light, $__color-primary-dark)
+  &__success
+    typeStyle($__color-success, $__color-success-light, $__color-success-dark)
+  &__info
+    typeStyle($__color-info, $__color-info-light, $__color-info-dark)
+  &__warning
+    typeStyle($__color-warning, $__color-warning-light, $__color-warning-dark)
   &__error
-    type($__color-error, $__color-error-light, $__color-error-dark)
-    &.is-dashed
-      dashed($__color-error, $__color-error-light, $__color-error-dark)
-    &.is-ghost
-      ghost($__color-error, $__color-error-light, $__color-error-dark)
+    typeStyle($__color-error, $__color-error-light, $__color-error-dark)

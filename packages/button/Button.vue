@@ -8,14 +8,15 @@
       'is-dashed': dashed,
       'is-ghost': ghost,
       'is-round': round,
-      'is-circle': circle
+      'is-circle': circle,
+      'is-text': text
     }"
     :disabled="disabled"
     @mouseup="mouseup"
     @click="$emit('click', $event)"
   >
     <span
-      v-if="isWave"
+      v-if="isWave && !text"
       class="tulp-base__wave"
       :class="{ active: isWave }"
     />
@@ -27,34 +28,7 @@
       @leave="loadingTransitionLeave"
     >
       <span v-if="loading" class="tulp-button-loading">
-        <svg
-          class="tulp-button-loading__icon"
-          viewBox="0 0 200 200"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g>
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              from="0 100 100"
-              to="360 100 100"
-              dur="1s"
-              repeatCount="indefinite"
-            />
-            <circle
-              fill="none"
-              stroke="currentColor"
-              stroke-width="20"
-              stroke-linecap="round"
-              cx="100"
-              cy="100"
-              r="90"
-              stroke-dasharray="700"
-              stroke-dashoffset="1000"
-            />
-          </g>
-        </svg>
+        <LoadingIcon />
       </span>
     </transition>
     <span v-if="$slots.default" class="tulp-button__content">
@@ -66,17 +40,18 @@
 import '../../styles/button.styl'
 import '../../styles/wave.styl'
 import TIcon from '../icon/index.js'
+import LoadingIcon from '../loading-icon/LoadingIcon.vue'
 import loadingTransition from '../mixins/loading-transition.js'
 export default {
   name: 'TButton',
-  components: { TIcon },
+  components: { TIcon, LoadingIcon },
   mixins: [loadingTransition],
   props: {
     type: {
       type: String,
       default: 'default',
       validator(value) {
-        return value === 'default' || value === 'primary' || value === 'error'
+        return value === 'default' || value === 'primary' || value === 'success' || value === 'info' || value === 'warning' || value === 'error'
       }
     },
     icon: {
@@ -88,7 +63,8 @@ export default {
     dashed: Boolean,
     ghost: Boolean,
     round: Boolean,
-    circle: Boolean
+    circle: Boolean,
+    text: Boolean
   },
   data() {
     return {
