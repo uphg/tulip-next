@@ -2,8 +2,9 @@
   <button
     class="tulp-button"
     :class="{
-      'is-loading': loading,
       [`tulp-button__${type}`]: type,
+      [`tulp-button-size__${size}`]: size,
+      'is-loading': loading,
       'is-disabled': disabled,
       'is-dashed': dashed,
       'is-ghost': ghost,
@@ -57,6 +58,13 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+    size: {
+      type: String,
+      default: '',
+      validator(value) {
+        return value === '' || value === 'medium' || value === 'small' || value === 'mini'
+      }
     },
     loading: Boolean,
     disabled: Boolean,
