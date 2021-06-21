@@ -3,13 +3,15 @@
 .tulp-base__wave
   pointer-events none
   box-sizing border-box
+  margin -1px
   opacity 0
   position absolute
   top 0
   left 0
   right 0
   bottom 0
-  border-radius 2.8px
+  // border-radius 2.8px
+  border-radius inherit
   animation-iteration-count 1  // 动画执行次数
   animation-duration .6s  // 动画持续时间
   // animation-timing-function cubic-bezier(.08,.82,.17,1) // 更缓慢的过渡
@@ -22,7 +24,8 @@
     box-shadow 0 0 0.8px 0 var(--wave-color)
     opacity 0.8
   to
-    box-shadow 0 0 0.8px 6px var(--wave-color)
+    // box-shadow 0 0 0.8px 6px var(--wave-color)
+    box-shadow 0 0 0.8px 5px var(--wave-color)
     opacity 0
 
 // 更小的波动范围
