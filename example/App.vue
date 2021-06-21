@@ -99,6 +99,7 @@
     <div class="row">
       <span class="label">普通按钮：</span>
       <t-button size="big">默认按钮</t-button>
+      <t-button size="big" round>默认按钮</t-button>
       <t-button size="big" type="primary">主要按钮</t-button>
       <t-button size="big" type="success">成功按钮</t-button>
       <t-button size="big" type="info">信息按钮</t-button>
@@ -119,6 +120,7 @@
     <div class="row">
       <span class="label">普通按钮：</span>
       <t-button size="small">默认按钮</t-button>
+      <t-button size="small" round>默认按钮</t-button>
       <t-button size="small" type="primary">主要按钮</t-button>
       <t-button size="small" type="success">成功按钮</t-button>
       <t-button size="small" type="info">信息按钮</t-button>

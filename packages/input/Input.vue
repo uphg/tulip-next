@@ -97,7 +97,7 @@ export default {
       type: String,
       default: '',
       validator(value) {
-        return value === '' || value === 'medium' || value === 'small' || value === 'mini'
+        return value === '' || value === 'big' || value === 'small'
       }
     },
     disabled: Boolean,
