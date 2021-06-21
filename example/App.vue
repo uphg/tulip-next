@@ -15,7 +15,29 @@
     <div>
       <t-button :loading="loading" @click="clickLoading">默认按钮</t-button>
     </div>
-    <h2>输入框</h2>
+    <br>
+    <div>
+      <t-input v-model="input5" size="big" type="textarea" placeholder="请输入内容" />
+    </div>
+    <h2>大号输入框</h2>
+    <div>
+      <t-input v-model="input" value="123" size="big">
+        <t-icon slot="prefix" name="close-o" />
+        <t-icon slot="suffix" name="close-o" />
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
+    <h2>迷你输入框</h2>
+    <div>
+      <t-input v-model="input" value="123" size="small">
+        <t-icon slot="prefix" name="close-o" />
+        <t-icon slot="suffix" name="close-o" />
+        <template slot="before">http://</template>
+        <template slot="after">.com</template>
+      </t-input>
+    </div>
+    <br>
     <div>
       <t-input v-model="input" value="123">
         <t-icon slot="prefix" name="close-o" />
@@ -73,7 +95,16 @@
         <p>{{ 'input5：' + input5 }}</p>
       </div>
     </div>
-
+    <h2>大号按钮</h2>
+    <div class="row">
+      <span class="label">普通按钮：</span>
+      <t-button size="big">默认按钮</t-button>
+      <t-button size="big" type="primary">主要按钮</t-button>
+      <t-button size="big" type="success">成功按钮</t-button>
+      <t-button size="big" type="info">信息按钮</t-button>
+      <t-button size="big" type="warning">警告按钮</t-button>
+      <t-button size="big" type="error">危险按钮</t-button>
+    </div>
     <h2>按钮</h2>
     <div class="row">
       <span class="label">英文：</span>
@@ -84,6 +115,17 @@
       <t-button type="warning">Warning</t-button>
       <t-button type="error">Error</t-button>
     </div>
+    <h2>迷你按钮</h2>
+    <div class="row">
+      <span class="label">普通按钮：</span>
+      <t-button size="small">默认按钮</t-button>
+      <t-button size="small" type="primary">主要按钮</t-button>
+      <t-button size="small" type="success">成功按钮</t-button>
+      <t-button size="small" type="info">信息按钮</t-button>
+      <t-button size="small" type="warning">警告按钮</t-button>
+      <t-button size="small" type="error">危险按钮</t-button>
+    </div>
+
     <div class="row">
       <span class="label">普通按钮：</span>
       <t-button>默认按钮</t-button>
