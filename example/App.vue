@@ -7,12 +7,14 @@
           :key="index"
           class="sidebar-item"
           :class="{ active: index === viewIndex }"
-          @click="clickSidebar(index)"
+          @click="setViewIndex(index)"
         >{{ item }}</li>
       </ul>
     </div>
     <div class="page">
-      <component :is="componentId" />
+      <div class="container">
+        <component :is="componentId" />
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +24,7 @@ import Button from './view/Button.vue'
 import Input from './view/Input.vue'
 import Countdown from './view/Countdown.vue'
 import Icon from './view/Icon.vue'
+const VIEW_INDEX = 'view-index'
 export default {
   name: 'App',
   components: {
@@ -46,9 +49,14 @@ export default {
       return this.siderbars[this.viewIndex]
     }
   },
+  mounted() {
+    const index = window.localStorage.getItem(VIEW_INDEX)
+    index && this.setViewIndex(index)
+  },
   methods: {
-    clickSidebar(index) {
-      this.viewIndex = index
+    setViewIndex(index) {
+      this.viewIndex = Number(index)
+      window.localStorage.setItem(VIEW_INDEX, index)
     }
   }
 }
@@ -98,10 +106,14 @@ body {
   flex-grow 1
   padding 20px
 }
+.container {
+  max-width 910px
+  margin 0 auto
+}
 
 /* === 自定义布局 === */
 h2 {
-  text-align: center;
+  // text-align: center;
 }
 
 .row {
