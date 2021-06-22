@@ -16,6 +16,7 @@ module.exports = {
       type: 'umd',
     },
     clean: true, // 打包时清空之前的文件
+    globalObject: 'this', // 同时兼容浏览器和 Node.js 
   },
   // 配置参考：https://webpack.docschina.org/configuration/resolve/
   resolve: {
