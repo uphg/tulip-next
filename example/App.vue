@@ -1,324 +1,105 @@
 <template>
   <div id="app">
-    <div>
-      <t-countdown
-        ref="countdown2"
-        prompt="秒后重新发送"
-        :begin-second="5"
-        :loading="countLoading"
-        @count-start="isCount2 = true"
-        @count-end="isCount2 = false"
-        @click="countLoading = !countLoading"
-      />
+    <div class="sidebar">
+      <ul class="sidebar-ul">
+        <li
+          v-for="(item, index) in siderbars"
+          :key="index"
+          class="sidebar-item"
+          :class="{ active: index === viewIndex }"
+          @click="clickSidebar(index)"
+        >{{ item }}</li>
+      </ul>
     </div>
-    <h2>带有过渡效果的 loading</h2>
-    <div>
-      <t-button :loading="loading" @click="clickLoading">默认按钮</t-button>
+    <div class="page">
+      <component :is="componentId" />
     </div>
-    <br>
-    <div>
-      <t-input v-model="input5" size="big" type="textarea" placeholder="请输入内容" />
-    </div>
-    <h2>大号输入框</h2>
-    <div>
-      <t-input v-model="input" value="123" size="big">
-        <t-icon slot="prefix" name="close-o" />
-        <t-icon slot="suffix" name="close-o" />
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <h2>迷你输入框</h2>
-    <div>
-      <t-input v-model="input" value="123" size="small">
-        <t-icon slot="prefix" name="close-o" />
-        <t-icon slot="suffix" name="close-o" />
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <br>
-    <div>
-      <t-input v-model="input" value="123">
-        <t-icon slot="prefix" name="close-o" />
-        <t-icon slot="suffix" name="close-o" />
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <br>
-    <div>
-      <t-input v-model="input" prefix-icon="share" value="123" suffix-icon="share">
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <br>
-    <div>
-      <t-input v-model="input" prefix-icon="share" value="123" show-password>
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <br>
-    <div class="row demo-input-addon">
-      <t-input v-model="input" value="123">
-        <template slot="before">http://</template>
-      </t-input>
-      <br>
-      <br>
-      <t-input v-model="input" value="123">
-        <template slot="after">.com</template>
-      </t-input>
-      <br>
-      <br>
-      <t-input v-model="input" value="123">
-        <template slot="before">http://</template>
-        <template slot="after">.com</template>
-      </t-input>
-    </div>
-    <div class="row demo-input">
-      <t-input v-model="input" value="123" />
-      <t-input v-model="input4" placeholder="请输入内容" />
-      <t-input disabled placeholder="请输入内容" />
-      <br>
-      <br>
-      <t-input v-model="input2" show-password class="show-password-demo" />
-      <t-input v-model="input3" clearable />
-
-      <p>{{ 'input：' + input }}</p>
-      <p>{{ 'input2：' + input2 }}</p>
-      <p>{{ 'input3：' + input3 }}</p>
-      <p>{{ 'input4：' + input4 }}</p>
-      <div>
-        <t-input v-model="input5" type="textarea" placeholder="请输入内容" />
-        <p>{{ 'input5：' + input5 }}</p>
-      </div>
-    </div>
-    <h2>大号按钮</h2>
-    <div class="row">
-      <span class="label">普通按钮：</span>
-      <t-button size="big">默认按钮</t-button>
-      <t-button size="big" round>默认按钮</t-button>
-      <t-button size="big" type="primary">主要按钮</t-button>
-      <t-button size="big" type="success">成功按钮</t-button>
-      <t-button size="big" type="info">信息按钮</t-button>
-      <t-button size="big" type="warning">警告按钮</t-button>
-      <t-button size="big" type="error">危险按钮</t-button>
-    </div>
-    <h2>按钮</h2>
-    <div class="row">
-      <span class="label">英文：</span>
-      <t-button @click="clickButton">Default</t-button>
-      <t-button type="primary">Primary</t-button>
-      <t-button type="success">Success</t-button>
-      <t-button type="info">Info</t-button>
-      <t-button type="warning">Warning</t-button>
-      <t-button type="error">Error</t-button>
-    </div>
-    <h2>迷你按钮</h2>
-    <div class="row">
-      <span class="label">普通按钮：</span>
-      <t-button size="small">默认按钮</t-button>
-      <t-button size="small" round>默认按钮</t-button>
-      <t-button size="small" type="primary">主要按钮</t-button>
-      <t-button size="small" type="success">成功按钮</t-button>
-      <t-button size="small" type="info">信息按钮</t-button>
-      <t-button size="small" type="warning">警告按钮</t-button>
-      <t-button size="small" type="error">危险按钮</t-button>
-    </div>
-
-    <div class="row">
-      <span class="label">普通按钮：</span>
-      <t-button>默认按钮</t-button>
-      <t-button type="primary">主要按钮</t-button>
-      <t-button type="success">成功按钮</t-button>
-      <t-button type="info">信息按钮</t-button>
-      <t-button type="warning">警告按钮</t-button>
-      <t-button type="error">危险按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">文本按钮：</span>
-      <t-button text>默认按钮</t-button>
-      <t-button type="primary" text>主要按钮</t-button>
-      <t-button type="primary" text loading>主要按钮</t-button>
-      <t-button type="success" text>成功按钮</t-button>
-      <t-button type="info" text>信息按钮</t-button>
-      <t-button type="warning" text>警告按钮</t-button>
-      <t-button type="error" text>危险按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">透明背景：</span>
-      <t-button ghost>默认按钮</t-button>
-      <t-button type="primary" ghost>主要按钮</t-button>
-      <t-button type="success" ghost>成功按钮</t-button>
-      <t-button type="info" ghost>信息按钮</t-button>
-      <t-button type="warning" ghost>警告按钮</t-button>
-      <t-button type="error" ghost>危险按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">圆角按钮：</span>
-      <t-button round>默认按钮</t-button>
-      <t-button type="primary" round>主要按钮</t-button>
-      <t-button type="error" round>警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">圆角Icon：</span>
-      <t-button icon="calendar" circle />
-      <t-button icon="search" circle />
-      <t-button type="primary" icon="calendar" circle />
-      <t-button type="error" icon="calendar-dates" circle />
-    </div>
-    <div class="row">
-      <span class="label">透明背景：</span>
-      <t-button ghost loading>默认按钮</t-button>
-      <t-button type="primary" ghost loading>主要按钮</t-button>
-      <t-button type="error" ghost loading>警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">虚线按钮：</span>
-      <t-button dashed>默认按钮</t-button>
-      <t-button type="primary" dashed>主要按钮</t-button>
-      <t-button type="error" dashed>警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">虚线按钮：</span>
-      <t-button dashed loading>默认按钮</t-button>
-      <t-button type="primary" dashed loading>主要按钮</t-button>
-      <t-button type="error" dashed loading>警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">Icon 按钮：</span>
-      <t-button icon="calendar" />
-      <t-button icon="search">默认按钮</t-button>
-      <t-button type="primary" icon="calendar">主要按钮</t-button>
-      <t-button type="error" icon="calendar-dates">警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">禁用状态：</span>
-      <t-button disabled>默认按钮</t-button>
-      <t-button type="primary" disabled>主要按钮</t-button>
-      <t-button type="error" disabled>警告按钮</t-button>
-    </div>
-    <div class="row">
-      <span class="label">Loading 按钮：</span>
-      <t-button loading>默认按钮</t-button>
-      <t-button type="primary" loading>主要按钮</t-button>
-      <t-button type="error" loading>警告按钮</t-button>
-    </div>
-    <h2>按钮组</h2>
-    <div class="row button-group">
-      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button>上一页</t-button>
-        <t-button>当前页</t-button>
-        <t-button>下一页</t-button>
-      </t-button-group>
-      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button round>上一页</t-button>
-        <t-button round>当前页</t-button>
-        <t-button round>下一页</t-button>
-      </t-button-group>
-      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button type="primary">上一页</t-button>
-        <t-button type="primary">当前页</t-button>
-        <t-button type="primary">下一页</t-button>
-      </t-button-group>
-      <t-button-group style="margin-right: 20px; margin-bottom: 20px;">
-        <t-button type="error">上一页</t-button>
-        <t-button type="error">当前页</t-button>
-        <t-button type="error">下一页</t-button>
-      </t-button-group>
-      <t-button-group />
-    </div>
-    <h2>倒计时</h2>
-    <div class="row">
-      <span class="label">倒计时按钮：</span>
-      <t-countdown
-        ref="countdown"
-        prompt="秒后重新发送"
-        :begin-second="5"
-        @count-start="isCount = true"
-        @count-end="isCount = false"
-        @click="clickCount"
-      />
-    </div>
-    <h2>Icon 图标</h2>
-    <div class="row icon-list">
-      <span class="label">Icon 组件：</span>
-      <t-icon name="alarm" />
-      <t-icon name="aspect-ratio" />
-    </div>
-
   </div>
 </template>
 
 <script>
+import Button from './view/Button.vue'
+import Input from './view/Input.vue'
+import Countdown from './view/Countdown.vue'
+import Icon from './view/Icon.vue'
 export default {
   name: 'App',
+  components: {
+    Button,
+    Input,
+    Countdown,
+    Icon
+  },
   data() {
     return {
-      loading: false,
-      isLoading: true,
-      isCount: false,
-      isCount2: false,
-      countLoading: false,
-      input: '我是input',
-      input2: '我是input',
-      input3: '我是input',
-      input4: '',
-      input5: ''
+      viewIndex: 0,
+      siderbars: [
+        'Button',
+        'Input',
+        'Countdown',
+        'Icon'
+      ]
+    }
+  },
+  computed: {
+    componentId() {
+      return this.siderbars[this.viewIndex]
     }
   },
   methods: {
-    clickLoading() {
-      console.log('被点了')
-      this.loading = !this.loading
-    },
-    clickButton(e) {
-      console.log('我被触发了')
-      console.log('event')
-      console.log(e)
-    },
-    clickCount() {
-      if (!this.isCount) {
-        this.$refs['countdown'].startCount()
-      }
-    },
-    clickCount2() {
-      if (!this.isCount2) {
-        this.$refs['countdown2'].startCount()
-      }
-    },
-    setIconNameIndex() {
-      if (this.iconNameIndex >= 2) {
-        this.iconNameIndex = 0
-        return
-      }
-      this.iconNameIndex += 1
+    clickSidebar(index) {
+      this.viewIndex = index
     }
   }
 }
 </script>
 
 <style lang="stylus">
-*, *::after, *::before {
-  box-sizing: border-box;
-}
+
 button, input, select, textarea {
   font-family: inherit;
 }
-
-#app {
-  width: 820px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  // padding: {
-  //   left: 20px;
-  //   right: 20px;
-  // }
-  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+body {
+  margin 0
 }
+#app {
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+  display flex
+  box-sizing border-box
+}
+.sidebar {
+  width 320px
+  height 100vh
+  box-sizing border-box
+  border-right 1px solid #eee;
+  padding 20px
+}
+.sidebar-ul {
+  list-style none
+  margin 0
+  padding 0
+}
+.sidebar-item {
+  cursor pointer
+  border 1px solid #eee
+  margin 0
+  padding 16px 12px
+  margin-bottom 10px
+  transition all 0.3s
+  &.active, &:hover {
+    color #1a73e8
+    border-color #1a73e8
+  }
+}
+.page {
+  height 100vh
+  overflow-y auto
+  box-sizing border-box
+  flex-grow 1
+  padding 20px
+}
+
+/* === 自定义布局 === */
 h2 {
   text-align: center;
 }
@@ -326,10 +107,6 @@ h2 {
 .row {
   margin-top: 20px;
   margin-bottom: 20px;
-  // margin: {
-  //   top: 20px;
-  //   bottom: 20px;
-  // }
   &:not(.button-group) {
     button {
       margin-right: 15px;
