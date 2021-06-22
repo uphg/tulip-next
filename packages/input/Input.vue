@@ -3,6 +3,7 @@
     :class="[
       type === 'textarea' ? 'tulp-textarea' : 'tulp-input',
       {
+        [`tulp-input-size__${size}`]: size,
         'tulp-input-group-addon': $slots.before || $slots.after,
         'tulp-input-group-addon--before': $slots.before,
         'tulp-input-group-addon--after': $slots.after,
@@ -29,8 +30,8 @@
         @focus="handleFocus"
         @blur="handleBlur"
       >
-      <span class="tulp-input__prefix">
-        <span v-if="prefixIcon || $slots.prefix" class="tulp-input__prefix-icon">
+      <span v-if="prefixIcon || $slots.prefix" class="tulp-input__prefix">
+        <span class="tulp-input__prefix-icon">
           <slot name="prefix" />
           <t-icon v-if="prefixIcon" class="tulp-input__icon" :name="prefixIcon" />
         </span>
@@ -92,28 +93,19 @@ export default {
     type: {
       type: String
     },
-    disabled: {
-      type: Boolean,
-      default: false
+    size: {
+      type: String,
+      default: '',
+      validator(value) {
+        return value === '' || value === 'big' || value === 'small'
+      }
     },
-    readonly: {
-      type: Boolean,
-      default: false
-    },
-    prefixIcon: {
-      type: String
-    },
-    suffixIcon: {
-      type: String
-    },
-    showPassword: {
-      type: Boolean,
-      default: false
-    },
-    clearable: {
-      type: Boolean,
-      default: false
-    }
+    disabled: Boolean,
+    readonly: Boolean,
+    prefixIcon: String,
+    suffixIcon: String,
+    showPassword: Boolean,
+    clearable: Boolean
   },
 
   data() {

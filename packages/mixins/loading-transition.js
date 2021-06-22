@@ -10,6 +10,11 @@ export default {
 
     loadingTransitionLeave(el, done) {
       el.classList.remove('active')
+      let loadId = setTimeout(() => {
+        window.clearTimeout(loadId)
+        loadId = null
+        done()
+      }, 300)
     }
   }
 }
