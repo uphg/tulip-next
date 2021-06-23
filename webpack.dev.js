@@ -12,6 +12,7 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     hot: true, // 启用热更新
+    port: 8090
   },
   module: {
     rules: [
