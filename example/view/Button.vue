@@ -3,6 +3,7 @@
     <h2>带有过渡效果的 loading</h2>
     <div>
       <t-button :loading="loading" @click="loading = !loading">默认按钮</t-button>
+      <t-button :loading="loading" icon="search" @click="loading = !loading">默认按钮</t-button>
     </div>
     <h2>大号按钮</h2>
     <div class="row">
