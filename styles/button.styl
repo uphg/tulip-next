@@ -67,8 +67,6 @@ roundShape(radius, padding)
   border-radius radius
   padding-left padding
   padding-right padding
-  // & > .tulp-base__wave
-  //   border-radius radius
 
 .tulp-button
   position relative
@@ -91,6 +89,8 @@ roundShape(radius, padding)
     roundShape($__border-radius-round, $__round-padding)
   &.is-circle
     roundShape($__border-radius-round, $__circle-padding)
+  & > .tulp-button-loading
+    height 13.6px
 
 .tulp-button
   &:focus
