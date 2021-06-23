@@ -1,13 +1,13 @@
 import Button from '../packages/button/index.js'
 import ButtonGroup from '../packages/button-group/index.js'
-import Countdown from '../packages/countdown/index.js'
+import CaptchaCountdown from '../packages/captcha-countdown/index.js'
 import Icon from '../packages/icon/index.js'
 import Input from '../packages/input/index.js'
 
 const components = [
   Button,
   ButtonGroup,
-  Countdown,
+  CaptchaCountdown,
   Icon,
   Input
 ]
@@ -22,7 +22,7 @@ export {
   install,
   Button,
   ButtonGroup,
-  Countdown,
+  CaptchaCountdown,
   Icon,
   Input
 }
@@ -31,7 +31,7 @@ export default {
   install,
   Button,
   ButtonGroup,
-  Countdown,
+  CaptchaCountdown,
   Icon,
   Input
 }

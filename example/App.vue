@@ -22,7 +22,7 @@
 <script>
 import Button from './view/Button.vue'
 import Input from './view/Input.vue'
-import Countdown from './view/Countdown.vue'
+import CaptchaCountdown from './view/CaptchaCountdown.vue'
 import Icon from './view/Icon.vue'
 const VIEW_INDEX = 'view-index'
 export default {
@@ -30,7 +30,7 @@ export default {
   components: {
     Button,
     Input,
-    Countdown,
+    CaptchaCountdown,
     Icon
   },
   data() {
@@ -39,7 +39,7 @@ export default {
       siderbars: [
         'Button',
         'Input',
-        'Countdown',
+        'CaptchaCountdown',
         'Icon'
       ]
     }

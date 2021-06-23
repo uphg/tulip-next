@@ -1,7 +1,7 @@
 <template>
-  <div class="countdown-demo">
+  <div class="captcha-countdown-demo">
     <div>
-      <t-countdown
+      <t-captcha-countdown
         ref="countdown2"
         prompt="秒后重新发送"
         :begin-second="5"
@@ -14,7 +14,7 @@
     <h2>倒计时</h2>
     <div class="row">
       <span class="label">倒计时按钮：</span>
-      <t-countdown
+      <t-captcha-countdown
         ref="countdown"
         prompt="秒后重新发送"
         :begin-second="5"

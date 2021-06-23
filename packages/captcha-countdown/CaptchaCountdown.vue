@@ -1,6 +1,6 @@
 <template>
   <span
-    class="tulp-countdown"
+    class="tulp-captcha-countdown"
     :class="{ 'is-disable': disable, 'is-loading': loading }"
     @click="$emit('click', startCount)"
   >
@@ -14,15 +14,14 @@
         <LoadingIcon />
       </span>
     </transition>
-    <span class="tulp-countdown__text">{{ currentText }}</span></span>
+    <span class="tulp-captcha-countdown__text">{{ currentText }}</span></span>
 </template>
 <script>
-import '../../styles/countdown.styl'
-// import TIcon from '../icon/Icon.vue'
+import '../../styles/captcha-countdown.styl'
 import LoadingIcon from '../loading-icon/LoadingIcon.vue'
 import loadingTransition from '../mixins/loading-transition.js'
 export default {
-  name: 'TCountdown',
+  name: 'TCaptchaCountdown',
   components: { LoadingIcon },
   mixins: [loadingTransition],
   props: {
