@@ -3,7 +3,7 @@
     :class="[
       type === 'textarea' ? 'tulp-textarea' : 'tulp-input',
       {
-        [`tulp-input-size__${size}`]: size,
+        [`tulp-input-size--${size}`]: size,
         'tulp-input-group-addon': $slots.before || $slots.after,
         'tulp-input-group-addon--before': $slots.before,
         'tulp-input-group-addon--after': $slots.after,

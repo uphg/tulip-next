@@ -95,7 +95,7 @@ roundShape(radius, padding)
 .tulp-button
   &:focus
     outline none
-  &__default
+  &--default
     --wave-color $__color-primary
     color $__color-text-primary
     background-color #fff
@@ -124,19 +124,19 @@ roundShape(radius, padding)
         color $__color-primary-dark
       &.is-loading, &.is-disabled
         color $__color-primary
-  &__primary
+  &--primary
     typeStyle($__color-primary, $__color-primary-light, $__color-primary-dark)
-  &__success
+  &--success
     typeStyle($__color-success, $__color-success-light, $__color-success-dark)
-  &__info
+  &--info
     typeStyle($__color-info, $__color-info-light, $__color-info-dark)
-  &__warning
+  &--warning
     typeStyle($__color-warning, $__color-warning-light, $__color-warning-dark)
-  &__error
+  &--error
     typeStyle($__color-error, $__color-error-light, $__color-error-dark)
 
 .tulp-button-size
-  &__small
+  &--small
     padding $__button-small-padding
-  &__big
+  &--big
     padding $__button-big-padding

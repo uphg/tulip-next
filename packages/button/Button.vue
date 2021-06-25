@@ -2,8 +2,8 @@
   <button
     class="tulp-button"
     :class="{
-      [`tulp-button__${type}`]: type,
-      [`tulp-button-size__${size}`]: size,
+      [`tulp-button--${type}`]: type,
+      [`tulp-button-size--${size}`]: size,
       'is-loading': loading,
       'is-disabled': disabled,
       'is-dashed': dashed,
