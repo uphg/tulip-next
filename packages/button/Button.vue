@@ -21,20 +21,19 @@
       class="tulp-base__wave"
       :class="{ active: isWave }"
     />
-
-    <span v-if="icon && !loading" class="tulp-button__icon">
-      <t-icon :name="icon" />
-    </span>
     <transition
-      @before-enter="loadingBeforeEnter"
-      @enter="loadingEnter"
-      @after-enter="loadingAfterEnter"
-      @before-leave="loadingBeforeLeave"
-      @leave="loadingLeave"
-      @after-leave="loadingAfterLeave"
+      @before-enter="iconBeforeEnter"
+      @enter="iconEnter"
+      @after-enter="iconAfterEnter"
+      @before-leave="iconBeforeLeave"
+      @leave="iconLeave"
+      @after-leave="iconAfterLeave"
     >
-      <span v-if="loading" class="tulp-button-loading">
+      <span v-if="loading" class="tulp-button__loading">
         <LoadingIcon />
+      </span>
+      <span v-if="icon && !loading" class="tulp-button__icon">
+        <t-icon :name="icon" />
       </span>
     </transition>
     <span v-if="$slots.default" class="tulp-button__content">
