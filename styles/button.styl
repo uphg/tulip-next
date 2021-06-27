@@ -97,9 +97,9 @@ roundShape(radius, padding)
     height $__icon-size
     margin-right 5px
   &.is-round
-    roundShape($__border-radius-round, $__round-padding)
+    roundShape($__border-radius-round, $__padding-round)
   &.is-circle
-    roundShape($__border-radius-round, $__circle-padding)
+    roundShape($__border-radius-round, $__padding-circle)
 
 .tulp-button
   &:focus
@@ -148,19 +148,19 @@ roundShape(radius, padding)
   &--small
     padding $__button-small-padding
     &.is-round
-      padding-left 16px
-      padding-right 16px
+      padding-left $__padding-round-small
+      padding-right $__padding-round-small
     &.is-circle
-      padding-left 8px
-      padding-right 8px
+      padding-left $__padding-circle-small
+      padding-right $__padding-circle-small
   &--big
     padding $__button-big-padding
     &.is-round
-      border-radius 21px
+      border-radius $__border-radius-round-big
     &.is-circle
-      border-radius 21px
-      padding-left 12px
-      padding-right 12px
+      border-radius $__border-radius-round-big
+      padding-left $__padding-circle-big
+      padding-right $__padding-circle-big
 
 .tulp-width-expand-transition-active
   transition width 0.3s ease-in-out, opacity 0.3s ease-in-out
