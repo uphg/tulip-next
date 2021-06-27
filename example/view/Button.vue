@@ -78,9 +78,9 @@
     <div class="row">
       <span class="label">圆角Icon：</span>
       <t-button icon="calendar" circle />
-      <t-button icon="search" circle />
+      <t-button icon="search" size="small" circle />
       <t-button type="primary" icon="calendar" circle />
-      <t-button type="error" icon="calendar-dates" circle />
+      <t-button type="error" size="big" icon="calendar-dates" circle />
     </div>
     <div class="row">
       <span class="label">透明背景：</span>
