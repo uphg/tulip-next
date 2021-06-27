@@ -147,8 +147,13 @@ roundShape(radius, padding)
 .tulp-button-size
   &--small
     padding $__button-small-padding
+    &.is-round
+      padding-left: 16px;
+      padding-right: 16px;
   &--big
     padding $__button-big-padding
+    &.is-round
+      border-radius 21px
 
 .tulp-width-expand-transition-active
   transition width 0.3s ease-in-out, opacity 0.3s ease-in-out
