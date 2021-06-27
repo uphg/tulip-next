@@ -1,4 +1,4 @@
-import dom from '../../src/utils/dom'
+import dom from '../utils/dom'
 
 const TRANSITION_CLASS = 'tulp-width-expand-transition-active'
 export default {
@@ -10,7 +10,6 @@ export default {
     },
 
     loadingEnter(el) {
-      console.log('123')
       if (el.scrollWidth !== 0) {
         el.style.width = el.scrollWidth + 'px'
       } else {

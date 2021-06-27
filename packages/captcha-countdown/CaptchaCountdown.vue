@@ -4,7 +4,7 @@
     :class="{ 'is-disable': disable, 'is-loading': loading }"
     @click="$emit('click', startCount)"
   >
-    <transition
+    <!-- <transition
       appear
       :css="false"
       @enter="loadingTransitionEnter"
@@ -13,17 +13,17 @@
       <span v-if="loading" class="tulp-button-loading">
         <LoadingIcon />
       </span>
-    </transition>
+    </transition> -->
     <span class="tulp-captcha-countdown__text">{{ currentText }}</span></span>
 </template>
 <script>
 import '../../styles/captcha-countdown.styl'
-import LoadingIcon from '../loading-icon/LoadingIcon.vue'
-import loadingTransition from '../mixins/loading-transition.js'
+// import LoadingIcon from '../loading-icon/LoadingIcon.vue'
+// import loadingTransition from '../mixins/loading-transition.js'
 export default {
   name: 'TCaptchaCountdown',
-  components: { LoadingIcon },
-  mixins: [loadingTransition],
+  // components: { LoadingIcon },
+  // mixins: [loadingTransition],
   props: {
     loading: {
       type: Boolean,
