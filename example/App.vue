@@ -24,6 +24,7 @@ import Button from './view/Button.vue'
 import Input from './view/Input.vue'
 import CaptchaCountdown from './view/CaptchaCountdown.vue'
 import Icon from './view/Icon.vue'
+import Transitions from './view/Transition.vue'
 const VIEW_INDEX = 'view-index'
 export default {
   name: 'App',
@@ -31,7 +32,8 @@ export default {
     Button,
     Input,
     CaptchaCountdown,
-    Icon
+    Icon,
+    Transitions
   },
   data() {
     return {
@@ -40,7 +42,8 @@ export default {
         'Button',
         'Input',
         'CaptchaCountdown',
-        'Icon'
+        'Icon',
+        'Transitions'
       ]
     }
   },
@@ -63,6 +66,10 @@ export default {
 </script>
 
 <style lang="stylus">
+
+.tulp-collapse-transition {
+  transition: 0.3s height ease-in-out, 0.3s padding-top ease-in-out, 0.3s padding-bottom ease-in-out;
+}
 
 button, input, select, textarea {
   font-family: inherit;

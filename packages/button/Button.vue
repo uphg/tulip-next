@@ -21,12 +21,17 @@
       class="tulp-base__wave"
       :class="{ active: isWave }"
     />
-    <t-icon v-if="icon && !loading" :name="icon" />
+
+    <span v-if="icon && !loading" class="tulp-button__icon">
+      <t-icon :name="icon" />
+    </span>
     <transition
-      appear
-      :css="false"
-      @enter="loadingTransitionEnter"
-      @leave="loadingTransitionLeave"
+      @before-enter="loadingBeforeEnter"
+      @enter="loadingEnter"
+      @after-enter="loadingAfterEnter"
+      @before-leave="loadingBeforeLeave"
+      @leave="loadingLeave"
+      @after-leave="loadingAfterLeave"
     >
       <span v-if="loading" class="tulp-button-loading">
         <LoadingIcon />

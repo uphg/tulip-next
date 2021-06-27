@@ -1,5 +1,5 @@
 @require "./common/variable"
-@require "./mixins/mixins"
+// @require "./mixins/mixins"
 
 fillTone(color)
   background-color color
@@ -83,14 +83,16 @@ roundShape(radius, padding)
   buttonLoading()
   &__content
     line-height $__button-line-height
-  [class*=tulp-icon] + &__content
-    margin-left 5px
+  &__icon
+    display inline-flex
+    width 19px
+    height 13.6px
+  [class*=tulp-icon]
+    margin-right 5px
   &.is-round
     roundShape($__border-radius-round, $__round-padding)
   &.is-circle
     roundShape($__border-radius-round, $__circle-padding)
-  & > .tulp-button-loading
-    height 13.6px
 
 .tulp-button
   &:focus
@@ -140,3 +142,17 @@ roundShape(radius, padding)
     padding $__button-small-padding
   &--big
     padding $__button-big-padding
+
+// 过渡样式
+.tulp-button-loading
+  width 19px
+  height 13.6px
+  position relative
+  box-sizing border-box
+  overflow hidden
+  &__icon
+    height 13.6px
+    margin-right 5px
+
+.tulp-width-expand-transition-active
+  transition width 0.3s, opacity 0.3s
