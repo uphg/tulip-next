@@ -80,23 +80,21 @@ roundShape(radius, padding)
   justify-content center
   align-items center
   transition all .3s $__transition
-  buttonLoading()
   &__content
+    display inline-flex
+    align-items center
+    min-height $__font-size
     line-height $__button-line-height
   &__icon
-    display inline-flex
-    width 19px
-    height 13.6px
-  [class*=tulp-icon]
-    margin-right 5px
-  &__loading
-    width 19px
-    height 13.6px
-    position relative
     box-sizing border-box
-    overflow hidden
-  &__loading-icon
-    height 13.6px
+    display inline-flex
+    width 20px
+    height $__icon-size
+    &.is-uncontent
+      width $__icon-size
+  &__icon-loading
+    width $__icon-size
+    height $__icon-size
     margin-right 5px
   &.is-round
     roundShape($__border-radius-round, $__round-padding)

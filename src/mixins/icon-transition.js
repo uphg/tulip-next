@@ -11,11 +11,7 @@ export default {
 
     iconEnter(el) {
       if (el.scrollWidth !== 0) {
-        console.log('el.scrollWidth')
-        console.log(el.scrollWidth)
         el.style.width = el.scrollWidth + 'px'
-        console.log('el.style.width')
-        console.log(el.style.width)
         el.style.opacity = 1
       } else {
         el.style.width = ''

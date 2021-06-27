@@ -1,6 +1,6 @@
 <template functional>
   <svg
-    class="tulp-button__loading-icon"
+    class="tulp-button__icon-loading"
     viewBox="0 0 200 200"
     xmlns="http://www.w3.org/2000/svg"
   >

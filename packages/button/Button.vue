@@ -29,10 +29,10 @@
       @leave="iconLeave"
       @after-leave="iconAfterLeave"
     >
-      <span v-if="loading" class="tulp-button__loading">
+      <span v-if="loading" class="tulp-button__icon" :class="{ 'is-uncontent': !$slots.default }">
         <LoadingIcon />
       </span>
-      <span v-if="icon && !loading" class="tulp-button__icon">
+      <span v-if="icon && !loading" class="tulp-button__icon" :class="{ 'is-uncontent': !$slots.default }">
         <t-icon :name="icon" />
       </span>
     </transition>
