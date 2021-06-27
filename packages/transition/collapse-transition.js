@@ -2,9 +2,8 @@ import './collapse-transition.styl'
 import dom from '../../src/utils/dom'
 
 const TRANSITION_CLASS = 'tulp-collapse-transition-active'
-
 export default {
-  name: 'TExpandTransition',
+  name: 'TCollapseTransition',
   functional: true,
   render(h, { children }) {
     return h('transition', {
@@ -47,8 +46,8 @@ export default {
           el.dataset.oldPaddingTop = el.style.paddingTop
           el.dataset.oldPaddingBottom = el.style.paddingBottom
 
+          // 修复回弹动画高度错误的 bug
           const padding = (parseInt(el.dataset.oldPaddingTop, 10) + parseInt(el.dataset.oldPaddingBottom, 10)) || 0
-
           el.style.height = el.scrollHeight - padding + 'px'
           el.style.overflow = 'hidden'
         },

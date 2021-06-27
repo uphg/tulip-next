@@ -89,6 +89,15 @@ roundShape(radius, padding)
     height 13.6px
   [class*=tulp-icon]
     margin-right 5px
+  &__loading
+    width 19px
+    height 13.6px
+    position relative
+    box-sizing border-box
+    overflow hidden
+  &__loading-icon
+    height 13.6px
+    margin-right 5px
   &.is-round
     roundShape($__border-radius-round, $__round-padding)
   &.is-circle
@@ -143,17 +152,5 @@ roundShape(radius, padding)
   &--big
     padding $__button-big-padding
 
-// 过渡样式
-.tulp-button
-  &__loading
-    width 19px
-    height 13.6px
-    position relative
-    box-sizing border-box
-    overflow hidden
-  &__loading-icon
-    height 13.6px
-    margin-right 5px
-
 .tulp-width-expand-transition-active
-  transition width 0.3s, opacity 0.3s
+  transition width 0.3s ease-in-out, opacity 0.3s ease-in-out

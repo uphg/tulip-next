@@ -3,14 +3,14 @@
     <div><button @click="show = !show">点击切换</button></div>
     <TExpandTransition>
       <div v-if="show" class="transition-block-level" style="padding: 20px 0;">
-        <div class="transition-box">t-expand-transition</div>
+        <div class="transition-box">t-collapse-transition</div>
       </div>
     </TExpandTransition>
 
     <div><button @click="show2 = !show2">点击切换</button></div>
     <TExpandTransition>
       <div v-show="show2" class="transition-block-level">
-        <div class="transition-box">t-expand-transition</div>
+        <div class="transition-box">t-collapse-transition</div>
       </div>
     </TExpandTransition>
   </div>
@@ -48,7 +48,7 @@ export default {
   width 200px
   height 100px
   border-radius 4px
-  background-color #409EFF
+  background-color #415fcc
   text-align center
   color #fff
   padding 40px 20px

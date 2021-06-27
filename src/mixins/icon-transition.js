@@ -6,16 +6,21 @@ export default {
     iconBeforeEnter(el) {
       dom.addClass(el, TRANSITION_CLASS)
       el.style.width = '0'
-      el.style.opacity = '0'
+      el.style.opacity = 0
     },
 
     iconEnter(el) {
       if (el.scrollWidth !== 0) {
+        console.log('el.scrollWidth')
+        console.log(el.scrollWidth)
         el.style.width = el.scrollWidth + 'px'
+        console.log('el.style.width')
+        console.log(el.style.width)
+        el.style.opacity = 1
       } else {
         el.style.width = ''
+        el.style.opacity = 1
       }
-      el.style.opacity = '1'
     },
 
     iconAfterEnter(el) {
@@ -33,11 +38,14 @@ export default {
       if (el.scrollWidth !== 0) {
         dom.addClass(el, TRANSITION_CLASS)
         el.style.width = '0'
+        el.style.opacity = '0'
       }
     },
+
     iconAfterLeave(el) {
       dom.removeClass(el, TRANSITION_CLASS)
       el.style.width = ''
+      el.style.opacity = ''
     }
   }
 }
