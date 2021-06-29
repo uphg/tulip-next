@@ -2,12 +2,12 @@
 
 hideBorder()
   &:not(:first-child, :last-child) 
-    border-left-color $__border-color
-    border-right-color $__border-color
+    border-left-color $_border-color
+    border-right-color $_border-color
   &:first-child 
-    border-right-color $__border-color
+    border-right-color $_border-color
   &:last-child 
-    border-left-color $__border-color
+    border-left-color $_border-color
 
 group(radius)
   border-radius 0
@@ -45,6 +45,6 @@ group(radius)
   vertical-align middle
   box-sizing border-box
   & > .tulp-button 
-    group($__border-radius)
+    group($_border-radius)
   & > .is-round
-    group($__border-radius-round)
+    group($_border-radius-round)

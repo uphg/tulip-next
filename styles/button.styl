@@ -9,6 +9,10 @@ lineTone(color)
   color color
   border-color color
 
+horizonPadding(value)
+  padding-left value
+  padding-right value
+
 type(base, light, dark)
   --wave-color base
   color #fff
@@ -65,26 +69,22 @@ typeStyle(base, light, dark)
 
 roundShape(radius, padding)
   border-radius radius
-  padding-left padding
-  padding-right padding
+  horizonPadding(padding)
 
 .tulp-button
   position relative
-  font-size $__font-size
+  font-size $_font-size
   border 1px solid
   box-sizing border-box
-  border-radius $__border-radius
-  padding $__button-padding
+  border-radius $_button-border-radius
+  min-height $_button-height
+  line-height 1
   cursor pointer
   display inline-flex
   justify-content center
   align-items center
-  transition all .3s $__transition
-  &__content
-    display inline-flex
-    align-items center
-    min-height $__font-size
-    line-height $__button-line-height
+  transition $_all-transition
+  horizonPadding($_button-padding)
   &__icon
     box-sizing border-box
     display inline-flex
@@ -96,27 +96,27 @@ roundShape(radius, padding)
     width 1em
     height 1em
   &.is-round
-    roundShape($__border-radius-round, $__padding-round)
+    roundShape($_border-radius-round, $_button-padding-round)
   &.is-circle
-    roundShape($__border-radius-round, $__padding-circle)
+    roundShape($_border-radius-round, $_button-padding-circle)
 
 .tulp-button
   &:focus
     outline none
   &--default
-    --wave-color $__color-primary
-    color $__color-text-primary
+    --wave-color $_color-primary
+    color $_color-text-primary
     background-color #fff
-    border-color $__border-color
+    border-color $_border-color
     &:hover, &:focus
-      color $__color-primary
-      border-color $__color-primary
+      color $_color-primary
+      border-color $_color-primary
     &:active
-      color $__color-primary-dark
-      border-color $__color-primary-dark
+      color $_color-primary-dark
+      border-color $_color-primary-dark
     &.is-loading, &.is-disabled
-      color $__color-text-looming
-      border-color $__border-color-light
+      color $_color-text-looming
+      border-color $_border-color-light
     &.is-dashed
       border-style dashed
     &.is-ghost
@@ -127,39 +127,37 @@ roundShape(radius, padding)
       border none
       padding 6px 0
       &:hover, &:focus
-        color $__color-primary
+        color $_color-primary
       &:active
-        color $__color-primary-dark
+        color $_color-primary-dark
       &.is-loading, &.is-disabled
-        color $__color-primary
+        color $_color-primary
   &--primary
-    typeStyle($__color-primary, $__color-primary-light, $__color-primary-dark)
+    typeStyle($_color-primary, $_color-primary-light, $_color-primary-dark)
   &--success
-    typeStyle($__color-success, $__color-success-light, $__color-success-dark)
+    typeStyle($_color-success, $_color-success-light, $_color-success-dark)
   &--info
-    typeStyle($__color-info, $__color-info-light, $__color-info-dark)
+    typeStyle($_color-info, $_color-info-light, $_color-info-dark)
   &--warning
-    typeStyle($__color-warning, $__color-warning-light, $__color-warning-dark)
+    typeStyle($_color-warning, $_color-warning-light, $_color-warning-dark)
   &--error
-    typeStyle($__color-error, $__color-error-light, $__color-error-dark)
+    typeStyle($_color-error, $_color-error-light, $_color-error-dark)
 
 .tulp-button-size
   &--small
-    padding $__button-small-padding
+    min-height $_button-small-height
+    horizonPadding($_button-small-padding)
     &.is-round
-      padding-left $__padding-round-small
-      padding-right $__padding-round-small
+      roundShape($_border-radius-small-round, $_button-small-padding-round)
     &.is-circle
-      padding-left $__padding-circle-small
-      padding-right $__padding-circle-small
+      roundShape($_border-radius-small-circle, $_button-small-padding-circle)
   &--big
-    padding $__button-big-padding
+    min-height $_button-big-height
+    horizonPadding($_button-big-padding)
     &.is-round
-      border-radius $__border-radius-round-big
+      roundShape($_border-radius-big-round, $_button-big-padding-round)
     &.is-circle
-      border-radius $__border-radius-round-big
-      padding-left $__padding-circle-big
-      padding-right $__padding-circle-big
+      roundShape($_border-radius-big-circle, $_button-big-padding-circle)
 
 .tulp-width-expand-transition-active
   transition width 0.3s ease-in-out, opacity 0.3s ease-in-out

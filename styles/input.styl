@@ -1,25 +1,25 @@
 @require "./common/variable"
 
 input()
-  font-size $__font-size
+  font-size $_font-size
   font-family inherit
-  border 1px solid $__border-color
+  border 1px solid $_border-color
   box-sizing border-box
-  border-radius $__border-radius
-  transition color 0.3s $__transition, border-color 0.3s $__transition, box-shadow 0.3s $__transition
+  border-radius $_border-radius
+  transition color 0.3s $_transition, border-color 0.3s $_transition, box-shadow 0.3s $_transition
   &::placeholder 
-    color $__input-placeholder-color
+    color $_input-placeholder-color
   &:hover
-    border-color $__border-color-dark
+    border-color $_border-color-dark
   &:focus
-    border-color $__color-primary
-    box-shadow 0 0 0 2.2px $__input-wave
+    border-color $_color-primary
+    box-shadow 0 0 0 2.2px $_input-wave
   &:focus, &:focus-visible
     outline none
   &[disabled] 
     cursor not-allowed
-    background-color $__input-disabled-bg-color
-    border-color $__border-color
+    background-color $_input-disabled-bg-color
+    border-color $_border-color
 
 fix() 
   position absolute
@@ -27,13 +27,13 @@ fix()
   bottom 0
   display inline-flex
   align-items center
-  color $__color-text-looming
+  color $_color-text-looming
   & > .tulp-input__password, & > .tulp-input__clear 
     cursor pointer
     &:hover 
-      color $__border-color-dark
+      color $_border-color-dark
     &:active 
-      color $__color-text-minor
+      color $_color-text-minor
 
 .tulp-input 
   display inline-flex
@@ -41,8 +41,8 @@ fix()
   box-sizing border-box
   &__control 
     width 100%
-    padding $__input-padding
-    line-height $__input-line-height
+    padding $_input-padding
+    line-height $_input-line-height
     input()
   &.exist-suffix > &__control 
     padding-right 28px
@@ -55,7 +55,7 @@ fix()
     right 8px
     fix()
   &__icon 
-    transition color 0.3s $__transition
+    transition color 0.3s $_transition
 .tulp-input-group-addon
   & > .tulp-input__control
     position relative
@@ -71,28 +71,28 @@ fix()
     border-bottom-right-radius 0
 
 .tulp-input-addon 
-  font-size $__font-size
-  padding $__input-padding
-  line-height $__input-line-height
-  background-color $__input-disabled-bg-color
+  font-size $_font-size
+  padding $_input-padding
+  line-height $_input-line-height
+  background-color $_input-disabled-bg-color
   &__before 
-    border-top-left-radius $__border-radius
-    border-bottom-left-radius $__border-radius
-    border-left 1px solid $__border-color
-    border-top 1px solid $__border-color
-    border-bottom 1px solid $__border-color
+    border-top-left-radius $_border-radius
+    border-bottom-left-radius $_border-radius
+    border-left 1px solid $_border-color
+    border-top 1px solid $_border-color
+    border-bottom 1px solid $_border-color
   &__after 
-    border-top-right-radius $__border-radius
-    border-bottom-right-radius $__border-radius
-    border-right 1px solid $__border-color
-    border-top 1px solid $__border-color
-    border-bottom 1px solid $__border-color
+    border-top-right-radius $_border-radius
+    border-bottom-right-radius $_border-radius
+    border-right 1px solid $_border-color
+    border-top 1px solid $_border-color
+    border-bottom 1px solid $_border-color
 
 .tulp-textarea 
   &__control 
     min-height 30px
-    padding $__textarea-padding
-    line-height $__textarea-line-height
+    padding $_textarea-padding
+    line-height $_textarea-line-height
     resize vertical
     input()
   
