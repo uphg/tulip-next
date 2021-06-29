@@ -6,8 +6,8 @@ input()
   border 1px solid $_border-color
   box-sizing border-box
   border-radius $_border-radius
-  transition color 0.3s $_transition, border-color 0.3s $_transition, box-shadow 0.3s $_transition
-  &::placeholder 
+  transition $_color-transition, $_border-color-transition, $_box-shadow-transition
+  &::placeholder
     color $_input-placeholder-color
   &:hover
     border-color $_border-color-dark
@@ -16,45 +16,45 @@ input()
     box-shadow 0 0 0 2.2px $_input-wave
   &:focus, &:focus-visible
     outline none
-  &[disabled] 
+  &[disabled]
     cursor not-allowed
     background-color $_input-disabled-bg-color
     border-color $_border-color
 
-fix() 
+fix()
   position absolute
   top 0
   bottom 0
   display inline-flex
   align-items center
   color $_color-text-looming
-  & > .tulp-input__password, & > .tulp-input__clear 
+  & > .tulp-input__password, & > .tulp-input__clear
     cursor pointer
-    &:hover 
+    &:hover
       color $_border-color-dark
-    &:active 
+    &:active
       color $_color-text-minor
 
-.tulp-input 
+.tulp-input
   display inline-flex
   position relative
   box-sizing border-box
-  &__control 
+  &__control
     width 100%
     padding $_input-padding
     line-height $_input-line-height
     input()
-  &.exist-suffix > &__control 
+  &.exist-suffix > &__control
     padding-right 28px
-  &.exist-prefix > &__control 
+  &.exist-prefix > &__control
     padding-left 28px
-  &__prefix 
+  &__prefix
     left 8px
     fix()
-  &__suffix  
+  &__suffix
     right 8px
     fix()
-  &__icon 
+  &__icon
     transition color 0.3s $_transition
 .tulp-input-group-addon
   & > .tulp-input__control
