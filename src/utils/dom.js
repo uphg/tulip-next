@@ -44,7 +44,11 @@ const dom = {
       paddingTop: parseInt(style.paddingTop, 10),
       paddingLeft: parseInt(style.paddingLeft, 10),
       paddingRight: parseInt(style.paddingRight, 10),
-      paddingBottom: parseInt(style.paddingBottom, 10)
+      paddingBottom: parseInt(style.paddingBottom, 10),
+      marginTop: parseInt(style.marginTop, 10),
+      marginLeft: parseInt(style.marginLeft, 10),
+      marginRight: style.marginRight,
+      marginBottom: parseInt(style.marginBottom, 10)
     }
   }
 }

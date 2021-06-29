@@ -5,15 +5,18 @@ export default {
   methods: {
     iconBeforeEnter(el) {
       dom.addClass(el, TRANSITION_CLASS)
-      el.style.width = '0'
+      el.style.marginRight = 0
+      el.style.width = 0
       el.style.opacity = 0
     },
 
     iconEnter(el) {
       if (el.scrollWidth !== 0) {
+        el.style.marginRight = ''
         el.style.width = el.scrollWidth + 'px'
         el.style.opacity = 1
       } else {
+        el.style.marginRight = ''
         el.style.width = ''
         el.style.opacity = 1
       }
@@ -33,6 +36,7 @@ export default {
     iconLeave(el) {
       if (el.scrollWidth !== 0) {
         dom.addClass(el, TRANSITION_CLASS)
+        el.style.marginRight = 0
         el.style.width = '0'
         el.style.opacity = '0'
       }
@@ -40,6 +44,7 @@ export default {
 
     iconAfterLeave(el) {
       dom.removeClass(el, TRANSITION_CLASS)
+      el.style.marginRight = ''
       el.style.width = ''
       el.style.opacity = ''
     }

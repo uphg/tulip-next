@@ -46,11 +46,11 @@ import '../../styles/button.styl'
 import '../../styles/wave.styl'
 import TIcon from '../icon/index.js'
 import LoadingIcon from '../loading-icon/LoadingIcon.vue'
-import iconTransition from '../../src/mixins/icon-transition.js'
+import buttonIconTransition from '../../src/mixins/button-icon-transition.js'
 export default {
   name: 'TButton',
   components: { TIcon, LoadingIcon },
-  mixins: [iconTransition],
+  mixins: [buttonIconTransition],
   props: {
     type: {
       type: String,

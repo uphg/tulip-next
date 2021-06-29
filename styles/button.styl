@@ -9,7 +9,7 @@ lineTone(color)
   color color
   border-color color
 
-horizonPadding(value)
+horizontalPadding(value)
   padding-left value
   padding-right value
 
@@ -69,7 +69,7 @@ typeStyle(base, light, dark)
 
 roundShape(radius, padding)
   border-radius radius
-  horizonPadding(padding)
+  horizontalPadding(padding)
 
 .tulp-button
   position relative
@@ -84,14 +84,16 @@ roundShape(radius, padding)
   justify-content center
   align-items center
   transition $_all-transition
-  horizonPadding($_button-padding)
+  horizontalPadding($_button-padding)
   &__icon
     box-sizing border-box
     display inline-flex
-    width 1.45em
+    // width 1.45em
+    width 1em
+    margin-right 6px
     height 1em
     &.is-uncontent
-      width 1em
+      margin-right 0
   &__icon-loading
     width 1em
     height 1em
@@ -146,18 +148,18 @@ roundShape(radius, padding)
 .tulp-button-size
   &--small
     min-height $_button-small-height
-    horizonPadding($_button-small-padding)
+    horizontalPadding($_button-small-padding)
     &.is-round
       roundShape($_border-radius-small-round, $_button-small-padding-round)
     &.is-circle
       roundShape($_border-radius-small-circle, $_button-small-padding-circle)
   &--big
     min-height $_button-big-height
-    horizonPadding($_button-big-padding)
+    horizontalPadding($_button-big-padding)
     &.is-round
       roundShape($_border-radius-big-round, $_button-big-padding-round)
     &.is-circle
       roundShape($_border-radius-big-circle, $_button-big-padding-circle)
 
 .tulp-width-expand-transition-active
-  transition width 0.3s ease-in-out, opacity 0.3s ease-in-out
+  transition width 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out
