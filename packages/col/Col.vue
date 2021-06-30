@@ -1,11 +1,37 @@
 <template>
-  <div class="tulp-col">
+  <div class="tulp-col" :style="gutterStyle" :class="{[`tulp-col-${span}`]: span}">
     <slot />
   </div>
 </template>
+<script>
+export default {
+  name: 'TCol',
+  props: {
+    span: {
+      type: Number,
+      default: 24
+    }
+  },
+  data() {
+    return {
+      gutter: 0
+    }
+  },
+  computed: {
+    gutterStyle() {
+      const gutter = this.gutter
+      if (!gutter) return
+      return {
+        paddingLeft: `${gutter / 2}px`,
+        paddingRight: `${gutter / 2}px`
+      }
+    }
+  }
+}
+</script>
 <style lang="stylus">
-cols = ( 1) (two 2) (three 3)
-for num in (1..10)
-  .col-{num}
-    width 100%
+for num in (1..24)
+  .tulp-col-{num}
+    width (num / 24) * 100%
+
 </style>

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Grid from './view/Grid.vue'
 import Button from './view/Button.vue'
 import Input from './view/Input.vue'
 import CaptchaCountdown from './view/CaptchaCountdown.vue'
@@ -29,6 +30,7 @@ const VIEW_INDEX = 'view-index'
 export default {
   name: 'App',
   components: {
+    Grid,
     Button,
     Input,
     CaptchaCountdown,
@@ -39,6 +41,7 @@ export default {
     return {
       viewIndex: 0,
       siderbars: [
+        'Grid',
         'Button',
         'Input',
         'CaptchaCountdown',
