@@ -1,5 +1,13 @@
 <template>
   <div class="grid-demo">
+    <h2>响应式</h2>
+    <div>
+      <t-row>
+        <t-col :span="8" :xxl="5" :xl="4" :lg="3" :md="2" :sm="1"><div class="grid-block bg-base" /></t-col>
+        <t-col :span="8" :xxl="14" :xl="16" :lg="18" :md="20" :sm="22"><div class="grid-block bg-light" /></t-col>
+        <t-col :span="8" :xxl="5" :xl="4" :lg="3" :md="2" :sm="1"><div class="grid-block bg-base" /></t-col>
+      </t-row>
+    </div>
     <h2>偏移</h2>
     <div class="margin-bottom-20">
       <t-row>

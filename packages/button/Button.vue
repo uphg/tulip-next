@@ -56,7 +56,7 @@ export default {
       type: String,
       default: 'default',
       validator(value) {
-        return value === 'default' || value === 'primary' || value === 'success' || value === 'info' || value === 'warning' || value === 'error'
+        return ['default', 'primary', 'success', 'info', 'warning'].includes(value)
       }
     },
     icon: {
@@ -67,7 +67,7 @@ export default {
       type: String,
       default: '',
       validator(value) {
-        return value === '' || value === 'big' || value === 'small'
+        return ['', 'big', 'small'].includes(value)
       }
     },
     loading: Boolean,
