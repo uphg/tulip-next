@@ -9,7 +9,8 @@
 </template>
 <script>
 import { isObject, isNumber } from '../../src/utils/types.js'
-const mediaValidator = (value) => {
+const mediaValidator = (value) => isNumber(value) || isObject(value)
+/* const mediaValidator = (value) => true {
   if (isNumber(value)) {
     return value >= 0 && value <= 24
   } else if (isObject(value)) {
@@ -18,7 +19,7 @@ const mediaValidator = (value) => {
       if (!['span', 'offset'].includes(key)) return false
     }
   }
-}
+} */
 
 export default {
   name: 'TCol',
@@ -90,7 +91,7 @@ export default {
         { key: 'xl', value: xl },
         { key: 'xxl', value: xxl }
       ]
-      medias.forEach((item, index) => {
+      medias.forEach(item => {
         if (item.value) {
           if (isObject(item.value)) {
             const { span, offset } = item.value
