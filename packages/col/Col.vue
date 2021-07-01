@@ -1,5 +1,12 @@
 <template>
-  <div class="tulp-col" :style="gutterStyle" :class="{[`tulp-col-${span}`]: span}">
+  <div
+    class="tulp-col"
+    :style="gutterStyle"
+    :class="{
+      [`tulp-col-${span}`]: span,
+      [`tulp-col-offset-${offset}`]: offset
+    }"
+  >
     <slot />
   </div>
 </template>
@@ -10,6 +17,10 @@ export default {
     span: {
       type: Number,
       default: 24
+    },
+    offset: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -34,4 +45,7 @@ for num in (1..24)
   .tulp-col-{num}
     width (num / 24) * 100%
 
+for num in (1..24)
+  .tulp-col-offset-{num}
+    margin-left (num / 24) * 100%
 </style>
