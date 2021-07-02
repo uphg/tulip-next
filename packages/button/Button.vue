@@ -56,7 +56,7 @@ export default {
       type: String,
       default: 'default',
       validator(value) {
-        return ['default', 'primary', 'success', 'info', 'warning'].includes(value)
+        return ['default', 'primary', 'success', 'info', 'warning', 'error'].includes(value)
       }
     },
     icon: {
