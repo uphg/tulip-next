@@ -1,5 +1,27 @@
 <template>
   <div class="grid-demo">
+    <h2>测试非法传入值</h2>
+    <div>
+      <t-row>
+        <t-col
+          :span="8"
+          :offset="8"
+          :xxl="{ }"
+          :xl="{ span: 4, offset: 4 }"
+          :lg="{ span: 3, offset: 3 }"
+          :md="{ span: 2, offset: 2 }"
+          :sm="{ span: 1, offset: 1 }"
+        ><div class="grid-block bg-base" /></t-col>
+        <t-col
+          :span="8"
+          :xxl="14"
+          :xl="16"
+          :lg="18"
+          :md="20"
+          :sm="22"
+        ><div class="grid-block bg-light" /></t-col>
+      </t-row>
+    </div>
     <h2>响应式偏移量</h2>
     <div>
       <t-row>

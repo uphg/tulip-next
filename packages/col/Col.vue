@@ -1,25 +1,36 @@
 <template>
   <div
     class="tulp-col"
-    :class="classes"
+    :class="[
+      {
+        [`tulp-col-${span}`]: span,
+        [`tulp-col-offset-${offset}`]: offset
+      },
+      mediaClass('sm', sm),
+      mediaClass('md', md),
+      mediaClass('lg', lg),
+      mediaClass('xl', xl),
+      mediaClass('xxl', xxl),
+    ]"
     :style="gutterStyle"
   >
     <slot />
   </div>
 </template>
 <script>
-import { isObject, isNumber } from '../../src/utils/types.js'
-const mediaValidator = (value) => isNumber(value) || isObject(value)
-/* const mediaValidator = (value) => true {
-  if (isNumber(value)) {
-    return value >= 0 && value <= 24
-  } else if (isObject(value)) {
-    const keys = Object.keys(value)
-    for (const key of keys) {
-      if (!['span', 'offset'].includes(key)) return false
+import { isNumber, isObject } from '../../src/utils/types.js'
+const mediaValidator = (value) => {
+  let valid = true
+  if (isObject(value)) {
+    for (const key of Object.keys(value)) {
+      if (!['span', 'offset'].includes(key)) {
+        valid = false
+        break
+      }
     }
   }
-} */
+  return value >= 0 && value <= 24 || valid
+}
 
 export default {
   name: 'TCol',
@@ -70,45 +81,28 @@ export default {
   },
   computed: {
     gutterStyle() {
-      const gutter = this.gutter
+      const { gutter } = this
       if (!gutter) return
       return {
         paddingLeft: `${gutter / 2}px`,
         paddingRight: `${gutter / 2}px`
       }
-    },
-    classes() {
-      const { span, offset, xs, sm, md, lg, xl, xxl } = this
-      let base = {
-        [`tulp-col-${span}`]: span,
-        [`tulp-col-offset-${offset}`]: offset
-      }
-      const medias = [
-        { key: 'xs', value: xs },
-        { key: 'sm', value: sm },
-        { key: 'md', value: md },
-        { key: 'lg', value: lg },
-        { key: 'xl', value: xl },
-        { key: 'xxl', value: xxl }
-      ]
-      medias.forEach(item => {
-        if (item.value) {
-          if (isObject(item.value)) {
-            const { span, offset } = item.value
-            base = {
-              ...base,
-              [`tulp-col-${item.key}-${span}`]: span,
-              [`tulp-col-offset-${item.key}-${offset}`]: offset
-            }
-          } else {
-            base = {
-              ...base,
-              [`tulp-col-${item.key}-${item.value}`]: item.value
-            }
-          }
+    }
+  },
+  methods: {
+    mediaClass(type, item) {
+      if (isNumber(item)) {
+        return {
+          [`tulp-col-${type}-${item}`]: item
         }
-      })
-      return base
+      } else if (isObject(item)) {
+        return {
+          [`tulp-col-${type}-${item.span}`]: item.span,
+          [`tulp-col-offset-${type}-${item.offset}`]: item.offset
+        }
+      } else {
+        return null
+      }
     }
   }
 }
