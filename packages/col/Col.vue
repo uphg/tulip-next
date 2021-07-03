@@ -1,24 +1,15 @@
 <template>
   <div
     class="tulp-col"
-    :class="[
-      {
-        [`tulp-col-${span}`]: span,
-        [`tulp-col-offset-${offset}`]: offset
-      },
-      mediaClass('sm', sm),
-      mediaClass('md', md),
-      mediaClass('lg', lg),
-      mediaClass('xl', xl),
-      mediaClass('xxl', xxl),
-    ]"
+    :class="classes"
     :style="gutterStyle"
   >
     <slot />
   </div>
 </template>
 <script>
-import { isNumber, isObject } from '../../src/utils/types.js'
+import { isObject, isNumber } from '../../src/utils/types.js'
+// const mediaValidator = (value) => isNumber(value) || isObject(value)
 const mediaValidator = (value) => {
   let valid = true
   if (isObject(value)) {
@@ -81,28 +72,45 @@ export default {
   },
   computed: {
     gutterStyle() {
-      const { gutter } = this
+      const gutter = this.gutter
       if (!gutter) return
       return {
         paddingLeft: `${gutter / 2}px`,
         paddingRight: `${gutter / 2}px`
       }
-    }
-  },
-  methods: {
-    mediaClass(type, item) {
-      if (isNumber(item)) {
-        return {
-          [`tulp-col-${type}-${item}`]: item
-        }
-      } else if (isObject(item)) {
-        return {
-          [`tulp-col-${type}-${item.span}`]: item.span,
-          [`tulp-col-offset-${type}-${item.offset}`]: item.offset
-        }
-      } else {
-        return null
+    },
+    classes() {
+      const { span, offset, xs, sm, md, lg, xl, xxl } = this
+      let base = {
+        [`tulp-col-${span}`]: span,
+        [`tulp-col-offset-${offset}`]: offset
       }
+      const medias = [
+        { key: 'xs', value: xs },
+        { key: 'sm', value: sm },
+        { key: 'md', value: md },
+        { key: 'lg', value: lg },
+        { key: 'xl', value: xl },
+        { key: 'xxl', value: xxl }
+      ]
+      medias.forEach(item => {
+        if (item.value) {
+          if (isObject(item.value)) {
+            const { span, offset } = item.value
+            base = {
+              ...base,
+              [`tulp-col-${item.key}-${span}`]: span,
+              [`tulp-col-offset-${item.key}-${offset}`]: offset
+            }
+          } else if (isNumber(item.value)) {
+            base = {
+              ...base,
+              [`tulp-col-${item.key}-${item.value}`]: item.value
+            }
+          }
+        }
+      })
+      return base
     }
   }
 }
@@ -114,7 +122,6 @@ for num in (1..24)
 for num in (1..24)
   .tulp-col-offset-{num}
     margin-left (num / 24) * 100%
-
 mediaTypes(type)
   for num in (1..24)
     .tulp-col-{type}-{num}
@@ -122,7 +129,6 @@ mediaTypes(type)
   for num in (1..24)
     .tulp-col-offset-{type}-{num}
       margin-left (num / 24) * 100%
-
 medias = {
   'xxl': 1600px,
   'xl': 1200px,
