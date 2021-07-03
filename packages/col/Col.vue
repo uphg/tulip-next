@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { isObject, isNumber } from '../../src/utils/types.js'
+import { isObject } from '../../src/utils/types.js'
 const mediaValidator = (value) => {
   let valid = true
   if (isObject(value)) {
@@ -82,17 +82,18 @@ export default {
       const base = {}
 
       ;['span', 'offset'].forEach(prop => {
+        const number = this[prop]
         if (prop === 'span') {
-          base[`tulp-col-${this[prop]}`] = this[prop]
+          base[`tulp-col-${number}`] = number
         } else {
-          base[`tulp-col-${prop}-${this[prop]}`] = this[prop]
+          base[`tulp-col-${prop}-${number}`] = number
         }
       })
 
       ;['sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
         const props = this[size]
         if (props) {
-          if (isNumber(props)) {
+          if (typeof props === 'number') {
             base[`tulp-col-${size}-${props}`] = props
           } else if (isObject(props)) {
             Object.keys(props).forEach(prop => {
