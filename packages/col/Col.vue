@@ -1,7 +1,7 @@
 <template>
   <div
     class="tulp-col"
-    :class="classes"
+    :class="classList"
     :style="gutterStyle"
   >
     <slot />
@@ -9,7 +9,6 @@
 </template>
 <script>
 import { isObject, isNumber } from '../../src/utils/types.js'
-// const mediaValidator = (value) => isNumber(value) || isObject(value)
 const mediaValidator = (value) => {
   let valid = true
   if (isObject(value)) {
@@ -79,36 +78,34 @@ export default {
         paddingRight: `${gutter / 2}px`
       }
     },
-    classes() {
-      const { span, offset, sm, md, lg, xl, xxl } = this
-      let base = {
-        [`tulp-col-${span}`]: span,
-        [`tulp-col-offset-${offset}`]: offset
-      }
-      const medias = [
-        { key: 'sm', value: sm },
-        { key: 'md', value: md },
-        { key: 'lg', value: lg },
-        { key: 'xl', value: xl },
-        { key: 'xxl', value: xxl }
-      ]
-      medias.forEach(item => {
-        if (item.value) {
-          if (isObject(item.value)) {
-            const { span, offset } = item.value
-            base = {
-              ...base,
-              [`tulp-col-${item.key}-${span}`]: span,
-              [`tulp-col-offset-${item.key}-${offset}`]: offset
-            }
-          } else if (isNumber(item.value)) {
-            base = {
-              ...base,
-              [`tulp-col-${item.key}-${item.value}`]: item.value
-            }
+    classList() {
+      const base = {}
+
+      ;['span', 'offset'].forEach(prop => {
+        if (prop === 'span') {
+          base[`tulp-col-${this[prop]}`] = this[prop]
+        } else {
+          base[`tulp-col-${prop}-${this[prop]}`] = this[prop]
+        }
+      })
+
+      ;['sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
+        const props = this[size]
+        if (props) {
+          if (isNumber(props)) {
+            base[`tulp-col-${size}-${props}`] = props
+          } else if (isObject(props)) {
+            Object.keys(props).forEach(prop => {
+              if (prop === 'span') {
+                base[`tulp-col-${size}-${props[prop]}`] = props[prop]
+              } else {
+                base[`tulp-col-${prop}-${size}-${props[prop]}`] = props[prop]
+              }
+            })
           }
         }
       })
+
       return base
     }
   }
