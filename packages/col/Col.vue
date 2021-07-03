@@ -80,13 +80,12 @@ export default {
       }
     },
     classes() {
-      const { span, offset, xs, sm, md, lg, xl, xxl } = this
+      const { span, offset, sm, md, lg, xl, xxl } = this
       let base = {
         [`tulp-col-${span}`]: span,
         [`tulp-col-offset-${offset}`]: offset
       }
       const medias = [
-        { key: 'xs', value: xs },
         { key: 'sm', value: sm },
         { key: 'md', value: md },
         { key: 'lg', value: lg },
