@@ -3,5 +3,5 @@ export function isObject(obj) {
 }
 
 export function isNumber(num) {
-  return typeof num
+  return typeof num === 'number'
 }
