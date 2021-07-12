@@ -1,13 +1,4 @@
-<template>
-  <div
-    class="tulp-col"
-    :class="classList"
-    :style="gutterStyle"
-  >
-    <slot />
-  </div>
-</template>
-<script>
+import '../../styles/col.styl'
 import { isObject } from '../../src/utils/types.js'
 const mediaValidator = (value) => {
   let valid = true
@@ -25,6 +16,10 @@ const mediaValidator = (value) => {
 export default {
   name: 'TCol',
   props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
     span: {
       type: Number,
       default: 24
@@ -109,36 +104,11 @@ export default {
 
       return base
     }
+  },
+  render(h) {
+    return h(this.tag, {
+      class: ['tulp-col', this.classList],
+      style: this.gutterStyle
+    }, this.$slots.default)
   }
 }
-</script>
-<!--
-<style lang="stylus">
-for num in (1..24)
-  .tulp-col-{num}
-    width (num / 24) * 100%
-for num in (1..24)
-  .tulp-col-offset-{num}
-    margin-left (num / 24) * 100%
-
-mediaTypes(type)
-  for num in (1..24)
-    .tulp-col-{type}-{num}
-      width (num / 24) * 100%
-  for num in (1..24)
-    .tulp-col-offset-{type}-{num}
-      margin-left (num / 24) * 100%
-
-medias = {
-  'xxl': 1600px,
-  'xl': 1200px,
-  'lg': 992px,
-  'md': 768px,
-  'sm': 576px
-}
-
-for key, value in medias
-  @media (max-width: value)
-    mediaTypes(key)
-</style>
--->
