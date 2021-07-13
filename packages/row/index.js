@@ -1,4 +1,3 @@
-// import TRow from './Row.vue'
 import TRow from './row'
 
 TRow.install = function(Vue) {

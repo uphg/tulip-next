@@ -40,3 +40,7 @@ yarn lint
 # 检查并自动修复
 yarn lint --fix
 ```
+
+## 日志
+
+组件库最终完成后将 `package.json` 中的 `sideEffects` 属性配置为 `"sideEffects": false`。
