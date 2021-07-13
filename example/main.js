@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import { Button, ButtonGroup, CaptchaCountdown, Icon, Input, Row, Col } from '../src/index.js'
+import { Button, ButtonGroup, CaptchaCountdown, Icon, Input, Row, Col, Layout, Header, Main, Footer, Aside } from '../src/index.js'
 
 Vue.config.productionTip = false
 
@@ -12,6 +12,12 @@ Vue.use(CaptchaCountdown)
 Vue.use(Input)
 Vue.use(Row)
 Vue.use(Col)
+
+Vue.use(Layout)
+Vue.use(Header)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Aside)
 
 new Vue({
   render: h => h(App)

@@ -6,6 +6,7 @@ import Input from '../packages/input/index.js'
 import Row from '../packages/row/index.js'
 import Col from '../packages/col/index.js'
 import Layout from '../packages/layout/index.js'
+import Aside from '../packages/aside/index.js'
 import Header from '../packages/header/index.js'
 import Main from '../packages/main/index.js'
 import Footer from '../packages/footer/index.js'
@@ -19,6 +20,7 @@ const components = [
   Row,
   Col,
   Layout,
+  Aside,
   Header,
   Main,
   Footer
@@ -40,6 +42,7 @@ export {
   Row,
   Col,
   Layout,
+  Aside,
   Header,
   Main,
   Footer
@@ -55,6 +58,7 @@ export default {
   Row,
   Col,
   Layout,
+  Aside,
   Header,
   Main,
   Footer

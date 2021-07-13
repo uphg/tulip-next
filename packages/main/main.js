@@ -1,3 +1,5 @@
+import '../../styles/main.styl'
+
 export default {
   name: 'TMain',
   props: {
