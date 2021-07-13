@@ -5,6 +5,10 @@ import Icon from '../packages/icon/index.js'
 import Input from '../packages/input/index.js'
 import Row from '../packages/row/index.js'
 import Col from '../packages/col/index.js'
+import Layout from '../packages/layout/index.js'
+import Header from '../packages/header/index.js'
+import Main from '../packages/main/index.js'
+import Footer from '../packages/footer/index.js'
 
 const components = [
   Button,
@@ -13,7 +17,11 @@ const components = [
   Icon,
   Input,
   Row,
-  Col
+  Col,
+  Layout,
+  Header,
+  Main,
+  Footer
 ]
 
 const install = function(Vue, opts = {}) {
@@ -30,7 +38,11 @@ export {
   Icon,
   Input,
   Row,
-  Col
+  Col,
+  Layout,
+  Header,
+  Main,
+  Footer
 }
 
 export default {
@@ -41,5 +53,9 @@ export default {
   Icon,
   Input,
   Row,
-  Col
+  Col,
+  Layout,
+  Header,
+  Main,
+  Footer
 }
