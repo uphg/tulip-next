@@ -1,12 +1,12 @@
-<template>
-  <div class="tulp-row" :style="gutterStyle" :class="{ [`is-justify-${justify}`]: justify }">
-    <slot />
-  </div>
-</template>
-<script>
+import '../../styles/row.styl'
+
 export default {
   name: 'TRow',
   props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
     gutter: {
       type: Number,
       default: 0,
@@ -29,25 +29,14 @@ export default {
     }
   },
   mounted() {
-    const gutter = this.gutter
     this.$children.forEach(vm => {
-      vm.gutter = gutter
+      vm.gutter = this.gutter
     })
+  },
+  render(h) {
+    return h(this.tag, {
+      class: ['tulp-row', { [`is-justify-${this.justify}`]: this.justify }],
+      style: this.gutterStyle
+    }, this.$slots.default)
   }
 }
-</script>
-<style lang="stylus">
-.tulp-row
-  display flex
-
-justify(key, value)
-  &.is-justify-{key}
-    justify-content value
-
-.tulp-row
-  justify(start, flex-start)
-  justify(center, center)
-  justify(end, flex-end)
-  justify(space-between, space-between)
-  justify(space-around, space-around)
-</style>
