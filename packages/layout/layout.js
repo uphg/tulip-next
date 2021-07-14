@@ -5,23 +5,16 @@ export default {
     tag: {
       type: String,
       default: 'section'
-    }
+    },
+    // 可选值: vertical/horizontal
+    direction: String
   },
-  data() {
-    return {
-      hasAside: false
-    }
-  },
-  mounted() {
-    this.updateHasAside()
-  },
-  updated() {
-    this.updateHasAside()
-  },
-  methods: {
-    // 更新 Aside 存在的状态
-    updateHasAside() {
-      this.hasAside = this.$children && this.$children.filter(vm => vm.$options.name === 'TAside').length > 0
+  computed: {
+    hasAside() {
+      if (this.direction === 'vertical') return true
+      if (this.direction === 'horizontal') return false
+      const slots = this.$slots
+      return slots && slots.default ? slots.default.some(vnode => vnode.componentOptions && vnode.componentOptions.tag === 't-aside') : false
     }
   },
   render(h) {

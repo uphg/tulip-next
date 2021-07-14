@@ -15,7 +15,7 @@
     </div>
     <div class="row">
       <t-layout>
-        <t-aside width="200">侧栏</t-aside>
+        <t-aside width="200px">侧栏</t-aside>
         <t-main>内容</t-main>
       </t-layout>
     </div>
