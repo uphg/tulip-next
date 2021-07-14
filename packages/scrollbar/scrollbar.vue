@@ -14,11 +14,14 @@
         :class="['tulp-scrollbar__view', viewClass]"
       ><slot /></component>
     </div>
+    <bar />
   </div>
 </template>
 <script>
+import Bar from './bar.vue'
 export default {
   name: 'TScrollbar',
+  components: { Bar },
   props: {
     height: [String, Number],
     tag: {
@@ -42,6 +45,7 @@ export default {
 </script>
 <style lang="stylus">
 .tulp-scrollbar
+  position relative
   &__wrap
     overflow auto
     scrollbar-width none
