@@ -10,6 +10,7 @@ import Aside from '../packages/aside/index.js'
 import Header from '../packages/header/index.js'
 import Main from '../packages/main/index.js'
 import Footer from '../packages/footer/index.js'
+import Scrollbar from '../packages/scrollbar/index.js'
 
 const components = [
   Button,
@@ -23,7 +24,8 @@ const components = [
   Aside,
   Header,
   Main,
-  Footer
+  Footer,
+  Scrollbar
 ]
 
 const install = function(Vue, opts = {}) {
@@ -45,7 +47,8 @@ export {
   Aside,
   Header,
   Main,
-  Footer
+  Footer,
+  Scrollbar
 }
 
 export default {
@@ -61,5 +64,6 @@ export default {
   Aside,
   Header,
   Main,
-  Footer
+  Footer,
+  Scrollbar
 }

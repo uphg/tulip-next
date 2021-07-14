@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import { Button, ButtonGroup, CaptchaCountdown, Icon, Input, Row, Col, Layout, Header, Main, Footer, Aside } from '../src/index.js'
+import { Button, ButtonGroup, CaptchaCountdown, Icon, Input, Row, Col, Layout, Header, Main, Footer, Aside, Scrollbar } from '../src/index.js'
 
 Vue.config.productionTip = false
 
@@ -18,6 +18,7 @@ Vue.use(Header)
 Vue.use(Main)
 Vue.use(Footer)
 Vue.use(Aside)
+Vue.use(Scrollbar)
 
 new Vue({
   render: h => h(App)

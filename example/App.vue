@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Scrollbar from './view/Scrollbar.vue'
 import Layout from './view/Layout.vue'
 import Grid from './view/Grid.vue'
 import Button from './view/Button.vue'
@@ -31,6 +32,7 @@ const VIEW_INDEX = 'view-index'
 export default {
   name: 'App',
   components: {
+    Scrollbar,
     Layout,
     Grid,
     Button,
@@ -43,6 +45,7 @@ export default {
     return {
       viewIndex: 0,
       siderbars: [
+        'Scrollbar',
         'Layout',
         'Grid',
         'Button',
