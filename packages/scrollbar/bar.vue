@@ -1,13 +1,19 @@
 <template>
   <div ref="bar" class="tulp-scrollbar__bar">
-    <div class="tulp-scrollbar__thumb" :style="{ height: '30px', transform: `translateX(${move})` }" />
+    <div
+      class="tulp-scrollbar__thumb"
+      :style="{
+        height: size,
+        transform: `translateY(${move}%)`
+      }"
+    />
   </div>
 </template>
 <script>
 export default {
   props: {
     move: Number,
-    height: Number
+    size: [Number, String]
   },
   mounted() {
     console.log('this.$refs.bar')
@@ -29,5 +35,5 @@ export default {
     width 100%
     background-color #ccc
     border-radius inherit
-
+    position relative
 </style>

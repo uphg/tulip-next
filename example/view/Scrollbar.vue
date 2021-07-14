@@ -5,11 +5,11 @@
         <p v-for="item in 20" :key="item">内容{{ item }}</p>
       </t-scrollbar>
     </div>
-    <div class="scrollbar-row">
+    <!-- <div class="scrollbar-row">
       <t-scrollbar height="200px" tag="section" wrap-class="wrap" view-class="view">
         <p v-for="item in 20" :key="item">内容{{ item }}</p>
       </t-scrollbar>
-    </div>
+    </div> -->
   </div>
 </template>
 <style lang="stylus">

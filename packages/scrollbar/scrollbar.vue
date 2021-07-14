@@ -14,7 +14,7 @@
         :class="['tulp-scrollbar__view', viewClass]"
       ><slot /></component>
     </div>
-    <bar />
+    <bar :size="sizeHeight" :move="moveY" />
   </div>
 </template>
 <script>
@@ -31,14 +31,34 @@ export default {
     wrapClass: [String, Array],
     viewClass: [String, Array]
   },
+  data() {
+    return {
+      sizeHeight: '0',
+      moveY: 0
+    }
+  },
   computed: {
     style() {
       return { height: this.height }
     }
   },
+  mounted() {
+    this.update()
+  },
   methods: {
     handleScroll() {
-      console.log(123)
+      const wrap = this.$refs.wrap
+      this.moveY = (wrap.scrollTop / wrap.clientHeight) * 100 // 计算 bar 移动自身多少倍（百分比）
+    },
+    update() {
+      const wrap = this.$refs.wrap
+      if (!wrap) return
+      // console.log('wrap.clientHeight')
+      // console.log(wrap.clientHeight)
+      // console.log('wrap.scrollHeight')
+      // console.log(wrap.scrollHeight)
+      const heightPercentage = (wrap.clientHeight / wrap.scrollHeight) * 100
+      this.sizeHeight = heightPercentage < 100 ? (heightPercentage + '%') : ''
     }
   }
 }
