@@ -1,46 +1,11 @@
-# Tulip
+# Vue 组件文档示例项目
 
-[![Build Status](https://travis-ci.com/uphg/tulip.svg?branch=master)](https://travis-ci.com/uphg/tulip)
+- 使用 Vue 3 + VueRouter 4 + TS + Vite 搭建的一个项目示例
+- 自适应移动端的导航
 
-一个 Vue 组件库，包括：
-
-- ESLint 检查
-- Karma + Mocha 单元测试
-
-## 命令
-
-安装依赖
+## 运行
 
 ```sh
-yarn install
+yarn
+yarn dev
 ```
-
-运行
-
-```sh
-yarn start
-```
-
-打包
-
-```sh
-yarn build
-```
-
-运行测试
-
-```sh
-yarn test
-```
-
-ESLint 代码检查
-
-```sh
-yarn lint
-# 检查并自动修复
-yarn lint --fix
-```
-
-## 日志
-
-组件库最终完成后将 `package.json` 中的 `sideEffects` 属性配置为 `"sideEffects": false`。
