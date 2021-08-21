@@ -2,6 +2,9 @@
   <div class="button-demo">
     <h2>Button 组件示例</h2>
     <Button @click="onClick">默认按钮</Button>
+    <Button @click="onClick">默认按钮</Button>
+    <Button @click="onClick">默认按钮</Button>
+    <Button @click="onClick">默认按钮</Button>
   </div>
 </template>
 <script lang="ts">

@@ -42,7 +42,7 @@ $core-height: $height - 4px;
     }
   }
   &.checked {
-    background-color: #1890ff;
+    background-color: #415fcc;
     & > .switch-core {
       left: calc(100% - #{$core-height} - 2px);
     }
