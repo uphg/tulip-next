@@ -6,7 +6,7 @@ export function useButtonWave() {
 
   const closeTimeout = () => {
     isWave.value = false
-    typeof animationTimerId  === 'number' && window.clearTimeout(animationTimerId)
+    typeof animationTimerId === 'number' && window.clearTimeout(animationTimerId)
     animationTimerId = null
   }
 
