@@ -3,7 +3,7 @@
     class="tulp-switch"
     :class="{ 'tulp-switch--checked': value }"
     @click="toggle"
-    @mouseup="onMouseup"
+    @mouseup="triggerWave"
   >
     <span
       v-if="isWave"
@@ -25,9 +25,9 @@ export default defineComponent({
     const toggle = () => {
       context.emit('update:value', !props.value)
     }
-    const { isWave, onMouseup } = useButtonWave()
+    const { isWave, triggerWave } = useButtonWave()
 
-    return { toggle, isWave, onMouseup }
+    return { toggle, isWave, triggerWave }
   }
 })
 </script>

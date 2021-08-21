@@ -1,23 +1,26 @@
-import { ref, nextTick  } from 'vue';
+import { ref, nextTick, Ref  } from 'vue';
 
 export function useButtonWave() {
-  const isWave = ref(false)
+  const isWave: Ref<boolean> = ref(false)
   let animationTimerId: number | null = null
 
-  const onMouseup = () => {
-    if (isWave) {
-      animationTimerId && window.clearTimeout(animationTimerId)
-      isWave.value = false
-      animationTimerId = null
+  const closeTimeout = () => {
+    isWave.value = false
+    typeof animationTimerId  === 'number' && window.clearTimeout(animationTimerId)
+    animationTimerId = null
+  }
+
+  const triggerWave = () => {
+    if (isWave.value) {
+      closeTimeout()
     }
     nextTick(() => {
       isWave.value = true
       animationTimerId = window.setTimeout(() => {
-        isWave.value = false
-        animationTimerId = null
+        closeTimeout()
       }, 1000)
     })
   }
 
-  return { isWave, onMouseup }
+  return { isWave, triggerWave }
 }

@@ -4,7 +4,7 @@
     :class="{
       [`tulp-button-${type}`]: type
     }"
-    @mouseup="onMouseup"
+    @mouseup="triggerWave"
   >
     <span class="tulp-button-content">
       <slot />
@@ -63,9 +63,9 @@ export default defineComponent({
     text: Boolean
   },
   setup() {
-    const { isWave, onMouseup } = useButtonWave()
+    const { isWave, triggerWave } = useButtonWave()
 
-    return { isWave, onMouseup }
+    return { isWave, triggerWave }
   }
 })
 </script>
