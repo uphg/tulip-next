@@ -1,1 +1,1 @@
-export const TULP = 'Tu'
+export const LIB_PREFIX = 'Tu'

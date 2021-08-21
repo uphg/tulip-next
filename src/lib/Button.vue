@@ -1,19 +1,26 @@
 <template>
-  <button class="tulp-button" @mouseup="onMouseup">
-    <span class="tulp-button__content">
+  <button
+    class="tulp-button"
+    :class="{
+      [`tulp-button-${type}`]: type
+    }"
+    @mouseup="onMouseup"
+  >
+    <span class="tulp-button-content">
       <slot />
     </span>
-    <span class="tulp-button__border"></span>
+    <span class="tulp-button-border"></span>
     <span
       v-if="isWave && !text"
-      class="tulp-base__wave"
+      class="tulp-button-wave"
       :class="{ active: isWave }"
     />
   </button>
 </template>
 <script lang="ts">
-import { TULP } from '../utils/default-config'
-import { defineComponent, PropType, ref, Ref, nextTick  } from 'vue';
+import { LIB_PREFIX } from '../utils/default-config'
+import { defineComponent, PropType } from 'vue';
+import { useButtonWave } from './useButtonWave'
 
 type TButtonType = PropType<'primary' | 'success' | 'warning' | 'danger'>
 type TButtonNativeType = PropType<'button' | 'submit' | 'reset'>
@@ -29,7 +36,7 @@ interface TButtonProps {
 }
 
 export default defineComponent({
-  name: `${TULP}Button`,
+  name: `${LIB_PREFIX}Button`,
   props: {
     type: {
       type: String as TButtonType,
@@ -56,29 +63,18 @@ export default defineComponent({
     text: Boolean
   },
   setup() {
-    const isWave = ref(false)
-    let animationTimerId: number | null = null
-
-    const onMouseup = () => {
-      if (isWave) {
-        animationTimerId && window.clearTimeout(animationTimerId)
-        isWave.value = false
-        animationTimerId = null
-      }
-      nextTick(() => {
-        isWave.value = true
-        animationTimerId = window.setTimeout(() => {
-          isWave.value = false
-          animationTimerId = null
-        }, 1000)
-      })
-    }
+    const { isWave, onMouseup } = useButtonWave()
 
     return { isWave, onMouseup }
   }
 })
 </script>
 <style lang="scss">
+@import 'style/button-wave', 'style/animation-wave';
+$_color-primary: #415fcc;
+$_color-primary-light: #7288d9;
+$_color-primary-dark: #2b45a1;
+
 .tulp-button {
   position: relative;
   font-size: 14px;
@@ -96,18 +92,12 @@ export default defineComponent({
   height: 36px;
   line-height: 1;
   --ripple-color: #415fcc;
-  &:hover, &:focus {
-    color: #415fcc;
-    .tulp-button__border {
-      border-color: #415fcc;
-    }
-  }
-  &__border {
+  &-border {
     transition: border-color 0.25s;
     box-sizing: border-box;
     width: 100%;
     border-radius: inherit;
-    border: 1px solid #dcdfe6;
+    
     position: absolute;
     top: 0;
     left: 0;
@@ -115,43 +105,40 @@ export default defineComponent({
     bottom: 0;
   }
 }
-
-.tulp-base__wave {
-  pointer-events: none;
-  box-sizing: border-box;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  z-index: 1;
-  animation-iteration-count: 1;  // 动画执行次数
-  animation-duration: .6s;  // 动画持续时间
-  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);  // 动画过渡效果
-  &.active {
-    animation-name: button-wave-spread, button-wave-opacity;
+.tulp-button-default {
+  .tulp-button-border {
+    border: 1px solid #dcdfe6;
+  }
+  &:hover, &:focus {
+    color: #415fcc;
+    .tulp-button-border {
+      border-color: #415fcc;
+    }
+  }
+  &:active {
+    color: $_color-primary-dark;
+    .tulp-button-border {
+      border-color: $_color-primary-dark;
+    }
   }
 }
 
-@keyframes button-wave-spread {
-  from {
-    box-shadow: 0 0 0.5px 0 var(--ripple-color);
+.tulp-button-primary {
+  color: #ffffff;
+  background-color: $_color-primary;
+  transition: background-color 0.25s;
+  .tulp-button-border {
+    border: none;
   }
-    
-  to {
-    box-shadow: 0 0 0.5px 4.5px var(--ripple-color);
+  &:hover, &:focus {
+    background-color: $_color-primary-light;
+  }
+  &:active {
+    background-color: $_color-primary-dark;
   }
 }
 
-@keyframes button-wave-opacity {
-  from {
-    opacity: 0.6;
-  }
-    
-  to {
-    opacity: 0;
-  }
+.tulp-button-wave {
+  @include button-wave;
 }
 </style>
