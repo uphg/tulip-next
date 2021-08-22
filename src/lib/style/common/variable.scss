@@ -1,0 +1,73 @@
+// 2021-05-23 backup
+$_color-primary: #415fcc;
+$_color-primary-light: #7288d9;
+$_color-primary-dark: #2b45a1;
+
+$_color-success: #34A853;
+$_color-success-light: #5db975;
+$_color-success-dark: #2f974b;
+
+$_color-info: #8D93AB;
+$_color-info-light: #a4a9bc;
+$_color-info-dark: #7f849a;
+
+$_color-warning: #F9B208;
+$_color-warning-light: #fcc937;
+$_color-warning-dark: #e0a007;
+
+$_color-error: #EA4335;
+$_color-error-light: #f1877d;
+$_color-error-dark: #d33c30;
+
+$_color-text-primary: #0d0d0d;
+$_color-text-minor: #606266;
+$_color-text-looming: #C0C4CC;
+
+$_font-size: 14px;
+$_font-size-small: 12px;
+$_icon-size: $_font-size;
+
+$_all-transition: all .3s cubic-bezier(.645,.045,.355,1);
+$_color-transition: color .3s cubic-bezier(.645,.045,.355,1);
+$_background-transition: background .3s cubic-bezier(.645,.045,.355,1);
+$_border-color-transition: border-color .3s cubic-bezier(.645,.045,.355,1);
+$_box-shadow-transition: box-shadow .3s cubic-bezier(.645,.045,.355,1);
+
+$_border-color: #cdd1e4;
+$_border-color-light: #e4e5e9;
+$_border-color-dark: #9ca3af;
+
+$_border-radius: 4px;
+$_border-radius-round: 18px;
+$_border-radius-small-round: 16px;
+$_border-radius-small-circle: 16px;
+$_border-radius-big-round: 20px;
+$_border-radius-big-circle: 20px;
+
+/* Button default */
+$_button-height: 36px;
+$_button-border-radius: $_border-radius;
+$_button-padding: 16px;
+$_button-padding-round: 21px;
+$_button-padding-circle: 10px;
+
+/* Button small */
+$_button-small-height: 32px;
+$_button-small-padding: 14px;
+$_button-small-padding-round: 18px;
+$_button-small-padding-circle: 8px;
+
+/* Button big */
+$_button-big-height: 40px;
+$_button-big-padding: 18px;
+$_button-big-padding-round: 20px;
+$_button-big-padding-circle: 12px;
+
+/* -- Input */
+$_input-padding: 0 14px;
+$_input-line-height: 34px;
+$_input-placeholder-color: #C0C4CC;
+$_input-disabled-bg-color: #f3f4f6;
+$_input-wave: rgba(68, 99, 209, 0.2);
+$_textarea-line-height: 1.5;
+$_textarea-padding: 6px 14px;

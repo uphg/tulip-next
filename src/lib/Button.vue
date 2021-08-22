@@ -2,7 +2,8 @@
   <button
     class="tulp-button"
     :class="{
-      [`tulp-button-${type}`]: type
+      [`tulp-button-${type}`]: type,
+      [`tulp-button-${size}`]: size
     }"
     @mouseup="triggerWave"
   >
@@ -50,6 +51,17 @@ export default defineComponent({
         ].includes(value)
       }
     },
+    size: {
+      type: String,
+      validator: (value: string) => {
+        return [
+          '',
+          'large',
+          'medium',
+          'small',
+        ].includes(value)
+      }
+    },
     icon: String,
     nativeType: {
       type: String as TButtonNativeType,
@@ -70,10 +82,8 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@import 'style/common/variable.scss';
 @import 'style/button-wave', 'style/animation-wave';
-$_color-primary: #415fcc;
-$_color-primary-light: #7288d9;
-$_color-primary-dark: #2b45a1;
 
 .tulp-button {
   position: relative;
@@ -86,18 +96,25 @@ $_color-primary-dark: #2b45a1;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   transition: color 0.25s;
   position: relative;
-  padding: 0 16px;
-  height: 36px;
-  line-height: 1;
+  padding: 0 $_button-padding;
+  height: $_button-height;
+  text-decoration: none;
+  line-height: normal;
   --ripple-color: #415fcc;
+  &-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
   &-border {
     transition: border-color 0.25s;
     box-sizing: border-box;
     width: 100%;
     border-radius: inherit;
-    
     position: absolute;
     top: 0;
     left: 0;
@@ -105,14 +122,19 @@ $_color-primary-dark: #2b45a1;
     bottom: 0;
   }
 }
+.tulp-button-small {
+  padding: 0 $_button-small-padding;
+  height: $_button-small-height;
+}
+
 .tulp-button-default {
   .tulp-button-border {
     border: 1px solid #dcdfe6;
   }
   &:hover, &:focus {
-    color: #415fcc;
+    color: $_color-primary;
     .tulp-button-border {
-      border-color: #415fcc;
+      border-color: $_color-primary;
     }
   }
   &:active {

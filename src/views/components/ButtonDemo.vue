@@ -3,6 +3,7 @@
     <h2>Button 组件示例</h2>
     <Button @click="onClick">默认按钮</Button>
     <Button type="primary" @click="onClick">主要按钮</Button>
+    <Button type="primary" size="small" @click="onClick">迷你按钮</Button>
   </div>
 </template>
 <script lang="ts">
