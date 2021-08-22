@@ -5,7 +5,8 @@
       [`tulp-button-${type}`]: type,
       [`tulp-button-${size}`]: size
     }"
-    @mouseup="triggerWave"
+    ref="button"
+    @click="triggerWave"
   >
     <span class="tulp-button-content">
       <slot />

@@ -12,8 +12,8 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   components: { Button },
   setup() {
-    const onClick = () => {
-      console.log('hi')
+    const onClick = (event: Event) => {
+      console.log(event)
     }
     return { onClick }
   }

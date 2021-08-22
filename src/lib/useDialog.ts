@@ -2,9 +2,14 @@ import Button from './Button.vue'
 import Dialog from './Dialog.vue'
 import { createApp, h } from 'vue'
 
-export const useDialog = () => (options: {[key: string]: string}) => {
+interface dialogOptions {
+  title: string
+  content: string
+}
+
+export const useDialog = () => (options: dialogOptions) => {
   const { title, content } = options
-  const div: HTMLDivElement = document.createElement('div')
+  const div = document.createElement('div')
   document.body.appendChild(div)
 
   const openDialog = () => {
@@ -22,7 +27,7 @@ export const useDialog = () => (options: {[key: string]: string}) => {
       return h(
         Dialog,
         {
-          title,
+          title: title,
           visible: true,
           'onUpdate:visible': (newVisible: boolean) => {
             newVisible === false && closeDialog()
@@ -35,9 +40,7 @@ export const useDialog = () => (options: {[key: string]: string}) => {
               Button,
               {
                 size: 'small',
-                onClick: () => {
-                  console.log('我被点击了')
-                }
+                onClick: closeDialog
               },
               { default: () => '取消' }
             ),
@@ -46,9 +49,7 @@ export const useDialog = () => (options: {[key: string]: string}) => {
               {
                 type: 'primary',
                 size: 'small',
-                onClick: () => {
-                  console.log('我被点击了')
-                }
+                onClick: closeDialog
               },
               { default: () => '确定' }
             )
