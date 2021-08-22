@@ -36,7 +36,7 @@ $_border-color: #cdd1e4;
 $_border-color-light: #e4e5e9;
 $_border-color-dark: #9ca3af;
 
-$_border-radius: 4px;
+$_border-radius: 3px;
 $_border-radius-round: 18px;
 $_border-radius-small-round: 16px;
 $_border-radius-small-circle: 16px;
@@ -72,4 +72,4 @@ $_textarea-line-height: 1.5;
 $_textarea-padding: 6px 14px;
 
 /* Dialog */
-$_dialog-border-radius: 3px;
+$_dialog-border-radius: $_border-radius;

@@ -91,7 +91,7 @@ export default defineComponent({
   font-size: 14px;
   background-color: #ffffff;
   border: none;
-  border-radius: 3px;
+  border-radius: $_border-radius;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;

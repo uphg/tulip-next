@@ -13,7 +13,7 @@ export default defineComponent({
   components: { Button },
   setup() {
     const onClick = (event: Event) => {
-      console.log(event)
+      console.log('hi')
     }
     return { onClick }
   }

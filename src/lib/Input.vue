@@ -1,5 +1,6 @@
 <template>
   <input
+    class="tulp-input"
     type="text"
     @input="handleInput"
   >
@@ -21,3 +22,27 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+@import 'style/common/variable.scss';
+
+.tulp-input {
+  font-size: $_font-size;
+  font-family: inherit;
+  border: 1px solid $_border-color;
+  box-sizing: border-box;
+  border-radius: $_border-radius;
+  padding: $_input-padding;
+  line-height: $_input-line-height;
+  transition: $_color-transition, $_border-color-transition, $_box-shadow-transition;
+  &:hover {
+    border-color: $_border-color-dark;
+  }
+  &:focus {
+    border-color: $_color-primary;
+    box-shadow: 0 0 0 2.2px $_input-wave;
+  }
+  &:focus, &:focus-visible {
+    outline: none;
+  }
+}
+</style>
