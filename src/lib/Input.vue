@@ -39,7 +39,7 @@ export default defineComponent({
   }
   &:focus {
     border-color: $_color-primary;
-    box-shadow: 0 0 0 2.2px $_input-wave;
+    box-shadow: $_wave-active-box-shadow;
   }
   &:focus, &:focus-visible {
     outline: none;

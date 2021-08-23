@@ -22,6 +22,9 @@ $_color-text-primary: #0d0d0d;
 $_color-text-minor: #606266;
 $_color-text-looming: #C0C4CC;
 
+$_wave-box-shadow: 0 0 0 2.2px rgba(0, 0, 0, 0.05);
+$_wave-active-box-shadow: 0 0 0 2.2px rgba(68, 99, 209, 0.2);
+
 $_font-size: 14px;
 $_font-size-small: 12px;
 $_icon-size: $_font-size;
@@ -67,9 +70,10 @@ $_input-padding: 0 14px;
 $_input-line-height: 34px;
 $_input-placeholder-color: #C0C4CC;
 $_input-disabled-bg-color: #f3f4f6;
-$_input-wave: rgba(68, 99, 209, 0.2);
 $_textarea-line-height: 1.5;
 $_textarea-padding: 6px 14px;
 
 /* Dialog */
 $_dialog-border-radius: $_border-radius;
+
+/* Switch */

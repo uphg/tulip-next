@@ -33,6 +33,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 @use "sass:math";
+@import 'style/common/variable.scss';
 @import 'style/button-wave', 'style/animation-wave';
 
 $height: 20px;
@@ -44,12 +45,17 @@ $core-height: $height - 4px;
   border: none;
   // 语法参考: https://sass-lang.com/documentation/breaking-changes/slash-div
   border-radius: math.div($height, 2);
-  background-color: #dcdfe6;
+  background-color: rgba(0, 0, 0, 0.14);
   transition: background-color 0.25s;
+  transition: $_background-transition, $_box-shadow-transition;
   position: relative;
   --ripple-color: #415fcc;
   &:focus {
     outline: none;
+    box-shadow: $_wave-box-shadow;
+  }
+  &:hover {
+    box-shadow: none;
   }
   &:active {
     > .tulp-switch-core {
@@ -60,6 +66,12 @@ $core-height: $height - 4px;
     background-color: #415fcc;
     & > .tulp-switch-core {
       left: calc(100% - #{$core-height} - 2px);
+    }
+    &:focus {
+      box-shadow: $_wave-active-box-shadow;
+    }
+    &:hover {
+      box-shadow: none;
     }
     &:active > .tulp-switch-core {
       width: $core-height + 4px; margin-left: -4px;

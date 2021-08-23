@@ -11,7 +11,7 @@ import { defineComponent, ref } from 'vue'
 import Switch from '../../lib/Switch.vue'
 export default defineComponent({
   components: { Switch },
-  setup () {
+  setup() {
     const value = ref(false)
     return { value }
   }
