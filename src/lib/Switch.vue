@@ -86,7 +86,7 @@ $core-height: $height - 4px;
   position: absolute;
   top: 2px;
   left: 2px;
-  transition: left 0.25s, margin-left 0.25s, width 0.25s;
+  transition: left $_transition-time, margin-left $_transition-time, width $_transition-time;
 }
 
 .tulp-switch-wave {

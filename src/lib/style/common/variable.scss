@@ -29,11 +29,12 @@ $_font-size: 14px;
 $_font-size-small: 12px;
 $_icon-size: $_font-size;
 
-$_all-transition: all .3s cubic-bezier(.645,.045,.355,1);
-$_color-transition: color .3s cubic-bezier(.645,.045,.355,1);
-$_background-transition: background .3s cubic-bezier(.645,.045,.355,1);
-$_border-color-transition: border-color .3s cubic-bezier(.645,.045,.355,1);
-$_box-shadow-transition: box-shadow .3s cubic-bezier(.645,.045,.355,1);
+$_transition-time: 0.25s;
+$_all-transition: all $_transition-time cubic-bezier(.645,.045,.355,1);
+$_color-transition: color $_transition-time cubic-bezier(.645,.045,.355,1);
+$_background-transition: background $_transition-time cubic-bezier(.645,.045,.355,1);
+$_border-color-transition: border-color $_transition-time cubic-bezier(.645,.045,.355,1);
+$_box-shadow-transition: box-shadow $_transition-time cubic-bezier(.645,.045,.355,1);
 
 $_border-color: #cdd1e4;
 $_border-color-light: #e4e5e9;
