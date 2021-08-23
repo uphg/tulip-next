@@ -83,9 +83,8 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/common/variable.scss';
-@import 'style/common/function.scss';
-@import 'style/button-wave', 'style/animation-wave';
+@import 'style/common/variable', 'style/common/transition';
+@import 'style/wave-effect', 'style/animation-wave';
 
 .tulp-button {
   position: relative;
@@ -163,6 +162,9 @@ export default defineComponent({
 }
 
 .tulp-button-wave {
-  @include button-wave;
+  @include wave-effect;
+  &.active {
+    animation-name: wave-spread, wave-opacity;
+  }
 }
 </style>

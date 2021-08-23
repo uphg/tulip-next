@@ -34,7 +34,7 @@ export default defineComponent({
 <style lang="scss">
 @use "sass:math";
 @import 'style/common/variable', 'style/common/transition';
-@import 'style/button-wave', 'style/animation-wave';
+@import 'style/wave-effect', 'style/animation-wave';
 
 $height: 20px;
 $core-height: $height - 4px;
@@ -83,6 +83,7 @@ $core-height: $height - 4px;
   height: $core-height;
   border-radius: math.div($core-height, 2);
   background-color: #fff;
+  box-shadow: 0 2px 4px #00230b33;
   position: absolute;
   top: 2px;
   left: 2px;
@@ -90,6 +91,9 @@ $core-height: $height - 4px;
 }
 
 .tulp-switch-wave {
-  @include button-wave;
+  @include wave-effect;
+  &.active {
+    animation-name: large-wave-spread, large-wave-opacity
+  }
 }
 </style>

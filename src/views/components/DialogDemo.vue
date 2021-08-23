@@ -1,24 +1,28 @@
 <template>
   <div class="dialog-demo">
-    <h2>对话框组件</h2>
-    <Button @click="dialogVisible = true">打开对话框</Button>
-    <Dialog v-model:visible="dialogVisible">
-      <p>我只想保持本色</p>
-      <p>和少年的心气</p>
-      <template #footer>
-        <Button
-          size="small"
-          @click="dialogVisible = false"
-        >取消</Button>
-        <Button
-          type="primary"
-          size="small"
-          @click="dialogVisible = false"
-        >确定</Button>
-      </template>
-    </Dialog>
-    <h3>快捷打开</h3>
-    <Button @click="openDialog">点击打开</Button>
+    <div>
+      <h2>对话框组件</h2>
+      <Button @click="dialogVisible = true">打开对话框</Button>
+      <Dialog v-model:visible="dialogVisible">
+        <p>我只想保持本色</p>
+        <p>和少年的心气</p>
+        <template #footer>
+          <Button
+            size="small"
+            @click="dialogVisible = false"
+          >取消</Button>
+          <Button
+            type="primary"
+            size="small"
+            @click="dialogVisible = false"
+          >确定</Button>
+        </template>
+      </Dialog>
+    </div>
+    <div>
+      <h2>快捷打开</h2>
+      <Button @click="openDialog">点击打开</Button>
+    </div>
   </div>
 </template>
 <script lang="ts">
