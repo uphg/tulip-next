@@ -23,7 +23,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/common/variable.scss';
+@import 'style/common/variable', 'style/common/transition';
 
 .tulp-input {
   font-size: $_font-size;

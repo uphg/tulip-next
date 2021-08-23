@@ -84,6 +84,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 @import 'style/common/variable.scss';
+@import 'style/common/function.scss';
 @import 'style/button-wave', 'style/animation-wave';
 
 .tulp-button {
@@ -112,7 +113,7 @@ export default defineComponent({
     flex-wrap: nowrap;
   }
   &-border {
-    transition: border-color 0.25s;
+    transition: transitionEffect(border-color);
     box-sizing: border-box;
     width: 100%;
     border-radius: inherit;

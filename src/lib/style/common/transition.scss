@@ -1,0 +1,12 @@
+$_transition-duration: 0.25s;
+$_transition-timing-function: cubic-bezier(.645,.045,.355,1);
+
+@function transitionEffect($property) {
+  @return $property $_transition-duration $_transition-timing-function;
+}
+
+$_all-transition: transitionEffect(all);
+$_color-transition: transitionEffect(color);
+$_background-transition: transitionEffect(background);
+$_border-color-transition: transitionEffect(border-color);
+$_box-shadow-transition: transitionEffect(box-shadow);
