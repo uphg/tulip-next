@@ -20,7 +20,7 @@
   </button>
 </template>
 <script lang="ts">
-import { LIB_PREFIX } from '../utils/default-config'
+import { Lib } from '../utils/default-config'
 import { defineComponent, PropType } from 'vue';
 import { useButtonWave } from './useButtonWave'
 
@@ -38,7 +38,7 @@ interface TButtonProps {
 }
 
 export default defineComponent({
-  name: `${LIB_PREFIX}Button`,
+  name: `${Lib.Prefix}Button`,
   props: {
     type: {
       type: String as TButtonType,
@@ -100,7 +100,6 @@ export default defineComponent({
   flex-wrap: nowrap;
   white-space: nowrap;
   transition: color 0.25s;
-  position: relative;
   padding: 0 $_button-padding;
   height: $_button-height;
   text-decoration: none;

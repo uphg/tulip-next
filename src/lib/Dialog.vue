@@ -1,34 +1,36 @@
 <template>
-  <template v-if="visible">
-    <Teleport to="body">
-      <div
-        class="tulp-dialog"
-        v-bind="$attrs"
-      >
-        <div class="tulp-dialog-overlay" @click="closeDialog"></div>
-        <div class="tulp-dialog-wrapper">
-          <div class="tulp-dialog-content">
-            <div class="tulp-dialog-header">
-              <span class="tulp-dialog-title">标题</span>
-              <span class="tulp-dialog-close" @click="closeDialog"></span>
-            </div>
-            <div class="tulp-dialog-body">
-              <slot />
-            </div>
-            <div class="tulp-dialog-footer">
-              <slot name="footer" />
+  <Teleport to="body">
+    <transition name="dialog-fade">
+      <template v-if="visible">
+        <div
+          class="tulp-dialog"
+          v-bind="$attrs"
+        >
+          <div class="tulp-dialog-overlay" @click="closeDialog"></div>
+          <div class="tulp-dialog-wrapper">
+            <div class="tulp-dialog-content">
+              <div class="tulp-dialog-header">
+                <span class="tulp-dialog-title">标题</span>
+                <span class="tulp-dialog-close" @click="closeDialog"></span>
+              </div>
+              <div class="tulp-dialog-body">
+                <slot />
+              </div>
+              <div class="tulp-dialog-footer">
+                <slot name="footer" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Teleport>
-  </template>
+      </template>
+    </transition>
+  </Teleport>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { LIB_PREFIX } from '../utils/default-config'
+import { Lib } from '../utils/default-config'
 export default defineComponent({
-  name: `${LIB_PREFIX}Dialog`,
+  name: `${Lib.Prefix}Dialog`,
   props: {
     visible: {
       type: Boolean,
@@ -68,11 +70,10 @@ export default defineComponent({
   width: 446px;
   position: relative;
   margin: {
-    top: 40vh;
+    top: 30vh;
     left: auto;
     right: auto;
   };
-  transform: translateY(-50%);
 }
 .tulp-dialog-content {
   background-color: #fff;
@@ -120,6 +121,71 @@ export default defineComponent({
   text-align: right;
   .tulp-button:not(:last-child) {
     margin-right: 10px;
+  }
+}
+
+/*.fade-enter-active,*/
+/*.fade-leave-active {*/
+/*  transition: opacity 0.5s ease;*/
+/*}*/
+.dialog-fade-enter-active {
+  animation: modal-fade-in 0.3s;
+  .tulp-dialog-wrapper {
+    animation: dialog-fade-in 0.3s;
+  }
+}
+
+.dialog-fade-leave-active {
+  animation: modal-fade-out 0.3s;
+  .tulp-dialog-wrapper {
+    animation: dialog-fade-out 0.3s;
+  }
+}
+
+/*.fade-enter-from,*/
+/*.fade-leave-to {*/
+/*  opacity: 0;*/
+/*}*/
+
+@keyframes modal-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes dialog-fade-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
   }
 }
 </style>

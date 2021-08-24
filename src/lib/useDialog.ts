@@ -14,6 +14,8 @@ export const useDialog = () => (options: dialogOptions) => {
 
   const openDialog = () => {
     app.mount(div)
+    console.log('app')
+    console.log(app)
     div.remove()
   }
 
@@ -30,7 +32,7 @@ export const useDialog = () => (options: dialogOptions) => {
           title: title,
           visible: true,
           'onUpdate:visible': (newVisible: boolean) => {
-            newVisible === false && closeDialog()
+            !newVisible && closeDialog()
           }
         },
         {
