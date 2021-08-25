@@ -124,10 +124,6 @@ export default defineComponent({
   }
 }
 
-/*.fade-enter-active,*/
-/*.fade-leave-active {*/
-/*  transition: opacity 0.5s ease;*/
-/*}*/
 .dialog-fade-enter-active {
   animation: modal-fade-in 0.3s;
   .tulp-dialog-wrapper {
@@ -141,11 +137,6 @@ export default defineComponent({
     animation: dialog-fade-out 0.3s;
   }
 }
-
-/*.fade-enter-from,*/
-/*.fade-leave-to {*/
-/*  opacity: 0;*/
-/*}*/
 
 @keyframes modal-fade-in {
   0% {
