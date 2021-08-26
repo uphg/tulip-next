@@ -28,6 +28,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Lib } from '../utils/default-config'
+
 export default defineComponent({
   name: `${Lib.Prefix}Modal`,
   props: {
@@ -124,20 +125,20 @@ export default defineComponent({
 }
 
 .modal-fade-enter-active {
-  animation: overlay-fade-in 0.3s;
+  animation: modal-overlay-fade-in 0.3s;
   .tulp-modal-wrapper {
     animation: modal-fade-in 0.3s;
   }
 }
 
 .modal-fade-leave-active {
-  animation: overlay-fade-out 0.3s;
+  animation: modal-overlay-fade-out 0.3s;
   .tulp-modal-wrapper {
     animation: modal-fade-out 0.3s;
   }
 }
 
-@keyframes overlay-fade-in {
+@keyframes modal-overlay-fade-in {
   0% {
     opacity: 0;
   }
@@ -147,7 +148,7 @@ export default defineComponent({
   }
 }
 
-@keyframes overlay-fade-out {
+@keyframes modal-overlay-fade-out {
   0% {
     opacity: 1;
   }

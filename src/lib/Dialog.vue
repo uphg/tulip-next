@@ -1,29 +1,30 @@
 <template>
-  <Teleport to="body">
-    <transition name="dialog-fade">
-      <div
-        v-if="visible"
-        class="tulp-dialog"
-        v-bind="$attrs"
-      >
-        <div class="tulp-dialog-overlay" @click="closeDialog"></div>
-        <div class="tulp-dialog-wrapper">
-          <div class="tulp-dialog-content">
-            <div class="tulp-dialog-header">
-              <span class="tulp-dialog-title">标题</span>
-              <span class="tulp-dialog-close" @click="closeDialog"></span>
-            </div>
-            <div class="tulp-dialog-body">
-              <slot />
-            </div>
-            <div class="tulp-dialog-footer">
-              <slot name="footer" />
-            </div>
+  <transition
+    name="dialog-fade"
+    @after-leave="afterLeave"
+  >
+    <div
+      v-if="visible"
+      class="tulp-dialog"
+      v-bind="$attrs"
+    >
+      <div class="tulp-dialog-overlay" @click="closeDialog"></div>
+      <div class="tulp-dialog-wrapper">
+        <div class="tulp-dialog-content">
+          <div class="tulp-dialog-header">
+            <span class="tulp-dialog-title">标题</span>
+            <span class="tulp-dialog-close" @click="closeDialog"></span>
+          </div>
+          <div class="tulp-dialog-body">
+            <slot />
+          </div>
+          <div class="tulp-dialog-footer">
+            <slot name="footer" />
           </div>
         </div>
       </div>
-    </transition>
-  </Teleport>
+    </div>
+  </transition>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -41,7 +42,11 @@ export default defineComponent({
       context.emit('update:visible', false)
     }
 
-    return { closeDialog }
+    const afterLeave = () => {
+      context.emit('close', false)
+    }
+
+    return { closeDialog, afterLeave }
   }
 })
 </script>
@@ -124,30 +129,30 @@ export default defineComponent({
 }
 
 .dialog-fade-enter-active {
-  animation: modal-fade-in 0.3s;
+  animation: dialog-overlay-fade-in 0.3s;
   .tulp-dialog-wrapper {
     animation: dialog-fade-in 0.3s;
   }
 }
 
 .dialog-fade-leave-active {
-  animation: modal-fade-out 0.3s;
+  animation: dialog-overlay-fade-out 0.3s;
   .tulp-dialog-wrapper {
     animation: dialog-fade-out 0.3s;
   }
 }
 
-@keyframes modal-fade-in {
+@keyframes dialog-overlay-fade-in {
   0% {
     opacity: 0;
   }
   100% {
-    transform: translate3d(0, 0, 0);
+    /*transform: translate3d(0, 0, 0);*/
     opacity: 1;
   }
 }
 
-@keyframes modal-fade-out {
+@keyframes dialog-overlay-fade-out {
   0% {
     opacity: 1;
   }

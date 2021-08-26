@@ -1,6 +1,6 @@
 import Button from './Button.vue'
 import Dialog from './Dialog.vue'
-import { createApp, h } from 'vue'
+import { createApp, h, nextTick } from 'vue'
 
 interface dialogOptions {
   title: string
@@ -14,24 +14,35 @@ export const useDialog = () => (options: dialogOptions) => {
 
   const openDialog = () => {
     app.mount(div)
-    div.remove()
   }
 
   const closeDialog = () => {
     app.unmount()
     div.remove()
+    console.log('销毁触发了')
   }
 
   const app = createApp({
+    data() {
+      return {
+        visible: false
+      }
+    },
+    mounted() {
+      void nextTick(() => {
+        this.visible = true
+      })
+    },
     render() {
       return h(
         Dialog,
         {
           title: title,
-          visible: true,
+          visible: this.visible,
           'onUpdate:visible': (newVisible: boolean) => {
-            !newVisible && closeDialog()
-          }
+            this.visible = newVisible
+          },
+          'onClose': closeDialog
         },
         {
           default: () => content,
@@ -40,7 +51,9 @@ export const useDialog = () => (options: dialogOptions) => {
               Button,
               {
                 size: 'small',
-                onClick: closeDialog
+                onClick: () => {
+                  this.visible = false
+                }
               },
               { default: () => '取消' }
             ),
@@ -49,7 +62,9 @@ export const useDialog = () => (options: dialogOptions) => {
               {
                 type: 'primary',
                 size: 'small',
-                onClick: closeDialog
+                onClick: () => {
+                  this.visible = false
+                }
               },
               { default: () => '确定' }
             )
