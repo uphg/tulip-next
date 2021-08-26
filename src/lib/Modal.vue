@@ -1,22 +1,22 @@
 <template>
   <Teleport to="body">
-    <transition name="dialog-fade">
+    <transition name="modal-fade">
       <div
         v-if="visible"
-        class="tulp-dialog"
+        class="tulp-modal"
         v-bind="$attrs"
       >
-        <div class="tulp-dialog-overlay" @click="closeDialog"></div>
-        <div class="tulp-dialog-wrapper">
-          <div class="tulp-dialog-content">
-            <div class="tulp-dialog-header">
-              <span class="tulp-dialog-title">标题</span>
-              <span class="tulp-dialog-close" @click="closeDialog"></span>
+        <div class="tulp-modal-overlay" @click="closeDialog"></div>
+        <div class="tulp-modal-wrapper">
+          <div class="tulp-modal-content">
+            <div class="tulp-modal-header">
+              <span class="tulp-modal-title">标题</span>
+              <span class="tulp-modal-close" @click="closeDialog"></span>
             </div>
-            <div class="tulp-dialog-body">
+            <div class="tulp-modal-body">
               <slot />
             </div>
-            <div class="tulp-dialog-footer">
+            <div class="tulp-modal-footer">
               <slot name="footer" />
             </div>
           </div>
@@ -29,7 +29,7 @@
 import { defineComponent } from 'vue'
 import { Lib } from '../utils/default-config'
 export default defineComponent({
-  name: `${Lib.Prefix}Dialog`,
+  name: `${Lib.Prefix}Modal`,
   props: {
     visible: {
       type: Boolean,
@@ -48,7 +48,7 @@ export default defineComponent({
 <style lang="scss">
 @import 'style/common/variable.scss';
 
-.tulp-dialog {
+.tulp-modal {
   position: absolute;
   top: 0;
   left: 0;
@@ -56,7 +56,7 @@ export default defineComponent({
   bottom: 0;
   z-index: 1;
 }
-.tulp-dialog-overlay {
+.tulp-modal-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -65,7 +65,7 @@ export default defineComponent({
   background-color: rgba(0, 0, 0, .45);
   transition: background-color 0.25s;
 }
-.tulp-dialog-wrapper {
+.tulp-modal-wrapper {
   width: 446px;
   position: relative;
   margin: {
@@ -74,12 +74,12 @@ export default defineComponent({
     right: auto;
   };
 }
-.tulp-dialog-content {
+.tulp-modal-content {
   background-color: #fff;
   border-radius: $_dialog-border-radius;
   box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
 }
-.tulp-dialog-header {
+.tulp-modal-header {
   padding: 16px 24px;
   border-bottom: 1px solid #e8e8e8;
   border-radius: $_dialog-border-radius $_dialog-border-radius 0 0;
@@ -87,7 +87,7 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
 }
-.tulp-dialog-close {
+.tulp-modal-close {
   position: relative;
   display: inline-block;
   width: 16px;
@@ -110,10 +110,10 @@ export default defineComponent({
     transform: translate(-50%, -50%) rotate(45deg);
   }
 }
-.tulp-dialog-body {
+.tulp-modal-body {
   padding: 24px;
 }
-.tulp-dialog-footer {
+.tulp-modal-footer {
   padding: 10px 16px;
   border-top: 1px solid #e8e8e8;
   border-radius: 0 0 $_dialog-border-radius $_dialog-border-radius;
@@ -123,21 +123,21 @@ export default defineComponent({
   }
 }
 
-.dialog-fade-enter-active {
-  animation: modal-fade-in 0.3s;
-  .tulp-dialog-wrapper {
-    animation: dialog-fade-in 0.3s;
+.modal-fade-enter-active {
+  animation: overlay-fade-in 0.3s;
+  .tulp-modal-wrapper {
+    animation: modal-fade-in 0.3s;
   }
 }
 
-.dialog-fade-leave-active {
-  animation: modal-fade-out 0.3s;
-  .tulp-dialog-wrapper {
-    animation: dialog-fade-out 0.3s;
+.modal-fade-leave-active {
+  animation: overlay-fade-out 0.3s;
+  .tulp-modal-wrapper {
+    animation: modal-fade-out 0.3s;
   }
 }
 
-@keyframes modal-fade-in {
+@keyframes overlay-fade-in {
   0% {
     opacity: 0;
   }
@@ -147,7 +147,7 @@ export default defineComponent({
   }
 }
 
-@keyframes modal-fade-out {
+@keyframes overlay-fade-out {
   0% {
     opacity: 1;
   }
@@ -157,7 +157,7 @@ export default defineComponent({
 }
 
 
-@keyframes dialog-fade-in {
+@keyframes modal-fade-in {
   0% {
     transform: scale(0.8);
     opacity: 0;
@@ -168,7 +168,7 @@ export default defineComponent({
   }
 }
 
-@keyframes dialog-fade-out {
+@keyframes modal-fade-out {
   0% {
     transform: scale(1);
     opacity: 1;

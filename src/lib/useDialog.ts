@@ -14,8 +14,6 @@ export const useDialog = () => (options: dialogOptions) => {
 
   const openDialog = () => {
     app.mount(div)
-    console.log('app')
-    console.log(app)
     div.remove()
   }
 
