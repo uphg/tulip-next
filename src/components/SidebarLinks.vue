@@ -28,7 +28,7 @@ export default defineComponent({
 
     const sidebarIndex = inject('sidebarIndex')
     const updateSidebarIndex = inject<Function>('updateSidebarIndex')
-    const sidebarLinks = inject('sidebarLinks')
+    const sidebarLinks = inject('sidebarLinks') as Ref<Array<LinkType>>
     const updateSidebarLinks = inject<UpdateSidebarLinksFunc>('updateSidebarLinks')
     const hasHidden = (item: LinkType): boolean => !item.hidden
 

@@ -1,5 +1,5 @@
-import { linkType } from './router';
+import { LinkType } from './router';
 
 export interface UpdateSidebarLinksFunc {
-  (value: linkType[]): void;
+  (value: LinkType[]): void;
 }

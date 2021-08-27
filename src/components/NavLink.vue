@@ -14,7 +14,10 @@ import { UpdateSidebarLinksFunc } from '../app-type'
 export default defineComponent({
   name: 'NavLink',
   props: {
-    link: Object,
+    link: {
+      type: Object,
+      default: () => ({})
+    },
     activeClass: Boolean
   },
   setup () {

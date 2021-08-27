@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'App',
   setup () {
     const navbarIndex = ref(0)
-    const navbarLinks = ref(routes.filter(item => !item.hidden))
+    const navbarLinks = ref<Array<LinkType>>(routes.filter(item => !item.hidden))
     const sidebarVisible = ref(false)
     const sidebarIndex = ref(0)
     const sidebarLinks = ref<Array<LinkType>>([])

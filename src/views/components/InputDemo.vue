@@ -6,14 +6,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, Ref } from 'vue'
 import Input from '../../lib/Input.vue'
 
 export default defineComponent({
   components: { Input },
   setup() {
-    const value = ref(null)
-    
+    const value: Ref<string | null> = ref(null)
+
     return { value }
   },
 })

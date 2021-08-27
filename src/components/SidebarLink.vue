@@ -11,7 +11,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     path: String,
-    meta: Object,
+    meta: {
+      type: Object,
+      default: () => ({})
+    },
     activeClass: Boolean
   }
 })
