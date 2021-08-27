@@ -34,7 +34,7 @@ export default defineComponent({
 <style lang="scss">
 @use "sass:math";
 @import 'style/common/variable', 'style/common/transition';
-@import 'style/wave-effect', 'style/animation-wave';
+@import 'style/wave-effect';
 
 $height: 20px;
 $core-height: $height - 4px;

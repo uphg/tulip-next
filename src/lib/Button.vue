@@ -84,7 +84,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 @import 'style/common/variable', 'style/common/transition';
-@import 'style/wave-effect', 'style/animation-wave';
+@import 'style/wave-effect';
 
 .tulp-button {
   position: relative;

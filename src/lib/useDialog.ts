@@ -19,7 +19,6 @@ export const useDialog = () => (options: dialogOptions) => {
   const closeDialog = () => {
     app.unmount()
     div.remove()
-    console.log('销毁触发了')
   }
 
   const app = createApp({

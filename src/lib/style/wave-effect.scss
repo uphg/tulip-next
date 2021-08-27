@@ -13,3 +13,44 @@
   animation-duration: .6s;  // 动画持续时间
   animation-timing-function: cubic-bezier(0, 0, 0.2, 1);  // 动画过渡效果
 }
+
+@keyframes wave-spread {
+  from {
+    box-shadow: 0 0 0.5px 0 var(--ripple-color);
+  }
+
+  to {
+    box-shadow: 0 0 0.5px 4.5px var(--ripple-color);
+  }
+}
+
+@keyframes wave-opacity {
+  from {
+    opacity: 0.6;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* switch wave transition */
+@keyframes large-wave-spread {
+  from {
+    box-shadow: 0 0 0 0 var(--ripple-color);
+  }
+
+  to {
+    box-shadow: 0 0 0 6px var(--ripple-color);
+  }
+}
+
+@keyframes large-wave-opacity {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
