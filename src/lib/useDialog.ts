@@ -14,11 +14,11 @@ export const useDialog = () => (options: dialogOptions) => {
 
   const openDialog = () => {
     app.mount(div)
+    div.remove()
   }
 
   const closeDialog = () => {
     app.unmount()
-    div.remove()
   }
 
   const app = createApp({

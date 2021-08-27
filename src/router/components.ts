@@ -2,7 +2,6 @@ import ButtonDemo from '../views/components/ButtonDemo.vue'
 import InputDemo from '../views/components/InputDemo.vue'
 import SwitchDemo from '../views/components/SwitchDemo.vue'
 import DialogDemo from '../views/components/DialogDemo.vue'
-import ModalDome from '../views/components/ModalDome.vue';
 
 export const components = [
   {
@@ -28,11 +27,5 @@ export const components = [
     name: 'ComponentsDialog',
     component: DialogDemo,
     meta: { title: 'Dialog 对话框' }
-  },
-  {
-    path: 'modal',
-    name: 'ComponentsModal',
-    component: ModalDome,
-    meta: { title: 'Modal 对话框' }
   }
 ]
