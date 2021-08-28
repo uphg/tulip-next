@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '../Layout/Layout.vue'
 import HomeLayout from '../Layout/HomeLayout.vue'
 import NotFound from '../Layout/404.vue'
@@ -17,7 +17,7 @@ export interface LinkType {
   children?: LinkType[]
 }
 
-const history = createWebHistory()
+const history = createWebHashHistory()
 
 export const routes: LinkType[] = [
   {

@@ -1,9 +1,8 @@
-# Vue 组件文档示例项目
+# Tulip UI
 
-- 使用 Vue 3 + VueRouter 4 + TS + Vite 搭建的一个项目示例
-- 自适应移动端的导航
+- 使用 Vue 3 + TS + Vite
 
-## 运行
+## 运行示例
 
 ```sh
 yarn

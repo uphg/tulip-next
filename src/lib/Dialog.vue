@@ -6,11 +6,11 @@
     >
       <div
         v-if="visible"
-        class="tulp-dialog"
+        class="tulp-dialog-container"
         v-bind="$attrs"
       >
         <div class="tulp-dialog-overlay" @click="closeDialog"></div>
-        <div class="tulp-dialog-wrapper">
+        <div class="tulp-dialog">
           <div class="tulp-dialog-content">
             <div class="tulp-dialog-header">
               <span class="tulp-dialog-title">{{ title }}</span>
@@ -58,7 +58,7 @@ export default defineComponent({
 <style lang="scss">
 @import 'style/common/variable.scss';
 
-.tulp-dialog {
+.tulp-dialog-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -75,7 +75,7 @@ export default defineComponent({
   background-color: rgba(0, 0, 0, .45);
   transition: background-color 0.25s;
 }
-.tulp-dialog-wrapper {
+.tulp-dialog {
   width: 446px;
   position: relative;
   margin: {
@@ -108,7 +108,7 @@ export default defineComponent({
     content: '';
     position: absolute;
     height: 1px;
-    background: black;
+    background-color: #000000;
     width: 100%;
     top: 50%;
     left: 50%;
@@ -135,14 +135,14 @@ export default defineComponent({
 
 .dialog-fade-enter-active {
   animation: dialog-overlay-fade-in 0.3s;
-  .tulp-dialog-wrapper {
+  .tulp-dialog {
     animation: dialog-fade-in 0.3s;
   }
 }
 
 .dialog-fade-leave-active {
   animation: dialog-overlay-fade-out 0.3s;
-  .tulp-dialog-wrapper {
+  .tulp-dialog {
     animation: dialog-fade-out 0.3s;
   }
 }
