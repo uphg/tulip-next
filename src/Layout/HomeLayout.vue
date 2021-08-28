@@ -34,6 +34,11 @@ export default defineComponent({
     left: auto;
     right: auto;
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
 @media (min-width: 720px) {
   .no-sidebar {

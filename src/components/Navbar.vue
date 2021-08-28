@@ -5,7 +5,7 @@
       <router-link
         class="logo-link"
         to="/home"
-      >logo</router-link>
+      >Tulip</router-link>
     </div>
     <NavLinks />
   </header>
@@ -51,6 +51,18 @@ export default defineComponent({
   }
   .navbar-left {
     width: calc(320px - 24px);
+    display: flex;
+    align-items: center;
+  }
+  .logo-link {
+    color: #262626;
+    font-size: 24px;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #ff0000;
+    &:active {
+      color: #262626;
+      text-shadow: 1px 1px 1px #ff0000;
+    }
   }
 
   .sidebar-button {

@@ -106,6 +106,8 @@ export default defineComponent({
   line-height: normal;
   --ripple-color: #415fcc;
   &-content {
+    height: 1em;
+    line-height: 1;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
