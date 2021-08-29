@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build:lib": "vue-tsc --noEmit && vite build --config lib-config.ts",
+    "build:docs": "vue-tsc --noEmit && vite build --config docs-config.ts",
     "serve": "vite preview"
   },
   "dependencies": {
