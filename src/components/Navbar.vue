@@ -35,6 +35,7 @@ export default defineComponent({
   display: flex;
   box-sizing: border-box;
   border-bottom: 1px solid #eaecef;
+  background-color: #fff;
   .nav-links {
     display: flex;
   }
@@ -47,7 +48,7 @@ export default defineComponent({
     padding: 0 10px;
   }
   .nav-link-active {
-    color: #3eaf7c;
+    color: #243457;
   }
   .navbar-left {
     width: calc(320px - 24px);

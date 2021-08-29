@@ -47,7 +47,7 @@ export default defineComponent({
     color: inherit;
     text-decoration: inherit;
     &.nav-link-active {
-      color: #3eaf7c;
+      color: #243457;
     }
   }
   @media (max-width: 719px) {

@@ -24,7 +24,7 @@ export default defineComponent({
   color: inherit;
   text-decoration: none;
   &.sidebar-link-active {
-    color: #3eaf7c;
+    color: #243457;
   }
 }
 </style>
