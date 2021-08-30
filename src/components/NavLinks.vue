@@ -15,13 +15,13 @@
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
 import NavLink from './NavLink.vue'
-import { LinkType } from '../router';
+import { NavLinkType } from '../router';
 
 export default defineComponent({
   components: { NavLink },
   setup () {
     const navbarIndex = inject('navbarIndex')
-    const navbarLinks = inject('navbarLinks') as Ref<Array<LinkType>>
+    const navbarLinks = inject('navbarLinks') as Ref<NavLinkType[]>
 
     return { navbarLinks, navbarIndex }
   }

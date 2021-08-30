@@ -7,19 +7,19 @@ import { components } from './components'
 import Home from '../views/Home.vue'
 import { DefineComponent, Component } from 'vue'
 
-export interface LinkType {
+export interface NavLinkType {
   path: string;
   component: DefineComponent | Component;
   name?: string;
   redirect?: string;
   hidden?: boolean;
   meta?: { [key: string]: string };
-  children?: LinkType[]
+  children?: NavLinkType[]
 }
 
 const history = createWebHashHistory()
 
-export const routes: LinkType[] = [
+export const routes: NavLinkType[] = [
   {
     path: '/',
     component: HomeLayout ,

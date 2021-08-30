@@ -18,7 +18,7 @@ import { defineComponent, inject, onMounted, Ref } from 'vue'
 import { useRoute } from 'vue-router'
 import SidebarLink from './SidebarLink.vue'
 import { UpdateSidebarLinksFunc } from '../app-type'
-import { LinkType } from '../router';
+import { NavLinkType } from '../router';
 
 export default defineComponent({
   components: { SidebarLink },
@@ -28,12 +28,12 @@ export default defineComponent({
 
     const sidebarIndex = inject('sidebarIndex')
     const updateSidebarIndex = inject<Function>('updateSidebarIndex')
-    const sidebarLinks = inject('sidebarLinks') as Ref<Array<LinkType>>
+    const sidebarLinks = inject('sidebarLinks') as Ref<NavLinkType[]>
     const updateSidebarLinks = inject<UpdateSidebarLinksFunc>('updateSidebarLinks')
-    const hasHidden = (item: LinkType): boolean => !item.hidden
+    const hasHidden = (item: NavLinkType): boolean => !item.hidden
 
     onMounted(() => {
-      const sidebars = (children as Array<LinkType>).filter((item): boolean => !item.hidden)
+      const sidebars = (children as NavLinkType[]).filter((item): boolean => !item.hidden)
       updateSidebarLinks && updateSidebarLinks(sidebars)
       updateSidebarIndex && updateSidebarIndex(route)
     })

@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue'
-import { LinkType } from '../router'
+import { NavLinkType } from '../router'
 import { UpdateSidebarLinksFunc } from '../app-type'
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
   },
   setup () {
     const updateSidebarLinks = inject<UpdateSidebarLinksFunc>('updateSidebarLinks')
-    const clickLinks = ({ children }: { children: LinkType[] }) => {
+    const clickLinks = ({ children }: { children: NavLinkType[] }) => {
       updateSidebarLinks && updateSidebarLinks(children)
     }
 
