@@ -4,7 +4,7 @@ export function useButtonWave() {
   const isWave: Ref<boolean> = ref(false)
   let animationTimerId: number | null = null
 
-  const closeTimeout = () => {
+  const destroyTimeout = () => {
     isWave.value = false
     typeof animationTimerId === 'number' && window.clearTimeout(animationTimerId)
     animationTimerId = null
@@ -12,12 +12,12 @@ export function useButtonWave() {
 
   const triggerWave = () => {
     if (isWave.value) {
-      closeTimeout()
+      destroyTimeout()
     }
     nextTick(() => {
       isWave.value = true
       animationTimerId = window.setTimeout(() => {
-        closeTimeout()
+        destroyTimeout()
       }, 1000)
     })
   }
