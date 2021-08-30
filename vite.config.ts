@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   base: '/tulip/',
   build: {
-    cssCodeSplit: true, // 使用 js 模块化 css 代码
+    // cssCodeSplit: true, // 使用 js 模块化 css 代码
     lib: {
       entry: path.resolve(__dirname, 'src/lib/main.ts'),
       name: 'MyLib',
