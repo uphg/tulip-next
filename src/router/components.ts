@@ -2,6 +2,7 @@ import ButtonDemo from '../views/components/ButtonDemo.vue'
 import InputDemo from '../views/components/InputDemo.vue'
 import SwitchDemo from '../views/components/SwitchDemo.vue'
 import DialogDemo from '../views/components/DialogDemo.vue'
+import JsxDemo from '../views/components/JsxDemo'
 
 export const components = [
   {
@@ -27,5 +28,11 @@ export const components = [
     name: 'ComponentsDialog',
     component: DialogDemo,
     meta: { title: 'Dialog 对话框' }
+  },
+  {
+    path: 'jsx',
+    name: 'ComponentsJsx',
+    component: JsxDemo,
+    meta: { title: 'JSX 语法测试' }
   }
 ]
