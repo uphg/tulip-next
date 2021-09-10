@@ -1,5 +1,5 @@
 {
-  "name": "vue-component-docs-example",
+  "name": "tulp-ui",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
