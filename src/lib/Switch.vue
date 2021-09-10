@@ -32,5 +32,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/switch';
+@import 'style/components/switch';
 </style>

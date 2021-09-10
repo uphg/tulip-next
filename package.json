@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && sass src/lib/style:dist/style --style compressed && sh scripts/clear-files.sh",
+    "build": "vue-tsc --noEmit && vite build && sass src/lib/style/components:dist/style --style compressed && sh scripts/clear-files.sh",
     "build:docs": "vue-tsc --noEmit && vite build --config docs-config.ts",
     "serve": "vite preview"
   },

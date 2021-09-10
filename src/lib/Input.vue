@@ -24,5 +24,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/input';
+@import 'style/components/input';
 </style>

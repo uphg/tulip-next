@@ -1,5 +1,5 @@
 @use "sass:math";
-@import 'common/variable', 'common/transition', 'wave-effect';
+@import '../common/variable', '../common/transition', '../common/wave-effect';
 
 $height: 20px;
 $core-height: $height - 4px;

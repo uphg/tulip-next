@@ -83,5 +83,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/button';
+@import 'style/components/button';
 </style>

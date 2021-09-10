@@ -56,5 +56,5 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-@import 'style/dialog';
+@import 'style/components/dialog';
 </style>
