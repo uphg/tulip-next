@@ -1,0 +1,123 @@
+@require './animation'
+
+$base = '.tu-switch'
+// 2px 表示 Switch 的边距
+
+{$base}
+  border none
+  cursor pointer
+  min-width calc(var(--t-switch-height) * 2)
+  height var(--t-switch-height)
+  border-radius calc(var(--t-switch-height) / 2)
+  background-color var(--t-switch-bg-color)
+  position relative
+  padding 0
+  transition var(--t-bg-color-transition), var(--t-box-shadow-transition)
+  --ripple-color var(--t-color-primary)
+  &:focus
+    outline none
+    box-shadow var(--t-wave-box-shadow)
+  &:hover
+    box-shadow none
+  &:active
+    {$base}__core
+      width calc(var(--t-switch-core-height) + var(--t-switch-unfold))
+
+  &__wrap
+    display inline-flex
+    position relative
+    min-width calc(var(--t-switch-height) * 2)
+    height var(--t-switch-height)
+    overflow hidden
+    border-radius inherit
+
+  &__content
+    height 200%
+    display flex
+    flex-direction column
+    overflow hidden
+    position relative
+    padding 0 var(--t-switch-padding)
+    border-radius inherit
+
+  &__checked, &__unchecked
+    color #fff
+    display flex
+    align-items center
+    height var(--t-switch-height)
+    transition transform var(--t-transition-time)
+    padding-right calc(var(--t-switch-core-height) - var(--t-switch-padding) + 2px + var(--t-switch-unfold) + 2px)
+  &__checked
+    transform translateX(-100%)
+
+  &__core
+    width var(--t-switch-core-height)
+    height var(--t-switch-core-height)
+    border-radius calc(var(--t-switch-core-height) / 2)
+    background-color #fff
+    box-shadow 0 2px 4px #00230b33
+    position absolute
+    top 2px
+    left 2px
+    transition left var(--t-transition-time), margin-left var(--t-transition-time), width var(--t-transition-time)
+
+  &__core-unchecked
+    height var(--t-switch-height)
+    padding-left var(--t-switch-unfold)
+    display flex
+    align-items: center;
+    white-space: nowrap;
+    position absolute
+    top -2px
+    left calc(var(--t-switch-core-height) + 2px)
+
+  &{$base}--checked
+    background-color var(--t-switch-active-bg-color)
+    {$base}__core
+      left calc(100% - var(--t-switch-height) + 2px)
+    {$base}__core-unchecked
+      transition left var(--t-transition-time)
+
+    &:focus
+      box-shadow var(--t-wave-active-box-shadow)
+    &:hover
+      box-shadow none
+    &:active
+      {$base}__core
+        width calc(var(--t-switch-core-height) + var(--t-switch-unfold))
+        margin-left calc(var(--t-switch-unfold) * -1)
+      {$base}__core-unchecked
+        left calc(var(--t-switch-core-height) + var(--t-switch-unfold) + 2px)
+
+    {$base}__checked
+      transform translateX(0)
+
+  &.is-square
+    border-radius 3px
+    {$base}__core
+      border-radius 3px
+
+  &--small
+    min-width calc(var(--t-switch-small-height) * 2)
+    height var(--t-switch-small-height)
+    border-radius calc(var(--t-switch-small-height) / 2)
+    --t-switch-height var(--t-switch-small-height)
+    --t-switch-padding 10px
+    --t-switch-core-height calc(var(--t-switch-small-height) - 4px)
+    --t-switch-unfold 4px
+
+    &{$base}--checked > {$base}__core
+      left calc(100% - var(--t-switch-small-height) + 2px)
+
+  &--large
+    min-width calc(var(--t-switch-large-height) * 2)
+    height var(--t-switch-large-height)
+    border-radius calc(var(--t-switch-large-height) / 2)
+    --t-switch-height var(--t-switch-large-height)
+    --t-switch-padding 14px
+    --t-switch-core-height calc(var(--t-switch-large-height) - 4px)
+    --t-switch-unfold 6px
+
+    &{$base}--checked > {$base}__core
+      left calc(100% - var(--t-switch-large-height) + 2px)
+

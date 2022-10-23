@@ -1,0 +1,165 @@
+
+// 防止执行动画时内容抖动
+prevent-jitter()
+  transform: translateZ(0);
+
+.tu-dialog {
+  width: 446px;
+  position: relative;
+  margin: 30vh auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  &__container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .45);
+    transition: background-color 0.25s;
+  }
+}
+
+/* --- 默认组件样式 */
+
+.tu-dialog__content {
+  prevent-jitter()
+  background-color: #fff;
+  border-radius: var(--t-dialog-border-radius);
+  box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
+}
+.tu-dialog {
+  .tu-dialog__header {
+    padding: 18px 20px;
+    border-radius: var(--t-dialog-border-radius) var(--t-dialog-border-radius) 0 0;
+    display: flex;
+    align-items: center;
+    .prefix-icon {
+      margin-right: 6px;
+      width: 1.5em;
+      height: 1.5em;
+      &.tu-icon-success {
+        fill: var(--t-color-success);
+      }
+      &.tu-icon-warning {
+        fill: var(--t-color-warning);
+      }
+      &.tu-icon-info {
+        fill: var(--t-color-info);
+      }
+      &.tu-icon-error {
+        fill: var(--t-color-error);
+      }
+    }
+  }
+  .tu-dialog__close {
+    margin-left: auto;
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      background-color: #000000;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+    }
+    &::before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    &::after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+  .tu-dialog__title {
+    line-height: 1;
+  }
+  .tu-dialog__body {
+    padding: 0 20px;
+  }
+  .tu-dialog__footer {
+    padding: 16px 20px;
+    // border-top: 1px solid #e8e8e8;
+    border-radius: 0 0 var(--t-dialog-border-radius) var(--t-dialog-border-radius);
+    text-align: right;
+    .tu-button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.tu-scrollbar-width {
+  overflow hidden
+  margin-right var(--tu-scrollbar-width)
+}
+
+
+/* --- 动画样式 */
+.dialog-fade-enter-active {
+  animation: dialog-overlay-fade-in var(--t-dialg-animation-time);
+  .tu-dialog {
+    animation: dialog-fade-in var(--t-dialg-animation-time);
+  }
+}
+
+.dialog-fade-leave-active {
+  animation: dialog-overlay-fade-out var(--t-dialg-animation-time);
+  .tu-dialog {
+    animation: dialog-fade-out var(--t-dialg-animation-time);
+  }
+}
+
+@keyframes dialog-overlay-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-overlay-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes dialog-fade-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    prevent-jitter()
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}

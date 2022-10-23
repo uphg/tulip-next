@@ -1,0 +1,59 @@
+
+
+$base = '.tu-tabs'
+
+{$base}
+  &-nav
+    display flex
+    border-bottom 1px solid var(--t-border-color)
+    position relative
+
+  &-tab
+    cursor pointer
+    display inline-flex
+    padding 10px 0
+    &:not(:first-child)
+      margin-left 36px
+    &{$base}-tab--active
+      {$base}-tab__label
+        color var(--t-color-primary)
+
+  &-tab__label
+    transition var(--t-color-transition)
+    &:hover
+      color var(--t-color-primary)
+
+  &__active-bar
+    height 2px
+    background-color var(--t-color-primary)
+    position absolute
+    bottom 0
+    left 0
+    margin-bottom -1px
+    &--transition
+      transition left 0.25s, width 0.25s
+
+{$base}-nav
+  &&--segment
+    border-bottom 0
+    background-color #f7f7fa
+    padding 3px
+    border-radius 3px
+    {$base}-tab
+      display flex
+      flex-grow 1
+      align-items center
+      justify-content center
+      padding 6px 0
+      transition var(--t-bg-color-transition), var(--t-box-shadow-transition)
+      border-radius 3px 
+      &__label
+        color inherit
+      &:not(:first-child)
+        margin-left 0
+      &--active
+        background-color #fff
+        box-shadow 0 1px 3px 0 rgba(0, 0, 0, 0.08)        
+
+.tu-tab-pane
+  padding-top 12px

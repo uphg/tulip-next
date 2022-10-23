@@ -1,0 +1,82 @@
+@require './mixins'
+
+$base = '.tu-input'
+
+{$base}
+  box-sizing border-box
+  display inline-flex
+  border-radius var(--t-border-radius)
+  position relative
+  cursor text
+  font-size var(--t-font-size)
+  font-family inherit
+  line-height 1.5
+  &__wrapper
+    padding-left 14px
+    padding-right 14px
+    display inline-flex
+    flex-grow 1
+  &__border
+    box-sizing border-box
+    position absolute
+    left 0
+    right 0
+    top 0
+    bottom 0
+    pointer-events none
+    border 1px solid var(--t-border-color)
+    border-radius inherit
+    transition var(--t-box-shadow-transition), var(--t-border-color-transition)
+  &:hover
+    {$base}__border
+      border-color var(--t-color-primary)
+  &--focus
+    {$base}__border
+      border-color var(--t-color-primary)
+      box-shadow var(--t-wave-active-box-shadow)
+
+  &__prefix, &__suffix
+    white-space nowrap
+    display inline-flex
+    justfiy-content center
+    align-items center
+  &__prefix
+    margin-right 4px
+  &__suffix
+    margin-left 4px
+
+{$base}__base
+  display inline-flex
+  flex-grow 1
+  box-sizing border-box
+  border none
+  padding 0
+  font-size var(--t-font-size)
+  font-family inherit
+  line-height 34px
+  &:focus, &:focus-visible
+    outline none
+
+{$base}-group
+  display inline-flex
+  &-label
+    display inline-flex
+    align-items center
+    border 1px solid #e0e0e6
+    line-height 34px
+    padding 0 12px
+    &:first-child
+      border-right 0
+      border-top-left-radius var(--t-border-radius)
+      border-bottom-left-radius var(--t-border-radius)
+    &:last-child
+      border-left 0
+      border-top-right-radius var(--t-border-radius)
+      border-bottom-right-radius var(--t-border-radius)
+  {$base}
+    &:not(:first-child)
+      border-top-left-radius 0
+      border-bottom-left-radius 0
+    &:not(:last-child)
+      border-top-right-radius 0
+      border-bottom-right-radius 0

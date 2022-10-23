@@ -1,0 +1,19 @@
+.tu-component-fade-enter-active,
+.tu-component-fade-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.tu-component-fade-enter-from,
+.tu-component-fade-leave-to {
+  opacity: 0;
+}
+
+// 进入
+.tu-component-fade-enter-from {
+  transform: scale3d(0.8, 0.8, 1);
+}
+
+// 离开
+.tu-component-fade-leave-active {
+  transform: scale3d(0.8, 0.8, 1);
+}

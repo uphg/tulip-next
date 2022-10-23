@@ -1,0 +1,187 @@
+@require './animation'
+@require './mixins'
+
+$base = '.tu-button'
+
+shape(padding, radius)
+  padding 0 padding
+  --t-border-radius radius
+
+border-default(color, style = solid)
+  {$base}__border, {$base}__state-border
+    border 1px style
+  {$base}__border
+    border-color color
+  {$base}__state-border
+    border-color #0000
+
+line-color(color)
+  color color
+  {$base}__state-border
+    border-color color
+
+type(base, light, dark)
+  --ripple-color base
+  color #fff
+  background-color base
+  &:hover, &:focus
+    background-color light
+  &:active
+    background-color dark
+  &{$base}--loading, &{$base}--disabled
+    background-color light
+
+dashed(base, light, dark)
+  color base
+  background-color #0000
+  border-default(base, dashed)
+  &:hover, &:focus
+    line-color(light)
+  &:active
+    line-color(dark)
+  &{$base}--loading, &{$base}--disabled
+    line-color(light)
+
+ghost(base, light, dark)
+  color base
+  background-color #0000
+  border-default(base)
+  &:hover, &:focus
+    line-color(light)
+  &:active
+    line-color(dark)
+  &{$base}--loading, &{$base}--disabled
+    line-color(light)
+
+text(base, light, dark)
+  color base
+  &:hover, &:focus
+    color light
+    background-color #0000
+  &:active
+    color dark
+    background-color #0000
+  &{$base}--loading, &{$base}--disabled
+    color light
+    background-color #0000
+
+type-style(base, light, dark)
+  type(base, light, dark)
+  &{$base}--dashed
+    dashed(base, light, dark)
+  &{$base}--ghost
+    ghost(base, light, dark)
+  &{$base}--text
+    text(base, light, dark)
+
+{$base}
+  position relative
+  font-size 14px
+  color var(--t-color-text-primary)
+  background-color #ffffff
+  border none
+  border-radius var(--t-border-radius)
+  box-sizing border-box
+  cursor pointer
+  display inline-flex
+  justify-content center
+  align-items center
+  flex-wrap nowrap
+  white-space nowrap
+  transition var(--t-color-transition), var(--t-bg-color-transition)
+  padding 0 var(--t-button-padding)
+  min-height var(--t-button-height)
+  text-decoration none
+  line-height 1
+  &__content
+    display inline-flex
+    align-items center
+    flex-wrap nowrap
+  &__border
+    width 100%
+  &__border, &__state-border
+    box-sizing border-box
+    border-radius inherit
+    pointer-events none
+    position-fill()
+  &__state-border
+    transition var(--t-border-color-transition)
+  &__icon
+    box-sizing border-box
+    width 18px
+    height 18px
+    display inline-flex
+    justify-content center
+    align-items center
+
+  .tu-icon
+    &--left
+      margin-right 4px
+      &.tu-icon--empty
+        margin-right 0
+    &--right
+      order 1
+      margin-left 4px
+      &.tu-icon--empty
+        margin-left 0
+
+  &__loading-icon
+    width 1em
+    height 1em
+
+{$base}
+  &--default
+    --ripple-color var(--t-color-primary)
+    border-default(var(--t-button-border-color))
+    &:hover, &:focus
+      line-color(var(--t-color-primary))
+    &:active
+      line-color(var(--t-color-primary-dark))
+    &{$base}--dashed
+      background-color #0000
+      {$base}__border, {$base}__state-border
+        border-style dashed
+    &{$base}--ghost
+      background-color #0000
+
+  &--primary
+    type-style(var(--t-color-primary), var(--t-color-primary-light), var(--t-color-primary-dark))
+  &--success
+    type-style(var(--t-color-success), var(--t-color-success-light), var(--t-color-success-dark))
+  &--info
+    type-style(var(--t-color-info), var(--t-color-info-light), var(--t-color-info-dark))
+  &--warning
+    type-style(var(--t-color-warning), var(--t-color-warning-light), var(--t-color-warning-dark))
+  &--error
+    type-style(var(--t-color-error), var(--t-color-error-light), var(--t-color-error-dark))
+
+  &{$base}--round
+    shape(var(--t-button-padding-round), calc(var(--t-button-height) / 2))
+
+  &{$base}--circle
+    shape(var(--t-button-padding-circle), calc(var(--t-button-height) / 2))
+
+  &--small
+    padding 0 var(--t-button-small-padding)
+    min-height var(--t-button-small-height)
+    &{$base}--round
+      shape(var(--t-button-small-padding-round), calc(var(--t-button-small-height) / 2))
+    &{$base}--circle
+      shape(var(--t-button-small-padding-circle), calc(var(--t-button-small-height) / 2))
+
+  &--large
+    padding 0 var(--t-button-large-padding)
+    min-height var(--t-button-large-height)
+    &{$base}--round
+      shape(var(--t-button-large-padding-round), calc(var(--t-button-large-height) / 2))
+    &{$base}--circle
+      shape(var(--t-button-large-padding-circle), calc(var(--t-button-large-height) / 2))
+
+  &--text
+    background-color: #0000;
+    padding 0
+    min-height auto
+    &--default
+      color var(--t-color-text-primary)
+
+
