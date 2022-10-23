@@ -4,7 +4,9 @@
       <component :is="componentIs" />
     </div>
     <CollapseTransition>
-      <div v-show="visible" class="code-source language-vue tu-collapse-transition--active" v-html="decodeURIComponent(source)" />
+      <div v-show="visible">
+        <div v-html="decodeURIComponent(source)"></div>
+      </div>
     </CollapseTransition>
     <div class="control" @click="visible = !visible">{{ `${visible ? '收起' : '展开'}源码` }}</div>
   </div>
@@ -15,7 +17,10 @@ import { ref } from 'vue'
 import { CollapseTransition } from '../../../src/index'
 
 const props = defineProps({
-  source: String,
+  source: {
+    type: String,
+    default: ''
+  },
   componentName: String,
   part: [Object]
 })

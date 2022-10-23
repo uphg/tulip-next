@@ -2,7 +2,7 @@ import {
   defineComponent,
   Transition,
   renderSlot,
-  onMounted,
+  // onMounted,
   // ref,
   // h,
   // Fragment,
@@ -10,7 +10,6 @@ import {
 import { addClass, removeClass, setStyle } from '../../../utils'
 
 const TRANSITION_CLASS = 'tu-collapse-transition--active'
-
 
 const CollapseTransition = defineComponent({
   name: 'TCollapseTransition',
@@ -80,7 +79,8 @@ const CollapseTransition = defineComponent({
         onLeave={leave}
         onAfterLeave={afterLeave}
       >
-        {renderSlot(context.slots, 'default')}
+        {/* {renderSlot(context.slots, 'default')} */}
+        {context.slots.default?.()}
       </Transition>
     )
   }

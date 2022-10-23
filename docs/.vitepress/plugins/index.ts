@@ -5,8 +5,10 @@ import { highlight } from './highlight'
 
 const demoPath = `${path.resolve('./docs/examples')}`
 const demoRegex = /^demo\s*(.*)$/
+const demoTag = 'EDemo'
 const codePath = `${path.resolve('./')}`
 const codeRegex = /^code\s*(.*)$/
+const codeTag = 'ECode'
 
 function getComponentName(sourceFile) {
   const names = sourceFile.split(/[\/-]/)
@@ -37,7 +39,7 @@ function mdPlugin(md) {
 
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
-        return `<e-demo
+        return `<${demoTag}
           class="demo-${names[0]}"
           component-name="${componentName}"
           source="${encodeURIComponent(
@@ -46,7 +48,7 @@ function mdPlugin(md) {
           :part="${componentName}"
         >`
       } else {
-        return '</e-demo>'
+        return `</${demoTag}>`
       }
     },
   })
@@ -71,13 +73,13 @@ function mdPlugin(md) {
           )
         }
 
-        return `<e-code
+        return `<${codeTag}
           code="${encodeURIComponent(
             highlight(source, fileSuffix)
           )}"
         >`
       } else {
-        return '</e-code>'
+        return `</${codeTag}>`
       }
     },
   })
