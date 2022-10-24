@@ -1,10 +1,13 @@
 <template>
-  <div class="e-code language-vue" v-html="code && decodeURIComponent(code)" />
+  <div class="e-code language-vue" v-html="decodeURIComponent(html)" />
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  code: String
+defineProps({
+  html: {
+    type: String,
+    default: ''
+  }
 })
 </script>
 

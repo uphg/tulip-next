@@ -9,7 +9,6 @@ specifiers:
   '@vue/eslint-config-typescript': ^11.0.0
   '@vue/test-utils': ^2.1.0
   '@vue/tsconfig': ^0.1.3
-  escape-html: ^1.0.3
   eslint: ^8.22.0
   eslint-plugin-vue: ^9.3.0
   jsdom: ^20.0.1
@@ -17,6 +16,7 @@ specifiers:
   npm-run-all: ^4.1.5
   pinia: ^2.0.23
   prismjs: ^1.29.0
+  shiki: ^0.11.1
   stylus: ^0.59.0
   typescript: ~4.7.4
   vite: ^3.1.8
@@ -37,7 +37,6 @@ devDependencies:
   '@vue/eslint-config-typescript': 11.0.2_zntnitd7vbjlcydi3ofron7txi
   '@vue/test-utils': 2.1.0_vue@3.2.41
   '@vue/tsconfig': 0.1.3_@types+node@16.11.68
-  escape-html: 1.0.3
   eslint: 8.26.0
   eslint-plugin-vue: 9.6.0_eslint@8.26.0
   jsdom: 20.0.1
@@ -45,6 +44,7 @@ devDependencies:
   npm-run-all: 4.1.5
   pinia: 2.0.23_lrjaoqkmph6q2hmgd3qeuy6rom
   prismjs: 1.29.0
+  shiki: 0.11.1
   stylus: 0.59.0
   typescript: 4.7.4
   vite: 3.1.8_stylus@0.59.0
@@ -1692,10 +1692,6 @@ packages:
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
-    dev: true
-
-  /escape-html/1.0.3:
-    resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
     dev: true
 
   /escape-string-regexp/1.0.5:

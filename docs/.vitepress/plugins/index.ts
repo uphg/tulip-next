@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import mdContainer from 'markdown-it-container'
-import { highlight } from './highlight'
+import { getHighlighter } from 'shiki'
 
 const demoPath = `${path.resolve('./docs/examples')}`
 const demoRegex = /^demo\s*(.*)$/
@@ -15,8 +15,12 @@ function getComponentName(sourceFile) {
   return names.map((item) => item.replace(/^(\w)/, (_, c) => (c ? c.toUpperCase() : ''))).join('')
 }
 
-function mdPlugin(md) {
-  // md.use(linksPlugin)
+async function mdPlugin(md) {
+  const highlighter = await getHighlighter({
+    // theme: 'nord',
+    theme: 'material-palenight'
+  })
+
   md.use(mdContainer, 'demo', {
     validate(params) {
       return !!params.trim().match(demoRegex)
@@ -39,12 +43,13 @@ function mdPlugin(md) {
 
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
+        const code = highlighter.codeToHtml(source, { lang: 'vue' })
+
         return `<${demoTag}
           class="demo-${names[0]}"
           component-name="${componentName}"
-          source="${encodeURIComponent(
-          highlight(source, 'vue')
-        )}"
+          source="${encodeURIComponent(source)}"
+          html="${encodeURIComponent(code)}"
           :part="${componentName}"
         >`
       } else {
@@ -73,10 +78,10 @@ function mdPlugin(md) {
           )
         }
 
+        const code = highlighter.codeToHtml(source, { lang: fileSuffix })
+
         return `<${codeTag}
-          code="${encodeURIComponent(
-            highlight(source, fileSuffix)
-          )}"
+          html="${encodeURIComponent(code)}"
         >`
       } else {
         return `</${codeTag}>`

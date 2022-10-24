@@ -5,7 +5,7 @@
     </div>
     <CollapseTransition>
       <div v-show="visible">
-        <div v-html="decodeURIComponent(source)"></div>
+        <div class="code-source language-vue" v-html="decodeURIComponent(html)"></div>
       </div>
     </CollapseTransition>
     <div class="control" @click="visible = !visible">{{ `${visible ? '收起' : '展开'}源码` }}</div>
@@ -18,6 +18,10 @@ import { CollapseTransition } from '../../../src/index'
 
 const props = defineProps({
   source: {
+    type: String,
+    default: ''
+  },
+  html: {
     type: String,
     default: ''
   },
@@ -34,30 +38,27 @@ const componentIs = { ...props.part, name: props.componentName }
 .e-demo {
   width: 100%;
   border-radius: 6px;
+  margin-top: 1.2em;
   margin-bottom: 1.2em;
   box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
   overflow: hidden;
 }
-
 .component {
   padding: 22px 24px;
 }
-
-.code-source {
+.e-demo .code-source {
   width: 100%;
   border-top: 1px solid rgba(60, 60, 60, .12);
   color: #fff;
   overflow-x: auto;
   background-color: #282c34;
+  margin: 0;
+  border-radius: 0;
 }
-
-/* :deep(.code-source) {
-  pre {
-    margin: 0;
-    border-radius: 0;
-  }
-} */
-
+:deep(.code-source pre) {
+  margin: 0;
+  border-radius: 0;
+}
 .control {
   border-top: 1px solid rgba(60, 60, 60, .12);
   font-size: 14px;
