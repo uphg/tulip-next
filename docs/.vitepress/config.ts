@@ -7,22 +7,21 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
     nav: [
-      { text: 'Guide', link: '/guide' },
-      {
-        text: 'Dropdown Menu',
-        items: [
-          { text: 'Item A', link: '/item-1' },
-          { text: 'Item B', link: '/item-2' },
-          { text: 'Item C', link: '/item-3' }
-        ]
-      }
+      { text: '指南', link: '/guide' },
+      { text: '组件', link: '/components' }
     ],
     sidebar: [
       {
-        text: 'Guide',
+        text: '指南',
         items: [
-          { text: 'Introduction', link: '/introduction' },
-          { text: 'Getting Started', link: '/getting-started' },
+          { text: 'Tulp UI', link: '/guide/introduction' },
+          { text: '快速开始', link: '/guide/getting-started' },
+        ]
+      },
+      {
+        text: '组件',
+        items: [
+          { text: 'Button 按钮', link: '/components/button' },
         ]
       }
     ]

@@ -48,10 +48,9 @@ const componentIs = { ...props.part, name: props.componentName }
 }
 .e-demo .code-source {
   width: 100%;
-  border-top: 1px solid rgba(60, 60, 60, .12);
+  border-top: 1px solid var(--vp-c-divider-light);
   color: #fff;
   overflow-x: auto;
-  background-color: #282c34;
   margin: 0;
   border-radius: 0;
 }
@@ -60,7 +59,7 @@ const componentIs = { ...props.part, name: props.componentName }
   border-radius: 0;
 }
 .control {
-  border-top: 1px solid rgba(60, 60, 60, .12);
+  border-top: 1px solid var(--vp-c-divider-light);
   font-size: 14px;
   cursor: pointer;
   height: 42px;

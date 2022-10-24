@@ -1,4 +1,5 @@
 import '../../../src/styles/index.styl'
+import './style.css'
 import DefaultTheme from 'vitepress/theme'
 import Tulp from '../../../src/index'
 import Code from '../components/ECode.vue'

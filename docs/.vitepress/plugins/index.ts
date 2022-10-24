@@ -3,6 +3,7 @@ import fs from 'fs'
 import mdContainer from 'markdown-it-container'
 import { getHighlighter } from 'shiki'
 
+const styleBg = /(?<=\<pre\sclass=\"shiki\")\s[^>]+/
 const demoPath = `${path.resolve('./docs/examples')}`
 const demoRegex = /^demo\s*(.*)$/
 const demoTag = 'EDemo'
@@ -16,10 +17,7 @@ function getComponentName(sourceFile) {
 }
 
 async function mdPlugin(md) {
-  const highlighter = await getHighlighter({
-    // theme: 'nord',
-    theme: 'material-palenight'
-  })
+  const highlighter = await getHighlighter({ theme: 'material-palenight' })
 
   md.use(mdContainer, 'demo', {
     validate(params) {
@@ -43,7 +41,10 @@ async function mdPlugin(md) {
 
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
-        const code = highlighter.codeToHtml(source, { lang: 'vue' })
+        const _code = highlighter.codeToHtml(source, { lang: 'vue' })
+        console.log('code')
+        const code = _code.replace(styleBg, '')
+        console.log(code)
 
         return `<${demoTag}
           class="demo-${names[0]}"
