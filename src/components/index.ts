@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 import { Button, ButtonGroup } from './button/index'
+import { Input, InputGroup, InputGroupLabel } from './input/index'
 import { CollapseTransition } from './collapse-transition/index'
 
 // export * from './icon/index'
@@ -13,15 +14,22 @@ import { CollapseTransition } from './collapse-transition/index'
 // export * from './tabs/index'
 // export * from './pagination/index'
 
+const components = [
+  Button, ButtonGroup,
+  Input, InputGroup, InputGroupLabel,
+  CollapseTransition
+]
 
 const install = (app: App) => {
-  app.component(Button.name, Button)
-  app.component(ButtonGroup.name, ButtonGroup)
-  app.component(CollapseTransition.name, CollapseTransition)
+  components.forEach((item) => app.use(item))
 }
+
 export {
   Button,
   ButtonGroup,
+  Input,
+  InputGroup,
+  InputGroupLabel,
   CollapseTransition,
   install
 }

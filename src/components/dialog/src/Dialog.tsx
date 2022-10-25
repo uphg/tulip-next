@@ -1,4 +1,3 @@
-// import '../../../styles/dialog.styl'
 import {
   defineComponent,
   withDirectives,

@@ -7,13 +7,11 @@ const CollapseTransition = defineComponent({
   name: 'TCollapseTransition',
   setup(_props, context) {
     function beforeEnter(el: Element) {
-      console.log('进入动画 --- 执行前')
       addClass(el, transitionClass)
       setStyle(el, { height: '0', overflow: 'hidden' })
     }
   
     function enter(el: Element) {
-      console.log('进入动画 --- 执行中')
       nextFrame(el)
       setStyle(el, { height: `${el.scrollHeight}px` })
     }

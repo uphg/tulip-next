@@ -61,7 +61,3 @@ const on = {
   }
 }
 </script>
-<!-- 
-<style lang="stylus">
-@require '../../_styles/components/expand-transition'
-</style> -->

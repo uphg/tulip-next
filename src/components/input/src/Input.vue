@@ -48,6 +48,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  name: 'TInput',
   inheritAttrs: false
 })
 </script>
@@ -108,7 +109,3 @@ const handleFocus = (event: Event) => {
   isFocus.value = true
 }
 </script>
-<!-- 
-<style lang="stylus">
-@require '../../_styles/components/input'
-</style> -->
