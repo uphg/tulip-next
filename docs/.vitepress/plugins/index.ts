@@ -42,9 +42,7 @@ async function mdPlugin(md) {
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
         const _code = highlighter.codeToHtml(source, { lang: 'vue' })
-        console.log('code')
         const code = _code.replace(styleBg, '')
-        console.log(code)
 
         return `<${demoTag}
           class="demo-${names[0]}"
