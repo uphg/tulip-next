@@ -33,19 +33,17 @@ async function mdPlugin(md) {
         const sourceFile = sourceFileToken.children?.[0].content ?? ''
 
         if (sourceFileToken.type === 'inline') {
-          source = fs.readFileSync(
-            path.resolve(demoPath, `${sourceFile}.vue`),
-            'utf-8'
-          )
+          source = fs.readFileSync(path.resolve(demoPath, `${sourceFile}.vue`), 'utf-8')
         }
 
         const componentName = getComponentName(sourceFile)
         const names = sourceFile.split('/')
+        const className = `demo-${names[0]} ${names[0]}__${names[1]}`
         const _code = highlighter.codeToHtml(source, { lang: 'vue' })
-        const code = _code.replace(styleBg, '')
+        const code = _code.replace(styleBg, '') // clear code default background
 
         return `<${demoTag}
-          class="demo-${names[0]}"
+          class="${className}"
           component-name="${componentName}"
           source="${encodeURIComponent(source)}"
           html="${encodeURIComponent(code)}"
@@ -71,10 +69,7 @@ async function mdPlugin(md) {
         const sourceFile = sourceFileToken.children?.[0].content ?? ''
         const fileSuffix = sourceFile.match(/[^\.]+$/)[0]
         if (sourceFileToken.type === 'inline') {
-          source = fs.readFileSync(
-            path.resolve(codePath, `${sourceFile}`),
-            'utf-8'
-          )
+          source = fs.readFileSync(path.resolve(codePath, `${sourceFile}`), 'utf-8')
         }
 
         const code = highlighter.codeToHtml(source, { lang: fileSuffix })

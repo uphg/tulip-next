@@ -38,12 +38,24 @@ import InputPrefixAndSuffix from '../examples/input/prefix-and-suffix.vue'
 import InputGroup from '../examples/input/group.vue'
 </script>
 
-<style>
+<style lang="stylus">
 .space {
   max-width: 300px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   gap: 10px;
+}
+
+.demo-input {
+  .tu-input {
+    width: 320px;
+  }
+}
+
+.input__group {
+  .tu-input-group {
+    width: 360px;
+  }
 }
 </style>
