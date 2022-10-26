@@ -1,4 +1,4 @@
-@require './mixins'
+@require './_mixins'
 
 $base = '.tu-input'
 
@@ -38,7 +38,7 @@ $base = '.tu-input'
   &__prefix, &__suffix
     white-space nowrap
     display inline-flex
-    justfiy-content center
+    justify-content center
     align-items center
   &__prefix
     margin-right 4px
@@ -74,6 +74,7 @@ $base = '.tu-input'
       border-top-right-radius var(--t-border-radius)
       border-bottom-right-radius var(--t-border-radius)
   {$base}
+    flex-grow 1
     &:not(:first-child)
       border-top-left-radius 0
       border-bottom-left-radius 0

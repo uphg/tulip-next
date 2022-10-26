@@ -1,5 +1,5 @@
 @require './animation'
-@require './mixins'
+@require './_mixins'
 
 $base = '.tu-button'
 
@@ -113,7 +113,6 @@ type-style(base, light, dark)
     display inline-flex
     justify-content center
     align-items center
-
   .tu-icon
     &--left
       margin-right 4px
@@ -124,7 +123,6 @@ type-style(base, light, dark)
       margin-left 4px
       &.tu-icon--empty
         margin-left 0
-
   &__loading-icon
     width 1em
     height 1em
