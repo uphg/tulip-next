@@ -1,5 +1,5 @@
-import ButtonGroup from './src/ButtonGroup.vue'
-import Button from './src/Button.vue'
+import Button from './src/Button'
+import ButtonGroup from './src/ButtonGroup'
 import { withInstall } from '../../utils'
 
 const TButton = withInstall(Button)

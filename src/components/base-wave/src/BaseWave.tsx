@@ -1,24 +1,16 @@
-<template>
-  <span
-    ref="selfRef"
-    class="tu-base-wave"
-    :class="{ [activeClass]: isActive }"
-  />
-</template>
-
-<script lang="ts">
-import { defineComponent, ref, nextTick, computed } from 'vue'
+import { defineComponent, ref, nextTick, computed, type PropType } from 'vue'
 import type { Ref } from 'vue'
-export default defineComponent({
-  name: `TBaseWave`,
-  props: {
-    big: Boolean
-  },
-  setup(props) {
+
+const baseWaveProps = {
+  big: Boolean as PropType<boolean>
+}
+
+const BaseWave = defineComponent({
+  props: baseWaveProps,
+  setup(props, context) {
     const isActive: Ref<boolean> = ref(false)
     const selfRef = ref<HTMLElement | null>(null)
     const activeClass = computed(() => props.big ? 'tu-base-wave--big-active' : 'tu-base-wave--active')
-
     let animationTimerId: number | null = null
 
     const destroyTimeout = () => {
@@ -28,9 +20,7 @@ export default defineComponent({
     }
 
     const triggerWave = () => {
-      if (isActive.value) {
-        destroyTimeout()
-      }
+      if (isActive.value) { destroyTimeout() }
       nextTick(() => {
         void selfRef.value?.offsetHeight
         isActive.value = true
@@ -40,11 +30,14 @@ export default defineComponent({
       })
     }
 
-    return { isActive, selfRef, activeClass, triggerWave }
+    context.expose({ triggerWave })
+    return () => (
+      <span
+        ref={selfRef}
+        class={['tu-base-wave', { [activeClass.value]: isActive.value }]}
+      />
+    )
   }
 })
-</script>
-<!-- 
-<style lang="stylus">
-@require '../../_styles/components/base-wave'
-</style> -->
+
+export default BaseWave
