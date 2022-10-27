@@ -13,6 +13,7 @@ export const sidebar = {
       items: [
         { text: 'Button 按钮', link: '/docs/button' },
         { text: 'Input 输入框', link: '/docs/input' },
+        { text: 'Switch 开关', link: '/docs/switch' },
       ]
     }
   ]
