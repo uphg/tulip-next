@@ -10,7 +10,7 @@
     ]"
     @click="toggle"
   >
-    <BaseWave ref="waveRef" big />
+    <TBaseWave ref="waveRef" big />
     <span class="tu-switch__wrap">
       <span v-if="$slots.checked || $slots.unchecked" class="tu-switch__content">
         <span class="tu-switch__checked">
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { isNil } from '../../../utils'
-import BaseWave from '../../base-wave/src/BaseWave.vue'
+import { TBaseWave } from '../../base-wave'
 import type { PropType } from 'vue'
 import type { BaseWaveRef } from '../../base-wave'
 
