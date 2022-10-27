@@ -1,9 +1,7 @@
-import type { App } from 'vue';
 import CollapseTransition from './src/CollapseTransition'
+import { withInstall } from '../../utils'
 
-CollapseTransition.install = function (app: App) {
-  app.component(CollapseTransition.name, CollapseTransition);
-}
+const TCollapseTransition = withInstall(CollapseTransition)
 
-export { CollapseTransition }
+export { TCollapseTransition }
 

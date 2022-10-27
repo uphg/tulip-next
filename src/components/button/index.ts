@@ -1,13 +1,8 @@
-import type { App } from 'vue';
 import ButtonGroup from './src/ButtonGroup.vue'
 import Button from './src/Button.vue'
+import { withInstall } from '../../utils'
 
-Button.install = function (app: App) {
-  app.component(Button.name, Button);
-}
+const TButton = withInstall(Button)
+const TButtonGroup = withInstall(ButtonGroup)
 
-ButtonGroup.install = function (app: App) {
-  app.component(ButtonGroup.name, ButtonGroup);
-}
-
-export { Button, ButtonGroup }
+export { TButton, TButtonGroup }

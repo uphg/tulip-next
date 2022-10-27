@@ -1,3 +1,5 @@
+import type { Plugin } from "vue";
+
 export interface ArrayLike<T> {
   [index: number]: T;
   length: number;
@@ -14,3 +16,5 @@ export type TypedArray = Float32Array | Float64Array | Int8Array | Int16Array | 
 export interface StyleElement extends Element {
   style: any
 }
+
+export type SFCWithInstall<T> = T & Plugin
