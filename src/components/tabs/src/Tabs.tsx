@@ -1,8 +1,6 @@
-// import '../../_styles/components/tabs.styl'
 import { defineComponent, ref, computed, onMounted, watchEffect, nextTick } from 'vue';
 import { getRect, addClass } from '../../../utils';
 import type { PropType } from 'vue'
-// ComponentPublicInstance<HTMLInputElement>
 
 interface TTabsTabItem {
   label: string | number | boolean,

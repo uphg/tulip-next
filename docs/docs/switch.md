@@ -72,7 +72,7 @@ import SwitchShape from '../examples/switch/shape.vue'
 </script>
 
 <style lang="stylus">
-.demo-switch {
+.demo-switch > .component {
   display: flex;
   align-items: flex-end;
   .tu-switch {

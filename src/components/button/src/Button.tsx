@@ -1,8 +1,8 @@
-import { defineComponent, ref, renderSlot } from "vue";
+import { defineComponent, ref } from "vue";
 import LoadingIcon from './LoadingIcon'
 import { TBaseWave } from '../../base-wave'
-import { TExpandTransition } from '../../expand-transition/index'
-import { FadeTransition } from '../../fade-transition/index'
+import { TExpandTransition } from '../../expand-transition'
+import { TFadeTransition } from '../../fade-transition'
 import { TIcon } from '../../icon/index'
 import type { PropType } from 'vue'
 import type { BaseWaveRef } from '../../base-wave'
@@ -91,15 +91,15 @@ const Button = defineComponent({
                   }
                 ]}
               >
-                <FadeTransition>
+                <TFadeTransition>
                   { loading ? <LoadingIcon /> : <TIcon name={icon} /> }
-                </FadeTransition>
+                </TFadeTransition>
               </span>
               ) : null }
           </TExpandTransition>
           {slots.default ? (
             <span class="tu-button__content">
-              {renderSlot(context.slots, 'default')}
+              {slots.default?.()}
             </span>
           ) : null}
           {!text ? (

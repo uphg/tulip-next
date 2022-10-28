@@ -2,7 +2,10 @@ import { defineComponent, ref, nextTick, computed, type PropType } from 'vue'
 import type { Ref } from 'vue'
 
 const baseWaveProps = {
-  big: Boolean as PropType<boolean>
+  size: {
+    type: String as PropType<'medium' | 'large'>,
+    default: 'medium'
+  }
 }
 
 const BaseWave = defineComponent({
@@ -10,7 +13,7 @@ const BaseWave = defineComponent({
   setup(props, context) {
     const isActive: Ref<boolean> = ref(false)
     const selfRef = ref<HTMLElement | null>(null)
-    const activeClass = computed(() => props.big ? 'tu-base-wave--big-active' : 'tu-base-wave--active')
+    const activeClass = computed(() => props.size === 'large' ? 'tu-base-wave--big-active' : 'tu-base-wave--active')
     let animationTimerId: number | null = null
 
     const destroyTimeout = () => {

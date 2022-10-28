@@ -1,4 +1,4 @@
-import { defineComponent, renderSlot, type PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 
 const buttonGroupProps = {
   vertical: Boolean as PropType<boolean>
@@ -10,7 +10,7 @@ const ButtonGroup = defineComponent({
   setup(props, context) {
     return () => (
       <div class={['tu-button-group', { 'tu-button--vertical': props.vertical }]}>
-        {renderSlot(context.slots, 'default')}
+        {context.slots.default?.()}
       </div>
     )
   }

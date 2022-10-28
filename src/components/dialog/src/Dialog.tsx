@@ -4,7 +4,6 @@ import {
   vShow,
   Teleport,
   Transition,
-  renderSlot,
   watch,
   toRef,
   // h,
@@ -87,19 +86,19 @@ export default defineComponent({
                           <span class="tu-dialog__close" onClick={closeDialog}></span>
                         </>
                       ) : (
-                        renderSlot(context.slots, 'header')
+                        context.slots.header?.()
                       )
                     }
                   </div>
                   <div class="tu-dialog__body">
-                    {renderSlot(context.slots, 'default')}
+                    {context.slots.default?.()}
                   </div>
                   <div class="tu-dialog__footer">
-                    {renderSlot(context.slots, 'footer')}
+                    {context.slots.footer?.()}
                   </div>
                 </div>
               ) : (
-                props.preset === 'custom' ? renderSlot(context.slots, 'default') : null
+                props.preset === 'custom' ?  context.slots.default?.() : null
               )
             }
           </div>

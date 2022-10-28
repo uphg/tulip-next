@@ -1,1 +1,6 @@
-export { default as TExpandTransition } from './src/ExpandTransition.vue'
+import ExpandTransition from './src/ExpandTransition'
+import { withInstall } from '../../utils'
+
+const TExpandTransition = withInstall(ExpandTransition)
+
+export { TExpandTransition }

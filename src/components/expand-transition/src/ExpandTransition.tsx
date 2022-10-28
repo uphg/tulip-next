@@ -1,45 +1,64 @@
 import { defineComponent, Transition } from 'vue';
 import { addClass, removeClass, setStyle } from '../../../utils'
 
-const transitionClass = 'tu-collapse-transition--active'
+const transitionClass = 'tu-expand-transition--active'
 
-const CollapseTransition = defineComponent({
-  name: 'TCollapseTransition',
+const ExpandTransition = defineComponent({
   setup(_props, context) {
     function beforeEnter(el: Element) {
       addClass(el, transitionClass)
-      setStyle(el, { height: '0', overflow: 'hidden' })
+      setStyle(el, {
+        width: '0',
+        marginLeft: '0',
+        marginRight: '0'
+      })
     }
   
     function enter(el: Element) {
-      void el.scrollHeight
-      setStyle(el, { height: `${el.scrollHeight}px` })
+      el.setAttribute('oldOverflow', (el as HTMLElement).style.overflow)
+      void el.scrollWidth
+      setStyle(el, {
+        width: '',
+        marginLeft: '',
+        marginRight: '',
+        overflow: 'hidden'
+      })
     }
   
     function afterEnter(el: Element) {
       removeClass(el, transitionClass)
-      setStyle(el, { height: '', overflow: '' })
+      setStyle(el, {
+        width: '',
+        overflow: String(el.getAttribute('oldOverflow')),
+      })
     }
   
     function beforeLeave(el: Element) {
       setStyle(el, {
-        height: `${el.scrollHeight}px`,
+        width: `${(el as HTMLElement).offsetWidth}px`,
         overflow: 'hidden'
       })
     }
   
     function leave(el: Element) {
-      void el.scrollHeight
+      void el.scrollWidth
       addClass(el, transitionClass)
-      setStyle(el, { height: '0' })
+      setStyle(el, {
+        width: '0',
+        marginLeft: '0',
+        marginRight: '0'
+      })
     }
   
     function afterLeave(el: Element) {
       removeClass(el, transitionClass)
-      const overflow = el.getAttribute('oldOverflow') || ''
-      setStyle(el, { overflow, height: '' })
+      setStyle(el, {
+        overflow: String(el.getAttribute('oldOverflow')),
+        width: '',
+        marginLeft: '',
+        marginRight: '',
+      })
     }
-
     return () => (
       <Transition
         onBeforeEnter={beforeEnter}
@@ -55,4 +74,4 @@ const CollapseTransition = defineComponent({
   }
 })
 
-export default CollapseTransition
+export default ExpandTransition
