@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
-import { TDialog, useDialog } from '../index'
+import { TuDialog, useDialog } from '../index'
 
 describe('Dialog', () => {
   it('create', () => {
-    const wrapper = mount(TDialog)
+    const wrapper = mount(TuDialog)
     expect(wrapper.exists()).toBe(true)
   })
 

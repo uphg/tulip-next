@@ -1,7 +1,7 @@
 import FadeTransition from './src/FadeTransition'
 import { withInstall } from '../../utils'
 
-const TFadeTransition = withInstall(FadeTransition)
+const TuFadeTransition = withInstall(FadeTransition)
 
-export { TFadeTransition }
+export { TuFadeTransition }
 

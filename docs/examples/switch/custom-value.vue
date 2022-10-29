@@ -1,10 +1,10 @@
 <template>
-  <t-switch
+  <tu-switch
     v-model:value="value"
     :checked-value="1"
     :unchecked-value="0"
   />
-  <t-switch
+  <tu-switch
     v-model:value="value2"
     checked-value="hi"
     unchecked-value="hello"

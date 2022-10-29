@@ -5,7 +5,7 @@ $base = '.tu-tabs'
 {$base}
   &-nav
     display flex
-    border-bottom 1px solid var(--t-border-color)
+    border-bottom 1px solid var(--tu-border-color)
     position relative
 
   &-tab
@@ -16,16 +16,16 @@ $base = '.tu-tabs'
       margin-left 36px
     &{$base}-tab--active
       {$base}-tab__label
-        color var(--t-color-primary)
+        color var(--tu-color-primary)
 
   &-tab__label
-    transition var(--t-color-transition)
+    transition var(--tu-color-transition)
     &:hover
-      color var(--t-color-primary)
+      color var(--tu-color-primary)
 
   &__active-bar
     height 2px
-    background-color var(--t-color-primary)
+    background-color var(--tu-color-primary)
     position absolute
     bottom 0
     left 0
@@ -45,7 +45,7 @@ $base = '.tu-tabs'
       align-items center
       justify-content center
       padding 6px 0
-      transition var(--t-bg-color-transition), var(--t-box-shadow-transition)
+      transition var(--tu-bg-color-transition), var(--tu-box-shadow-transition)
       border-radius 3px 
       &__label
         color inherit

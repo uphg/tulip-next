@@ -1,21 +1,19 @@
 <template>
   <main>
-    <button @click="visible = !visible">点击打开</button>
-    <CollapseTransition>
-      <div v-show="visible" class="demo"></div>
-    </CollapseTransition>
+    <div>
+      <Test />
+      <TestCollapseTransition />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { CollapseTransition } from 'src/index'
-import { ref } from 'vue';
-
-const visible = ref(false)
+import Test from './Test.vue'
+import TestCollapseTransition from './TestCollapseTransition.vue'
 </script>
 
 <style>
 .demo {
-  height: 100px; width: 200px; background-color: black;
+  width: 200px;
 }
 </style>

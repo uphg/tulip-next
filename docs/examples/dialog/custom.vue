@@ -1,6 +1,6 @@
 <template>
-  <t-button @click="openCustom">点击打开</t-button>
-  <t-dialog
+  <tu-button @click="openCustom">点击打开</tu-button>
+  <tu-dialog
     v-model:visible="customVisible"
     render-directive="show"
     preset="custom"
@@ -10,17 +10,17 @@
     <div class="dialog-block">
       <p>我是自定义内容</p>
       <div class="dialog-options">
-        <t-button
+        <tu-button
           type="info"
           @click="customVisible = false"
-        >关闭</t-button>
-        <t-button
+        >关闭</tu-button>
+        <tu-button
           type="success"
           @click="customVisible = false"
-        >确认</t-button>
+        >确认</tu-button>
       </div>
     </div>
-  </t-dialog>
+  </tu-dialog>
 </template>
 
 <script setup lang="ts">

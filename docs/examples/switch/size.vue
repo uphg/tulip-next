@@ -1,7 +1,7 @@
 <template>
-  <t-switch v-model:value="value" size="small" />
-  <t-switch v-model:value="value" />
-  <t-switch v-model:value="value" size="large" />
+  <tu-switch v-model:value="value" size="small" />
+  <tu-switch v-model:value="value" />
+  <tu-switch v-model:value="value" size="large" />
 </template>
 
 <script setup lang="ts">

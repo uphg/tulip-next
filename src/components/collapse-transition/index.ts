@@ -1,7 +1,7 @@
 import CollapseTransition from './src/CollapseTransition'
 import { withInstall } from '../../utils'
 
-const TCollapseTransition = withInstall(CollapseTransition)
+const TuCollapseTransition = withInstall(CollapseTransition)
 
-export { TCollapseTransition }
+export { TuCollapseTransition }
 

@@ -1,10 +1,10 @@
 <template>
   <h2>白雪公主</h2>
-  <t-tabs v-model:value="value" type="segment">
-    <t-tab-pane :name="1" label="第一章">我是第一章</t-tab-pane>
-    <t-tab-pane :name="2" label="第二章">我是第二章</t-tab-pane>
-    <t-tab-pane :name="3" label="第三章">我是第三章</t-tab-pane>
-  </t-tabs>
+  <tu-tabs v-model:value="value" type="segment">
+    <tu-tab-pane :name="1" label="第一章">我是第一章</tu-tab-pane>
+    <tu-tab-pane :name="2" label="第二章">我是第二章</tu-tab-pane>
+    <tu-tab-pane :name="3" label="第三章">我是第三章</tu-tab-pane>
+  </tu-tabs>
 </template>
 
 <script setup lang="ts">

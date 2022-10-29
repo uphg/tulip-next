@@ -2,7 +2,7 @@ import Button from './src/Button'
 import ButtonGroup from './src/ButtonGroup'
 import { withInstall } from '../../utils'
 
-const TButton = withInstall(Button)
-const TButtonGroup = withInstall(ButtonGroup)
+const TuButton = withInstall(Button)
+const TuButtonGroup = withInstall(ButtonGroup)
 
-export { TButton, TButtonGroup }
+export { TuButton, TuButtonGroup }

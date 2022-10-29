@@ -1,5 +1,5 @@
 <template>
-  <t-switch v-model:value="value" />
+  <tu-switch v-model:value="value" />
 </template>
 
 <script setup lang="ts">

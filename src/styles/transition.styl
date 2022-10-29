@@ -1,22 +1,21 @@
+$fade = '.tu-fade'
 
-$base = '.tu-component-fade'
-
-{$base}-enter-active,
-{$base}-leave-active {
+{$fade}-enter-active,
+{$fade}-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-{$base}-enter-from,
-{$base}-leave-to {
+{$fade}-enter-from,
+{$fade}-leave-to {
   opacity: 0;
 }
 
 // 进入
-{$base}-enter-from {
+{$fade}-enter-from {
   transform: scale3d(0.8, 0.8, 1);
 }
 
 // 离开
-{$base}-leave-active {
+{$fade}-leave-active {
   transform: scale3d(0.8, 0.8, 1);
 }

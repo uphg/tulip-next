@@ -1,16 +1,16 @@
 <template>
-  <t-button-group>
-    <t-button>上一页</t-button>
-    <t-button>第1页</t-button>
-    <t-button>第2页</t-button>
-    <t-button>第3页</t-button>
-    <t-button>下一页</t-button>
-  </t-button-group>
-  <t-button-group vertical>
-    <t-button>上一章</t-button>
-    <t-button>第一章</t-button>
-    <t-button>第二章</t-button>
-    <t-button>第三章</t-button>
-    <t-button>下一章</t-button>
-  </t-button-group>
+  <tu-button-group>
+    <tu-button>上一页</tu-button>
+    <tu-button>第1页</tu-button>
+    <tu-button>第2页</tu-button>
+    <tu-button>第3页</tu-button>
+    <tu-button>下一页</tu-button>
+  </tu-button-group>
+  <tu-button-group vertical>
+    <tu-button>上一章</tu-button>
+    <tu-button>第一章</tu-button>
+    <tu-button>第二章</tu-button>
+    <tu-button>第三章</tu-button>
+    <tu-button>下一章</tu-button>
+  </tu-button-group>
 </template>

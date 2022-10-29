@@ -1,5 +1,5 @@
 <template>
-  <t-button>默认按钮</t-button>
-  <t-button round>圆角按钮</t-button>
-  <t-button icon="info" circle />
+  <tu-button>默认按钮</tu-button>
+  <tu-button round>圆角按钮</tu-button>
+  <tu-button icon="info" circle />
 </template>

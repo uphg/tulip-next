@@ -9,6 +9,7 @@ const baseWaveProps = {
 }
 
 const BaseWave = defineComponent({
+  name: 'TuBaseWave',
   props: baseWaveProps,
   setup(props, context) {
     const isActive: Ref<boolean> = ref(false)

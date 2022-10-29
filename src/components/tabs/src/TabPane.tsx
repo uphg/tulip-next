@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import type { PropType } from 'vue'
 
 export default defineComponent({
+  name: 'TuTabPane',
   props: {
     name: {
       type: [String, Number, Boolean] as PropType<string | number | boolean>,

@@ -1,19 +1,9 @@
-import {
-  defineComponent,
-  withDirectives,
-  vShow,
-  Teleport,
-  Transition,
-  watch,
-  toRef,
-  // h,
-  // Fragment,
-} from 'vue';
-import type { PropType } from 'vue'
+import { defineComponent, withDirectives, vShow, Teleport, Transition, watch, toRef } from 'vue';
 import { offBodyScroll, onBodyScroll } from '../../../utils'
+import type { PropType } from 'vue'
 
 export default defineComponent({
-  name: `TDialog`,
+  name: 'TuDialog',
   emits: ['update:visible', 'open', 'opened', 'close', 'closed', 'maskClick'],
   props: {
     visible: {

@@ -2,12 +2,13 @@ import { defineComponent, ref, computed, onMounted, watchEffect, nextTick } from
 import { getRect, addClass } from '../../../utils';
 import type { PropType } from 'vue'
 
-interface TTabsTabItem {
+interface TuTabsTabItem {
   label: string | number | boolean,
   name: string | number | boolean
 }
 
 export default defineComponent({
+  name: 'TuTabs',
   props: {
     value: {
       type: [String, Number, Boolean] as PropType<string | number | boolean>
@@ -28,14 +29,14 @@ export default defineComponent({
       return item.props?.name === props.value
     }))
 
-    const titles = computed<TTabsTabItem[] | undefined>(() => {
+    const titles = computed<TuTabsTabItem[] | undefined>(() => {
       return slots.default?.().map((item) => {
         const { label, name } = item.props || {}
         return { label, name }
       })
     })
 
-    const handleTabClick = (item: TTabsTabItem) => {
+    const handleTabClick = (item: TuTabsTabItem) => {
       context.emit('update:value', item.name)
     }
 

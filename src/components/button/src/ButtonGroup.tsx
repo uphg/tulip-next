@@ -5,7 +5,7 @@ const buttonGroupProps = {
 }
 
 const ButtonGroup = defineComponent({
-  name: 'TButtonGroup',
+  name: 'TuButtonGroup',
   props: buttonGroupProps,
   setup(props, context) {
     return () => (

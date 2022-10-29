@@ -1,9 +1,9 @@
 import { defineComponent, ref } from "vue";
 import LoadingIcon from './LoadingIcon'
-import { TBaseWave } from '../../base-wave'
-import { TExpandTransition } from '../../expand-transition'
-import { TFadeTransition } from '../../fade-transition'
-import { TIcon } from '../../icon/index'
+import { TuBaseWave } from '../../base-wave'
+import { TuExpandTransition } from '../../expand-transition'
+import { TuFadeTransition } from '../../fade-transition'
+import { TuIcon } from '../../icon/index'
 import type { PropType } from 'vue'
 import type { BaseWaveRef } from '../../base-wave'
 
@@ -49,7 +49,7 @@ const buttonProps = {
 }
 
 const Button = defineComponent({
-  name: 'TButton',
+  name: 'TuButton',
   props: buttonProps,
   setup(props, context) {
     const buttonRef = ref<Element | null>()
@@ -80,7 +80,7 @@ const Button = defineComponent({
           disabled={disabled}
           onClick={onClick}
         >
-          <TExpandTransition>
+          <TuExpandTransition>
             { icon || loading ? (
               <span
                 class={[
@@ -91,12 +91,12 @@ const Button = defineComponent({
                   }
                 ]}
               >
-                <TFadeTransition>
-                  { loading ? <LoadingIcon /> : <TIcon name={icon} /> }
-                </TFadeTransition>
+                <TuFadeTransition>
+                  { loading ? <LoadingIcon /> : <TuIcon name={icon} /> }
+                </TuFadeTransition>
               </span>
               ) : null }
-          </TExpandTransition>
+          </TuExpandTransition>
           {slots.default ? (
             <span class="tu-button__content">
               {slots.default?.()}
@@ -104,7 +104,7 @@ const Button = defineComponent({
           ) : null}
           {!text ? (
             <>
-              <TBaseWave ref={waveRef} big={circle} />
+              <TuBaseWave ref={waveRef} big={circle} />
               <span class="tu-button__border" />
               <span class="tu-button__state-border" />
             </>

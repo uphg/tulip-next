@@ -1,38 +1,41 @@
-import { TButton, TButtonGroup } from './button'
-import { TInput, TInputGroup, TInputGroupLabel } from './input'
-import { TCollapseTransition } from './collapse-transition'
-import { TSwitch } from './switch'
-import { TTabPane, TTabs } from './tabs'
 import { makeInstaller } from '../utils'
-import { TDialog } from './dialog'
-import { TExpandTransition } from './expand-transition'
+import { TuButton, TuButtonGroup } from './button'
+import { TuInput, TuInputGroup, TuInputGroupLabel } from './input'
+import { TuCollapseTransition } from './collapse-transition'
+import { TuSwitch } from './switch'
+import { TuTabPane, TuTabs } from './tabs'
+import { TuDialog, useDialog } from './dialog'
+import { TuExpandTransition } from './expand-transition'
 
 const components = [
-  TButton,
-  TButtonGroup,
-  TInput,
-  TInputGroup,
-  TInputGroupLabel,
-  TCollapseTransition,
-  TExpandTransition,
-  TSwitch,
-  TTabs,
-  TTabPane,
-  TDialog,
+  TuButton,
+  TuButtonGroup,
+  TuInput,
+  TuInputGroup,
+  TuInputGroupLabel,
+  TuCollapseTransition,
+  TuExpandTransition,
+  TuSwitch,
+  TuTabs,
+  TuTabPane,
+  TuDialog,
 ]
 
 const { install } = makeInstaller(components)
 
 export {
-  TButton,
-  TButtonGroup,
-  TInput,
-  TInputGroup,
-  TInputGroupLabel,
-  TCollapseTransition,
-  TExpandTransition,
-  TSwitch,
-  TTabs,
-  TTabPane,
+  TuButton,
+  TuButtonGroup,
+  TuInput,
+  TuInputGroup,
+  TuInputGroupLabel,
+  TuCollapseTransition,
+  TuExpandTransition,
+  TuSwitch,
+  TuTabs,
+  TuTabPane,
+
+  // utils
+  useDialog,
   install
 }

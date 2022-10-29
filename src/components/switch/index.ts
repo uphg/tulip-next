@@ -1,6 +1,6 @@
 import Switch from './src/Switch'
 import { withInstall } from '../../utils'
 
-const TSwitch = withInstall(Switch)
+const TuSwitch = withInstall(Switch)
 
-export { TSwitch }
+export { TuSwitch }

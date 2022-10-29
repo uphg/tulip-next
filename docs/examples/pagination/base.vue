@@ -1,5 +1,5 @@
 <template>
-  <t-pagination v-model:current="current" :total="57" />
+  <tu-pagination v-model:current="current" :total="57" />
 </template>
 
 <script setup lang="ts">

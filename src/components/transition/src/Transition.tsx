@@ -1,7 +1,7 @@
 import { defineComponent, Transition } from "vue";
 
-const FadeTransition = defineComponent({
-  name: 'FadeTransition',
+const baseTransition = defineComponent({
+  name: 'TuTransition',
   setup(_props, context) {
     return () => (
       <Transition name="tu-fade" mode="out-in">
@@ -11,4 +11,4 @@ const FadeTransition = defineComponent({
   }
 })
 
-export default FadeTransition
+export default baseTransition

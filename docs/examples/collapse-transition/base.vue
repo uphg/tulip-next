@@ -1,13 +1,13 @@
 <template>
-  <t-button @click="visible = !visible">点我</t-button>
+  <tu-button @click="visible = !visible">点我</tu-button>
 
   <div style="overflow: hidden; background-color: #eee;">
-    <t-collapse-transition>
+    <tu-collapse-transition>
       <div v-show="visible" style="margin: 20px 0; background-color: #4caf50;">
         <div class="collapse-box">collapse-transition</div>
         <div class="collapse-box">collapse-transition</div>
       </div>
-    </t-collapse-transition>
+    </tu-collapse-transition>
   </div>
 </template>
 

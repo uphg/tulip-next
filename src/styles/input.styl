@@ -5,10 +5,10 @@ $base = '.tu-input'
 {$base}
   box-sizing border-box
   display inline-flex
-  border-radius var(--t-border-radius)
+  border-radius var(--tu-border-radius)
   position relative
   cursor text
-  font-size var(--t-font-size)
+  font-size var(--tu-font-size)
   font-family inherit
   line-height 1.5
   &__wrapper
@@ -24,16 +24,16 @@ $base = '.tu-input'
     top 0
     bottom 0
     pointer-events none
-    border 1px solid var(--t-border-color)
+    border 1px solid var(--tu-border-color)
     border-radius inherit
-    transition var(--t-box-shadow-transition), var(--t-border-color-transition)
+    transition var(--tu-box-shadow-transition), var(--tu-border-color-transition)
   &:hover
     {$base}__border
-      border-color var(--t-color-primary)
+      border-color var(--tu-color-primary)
   &--focus
     {$base}__border
-      border-color var(--t-color-primary)
-      box-shadow var(--t-wave-active-box-shadow)
+      border-color var(--tu-color-primary)
+      box-shadow var(--tu-wave-active-box-shadow)
 
   &__prefix, &__suffix
     white-space nowrap
@@ -51,7 +51,7 @@ $base = '.tu-input'
   box-sizing border-box
   border none
   padding 0
-  font-size var(--t-font-size)
+  font-size var(--tu-font-size)
   font-family inherit
   line-height 34px
   &:focus, &:focus-visible
@@ -67,12 +67,12 @@ $base = '.tu-input'
     padding 0 12px
     &:first-child
       border-right 0
-      border-top-left-radius var(--t-border-radius)
-      border-bottom-left-radius var(--t-border-radius)
+      border-top-left-radius var(--tu-border-radius)
+      border-bottom-left-radius var(--tu-border-radius)
     &:last-child
       border-left 0
-      border-top-right-radius var(--t-border-radius)
-      border-bottom-right-radius var(--t-border-radius)
+      border-top-right-radius var(--tu-border-radius)
+      border-bottom-right-radius var(--tu-border-radius)
   {$base}
     flex-grow 1
     &:not(:first-child)

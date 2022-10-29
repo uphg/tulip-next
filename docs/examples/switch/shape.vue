@@ -1,6 +1,6 @@
 <template>
-  <t-switch v-model:value="value" />
-  <t-switch v-model:value="value" square />
+  <tu-switch v-model:value="value" />
+  <tu-switch v-model:value="value" square />
 </template>
 
 <script setup lang="ts">

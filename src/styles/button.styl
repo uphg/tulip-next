@@ -5,7 +5,7 @@ $base = '.tu-button'
 
 shape(padding, radius)
   padding 0 padding
-  --t-border-radius radius
+  --tu-border-radius radius
 
 border-default(color, style = solid)
   {$base}__border, {$base}__state-border
@@ -77,10 +77,10 @@ type-style(base, light, dark)
 {$base}
   position relative
   font-size 14px
-  color var(--t-color-text-primary)
+  color var(--tu-color-text-primary)
   background-color #ffffff
   border none
-  border-radius var(--t-border-radius)
+  border-radius var(--tu-border-radius)
   box-sizing border-box
   cursor pointer
   display inline-flex
@@ -88,9 +88,9 @@ type-style(base, light, dark)
   align-items center
   flex-wrap nowrap
   white-space nowrap
-  transition var(--t-color-transition), var(--t-bg-color-transition)
-  padding 0 var(--t-button-padding)
-  min-height var(--t-button-height)
+  transition var(--tu-color-transition), var(--tu-bg-color-transition)
+  padding 0 var(--tu-button-padding)
+  min-height var(--tu-button-height)
   text-decoration none
   line-height 1
   &__content
@@ -105,11 +105,11 @@ type-style(base, light, dark)
     pointer-events none
     position-fill()
   &__state-border
-    transition var(--t-border-color-transition)
+    transition var(--tu-border-color-transition)
   &__icon
     box-sizing border-box
-    width 18px
-    height 18px
+    width var(--tu-button-icon-size)
+    height var(--tu-button-icon-size)
     display inline-flex
     justify-content center
     align-items center
@@ -129,12 +129,12 @@ type-style(base, light, dark)
 
 {$base}
   &--default
-    --ripple-color var(--t-color-primary)
-    border-default(var(--t-button-border-color))
+    --ripple-color var(--tu-color-primary)
+    border-default(var(--tu-button-border-color))
     &:hover, &:focus
-      line-color(var(--t-color-primary))
+      line-color(var(--tu-color-primary))
     &:active
-      line-color(var(--t-color-primary-dark))
+      line-color(var(--tu-color-primary-dark))
     &{$base}--dashed
       background-color #0000
       {$base}__border, {$base}__state-border
@@ -143,43 +143,51 @@ type-style(base, light, dark)
       background-color #0000
 
   &--primary
-    type-style(var(--t-color-primary), var(--t-color-primary-light), var(--t-color-primary-dark))
+    type-style(var(--tu-color-primary), var(--tu-color-primary-light), var(--tu-color-primary-dark))
   &--success
-    type-style(var(--t-color-success), var(--t-color-success-light), var(--t-color-success-dark))
+    type-style(var(--tu-color-success), var(--tu-color-success-light), var(--tu-color-success-dark))
   &--info
-    type-style(var(--t-color-info), var(--t-color-info-light), var(--t-color-info-dark))
+    type-style(var(--tu-color-info), var(--tu-color-info-light), var(--tu-color-info-dark))
   &--warning
-    type-style(var(--t-color-warning), var(--t-color-warning-light), var(--t-color-warning-dark))
+    type-style(var(--tu-color-warning), var(--tu-color-warning-light), var(--tu-color-warning-dark))
   &--error
-    type-style(var(--t-color-error), var(--t-color-error-light), var(--t-color-error-dark))
+    type-style(var(--tu-color-error), var(--tu-color-error-light), var(--tu-color-error-dark))
 
   &{$base}--round
-    shape(var(--t-button-padding-round), calc(var(--t-button-height) / 2))
+    shape(var(--tu-button-padding-round), calc(var(--tu-button-height) / 2))
 
   &{$base}--circle
-    shape(var(--t-button-padding-circle), calc(var(--t-button-height) / 2))
+    shape(var(--tu-button-padding-circle), calc(var(--tu-button-height) / 2))
 
   &--small
-    padding 0 var(--t-button-small-padding)
-    min-height var(--t-button-small-height)
+    font-size var(--tu-button-small-font-size)
+    padding 0 var(--tu-button-small-padding)
+    min-height var(--tu-button-small-height)
+    {$base}__icon
+      width var(--tu-button-small-icon-size)
+      height var(--tu-button-small-icon-size)
     &{$base}--round
-      shape(var(--t-button-small-padding-round), calc(var(--t-button-small-height) / 2))
+      shape(var(--tu-button-small-padding-round), calc(var(--tu-button-small-height) / 2))
     &{$base}--circle
-      shape(var(--t-button-small-padding-circle), calc(var(--t-button-small-height) / 2))
+      shape(var(--tu-button-small-padding-circle), calc(var(--tu-button-small-height) / 2))
 
   &--large
-    padding 0 var(--t-button-large-padding)
-    min-height var(--t-button-large-height)
+    font-size var(--tu-button-large-font-size)
+    padding 0 var(--tu-button-large-padding)
+    min-height var(--tu-button-large-height)
+    {$base}__icon
+      width var(--tu-button-large-icon-size)
+      height var(--tu-button-large-icon-size)
     &{$base}--round
-      shape(var(--t-button-large-padding-round), calc(var(--t-button-large-height) / 2))
+      shape(var(--tu-button-large-padding-round), calc(var(--tu-button-large-height) / 2))
     &{$base}--circle
-      shape(var(--t-button-large-padding-circle), calc(var(--t-button-large-height) / 2))
+      shape(var(--tu-button-large-padding-circle), calc(var(--tu-button-large-height) / 2))
 
   &--text
     background-color: #0000;
     padding 0
     min-height auto
     &--default
-      color var(--t-color-text-primary)
+      color var(--tu-color-text-primary)
 
 

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite-plugin-windicss'
 
 export default defineConfig({
   extract: {
-    include: ['docs/**/*.{vue,html,jsx,tsx}'],
+    include: ['docs/**/*.{vue,html,jsx,tsx}', 'preview/**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules', '.git', 'excluded', 'dist', 'windi.config.{ts,js}', 'tailwind.config.{ts,js}'],
   },
   darkMode: 'class',

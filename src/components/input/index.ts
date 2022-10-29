@@ -3,8 +3,8 @@ import InputGroup from './src/InputGroup.vue'
 import InputGroupLabel from './src/InputGroupLabel.vue'
 import { withInstall } from '../../utils'
 
-const TInput = withInstall(Input)
-const TInputGroup = withInstall(InputGroup)
-const TInputGroupLabel = withInstall(InputGroupLabel)
+const TuInput = withInstall(Input)
+const TuInputGroup = withInstall(InputGroup)
+const TuInputGroupLabel = withInstall(InputGroupLabel)
 
-export { TInput, TInputGroup, TInputGroupLabel }
+export { TuInput, TuInputGroup, TuInputGroupLabel }

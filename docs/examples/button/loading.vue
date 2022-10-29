@@ -1,6 +1,6 @@
 <template>
-  <t-button icon="success" :loading="loading" @click="onClick">点我</t-button>
-  <t-button :loading="loading" @click="onClick">点我</t-button>
+  <tu-button icon="success" :loading="loading" @click="onClick">点我</tu-button>
+  <tu-button :loading="loading" @click="onClick">点我</tu-button>
 </template>
 
 <script setup lang="ts">

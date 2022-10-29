@@ -1,1 +1,1 @@
-export { default as TIcon } from './src/Icon.vue'
+export { default as TuIcon } from './src/Icon'

@@ -1,6 +1,6 @@
 <template>
-  <t-button @click="openDialog">点击打开</t-button>
-  <t-dialog
+  <tu-button @click="openDialog">点击打开</tu-button>
+  <tu-dialog
     v-model:visible="dialogVisible"
     title="我是标题"
   >
@@ -10,17 +10,17 @@
     <p>我只想保持本色</p>
     <p>和少年的心气</p>
     <template #footer>
-      <t-button
+      <tu-button
         size="small"
         @click="dialogVisible = false"
-      >取消</t-button>
-      <t-button
+      >取消</tu-button>
+      <tu-button
         type="primary"
         size="small"
         @click="dialogVisible = false"
-      >确定</t-button>
+      >确定</tu-button>
     </template>
-  </t-dialog>
+  </tu-dialog>
 </template>
 
 <script setup lang="ts">

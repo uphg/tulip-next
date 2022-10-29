@@ -4,7 +4,7 @@ import { addClass, removeClass, setStyle } from '../../../utils'
 const transitionClass = 'tu-collapse-transition--active'
 
 const CollapseTransition = defineComponent({
-  name: 'TCollapseTransition',
+  name: 'TuCollapseTransition',
   setup(_props, context) {
     function beforeEnter(el: Element) {
       addClass(el, transitionClass)

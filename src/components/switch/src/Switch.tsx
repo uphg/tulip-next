@@ -1,7 +1,7 @@
 import { defineComponent } from "vue";
 import { ref, computed } from 'vue'
 import { isNil } from '../../../utils'
-import { TBaseWave } from '../../base-wave'
+import { TuBaseWave } from '../../base-wave'
 import type { PropType } from 'vue'
 import type { BaseWaveRef } from '../../base-wave'
 
@@ -30,7 +30,7 @@ const switchProps = {
 }
 
 const Switch = defineComponent({
-  name: 'TSwitch',
+  name: 'TuSwitch',
   props: switchProps,
   emits: ['update:value'],
   setup(props, context) {
@@ -74,7 +74,7 @@ const Switch = defineComponent({
           ]}
           onClick={toggle}
         >
-          <TBaseWave ref={waveRef} size="large"/>
+          <TuBaseWave ref={waveRef} size="large"/>
           <span class="tu-switch__wrap">
             {slots.checked || slots.unchecked ? (
               <span class="tu-switch__content">

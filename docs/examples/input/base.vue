@@ -1,5 +1,5 @@
 <template>
-  <t-input v-model:value="value" placeholder="请输入内容" />
+  <tu-input v-model:value="value" placeholder="请输入内容" />
 </template>
 
 <script setup lang="ts">

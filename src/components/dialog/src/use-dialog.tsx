@@ -1,6 +1,6 @@
 import Dialog from './Dialog'
-import { TButton } from '../../button/index'
-import { TIcon } from '../../icon/index'
+import { TuButton } from '../../button/index'
+import { TuIcon } from '../../icon/index'
 import { createApp, nextTick, ref, h, onMounted } from 'vue'
 
 interface DialogOptions {
@@ -65,11 +65,11 @@ const createDialog = (options: DialogOptions) => {
         <Dialog
           title={title}
           v-model={[visible.value, 'visible']}
-          onClosed={unmountDialog}
+          onClosed={unmounTuDialog}
         >
           {{
             header: () => [
-              <TIcon class="prefix-icon" name={type} />,
+              <TuIcon class="prefix-icon" name={type} />,
               <span class="tu-dialog__title">{() => title}</span>,
               <span
                 class="tu-dialog__close"
@@ -81,7 +81,7 @@ const createDialog = (options: DialogOptions) => {
             default: () => content,
             footer: () => [
               h(
-                TButton,
+                TuButton,
                 {
                   size: 'small',
                   onClick: handleCancel
@@ -89,7 +89,7 @@ const createDialog = (options: DialogOptions) => {
                 { default: () => '取消' }
               ),
               h(
-                TButton,
+                TuButton,
                 {
                   type: 'primary',
                   size: 'small',
@@ -104,16 +104,16 @@ const createDialog = (options: DialogOptions) => {
     }
   })
 
-  const mountDialog = () => {
+  const mounTuDialog = () => {
     app.mount(div)
     div.remove()
   }
 
-  const unmountDialog = () => {
+  const unmounTuDialog = () => {
     app.unmount()
   }
 
-  mountDialog()
+  mounTuDialog()
 }
 
 const createTypeApi = (type: string, api: DialogApi) => (

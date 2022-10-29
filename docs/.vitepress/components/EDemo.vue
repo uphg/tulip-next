@@ -3,18 +3,18 @@
     <div class="component">
       <component :is="componentIs" />
     </div>
-    <TCollapseTransition>
+    <TuCollapseTransition>
       <div v-show="visible">
         <div class="code-source language-vue" v-html="decodeURIComponent(html)"></div>
       </div>
-    </TCollapseTransition>
+    </TuCollapseTransition>
     <div class="control" @click="visible = !visible">{{ `${visible ? '收起' : '展开'}源码` }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { TCollapseTransition } from '../../../src/index'
+import { TuCollapseTransition } from '../../../src/index'
 
 const props = defineProps({
   source: {

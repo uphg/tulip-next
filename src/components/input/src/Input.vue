@@ -48,7 +48,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'TInput',
+  name: 'TuInput',
   inheritAttrs: false
 })
 </script>

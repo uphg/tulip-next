@@ -33,13 +33,13 @@ prevent-jitter()
 .tu-dialog__content {
   prevent-jitter()
   background-color: #fff;
-  border-radius: var(--t-dialog-border-radius);
+  border-radius: var(--tu-dialog-border-radius);
   box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
 }
 .tu-dialog {
   .tu-dialog__header {
     padding: 18px 20px;
-    border-radius: var(--t-dialog-border-radius) var(--t-dialog-border-radius) 0 0;
+    border-radius: var(--tu-dialog-border-radius) var(--tu-dialog-border-radius) 0 0;
     display: flex;
     align-items: center;
     .prefix-icon {
@@ -47,16 +47,16 @@ prevent-jitter()
       width: 1.5em;
       height: 1.5em;
       &.tu-icon-success {
-        fill: var(--t-color-success);
+        fill: var(--tu-color-success);
       }
       &.tu-icon-warning {
-        fill: var(--t-color-warning);
+        fill: var(--tu-color-warning);
       }
       &.tu-icon-info {
-        fill: var(--t-color-info);
+        fill: var(--tu-color-info);
       }
       &.tu-icon-error {
-        fill: var(--t-color-error);
+        fill: var(--tu-color-error);
       }
     }
   }
@@ -93,7 +93,7 @@ prevent-jitter()
   .tu-dialog__footer {
     padding: 16px 20px;
     // border-top: 1px solid #e8e8e8;
-    border-radius: 0 0 var(--t-dialog-border-radius) var(--t-dialog-border-radius);
+    border-radius: 0 0 var(--tu-dialog-border-radius) var(--tu-dialog-border-radius);
     text-align: right;
     .tu-button:not(:last-child) {
       margin-right: 10px;
@@ -109,16 +109,16 @@ prevent-jitter()
 
 /* --- 动画样式 */
 .dialog-fade-enter-active {
-  animation: dialog-overlay-fade-in var(--t-dialg-animation-time);
+  animation: dialog-overlay-fade-in var(--tu-dialg-animation-time);
   .tu-dialog {
-    animation: dialog-fade-in var(--t-dialg-animation-time);
+    animation: dialog-fade-in var(--tu-dialg-animation-time);
   }
 }
 
 .dialog-fade-leave-active {
-  animation: dialog-overlay-fade-out var(--t-dialg-animation-time);
+  animation: dialog-overlay-fade-out var(--tu-dialg-animation-time);
   .tu-dialog {
-    animation: dialog-fade-out var(--t-dialg-animation-time);
+    animation: dialog-fade-out var(--tu-dialg-animation-time);
   }
 }
 
