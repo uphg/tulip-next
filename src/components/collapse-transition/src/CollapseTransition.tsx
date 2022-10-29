@@ -1,5 +1,5 @@
 import { defineComponent, Transition } from 'vue';
-import { addClass, removeClass, setStyle } from '../../../utils'
+import { addClass, getDataAttr, getStyle, removeClass, setStyle } from '../../../utils'
 
 const transitionClass = 'tu-collapse-transition--active'
 
@@ -7,13 +7,26 @@ const CollapseTransition = defineComponent({
   name: 'TuCollapseTransition',
   setup(_props, context) {
     function beforeEnter(el: Element) {
+      console.log("getStyle(el, 'marginTop')")
+      console.log(getStyle(el, 'marginTop'))
+      el.setAttribute('data-old-margin-top', getStyle(el, 'marginTop'))
+      el.setAttribute('data-old-margin-bottom', getStyle(el, 'marginBottom'))
       addClass(el, transitionClass)
-      setStyle(el, { height: '0', overflow: 'hidden' })
+      setStyle(el, {
+        height: '0',
+        overflow: 'hidden',
+        marginTop: '0',
+        marginBottom: '0',
+      })
     }
   
     function enter(el: Element) {
       void el.scrollHeight
-      setStyle(el, { height: `${el.scrollHeight}px` })
+      setStyle(el, {
+        height: `${el.scrollHeight}px`,
+        marginTop: el.getAttribute('data-old-margin-top')!,
+        marginBottom: el.getAttribute('data-old-margin-bottom')!
+      })
     }
   
     function afterEnter(el: Element) {
@@ -22,6 +35,8 @@ const CollapseTransition = defineComponent({
     }
   
     function beforeLeave(el: Element) {
+      el.setAttribute('data-old-margin-top', getStyle(el, 'marginTop'))
+      el.setAttribute('data-old-margin-bottom', getStyle(el, 'marginBottom'))
       setStyle(el, {
         height: `${el.scrollHeight}px`,
         overflow: 'hidden'
@@ -31,13 +46,23 @@ const CollapseTransition = defineComponent({
     function leave(el: Element) {
       void el.scrollHeight
       addClass(el, transitionClass)
-      setStyle(el, { height: '0' })
+      setStyle(el, {
+        height: '0',
+        marginTop: '0',
+        marginBottom: '0',
+      })
     }
   
     function afterLeave(el: Element) {
       removeClass(el, transitionClass)
-      const overflow = el.getAttribute('oldOverflow') || ''
-      setStyle(el, { overflow, height: '' })
+      console.log("el.getAttribute('data-old-margin-top')")
+      console.log(el.getAttribute('data-old-margin-top'))
+      setStyle(el, {
+        height: '',
+        overflow: '',
+        marginTop: el.getAttribute('data-old-margin-top')!,
+        marginBottom: el.getAttribute('data-old-margin-bottom')!
+      })
     }
 
     return () => (

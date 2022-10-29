@@ -1,10 +1,11 @@
-import type { StyleElement } from '../interfaces'
+import type { ObjectLike, StyleElement } from '../interfaces'
 import isObject from './isObject'
 import camelize from "./camelize";
 import each from './each'
 import mergeClass from './internal/mergeClass'
 import splitClass from './internal/splitClass'
 import toString from './toString'
+import kebabCase from './kebabCase';
 
 export function addClass(el: Element, ...args: string[] | string[][]) {
   const classNames = mergeClass(args)
@@ -30,7 +31,7 @@ export function removeClass(el: Element, ...args: string[]) {
   mergings && el.setAttribute('class', mergings.join(' '))
 }
 
-export function getStyle(el: HTMLElement, styleName: string): string {
+export function getStyle(el: Element, styleName: string): string {
   if (!el || !styleName) return ''
   styleName = camelize(styleName)
   // see: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle#defaultview
@@ -53,4 +54,27 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
 
 export const getRect = (el: HTMLElement | null, property: string)=>{
   return el?.getBoundingClientRect()[property as keyof DOMRect] as number
+}
+
+export function setDataAttr(el: Element, attr: string | ObjectLike, value?: string) {
+  console.log('attr')
+  console.log(attr)
+  if (isObject(attr)) {
+    each(attr as ObjectLike, (val: string, key) => setDataAttr(el, key as string, val))
+  } else {
+    const cameKey = 'data' + attr[0].toUpperCase() + attr.slice(1)
+    const key = kebabCase(cameKey)
+    console.log('key')
+    console.log(key)
+    el.setAttribute(key, value!)
+  }
+}
+
+export function getDataAttr(el: Element, attrName: string) {
+  console.log('attrName')
+  console.log(attrName)
+  const result = el.getAttribute('data' + attrName)
+  console.log('result')
+  console.log(result)
+  return el.getAttribute('data-' + attrName)
 }

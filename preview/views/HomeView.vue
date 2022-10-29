@@ -1,9 +1,8 @@
 <template>
   <main>
     <div>
-      <!-- <Test />
-      <TestCollapseTransition /> -->
-      <div class="demo"></div>
+      <!-- <Test /> -->
+      <TestCollapseTransition />
     </div>
   </main>
 </template>
@@ -17,9 +16,6 @@ import TestCollapseTransition from './TestCollapseTransition.vue'
 
 box-border()
   box-sizing border-box
-
-absolute()
-  position absolute
 
 r(n)
   return n * 0.25rem
@@ -45,7 +41,6 @@ pt(n)
   padding-top r(n)
 
 .demo
-  absolute()
   inset(1)
   p(2)
   width 200px
