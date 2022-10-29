@@ -3,7 +3,7 @@
 $base = '.tu-input'
 
 {$base}
-  box-sizing border-box
+  box-border()
   display inline-flex
   border-radius var(--tu-border-radius)
   position relative
@@ -17,7 +17,7 @@ $base = '.tu-input'
     display inline-flex
     flex-grow 1
   &__border
-    box-sizing border-box
+    box-border()
     position absolute
     left 0
     right 0
@@ -45,10 +45,13 @@ $base = '.tu-input'
   &__suffix
     margin-left 4px
 
-{$base}__base
+{$base}__inner-wrap
   display inline-flex
   flex-grow 1
-  box-sizing border-box
+{$base}__inner
+  box-border()
+  width 100%
+  display inline-flex
   border none
   padding 0
   font-size var(--tu-font-size)

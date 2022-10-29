@@ -49,13 +49,13 @@ import InputGroup from '../examples/input/group.vue'
 
 .demo-input {
   .tu-input {
-    width: 320px;
+    width: 240px;
   }
 }
 
 .input__group {
   .tu-input-group {
-    width: 360px;
+    width: 320px;
   }
 }
 </style>

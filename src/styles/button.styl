@@ -2,6 +2,10 @@
 @require './_mixins'
 
 $base = '.tu-button'
+$button-height = 34px
+$rounded-size = $button-height / 2
+$round-padding = 21px
+$circle-padding = 9px
 
 shape(padding, radius)
   padding 0 padding
@@ -75,13 +79,15 @@ type-style(base, light, dark)
     text(base, light, dark)
 
 {$base}
+  box-border()
+  px(4)
+  border none
   position relative
+  min-height $button-height
   font-size 14px
   color var(--tu-color-text-primary)
   background-color #ffffff
-  border none
   border-radius var(--tu-border-radius)
-  box-sizing border-box
   cursor pointer
   display inline-flex
   justify-content center
@@ -89,8 +95,6 @@ type-style(base, light, dark)
   flex-wrap nowrap
   white-space nowrap
   transition var(--tu-color-transition), var(--tu-bg-color-transition)
-  padding 0 var(--tu-button-padding)
-  min-height var(--tu-button-height)
   text-decoration none
   line-height 1
   &__content
@@ -100,14 +104,15 @@ type-style(base, light, dark)
   &__border
     width 100%
   &__border, &__state-border
-    box-sizing border-box
+    box-border()
+    inset(0)
+    position absolute
     border-radius inherit
     pointer-events none
-    position-fill()
   &__state-border
     transition var(--tu-border-color-transition)
   &__icon
-    box-sizing border-box
+    box-border()
     width var(--tu-button-icon-size)
     height var(--tu-button-icon-size)
     display inline-flex
@@ -154,10 +159,10 @@ type-style(base, light, dark)
     type-style(var(--tu-color-error), var(--tu-color-error-light), var(--tu-color-error-dark))
 
   &{$base}--round
-    shape(var(--tu-button-padding-round), calc(var(--tu-button-height) / 2))
+    shape($round-padding, $rounded-size)
 
   &{$base}--circle
-    shape(var(--tu-button-padding-circle), calc(var(--tu-button-height) / 2))
+    shape($circle-padding, $rounded-size)
 
   &--small
     font-size var(--tu-button-small-font-size)

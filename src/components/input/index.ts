@@ -1,6 +1,6 @@
-import Input from './src/Input.vue'
-import InputGroup from './src/InputGroup.vue'
-import InputGroupLabel from './src/InputGroupLabel.vue'
+import Input from './src/Input'
+import InputGroup from './src/InputGroup'
+import InputGroupLabel from './src/InputGroupLabel'
 import { withInstall } from '../../utils'
 
 const TuInput = withInstall(Input)

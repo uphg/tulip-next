@@ -1,16 +1,16 @@
 
 // 防止执行动画时内容抖动
-prevent-jitter()
+stable()
   transform: translateZ(0);
 
 .tu-dialog {
+  position relative
   width: 446px;
-  position: relative;
   margin: 30vh auto 0 auto;
   display: flex;
   flex-direction: column;
   &__container {
-    position: fixed;
+    position fixed
     top: 0;
     left: 0;
     right: 0;
@@ -18,7 +18,7 @@ prevent-jitter()
     z-index: 1;
   }
   &__overlay {
-    position: absolute;
+    position absolute
     top: 0;
     left: 0;
     right: 0;
@@ -29,9 +29,8 @@ prevent-jitter()
 }
 
 /* --- 默认组件样式 */
-
 .tu-dialog__content {
-  prevent-jitter()
+  stable()
   background-color: #fff;
   border-radius: var(--tu-dialog-border-radius);
   box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
@@ -109,20 +108,20 @@ prevent-jitter()
 
 /* --- 动画样式 */
 .dialog-fade-enter-active {
-  animation: dialog-overlay-fade-in var(--tu-dialg-animation-time);
+  animation: tu-dialog-overlay-fade-in var(--tu-dialg-animation-time);
   .tu-dialog {
-    animation: dialog-fade-in var(--tu-dialg-animation-time);
+    animation: tu-dialog-fade-in var(--tu-dialg-animation-time);
   }
 }
 
 .dialog-fade-leave-active {
-  animation: dialog-overlay-fade-out var(--tu-dialg-animation-time);
+  animation: tu-dialog-overlay-fade-out var(--tu-dialg-animation-time);
   .tu-dialog {
-    animation: dialog-fade-out var(--tu-dialg-animation-time);
+    animation: tu-dialog-fade-out var(--tu-dialg-animation-time);
   }
 }
 
-@keyframes dialog-overlay-fade-in {
+@keyframes tu-dialog-overlay-fade-in {
   0% {
     opacity: 0;
   }
@@ -131,7 +130,7 @@ prevent-jitter()
   }
 }
 
-@keyframes dialog-overlay-fade-out {
+@keyframes tu-dialog-overlay-fade-out {
   0% {
     opacity: 1;
   }
@@ -141,19 +140,19 @@ prevent-jitter()
 }
 
 
-@keyframes dialog-fade-in {
+@keyframes tu-dialog-fade-in {
   0% {
     transform: scale(0.8);
     opacity: 0;
   }
   100% {
-    prevent-jitter()
+    stable()
     transform: scale(1);
     opacity: 1;
   }
 }
 
-@keyframes dialog-fade-out {
+@keyframes tu-dialog-fade-out {
   0% {
     transform: scale(1);
     opacity: 1;

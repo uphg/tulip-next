@@ -1,21 +1,19 @@
 @require './animation'
+@require './_mixins'
 
 $base = '.tu-base-wave'
 
 {$base}
-  pointer-events none
-  box-sizing border-box
-  opacity 0
-  border-radius inherit
+  box-border()
+  inset(0)
   position absolute
-  top 0
-  left 0
-  right 0
-  bottom 0
+  border-radius inherit
+  pointer-events none
+  opacity 0
   z-index 1
-  animation-iteration-count 1  // 动画执行次数
-  animation-duration 0.6s  // 动画持续时间
-  animation-timing-function cubic-bezier(0, 0, 0.2, 1), cubic-bezier(0, 0, 0.2, 1)  // 动画过渡效果
+  animation-iteration-count 1
+  animation-duration 0.6s
+  animation-timing-function cubic-bezier(0, 0, 0.2, 1), cubic-bezier(0, 0, 0.2, 1)
   &{$base}--active
     animation-name wave-spread, wave-opacity
   &{$base}--big-active
