@@ -1,8 +1,7 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, Transition } from "vue";
 import LoadingIcon from './LoadingIcon'
 import { TuBaseWave } from '../../base-wave'
 import { TuExpandTransition } from '../../expand-transition'
-import { TuFadeTransition } from '../../fade-transition'
 import { TuIcon } from '../../icon/index'
 import type { PropType } from 'vue'
 import type { BaseWaveRef } from '../../base-wave'
@@ -91,9 +90,9 @@ const Button = defineComponent({
                   }
                 ]}
               >
-                <TuFadeTransition>
+                <Transition name="tu-fade" mode="out-in">
                   { loading ? <LoadingIcon /> : <TuIcon name={icon} /> }
-                </TuFadeTransition>
+                  </Transition>
               </span>
               ) : null }
           </TuExpandTransition>

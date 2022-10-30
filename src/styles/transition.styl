@@ -1,5 +1,13 @@
 $fade = '.tu-fade'
 
+.tu-collapse-transition--active
+  overflow hidden
+  transition height 0.3s ease-in-out, margin-top 0.3s ease-in-out, margin-bottom 0.3s ease-in-out
+
+.tu-expand-transition--active
+  transition width 0.25s ease-in-out, margin 0.25s ease-in-out, opacity 0.25s ease-in-out
+
+// Fade
 {$fade}-enter-active,
 {$fade}-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;

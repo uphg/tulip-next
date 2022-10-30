@@ -4,7 +4,7 @@
 
     <div class="overflow-hidden bg-yellow-200 w-100">
       <tu-collapse-transition>
-        <div v-show="visible" style="margin-top: 48px; margin-bottom: 48px; padding-top: 36px; padding-bottom: 36px;" class="bg-blue-300">
+        <div v-show="visible" style="margin-top: 48px; margin-bottom: 48px; height: 200px;" class="bg-blue-300">
           <div class="h-36 bg-light-400">
             <div class="collapse-box">collapse-transition</div>
           </div>
