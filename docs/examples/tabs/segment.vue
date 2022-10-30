@@ -1,5 +1,5 @@
 <template>
-  <h2>白雪公主</h2>
+  <h2>小红帽</h2>
   <tu-tabs v-model:value="value" type="segment">
     <tu-tab-pane :name="1" label="第一章">我是第一章</tu-tab-pane>
     <tu-tab-pane :name="2" label="第二章">我是第二章</tu-tab-pane>

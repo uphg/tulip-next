@@ -92,7 +92,7 @@ const Button = defineComponent({
               >
                 <Transition name="tu-fade" mode="out-in">
                   { loading ? <LoadingIcon /> : <TuIcon name={icon} /> }
-                  </Transition>
+                </Transition>
               </span>
               ) : null }
           </TuExpandTransition>

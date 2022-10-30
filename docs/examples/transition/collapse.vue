@@ -1,9 +1,9 @@
 <template>
-  <tu-button @click="visible = !visible">点我</tu-button>
+  <tu-button @click="visible = !visible">Toggle</tu-button>
 
-  <div style="overflow: hidden; background-color: #eee;">
+  <div style="overflow: hidden; height: 250px; padding: 20px 0;">
     <tu-collapse-transition>
-      <div v-show="visible" style="margin: 20px 0; background-color: #4caf50;">
+      <div v-show="visible">
         <div class="collapse-box">collapse-transition</div>
         <div class="collapse-box">collapse-transition</div>
       </div>
@@ -14,13 +14,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const visible = ref(false)
+const visible = ref(true)
 </script>
 
 <style>
 .collapse-box {
   color: #ffffff;
-  background-color: #1a73e8;
+  background-color: var(--vp-c-brand);
   width: 200px;
   height: 100px;
   border-radius: 4px;

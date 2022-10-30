@@ -1,7 +1,7 @@
 <template>
   <tu-button @click="openDialog">点击打开</tu-button>
   <tu-dialog
-    v-model:visible="dialogVisible"
+    v-model:visible="visible"
     title="我是标题"
   >
     <template #header>
@@ -12,12 +12,12 @@
     <template #footer>
       <tu-button
         size="small"
-        @click="dialogVisible = false"
+        @click="visible = false"
       >取消</tu-button>
       <tu-button
         type="primary"
         size="small"
-        @click="dialogVisible = false"
+        @click="visible = false"
       >确定</tu-button>
     </template>
   </tu-dialog>
@@ -26,9 +26,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const dialogVisible = ref(false)
+const visible = ref(false)
 
 const openDialog = () => {
-  dialogVisible.value = true
+  visible.value = true
 }
 </script>

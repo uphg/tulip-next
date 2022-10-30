@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { useDialog } from '../../lib/index'
+import { useDialog } from '../../../src/index'
 
 const dialog = useDialog()
 const openSuccess = () => {
@@ -24,7 +24,7 @@ const openSuccess = () => {
 const openWarning = () => {
   dialog.warning({
     title: '警告',
-    content: '我要警告你'
+    content: '这是警告窗口'
   })
 }
 const openInfo = () => {
