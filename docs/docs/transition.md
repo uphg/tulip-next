@@ -18,7 +18,7 @@ transition/collapse
 
 ::: demo
 
-transition/zoom-fade
+transition/zoom
 
 :::
 
@@ -28,7 +28,7 @@ transition/zoom-fade
 
 ::: demo
 
-transition/slide-fade
+transition/slide
 
 :::
 
@@ -44,7 +44,13 @@ transition/fade
 
 <script setup lang="ts">
 import TransitionFade from '../examples/transition/fade.vue'
-import TransitionZoomFade from '../examples/transition/zoom-fade.vue'
-import TransitionSlideFade from '../examples/transition/slide-fade.vue'
+import TransitionZoom from '../examples/transition/zoom.vue'
+import TransitionSlide from '../examples/transition/slide.vue'
 import TransitionCollapse from '../examples/transition/collapse.vue'
 </script>
+
+<style>
+.demo-transition.transition__slide .tu-button {
+  margin-right: 12px;
+}
+</style>
