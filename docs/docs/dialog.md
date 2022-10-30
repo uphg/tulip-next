@@ -39,7 +39,7 @@ dialog/quick
 | maskClosable    | 是否可点击遮罩关闭弹框                       | `boolean`               | `true`      |
 | title           | 弹框的标题（只在默认布局下生效）             | `string`                | `undefined` |
 | wrap            | 弹框是否被父元素包裹，默认插入至 body 元素上 | `boolean`               | `false`     |
-| preset          | 预设模板                                     | `'default' \| 'custom'` | `'default'` |
+| custom          | 预设模板                                     | `'default' \| 'custom'` | `'default'` |
 
 ## 事件
 

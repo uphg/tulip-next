@@ -1,5 +1,5 @@
 <template>
-  <tu-button @click="openDialog">点击打开</tu-button>
+  <tu-button @click="open">点击打开</tu-button>
   <tu-dialog
     v-model:visible="visible"
     title="我是标题"
@@ -10,15 +10,8 @@
     <p>我只想保持本色</p>
     <p>和少年的心气</p>
     <template #footer>
-      <tu-button
-        size="small"
-        @click="visible = false"
-      >取消</tu-button>
-      <tu-button
-        type="primary"
-        size="small"
-        @click="visible = false"
-      >确定</tu-button>
+      <tu-button size="small" @click="close">取消</tu-button>
+      <tu-button type="primary" size="small" @click="close">确定</tu-button>
     </template>
   </tu-dialog>
 </template>
@@ -28,7 +21,11 @@ import { ref } from 'vue'
 
 const visible = ref(false)
 
-const openDialog = () => {
+const open = () => {
   visible.value = true
+}
+
+const close = () => {
+  visible.value = false
 }
 </script>

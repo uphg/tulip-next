@@ -1,8 +1,8 @@
 <template>
-  <tu-button @click="openSuccess">成功</tu-button>
-  <tu-button @click="openWarning">警告</tu-button>
-  <tu-button @click="openInfo">信息</tu-button>
-  <tu-button @click="openError">错误</tu-button>
+  <tu-button type="success" @click="openSuccess">成功</tu-button>
+  <tu-button type="info" @click="openInfo">信息</tu-button>
+  <tu-button type="warning" @click="openWarning">警告</tu-button>
+  <tu-button type="error" @click="openError">错误</tu-button>
 </template>
 
 <script setup lang="ts">

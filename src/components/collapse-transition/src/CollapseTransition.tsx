@@ -59,9 +59,9 @@ const CollapseTransition = defineComponent({
     // 离开动画 - 执行后
     function afterLeave(el: Element) {
       leaveStatus.value = false
-      removeClass(el, transitionClass)
       const marginTop = el.getAttribute('data-old-margin-top') || ''
       const marginBottom = el.getAttribute('data-old-margin-bottom') || ''
+      removeClass(el, transitionClass)
       setStyle(el, { height: '', marginTop, marginBottom })
     }
 

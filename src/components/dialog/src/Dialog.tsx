@@ -6,47 +6,42 @@ export default defineComponent({
   name: 'TuDialog',
   emits: ['update:visible', 'open', 'opened', 'close', 'closed', 'maskClick'],
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
+    visible: Boolean as PropType<boolean>,
+    title: String as PropType<string>,
     maskClosable: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: true
     },
-    title: String,
     renderDirective: {
       type: String as PropType<'if' | 'show'>,
       default: 'if'
     },
-    wrap: Boolean,
-    preset: {
-      type: String as PropType<'default' | 'custom'>,
-      default: 'default'
-    }
+    wrap: Boolean as PropType<boolean>,
+    custom: Boolean as PropType<boolean>
   },
   setup(props, context) {
+    const { emit } = context
     const openDialog = () => {
-      context.emit('open')
+      emit('open')
       offBodyScroll()
     }
 
     const closeDialog = () => {
-      context.emit('update:visible', false)
-      context.emit('close')
+      emit('update:visible', false)
+      emit('close')
     }
 
     const handleBeforeLeave = () => {
-      context.emit('opened')
+      emit('opened')
     }
 
     const handleAfterLeave = () => {
-      context.emit('closed')
+      emit('closed')
       onBodyScroll()
     }
 
     const handleMaskClick = (event: Event) => {
-      context.emit('maskClick', event)
+      emit('maskClick', event)
       props.maskClosable && closeDialog()
     }
 
@@ -55,42 +50,35 @@ export default defineComponent({
     })
 
     return () => {
+      const { attrs, slots } = context
       const content = (
         <div
           class="tu-dialog__container"
-          {...context.attrs}
+          {...attrs}
         >
           <div
             class="tu-dialog__overlay"
             onClick={handleMaskClick}
           ></div>
           <div class="tu-dialog">
-            {
-              props.preset === 'default' ? (
-                <div class="tu-dialog__content">
-                  <div class="tu-dialog__header">
-                    {
-                      !context.slots.header ? (
-                        <>
-                          <span class="tu-dialog__title">{props.title}</span>
-                          <span class="tu-dialog__close" onClick={closeDialog}></span>
-                        </>
-                      ) : (
-                        context.slots.header?.()
-                      )
-                    }
-                  </div>
-                  <div class="tu-dialog__body">
-                    {context.slots.default?.()}
-                  </div>
-                  <div class="tu-dialog__footer">
-                    {context.slots.footer?.()}
-                  </div>
+            {!props.custom ? (
+              <div class="tu-dialog__content">
+                <div class="tu-dialog__header">
+                  {!slots.header ? (
+                      <>
+                        <span class="tu-dialog__title">{props.title}</span>
+                        <span class="tu-dialog__close" onClick={closeDialog}></span>
+                      </>
+                    ) : (slots.header?.())}
                 </div>
-              ) : (
-                props.preset === 'custom' ?  context.slots.default?.() : null
-              )
-            }
+                <div class="tu-dialog__body">
+                  {slots.default?.()}
+                </div>
+                <div class="tu-dialog__footer">
+                  {slots.footer?.()}
+                </div>
+              </div>
+              ) : (props.custom ? slots.default?.() : null)}
           </div>
         </div>
       )
