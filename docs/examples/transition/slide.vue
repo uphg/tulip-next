@@ -1,8 +1,12 @@
 <template>
-  <tu-button @click="visible = !visible">Toggle</tu-button>
+  <tu-button @click="index = 0">To 1</tu-button>
+  <tu-button @click="index = 1">To 2</tu-button>
+  <tu-button @click="index = 2">To 3</tu-button>
   <div style="display: flex; margin-top: 20px; height: 100px;">
-    <transition name="tu-slide-fade" mode="out-in">
-      <div v-if="visible" class="transition-box">slide-fade 1</div>
+    <transition name="tu-slide" mode="out-in">
+      <div v-if="index === 0" class="transition-box">Slide 1</div>
+      <div v-else-if="index === 1" class="transition-box">Slide 2</div>
+      <div v-else class="transition-box">Slide 3</div>
     </transition>
   </div>
 </template>
@@ -10,7 +14,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const visible = ref(true)
+const index = ref(0)
 </script>
 
 <style>

@@ -1,8 +1,8 @@
 <template>
   <tu-button @click="visible = !visible">Toggle</tu-button>
   <div style="display: flex; margin-top: 20px; height: 100px;">
-    <transition name="tu-zoom-fade" mode="out-in">
-      <div v-if="visible" class="transition-box">zoom-fade</div>
+    <transition name="tu-zoom" mode="out-in">
+      <div v-if="visible" class="transition-box">Zoom</div>
     </transition>
   </div>
 </template>

@@ -16,5 +16,8 @@ const value = ref(2)
 <style scoped>
 h2 {
   text-align: center;
+  margin-top: 16px;
+  padding: 0;
+  border: none;
 }
 </style>
