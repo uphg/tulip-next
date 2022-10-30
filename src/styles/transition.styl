@@ -16,34 +16,34 @@ $fade = '.tu-fade'
 {$fade}-leave-active
   transition opacity 0.3s ease
 
-// Zoom Fade
-$zoom-fade = '.tu-zoom-fade'
+// Zoom
+$zoom = '.tu-zoom'
 
-{$zoom-fade}-enter-from
+{$zoom}-enter-from
   transform scale3d(0.8, 0.8, 1)
 
-{$zoom-fade}-leave-active
+{$zoom}-leave-active
   transform scale3d(0.8, 0.8, 1)
 
-{$zoom-fade}-enter-active,
-{$zoom-fade}-leave-active
+{$zoom}-enter-active,
+{$zoom}-leave-active
   transition opacity 0.25s ease, transform 0.25s ease
 
-{$zoom-fade}-enter-from,
-{$zoom-fade}-leave-to
+{$zoom}-enter-from,
+{$zoom}-leave-to
   opacity 0
 
-// Slide Fade
-$slide-fade = '.tu-slide-fade'
+// Slide 
+$slide = '.tu-slide'
 
-{$slide-fade}-enter-from
-  transform translateX(-30px)
+{$slide}-enter-from
+  transform translateX(-25px)
   opacity 0
 
-{$slide-fade}-leave-to
-  transform translateX(30px)
+{$slide}-leave-to
+  transform translateX(25px)
   opacity 0
 
-{$slide-fade}-enter-active,
-{$slide-fade}-leave-active
+{$slide}-enter-active,
+{$slide}-leave-active
   transition opacity 0.5s, transform 0.5s
