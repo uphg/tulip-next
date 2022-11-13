@@ -22,23 +22,7 @@ interface DialogApi {
   [key: string]: (options: DialogTypeOption) => DialogApi
 }
 
-/**
- * dialog type 
- * 
- * 成功 success
- * 警告 warning
- * 信息 info
- * 错误 error
- * 问题 question
- */
-
-const typeApi: string[] = [
-  'success',
-  'warning',
-  'info',
-  'error',
-  'question'
-] 
+const typeApi = ['success', 'warning', 'info', 'error', 'question']
 
 const createDialog = (options: DialogOptions) => {
   const { type, title, content, cancel, confirm } = options
@@ -65,7 +49,7 @@ const createDialog = (options: DialogOptions) => {
         <Dialog
           title={title}
           v-model={[visible.value, 'visible']}
-          onClosed={unmounTuDialog}
+          onClosed={unmounDialog}
         >
           {{
             header: () => [
@@ -104,16 +88,16 @@ const createDialog = (options: DialogOptions) => {
     }
   })
 
-  const mounTuDialog = () => {
+  const mounDialog = () => {
     app.mount(div)
     div.remove()
   }
 
-  const unmounTuDialog = () => {
+  const unmounDialog = () => {
     app.unmount()
   }
 
-  mounTuDialog()
+  mounDialog()
 }
 
 const createTypeApi = (type: string, api: DialogApi) => (
@@ -123,7 +107,7 @@ const createTypeApi = (type: string, api: DialogApi) => (
   }
 )
 
-export const useDialog = (options?: { [key: string]: string }) => {
+export const useDialog = () => {
 
   const api = {} as DialogApi
 

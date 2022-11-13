@@ -2,7 +2,8 @@
   <main>
     <div>
       <!-- <Test /> -->
-      <TestCollapseTransition />
+      <!-- <TestCollapseTransition /> -->
+      <TestTabs />
     </div>
   </main>
 </template>
@@ -10,6 +11,7 @@
 <script setup lang="ts">
 import Test from './Test.vue'
 import TestCollapseTransition from './TestCollapseTransition.vue'
+import TestTabs from './TestTabs.vue'
 </script>
 
 <style lang="stylus">
@@ -30,7 +32,7 @@ p(n)
   padding r(n)
 
 py(n)
-  padding-top r(n)
+  padding-top r(n) 
   padding-bottom r(n)
 
 px(n)

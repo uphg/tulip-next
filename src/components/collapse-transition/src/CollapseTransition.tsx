@@ -9,7 +9,6 @@ const CollapseTransition = defineComponent({
     const enterStatus = ref(false)
     const leaveStatus = ref(false)
 
-    // 进入动画 - 执行前
     function beforeEnter(el: Element) {
       enterStatus.value = true
       if (!leaveStatus.value) {
@@ -20,7 +19,6 @@ const CollapseTransition = defineComponent({
       setStyle(el, { height: '0', marginTop: '0', marginBottom: '0' })
     }
   
-    // 进入动画 - 执行中
     function enter(el: Element) {
       void el.scrollHeight
       const marginTop = el.getAttribute('data-old-margin-top') || ''
@@ -28,14 +26,12 @@ const CollapseTransition = defineComponent({
       setStyle(el, { height: `${el.scrollHeight}px`, marginTop, marginBottom })
     }
   
-    // 进入动画 - 执行后
     function afterEnter(el: Element) {
       enterStatus.value = false
       removeClass(el, transitionClass)
       setStyle(el, { height: '' })
     }
   
-    // 离开动画 - 执行前
     function beforeLeave(el: Element) {
       leaveStatus.value = true
       if(!leaveStatus.value) {
@@ -45,7 +41,6 @@ const CollapseTransition = defineComponent({
       setStyle(el, { height: `${el.scrollHeight}px` })
     }
   
-    // 离开动画 - 执行中
     function leave(el: Element) {
       void el.scrollHeight
       addClass(el, transitionClass)
@@ -56,7 +51,6 @@ const CollapseTransition = defineComponent({
       })
     }
   
-    // 离开动画 - 执行后
     function afterLeave(el: Element) {
       leaveStatus.value = false
       const marginTop = el.getAttribute('data-old-margin-top') || ''

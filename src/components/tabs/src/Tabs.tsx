@@ -1,106 +1,78 @@
-import { defineComponent, ref, computed, onMounted, watchEffect, nextTick } from 'vue';
-import { getRect, addClass } from '../../../utils';
-import type { PropType } from 'vue'
+import { defineComponent, ref, watchEffect, type PropType, type SetupContext, type VNode } from "vue"
+import { getClientRect, renderComponent, setStyle } from "../../../utils"
 
-interface TuTabsTabItem {
-  label: string | number | boolean,
-  name: string | number | boolean
+const tabsProps = {
+  value: {
+    type: [String, Number, Boolean, Symbol(), null] as PropType<string | number | boolean | symbol | null>,
+    default: void 0
+  },
+  type: {
+    type: [String] as PropType<'default' | 'segment'>,
+    default: 'default'
+  }
 }
 
-export default defineComponent({
+const Tabs = defineComponent({
   name: 'TuTabs',
-  props: {
-    value: {
-      type: [String, Number, Boolean] as PropType<string | number | boolean>
-    },
-    type: {
-      type: [String] as PropType<'default' | 'segment'>,
-      default: 'default'
-    }
-  },
-  emits: ['update:value'],
-  setup(props, context) {
-    const slots = context.slots
-    const navRef = ref<HTMLElement | null>(null)
+  props: tabsProps,
+  setup(props, context: SetupContext<{}>) {
+    const { slots } = context
     const barRef = ref<HTMLElement | null>(null)
-    const selectRef = ref<HTMLElement | null>(null)
+    const checkedRef = ref<HTMLElement | null>(null)
+    const tabWrapRef = ref<HTMLElement | null>(null)
 
-    const content = computed(() => slots.default?.().find((item) => {
-      return item.props?.name === props.value
-    }))
-
-    const titles = computed<TuTabsTabItem[] | undefined>(() => {
-      return slots.default?.().map((item) => {
-        const { label, name } = item.props || {}
-        return { label, name }
-      })
-    })
-
-    const handleTabClick = (item: TuTabsTabItem) => {
-      context.emit('update:value', item.name)
+    const handleTabClick = (item: VNode) => {
+      context.emit('update:value', item.props?.name)
     }
 
     const updateBar = () => {
-      const width = getRect(selectRef.value, 'width')
-      const navLeft = getRect(navRef.value, 'left')
-      const selectLeft = getRect(selectRef.value, 'left')
-      const left = selectLeft - navLeft
+      const left = getClientRect(checkedRef.value, 'left') || 0
+      const width = getClientRect(checkedRef.value, 'width') || 0
+      const wrapLeft = getClientRect(tabWrapRef.value, 'left') || 0
       const bar = barRef.value
-      if (bar) {
-        bar.style.width = width + 'px'
-        bar.style.left = left + 'px'
+
+      if(bar) {
+        setStyle(bar, {
+          width: width + 'px',
+          left: left - wrapLeft + 'px'
+        })
       }
     }
 
-    const initTransitionBar = () => {
-      const bar = barRef.value
-      // 强制更新一次 DOM
-      void bar?.offsetHeight
-      nextTick(() => {
-        bar && addClass(bar, 'tu-tabs__active-bar--transition')
-      })
-    }
+    watchEffect(updateBar)
 
-    props.type === 'default' && onMounted(() => {
-      nextTick(() => {
-        watchEffect(updateBar)
-        initTransitionBar()
-      })
-    })
-
-    return () => (
-      <div class="tu-tabs">
-        <div
-          ref={navRef}
-          class={
-            [
-              'tu-tabs-nav',
-              props.type === 'segment' && 'tu-tabs-nav--segment'
-            ]
-          }
-        >
-          {titles.value?.map((item) => (
-            <div
-              ref={(el) => {
-                if (item.name === props.value) {
-                  selectRef.value = el as HTMLElement
-                }
-              }}
-              class={[
-                'tu-tabs-tab',
-                item.name === props.value && 'tu-tabs-tab--active'
-              ]}
-              onClick={() => handleTabClick(item)}
-            >
-              <span
-                class="tu-tabs-tab__label"
-              >{item.label}</span>
+    return () => {
+      const tabPanes = renderComponent(slots.default?.(), 'TabPane')
+      return (
+        <div class="tu-tabs">
+          <div class={['tu-tabs-nav', { 'tu-tabs-nav--segment': props.type === 'segment' }]}>
+            {slots.prefix && <div class="tu-tabs-nav__prefix">{slots.prefix()}</div>}
+            <div class={['tu-tabs-nav__wrap']}>
+              <div ref={tabWrapRef} class="tu-tabs-tab__wrap">
+                {tabPanes.map((item, index) => (
+                  <div
+                    ref={(el) => {
+                      if (item.props?.name === props.value) {
+                        checkedRef.value = el as HTMLElement
+                      }
+                    }}
+                    class={['tu-tabs-tab__item', { active: item.props?.name === props.value }]}
+                    key={index}
+                    onClick={() => handleTabClick(item)}
+                  ><span class="tu-tabs-tab__item-label">{item.props?.label}</span></div>
+                ))}
+              </div>
+              {props.type === 'default' && <div ref={barRef} class="tu-tabs-bar"></div>}
             </div>
-          ))}
-          {props.type === 'default' && <div ref={barRef} class={'tu-tabs__active-bar'}></div>}
+            {slots.suffix && <div class="tu-tabs-nav__suffix">{slots.suffix()}</div>}
+          </div>
+          <div class={['tu-tabs-content', { 'tu-tabs-content--segment': props.type === 'segment' }]}>
+            {tabPanes.find((item) => item.props?.name === props.value)}
+          </div>
         </div>
-        {content.value}
-      </div>
-    )
+      )
+    }
   }
 })
+
+export default Tabs

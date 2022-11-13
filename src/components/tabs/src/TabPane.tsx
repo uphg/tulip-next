@@ -1,23 +1,28 @@
-import { defineComponent } from 'vue';
-import type { PropType } from 'vue'
+import { defineComponent, type ExtractPropTypes, type PropType } from "vue";
+import { TAGKEY } from '../../../shared'
 
-export default defineComponent({
-  name: 'TuTabPane',
-  props: {
-    name: {
-      type: [String, Number, Boolean] as PropType<string | number | boolean>,
-      default: ''
-    },
-    label: {
-      type: [String, Number, Boolean] as PropType<string | number | boolean>,
-      default: ''
-    }
+export type TabPaneProps = ExtractPropTypes<typeof tabPaneProps>
+
+export const tabPaneProps = {
+  name: {
+    type: [String, Number, Boolean] as PropType<string | number | boolean>,
+    default: null
   },
-  render() {
-    return (
-      <div class="tu-tab-pane">
-        {this.$slots.default?.()}
-      </div>
+  label: {
+    type: [String, Number, Boolean] as PropType<string | number | boolean>,
+    default: null
+  }
+}
+
+const TabPane = defineComponent({
+  name: 'TuTabPane',
+  props: tabPaneProps,
+  [TAGKEY]: 'TabPane',
+  setup(_props, context) {
+    return () => (
+      <div class="tu-tab-pane">{context.slots.default?.()}</div>
     )
   }
 })
+
+export default TabPane

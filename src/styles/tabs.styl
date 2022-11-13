@@ -1,59 +1,58 @@
 
-
 $base = '.tu-tabs'
+$tab-gap = 12px;
 
 {$base}
   &-nav
     display flex
+    column-gap $tab-gap
     border-bottom 1px solid var(--tu-border-color)
+  &-nav__wrap
     position relative
-
-  &-tab
-    cursor pointer
-    display inline-flex
+  &-tab__wrap
+    display flex
+    column-gap $tab-gap
+  &-tab__item
     padding 10px 0
-    &:not(:first-child)
-      margin-left 36px
-    &{$base}-tab--active
-      {$base}-tab__label
-        color var(--tu-color-primary)
-
-  &-tab__label
-    transition var(--tu-color-transition)
-    &:hover
+    cursor pointer
+    &-label
+      transition color 0.25s
+    &.active
       color var(--tu-color-primary)
-
-  &__active-bar
+  &-bar
+    width 60px
     height 2px
     background-color var(--tu-color-primary)
+    margin-bottom -1px
     position absolute
     bottom 0
-    left 0
-    margin-bottom -1px
-    &--transition
-      transition left 0.25s, width 0.25s
-
-{$base}-nav
-  &&--segment
-    border-bottom 0
-    background-color #f7f7fa
-    padding 3px
+    transition width 0.25s, left 0.25s 
+  
+  &-nav__prefix, &-nav__suffix
+    display flex
+    align-items center
+  
+  &-nav--segment
+    border none
     border-radius 3px
-    {$base}-tab
-      display flex
+    background-color #f7f7fa
+    {$base}-nav__wrap
+      padding 3px
       flex-grow 1
-      align-items center
-      justify-content center
+    {$base}-tab__wrap
+      column-gap unset
+    {$base}-tab__item
       padding 6px 0
-      transition var(--tu-bg-color-transition), var(--tu-box-shadow-transition)
-      border-radius 3px 
-      &__label
+      display flex
+      justify-content center
+      align-items center
+      flex-grow 1
+      border-radius 3px
+      transition background-color 0.25s, box-shadow 0.25s
+      &.active
         color inherit
-      &:not(:first-child)
-        margin-left 0
-      &--active
         background-color #fff
-        box-shadow 0 1px 3px 0 rgba(0, 0, 0, 0.08)        
+        box-shadow 0 1px 2px -2px rgba(0, 0, 0, 0.08), 0 3px 6px 0 rgba(0, 0, 0, 0.06), 0 5px 12px 4px rgba(0, 0, 0, 0.04);
 
 .tu-tab-pane
-  padding-top 12px
+  padding-top 0.75rem
