@@ -6,6 +6,7 @@ import { TuDialog, useDialog } from './dialog'
 import { TuCollapseTransition } from './collapse-transition'
 import { TuTabPane, TuTabs } from './tabs'
 import { TuExpandTransition } from './expand-transition'
+import { TuPagination } from './pagination'
 
 const components = [
   TuButton,
@@ -18,7 +19,8 @@ const components = [
   TuSwitch,
   TuTabs,
   TuTabPane,
-  TuDialog
+  TuDialog,
+  TuPagination
 ]
 
 const { install } = makeInstaller(components)

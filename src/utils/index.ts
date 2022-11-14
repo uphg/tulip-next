@@ -1,4 +1,5 @@
 export { default as each } from './each'
+export { default as map } from './map'
 export { default as flatMap } from './flatMap'
 export { default as isNil } from './isNil'
 export { default as isObject } from './isObject'

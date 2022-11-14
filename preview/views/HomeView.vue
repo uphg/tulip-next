@@ -3,7 +3,8 @@
     <div>
       <!-- <Test /> -->
       <!-- <TestCollapseTransition /> -->
-      <TestTabs />
+      <!-- <TestTabs /> -->
+      <TestPagination />
     </div>
   </main>
 </template>
@@ -12,6 +13,7 @@
 import Test from './Test.vue'
 import TestCollapseTransition from './TestCollapseTransition.vue'
 import TestTabs from './TestTabs.vue'
+import TestPagination from './TestPagination.vue'
 </script>
 
 <style lang="stylus">
