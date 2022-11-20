@@ -11,7 +11,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "src*": ["./src/*"],
+      "tulp*": ["./src/*"],
       "docs": ["./docs/*"],
       "preview": ["./preview/*"]
     }
