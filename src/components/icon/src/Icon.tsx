@@ -1,20 +1,16 @@
-import { defineComponent } from "vue";
-import { useIcons } from '../../../icons/useIcons'
+import { defineComponent, h, type Component, type PropType } from "vue";
 
 const iconProps = {
-  name: String
+  is: Object as PropType<Component>
 }
 
 const Icon = defineComponent({
   name: 'TuIcon',
   props: iconProps,
-  setup(props) {
-    useIcons(window)
-    return () => (
-      <svg class={{ [`tu-icon-${props.name}`]: props.name }} aria-hidden="true">
-        <use xlink:href={`#tu-icon-${props.name}`} />
-      </svg>
-    )
+  setup(props, context) {
+    console.log('props.is')
+    console.log(props.is)
+    return () => h('i', { class: 'tu-icon' }, props.is ? h(props.is) : context.slots.default?.())
   }
 })
 

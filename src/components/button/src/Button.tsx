@@ -1,10 +1,8 @@
-import { defineComponent, ref, Transition } from "vue";
+import { defineComponent, ref, Transition, type Component, type PropType } from "vue";
 import LoadingIcon from './LoadingIcon'
-import { TuBaseWave } from '../../base-wave'
-import { TuExpandTransition } from '../../expand-transition'
 import { TuIcon } from '../../icon/index'
-import type { PropType } from 'vue'
-import type { BaseWaveRef } from '../../base-wave'
+import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
+import { TuExpandTransition } from '../../expand-transition'
 
 const buttonProps = {
   type: {
@@ -20,10 +18,7 @@ const buttonProps = {
       return ['', 'large', 'medium', 'small'].includes(value)
     }
   },
-  icon: {
-    type: String,
-    default: ''
-  },
+  icon: Object as PropType<Component>,
   iconPosition: {
     type: String as PropType<'left' | 'right'>,
     default: 'left',
@@ -80,7 +75,7 @@ const Button = defineComponent({
           onClick={onClick}
         >
           <TuExpandTransition>
-            { icon || loading ? (
+            {icon || loading ? (
               <span
                 class={[
                   'tu-button__icon',
@@ -91,10 +86,10 @@ const Button = defineComponent({
                 ]}
               >
                 <Transition name="tu-fade" mode="out-in">
-                  { loading ? <LoadingIcon /> : <TuIcon name={icon} /> }
+                  { loading ? <LoadingIcon /> : <TuIcon is={icon} /> }
                 </Transition>
               </span>
-              ) : null }
+              ) : null}
           </TuExpandTransition>
           {slots.default ? (
             <span class="tu-button__content">

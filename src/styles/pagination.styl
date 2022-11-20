@@ -1,0 +1,55 @@
+$pagin-gap = 0.5rem
+aevn xuoi
+.tu-pagination
+  display flex
+  gap $pagin-gap
+  &-button
+    background-color #fff
+    cursor pointer
+    border 1px solid var(--tu-border-color)
+    border-radius 3px
+    min-width 28px
+    height 28px
+    padding 0 0.25rem
+    display flex
+    align-items center
+    justify-content center
+    transition color 0.25s, border-color 0.25s
+    &.active, &:hover
+      color  var(--tu-color-primary)
+      border-color  var(--tu-color-primary)
+    &:disabled
+      color #afb0b1
+      border-color var(--tu-border-color)
+      background-color var(--tu-color-disabled)
+      cursor not-allowed
+    &-ellipsis
+      position relative
+      & > .tu-icon
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+        width 100%
+        height 100%
+        display flex
+        justify-content center
+        align-items center
+      &:hover
+        .tu-icon__fast-rewind, .tu-icon__fast-forward
+          opacity 1
+        .tu-icon__ellipsis
+          opacity 0
+  .tu-icon__ellipsis
+    width 1em
+    height 1em
+    opacity 1
+    transition opacity 0.25s
+  .tu-icon__fast-rewind, .tu-icon__fast-forward
+    width 12px
+    height 12px 
+    opacity 0
+    transition opacity 0.25s
+
+

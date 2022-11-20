@@ -1,10 +1,14 @@
 import Dialog from './Dialog'
 import { TuButton } from '../../button/index'
 import { TuIcon } from '../../icon/index'
-import { createApp, nextTick, ref, h, onMounted } from 'vue'
+import { createApp, nextTick, ref, h, onMounted, type Component } from 'vue'
+import CheckCircle from '../../../icons/CheckCircle.vue'
+import CloseCircle from '../../../icons/CloseCircle.vue'
+import infoCircle from '../../../icons/infoCircle.vue'
+import WarningCircle from '../../../icons/WarningCircle.vue'
 
 interface DialogOptions {
-  type: string,
+  icon: Component,
   title?: string
   content?: string,
   confirm: () => void,
@@ -22,10 +26,23 @@ interface DialogApi {
   [key: string]: (options: DialogTypeOption) => DialogApi
 }
 
-const typeApi = ['success', 'warning', 'info', 'error', 'question']
+// const typeApi = [
+//   'success',
+//   'warning',
+//   'info',
+//   'error',
+//   'question'
+// ]
+
+const typeMap = [
+  ['success', CheckCircle],
+  ['warning', WarningCircle],
+  ['info', infoCircle],
+  ['error', CloseCircle],
+]
 
 const createDialog = (options: DialogOptions) => {
-  const { type, title, content, cancel, confirm } = options
+  const { icon, title, content, cancel, confirm } = options
   const div = document.createElement('div')
   document.body.appendChild(div)
 
@@ -53,7 +70,7 @@ const createDialog = (options: DialogOptions) => {
         >
           {{
             header: () => [
-              <TuIcon class="prefix-icon" name={type} />,
+              <TuIcon class="prefix-icon" is={icon} />,
               <span class="tu-dialog__title">{() => title}</span>,
               <span
                 class="tu-dialog__close"
@@ -100,9 +117,9 @@ const createDialog = (options: DialogOptions) => {
   mounDialog()
 }
 
-const createTypeApi = (type: string, api: DialogApi) => (
+const createTypeApi = (icon: Component, api: DialogApi) => (
   (options?: DialogTypeOption) => {
-    createDialog({ type, ...options } as DialogOptions)
+    createDialog({ icon, ...options } as DialogOptions)
     return api
   }
 )
@@ -111,8 +128,9 @@ export const useDialog = () => {
 
   const api = {} as DialogApi
 
-  typeApi.forEach((item) => {
-    api[item] = createTypeApi(item, api)
+  typeMap.forEach((item) => {
+    const [type, icon] = item
+    api[type] = createTypeApi(icon, api)
   })
 
   return api
