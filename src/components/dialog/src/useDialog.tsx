@@ -26,14 +26,6 @@ interface DialogApi {
   [key: string]: (options: DialogTypeOption) => DialogApi
 }
 
-// const typeApi = [
-//   'success',
-//   'warning',
-//   'info',
-//   'error',
-//   'question'
-// ]
-
 const typeMap = [
   ['success', CheckCircle],
   ['warning', WarningCircle],

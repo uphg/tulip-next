@@ -21,32 +21,36 @@ export default defineComponent({
   },
   setup(props, context) {
     const { emit } = context
-    const openDialog = () => {
+
+    const close = () => {
+      emit('update:visible', false)
+    }
+
+    const handleOpen = () => {
       emit('open')
       offBodyScroll()
     }
 
-    const closeDialog = () => {
-      emit('update:visible', false)
+    const handleClose = () => {
       emit('close')
     }
 
-    const handleBeforeLeave = () => {
+    const onAfterEnter = () => {
       emit('opened')
     }
 
-    const handleAfterLeave = () => {
+    const onAfterLeave = () => {
       emit('closed')
       onBodyScroll()
     }
 
     const handleMaskClick = (event: Event) => {
       emit('maskClick', event)
-      props.maskClosable && closeDialog()
+      props.maskClosable && close()
     }
 
     watch(toRef(props, 'visible'), value => {
-      value && openDialog()
+      value ? handleOpen() : handleClose()
     })
 
     return () => {
@@ -67,7 +71,7 @@ export default defineComponent({
                   {!slots.header ? (
                       <>
                         <span class="tu-dialog__title">{props.title}</span>
-                        <span class="tu-dialog__close" onClick={closeDialog}></span>
+                        <span class="tu-dialog__close" onClick={close}></span>
                       </>
                     ) : (slots.header?.())}
                 </div>
@@ -86,8 +90,8 @@ export default defineComponent({
         <Teleport to="body" disabled={props.wrap}>
           <Transition
             name="dialog-fade"
-            onAfterLeave={handleAfterLeave}
-            onBeforeLeave={handleBeforeLeave}
+            onAfterEnter={onAfterEnter}
+            onAfterLeave={onAfterLeave}
           >
             {{
               default: () => {
