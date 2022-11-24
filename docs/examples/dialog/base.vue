@@ -1,13 +1,6 @@
 <template>
   <tu-button @click="open">点击打开</tu-button>
-  <tu-dialog
-    v-model:visible="visible"
-    title="我是标题"
-    @open="onOpen"
-    @opened="onOpened"
-    @close="onClose"
-    @closed="onClosed"
-  >
+  <tu-dialog title="我是标题" v-model:visible="visible">
     <template #header>
       <span>我是标题</span>
     </template>
@@ -31,18 +24,5 @@ const open = () => {
 
 const close = () => {
   visible.value = false
-}
-
-const onOpen = () => {
-  console.log('open')
-}
-const onOpened = () => {
-  console.log('opened')
-}
-const onClose = () => {
-  console.log('close')
-}
-const onClosed = () => {
-  console.log('closed')
 }
 </script>

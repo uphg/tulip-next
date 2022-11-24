@@ -8,8 +8,6 @@ const Icon = defineComponent({
   name: 'TuIcon',
   props: iconProps,
   setup(props, context) {
-    console.log('props.is')
-    console.log(props.is)
     return () => h('i', { class: 'tu-icon' }, props.is ? h(props.is) : context.slots.default?.())
   }
 })

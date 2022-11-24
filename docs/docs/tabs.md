@@ -12,9 +12,19 @@ tabs/base
 
 :::
 
+## 前缀/后缀
+
+可以添加前缀后缀
+
+::: demo
+
+tabs/prefix-suffix
+
+:::
+
 ## 分段标签
 
-可设置分段样式标签
+分段式的标签
 
 ::: demo
 
@@ -24,5 +34,6 @@ tabs/segment
 
 <script setup lang="ts">
 import TabsBase from '../examples/tabs/base.vue'
+import TabsPrefixSuffix from '../examples/tabs/prefix-suffix.vue'
 import TabsSegment from '../examples/tabs/segment.vue'
 </script>

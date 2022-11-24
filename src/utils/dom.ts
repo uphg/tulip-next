@@ -52,7 +52,12 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
   el.style[styleName] = value
 }
 
-export const getClientRect = (el: HTMLElement | null, property: string) => el?.getBoundingClientRect()[property as keyof DOMRect] as (number | undefined)
+// 获取相对当前客户端位置的距离
+export const getClientRect = (el: HTMLElement | null, property?: string) => {
+  const rect = el?.getBoundingClientRect()
+  if (!property) return rect
+  return rect && rect[property as keyof DOMRect] as number
+}
 
 export const getRect = (el: HTMLElement | null, property: string)=>{
   return el?.getBoundingClientRect()[property as keyof DOMRect] as number

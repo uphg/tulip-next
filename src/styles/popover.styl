@@ -1,0 +1,56 @@
+
+.tu-popover
+  padding 8px 12px
+  border-radius 3px
+  background-color #262626
+  min-height 40px
+  min-width 60px
+  position absolute
+  z-index 1000
+  color #fff
+  &-arrow-wrapper
+    position absolute
+    bottom: 0;
+    left: 50%;
+  &-arrow
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin-left: -6px;
+    border-width: 6px;
+    border-bottom-width: 0;
+    border-color: transparent;
+    border-top-color: #262626;
+    border-style: solid;
+
+/* --- 动画样式 */
+.popover-fade-enter-active {
+  animation: tu-popover-fade-in var(--tu-transition-time);
+}
+
+.popover-fade-leave-active {
+  animation: tu-popover-fade-out var(--tu-transition-time);
+}
+
+@keyframes tu-popover-fade-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    stable()
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tu-popover-fade-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}

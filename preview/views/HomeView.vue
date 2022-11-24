@@ -1,10 +1,11 @@
 <template>
   <main>
-    <div>
+    <div style="padding: 100px 100px">
       <!-- <Test /> -->
       <!-- <TestCollapseTransition /> -->
       <!-- <TestTabs /> -->
-      <TestPagination />
+      <!-- <TestPagination /> -->
+      <TestPopover />
     </div>
   </main>
 </template>
@@ -14,6 +15,7 @@ import Test from './Test.vue'
 import TestCollapseTransition from './TestCollapseTransition.vue'
 import TestTabs from './TestTabs.vue'
 import TestPagination from './TestPagination.vue'
+import TestPopover from './TestPopover.vue'
 </script>
 
 <style lang="stylus">

@@ -13,12 +13,8 @@ const openSuccess = () => {
   dialog.success({
     title: '成功',
     content: '你成功了',
-    confirm: () => {
-      console.log('你确认了')
-    },
-    cancel: () => {
-      console.log('你取消了')
-    }
+    confirm: () => console.log('你确认了'),
+    cancel: () => console.log('你取消了')
   })
 }
 const openWarning = () => {

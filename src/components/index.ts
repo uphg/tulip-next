@@ -7,6 +7,7 @@ import { TuCollapseTransition } from './collapse-transition'
 import { TuTabPane, TuTabs } from './tabs'
 import { TuExpandTransition } from './expand-transition'
 import { TuPagination } from './pagination'
+import { TuPopover } from './popover'
 
 const components = [
   TuButton,
@@ -20,7 +21,8 @@ const components = [
   TuTabs,
   TuTabPane,
   TuDialog,
-  TuPagination
+  TuPagination,
+  TuPopover,
 ]
 
 const { install } = makeInstaller(components)
@@ -36,6 +38,8 @@ export {
   TuSwitch,
   TuTabs,
   TuTabPane,
+  TuPagination,
+  TuPopover,
 
   // utils
   useDialog,
