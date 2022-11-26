@@ -14,8 +14,14 @@
         <tu-button>聚焦</tu-button>
       </tu-popover>
 
-      <tu-popover :visible="visible" content="Hello, I am Jack" trigger="focus">
+      <tu-popover :visible="visible" :content="content" trigger="manual">
         <tu-button @click="visible = !visible">手动</tu-button>
+      </tu-popover>
+      <tu-popover :visible="visible2" :content="content" trigger="manual">
+        <tu-button @click="visible2 = !visible2">手动</tu-button>
+      </tu-popover>
+      <tu-popover :visible="visible3" :content="content" trigger="manual">
+        <tu-button @click="visible3 = !visible3">手动</tu-button>
       </tu-popover>
     </div>
 
@@ -76,6 +82,8 @@ import { ref } from 'vue'
 const content = 'Hello, I am Jack. Hello, I am Jack. Hello, I am Jack. Hello, I am Jack. Hello, I am Jack.'
 
 const visible = ref(false)
+const visible2 = ref(false)
+const visible3 = ref(false)
 </script>
 
 <style lang="stylus">

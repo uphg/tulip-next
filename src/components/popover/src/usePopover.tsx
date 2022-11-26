@@ -1,6 +1,8 @@
-import {  h, ref, type VNodeRef, nextTick, computed, Teleport, Transition, type SetupContext } from "vue"
+import {  } from "fs"
+import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef } from "vue"
 import { getClientRect } from "../../../utils"
 import type { PopoverProps } from './popoverProps'
+import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 const arrowClassMap = [
   [['top-start', 'top', 'top-end'], 'top'],
@@ -9,14 +11,14 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
-export function usePopover(props: PopoverProps, context: SetupContext<{}>) {
+export function usePopover(props: PopoverProps, context: SetupContext<['update:visible']>) {
   const visible = ref(false)
   const triggerStyle = ref<{ left: number, top: number }>({ left: 0, top: 0 })
   const closeTimerId = ref<NodeJS.Timeout | null>(null)
   const mousedown = ref(false)
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
-
+  const zIndex = ref(2000)
   const visiblePopover = computed(() => props.visible !== void 0 ? props.visible : visible.value )
   const halfWidth = computed(() => (popoverRef.value?.offsetWidth || 0) / 2)
   const halfHeight = computed(() => (popoverRef.value?.offsetHeight || 0) / 2)
@@ -79,7 +81,10 @@ export function usePopover(props: PopoverProps, context: SetupContext<{}>) {
       },
     }
 
-    return styleMap[props.placement]
+    return {
+      zIndex: zIndex.value,
+      ...styleMap[props.placement]
+    }
   })
 
   const arrowStyle = computed(() => {
@@ -119,24 +124,43 @@ export function usePopover(props: PopoverProps, context: SetupContext<{}>) {
 
   const on = eventMap[props.trigger]
 
-  function isTrigger(event: MouseEvent) {
-    const trigger = triggerRef.value.$el
-    return trigger === event.target || trigger.contains(event.target)
+  const { getZIndex } = useMaxZIndex(window) || {}
+
+  props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? handleOpen() : handleClose())
+
+  function handleOpen() {
+    beforeOpen()
+    context.emit('update:visible', true)
   }
-  function isPopover(event: MouseEvent) {
-    const el = popoverRef.value
-    return el && (el === event.target || el.contains(event.target))
+
+  function handleClose() {
+    context.emit('update:visible', false)
+  }
+
+  function beforeOpen() {
+    const { top, left } = getPosition() || {}
+    zIndex.value = getZIndex?.() || 2000
+    triggerStyle.value.top = top
+    triggerStyle.value.left = left
   }
 
   function open() {
-    const { top, left } = getPosition() || {}
-    triggerStyle.value.top = top
-    triggerStyle.value.left = left
+    beforeOpen()
     visible.value = true
   }
 
   function close() {
     visible.value = false
+  }
+
+  function isTrigger(event: MouseEvent) {
+    const el = triggerRef.value.$el
+    return el === event.target || el.contains(event.target)
+  }
+
+  function isPopover(event: MouseEvent) {
+    const el = popoverRef.value
+    return el && (el === event.target || el.contains(event.target))
   }
 
   function getPosition() {
@@ -196,6 +220,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<{}>) {
   }
 
   function onMouseover() {
+    // xxx 未添加防抖
     !visible.value && open()
     nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
   }
