@@ -2,6 +2,8 @@
 // $tu-popover-bgcolor = #262626
 $tu-popover-bgcolor = #fff
 
+$arrow = '.tu-popover-arrow'
+
 .tu-popover
   // max-width 320px
   max-width 280px
@@ -13,20 +15,64 @@ $tu-popover-bgcolor = #fff
   position absolute
   z-index 1000
   box-shadow 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)
-  &-arrow-wrapper
+
+  &-arrow--top
     position absolute
     bottom 0
-    left 50%
-  &-arrow
+    {$arrow}
+      position absolute
+      width 0
+      height 0
+      margin-left -6px
+      border-style solid
+      border-width 6px
+      border-bottom-width 0
+      border-color transparent
+      border-top-color $tu-popover-bgcolor
+
+  &-arrow--left
     position absolute
-    width 0
-    height 0
-    margin-left -6px
-    border-width 6px
-    border-bottom-width 0
-    border-color transparent
-    border-top-color $tu-popover-bgcolor
-    border-style solid
+    right 0
+    {$arrow}
+      position absolute
+      width 0
+      height 0
+      margin-top -6px
+      border-style solid
+      border-width 6px
+      border-right-width 0
+      border-color transparent
+      border-left-color $tu-popover-bgcolor
+  
+  &-arrow--right
+    position absolute
+    left 0
+    {$arrow}
+      position absolute
+      width 0
+      height 0
+      margin-left -6px
+      margin-bottom -6px
+      border-style solid
+      border-width 6px
+      border-left-width 0
+      border-color transparent
+      border-right-color $tu-popover-bgcolor
+  
+  &-arrow--bottom
+    position absolute
+    top 0
+    {$arrow}
+      position absolute
+      width 0
+      height 0
+      margin-top -6px
+      margin-left -6px
+      border-style solid
+      border-width 6px
+      border-top-width 0
+      border-color transparent
+      border-bottom-color $tu-popover-bgcolor
 
 /* --- 动画样式 */
 .popover-fade-enter-active {

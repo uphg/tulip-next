@@ -1,5 +1,7 @@
 import type { Plugin } from "vue";
 
+export type ValueOf<T> = T[keyof T]
+
 export interface ArrayLike<T> {
   [index: number]: T;
   length: number;
