@@ -25,6 +25,22 @@
       </tu-popover>
     </div>
 
+    <div class="popover-demo">
+      <tu-popover trigger="click">
+        <template #content="{ close }">
+          <p style="margin-bottom: 0.25em;">Hi, I am Jack</p>
+          <tu-button type="primary" size="small" @click="close">关闭</tu-button>
+        </template>
+        <tu-button>点击（插槽关闭）</tu-button>
+      </tu-popover>
+    </div>
+
+    <div class="popover-demo">
+      <tu-popover content="Hi, I am Jack" trigger="click" hide-arrow>
+        <tu-button>去掉箭头</tu-button>
+      </tu-popover>
+    </div>
+
     <div class="popover-demo-1">
       <div style="display:flex; gap: 16px; margin-left: 100px;">
         <tu-popover placement="top-start" :content="content" trigger="click">

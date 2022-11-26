@@ -14,12 +14,14 @@ const arrowClassMap = [
 export function usePopover(props: PopoverProps, context: SetupContext<['update:visible']>) {
   const visible = ref(false)
   const triggerStyle = ref<{ left: number, top: number }>({ left: 0, top: 0 })
+  const zIndex = ref(2000)
   const closeTimerId = ref<NodeJS.Timeout | null>(null)
+  const hovered = ref(false)
   const mousedown = ref(false)
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
-  const zIndex = ref(2000)
-  const visiblePopover = computed(() => props.visible !== void 0 ? props.visible : visible.value )
+
+  const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
   const halfWidth = computed(() => (popoverRef.value?.offsetWidth || 0) / 2)
   const halfHeight = computed(() => (popoverRef.value?.offsetHeight || 0) / 2)
 
@@ -88,6 +90,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   })
 
   const arrowStyle = computed(() => {
+    if (props.hideArrow) return
     switch(props.placement) {
       case 'top-start':
       case 'bottom-start':
@@ -111,6 +114,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   })
 
   const arrowClass = computed(() => {
+    if (props.hideArrow) return
     const type = arrowClassMap.find((item) => item[0].includes(props.placement))?.[1]
     return { [`tu-popover-arrow--${type}`]: !!type }
   })
@@ -118,7 +122,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   const eventMap = {
     hover: { onMouseover },
     click: { onClick },
-    focus: { onFocus: open, onBlur },
+    focus: { onFocus: open, onBlur: close },
     manual: { },
   }
 
@@ -126,16 +130,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
 
   const { getZIndex } = useMaxZIndex(window) || {}
 
-  props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? handleOpen() : handleClose())
-
-  function handleOpen() {
-    beforeOpen()
-    context.emit('update:visible', true)
-  }
-
-  function handleClose() {
-    context.emit('update:visible', false)
-  }
+  props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
   function beforeOpen() {
     const { top, left } = getPosition() || {}
@@ -146,11 +141,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
 
   function open() {
     beforeOpen()
-    visible.value = true
+    props.trigger === 'manual' ? context.emit('update:visible', true) : visible.value = true
   }
 
   function close() {
-    visible.value = false
+    props.trigger === 'manual' ? context.emit('update:visible', false) : visible.value = false
   }
 
   function isTrigger(event: MouseEvent) {
@@ -220,9 +215,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   }
 
   function onMouseover() {
-    // xxx 未添加防抖
-    !visible.value && open()
-    nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
+    hovered.value = true
+    if(!visible.value) {
+      open()
+      nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
+    }
   }
 
   function onClick() {
@@ -237,19 +234,25 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
     }
   }
 
-  function onBlur(event: MouseEvent) {
-    if (isPopover(event)) return 
-    close()
-  }
-
   function handleDomMouseover(e: MouseEvent){
     if (isPopover(e) || isTrigger(e)) {
-      closeTimerId.value && window.clearTimeout(closeTimerId.value!)
-    } else if(visible.value) {
-      closeTimerId.value = setTimeout(() => {
-        document.removeEventListener('mouseover', handleDomMouseover)
-        close()
-      }, 200)
+      if (closeTimerId.value) {
+        window.clearTimeout(closeTimerId.value!)
+        closeTimerId.value = null
+        hovered.value = true
+      }
+    } else {
+      if (hovered.value && visible.value) {
+        const offMouseover = () => {
+          if (closeTimerId.value) {
+            closeTimerId.value = null
+            document.removeEventListener('mouseover', handleDomMouseover)
+            close()
+          }
+        }
+        closeTimerId.value = setTimeout(offMouseover, 200)
+      }
+      hovered.value = false
     }
   }
 
@@ -276,10 +279,12 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
         {{
           default: () => visiblePopover.value ? (
             <div class="tu-popover" ref={popoverRef} style={style.value}>
-              <div class="tu-popover__content">{props.content || context.slots.content?.()}</div>
-              <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
-                <div class="tu-popover-arrow"></div> 
-              </div>
+              <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
+              {props.hideArrow ? null : (
+                <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
+                  <div class="tu-popover-arrow"></div> 
+                </div>
+              )}
             </div>
           ) : null
         }}

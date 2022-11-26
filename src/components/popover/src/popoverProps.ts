@@ -37,5 +37,6 @@ export const popoverProps = {
       const result = includes(placementTypes, value)
       return result
     }
-  }
+  },
+  hideArrow: Boolean as PropType<boolean>
 }
