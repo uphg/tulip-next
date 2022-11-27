@@ -1,5 +1,5 @@
 import { defineComponent, ref, watchEffect, type PropType, type SetupContext, type VNode } from "vue"
-import { getClientRect, renderComponent, setStyle } from "../../../utils"
+import { renderComponent, setStyle } from "../../../utils"
 
 const tabsProps = {
   value: {
@@ -26,17 +26,13 @@ const Tabs = defineComponent({
     }
 
     const updateBar = () => {
-      const left = getClientRect(checkedRef.value, 'left') || 0
-      const width = getClientRect(checkedRef.value, 'width') || 0
-      const wrapLeft = getClientRect(tabWrapRef.value, 'left') || 0
+      const { left, width } = checkedRef.value?.getBoundingClientRect()! || {}
+      const { left: wrapLeft } = tabWrapRef.value?.getBoundingClientRect()! || {}
       const bar = barRef.value
-
-      if(bar) {
-        setStyle(bar, {
-          width: width + 'px',
-          left: left - wrapLeft + 'px'
-        })
-      }
+      bar && setStyle(bar, {
+        width: width + 'px',
+        left: left - wrapLeft + 'px'
+      })
     }
 
     watchEffect(updateBar)

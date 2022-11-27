@@ -52,11 +52,23 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
   el.style[styleName] = value
 }
 
-// 获取相对当前客户端位置的距离
-export const getClientRect = (el: HTMLElement | null, property?: string) => {
-  const rect = el?.getBoundingClientRect()
-  if (!property) return rect
-  return rect && rect[property as keyof DOMRect] as number
+// 获取相对客户端定位
+export const getRelativeClientPosition = (el: Element | HTMLElement) => {
+  const { left, top, right: toRight, bottom: toBottom } = el?.getBoundingClientRect() || {}
+  const { offsetWidth, offsetHeight } = document.body
+  const right = offsetWidth - toRight
+  const bottom = offsetHeight - toBottom
+  return { left, top, right, bottom }
+}
+
+export const getRelativeDOMPosition = (el: Element | HTMLElement) => {
+  const { top, left } = el?.getBoundingClientRect() || {}
+  const { scrollTop, scrollLeft } = document.documentElement
+  
+  return {
+    top: top + scrollTop,
+    left: left + scrollLeft
+  }
 }
 
 export const getRect = (el: HTMLElement | null, property: string)=>{
