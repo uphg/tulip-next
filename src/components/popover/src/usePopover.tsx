@@ -1,8 +1,11 @@
-import {  } from "fs"
-import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef } from "vue"
-import { getClientRect } from "../../../utils"
+import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from "vue"
 import type { PopoverProps } from './popoverProps'
+import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
+
+type UsePopoverOptions = {
+  className?: string 
+}
 
 const arrowClassMap = [
   [['top-start', 'top', 'top-end'], 'top'],
@@ -11,50 +14,60 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
-export function usePopover(props: PopoverProps, context: SetupContext<['update:visible']>) {
+const arrowMargin = 10
+
+export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
+  const className = options?.className
+  const { getZIndex } = useMaxZIndex(window) || {}
+  const on = {
+    hover: { onMouseover },
+    click: { onClick },
+    focus: { onFocus: open, onBlur: close },
+    manual: { },
+  }[props.trigger]
+
   const visible = ref(false)
-  const triggerStyle = ref<{ left: number, top: number }>({ left: 0, top: 0 })
-  const zIndex = ref(2000)
   const closeTimerId = ref<NodeJS.Timeout | null>(null)
   const hovered = ref(false)
   const mousedown = ref(false)
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
+  const zIndex = ref(2000)
+  const doc = ref({ top: 0, left: 0 })
 
   const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
-  const halfWidth = computed(() => (popoverRef.value?.offsetWidth || 0) / 2)
-  const halfHeight = computed(() => (popoverRef.value?.offsetHeight || 0) / 2)
+  const popoverStyle = computed(() => {
+    const trigger = triggerRef.value.$el as HTMLElement
+    const popover = popoverRef.value as HTMLElement
+    const { top, left } = doc.value
+    const topToTop = `${top - popover?.offsetHeight - 8}px`
+    const leftToLeft = `${left - popover?.offsetWidth - 8}px`
+    const rightToLeft = `${left + trigger?.offsetWidth + 8}px`
+    const bottomToTop = `${top + trigger?.offsetHeight + 8}px`
 
-  const style = computed(() => {
-    const { top, left } = triggerStyle.value
-    const topToTop = `${top - (popoverRef.value?.offsetHeight || 0) - 8}px`
-    const leftToLeft = `${left - popoverRef.value?.offsetWidth - 8}px`
-    const rightToLeft = `${left + 8}px`
-    const bottomToTop = `${top + 8}px`
-
-    const styleMap = {
+    const placementMap = {
       'top-start': {
         top: topToTop,
         left: `${left}px`
       },
       'top': {
         top: topToTop,
-        left: `${left - halfWidth.value}px`
+        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
       },
       'top-end': {
         top: topToTop,
-        left: `${left - popoverRef.value?.offsetWidth}px`
+        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
       },
       'left-start': {
         top: `${top}px`,
         left: leftToLeft
       },
       'left': {
-        top: `${top - halfHeight.value}px`,
+        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px` ,
         left: leftToLeft
       },
       'left-end': {
-        top: `${top - popoverRef.value?.offsetHeight}px`,
+        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px` ,
         left: leftToLeft
       },
       'right-start': {
@@ -62,11 +75,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
         left: rightToLeft
       },
       'right': {
-        top: `${top - halfHeight.value}px`,
+        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px`,
         left: rightToLeft
       },
       'right-end': {
-        top: `${top - popoverRef.value?.offsetHeight}px`,
+        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px`,
         left: rightToLeft
       },
       'bottom-start': {
@@ -75,82 +88,69 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
       },
       'bottom': {
         top: bottomToTop,
-        left: `${left - halfWidth.value}px`
+        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
       },
       'bottom-end': {
         top: bottomToTop,
-        left: `${left - popoverRef.value?.offsetWidth}px`
-      },
+        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
+      }
     }
 
     return {
-      zIndex: zIndex.value,
-      ...styleMap[props.placement]
+      zIndex: zIndex.value || 2000,
+      ...placementMap[props.placement]
     }
   })
-
   const arrowStyle = computed(() => {
     if (props.hideArrow) return
+    const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
     switch(props.placement) {
       case 'top-start':
       case 'bottom-start':
-        return { left: `${10 + 6}px` }
+        return { right: `${offsetWidth - arrowMargin}px` }
       case 'top':
       case 'bottom':
-        return { left: `${halfWidth.value}px` }
+        return { left: `${offsetWidth / 2 - 6}px` }
       case 'top-end':
       case 'bottom-end':
-        return { left: `${popoverRef.value?.offsetWidth - 6 - 10}px` }
+        return { left: `${offsetWidth - 12 - arrowMargin}px` }
       case 'left-start':
       case 'right-start':
-        return { top: `${10 + 6}px` }
+        return { bottom: `${offsetHeight - arrowMargin}px` }
       case 'left':
       case 'right':
-        return { top: `${halfHeight.value}px` }
+        return { top: `${offsetHeight / 2 - 6}px` }
       case 'left-end':
       case 'right-end':
-        return { top: `${popoverRef.value?.offsetHeight - 6 - 10}px` }
+        return { top: `${offsetHeight - 12 - arrowMargin}px` }
     }
   })
-
   const arrowClass = computed(() => {
     if (props.hideArrow) return
     const type = arrowClassMap.find((item) => item[0].includes(props.placement))?.[1]
     return { [`tu-popover-arrow--${type}`]: !!type }
   })
 
-  const eventMap = {
-    hover: { onMouseover },
-    click: { onClick },
-    focus: { onFocus: open, onBlur: close },
-    manual: { },
-  }
-
-  const on = eventMap[props.trigger]
-
-  const { getZIndex } = useMaxZIndex(window) || {}
-
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
-  function beforeOpen() {
-    const { top, left } = getPosition() || {}
-    zIndex.value = getZIndex?.() || 2000
-    triggerStyle.value.top = top
-    triggerStyle.value.left = left
-  }
-
   function open() {
-    beforeOpen()
-    props.trigger === 'manual' ? context.emit('update:visible', true) : visible.value = true
+    doc.value = getRelativeDOMPosition(triggerRef.value.$el)
+    zIndex.value = getZIndex?.() || 2000
+    updateVisible(true)
   }
 
   function close() {
-    props.trigger === 'manual' ? context.emit('update:visible', false) : visible.value = false
+    updateVisible(false)
+  }
+
+  function updateVisible(value: boolean) {
+    props.trigger !== 'manual' && (visible.value = value)
+    context.emit('update:visible', value)
   }
 
   function isTrigger(event: MouseEvent) {
     const el = triggerRef.value.$el
-    return el === event.target || el.contains(event.target)
+    return el && (el === event.target || el.contains(event.target))
   }
 
   function isPopover(event: MouseEvent) {
@@ -158,65 +158,9 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
     return el && (el === event.target || el.contains(event.target))
   }
 
-  function getPosition() {
-    const el = triggerRef.value.$el
-    const { top, left } = getClientRect(el) as DOMRect
-    const { scrollTop, scrollLeft } = document.documentElement
-    const docTop = top + scrollTop
-    const docLeft = left + scrollLeft
-
-    switch (props.placement) {
-      case 'top-start':
-      case 'left-start':
-        return {
-          top: docTop,
-          left: docLeft
-        }
-      case 'top':
-        return {
-          top: docTop,
-          left: docLeft + el.offsetWidth / 2
-        }
-      case 'top-end':
-      case 'right-start':
-        return {
-          top: docTop,
-          left: docLeft + el.offsetWidth
-        }
-      case 'left':
-        return {
-          top: docTop + el.offsetHeight / 2,
-          left: docLeft
-        }
-      case 'left-end':
-      case 'bottom-start':
-        return {
-          top: docTop + el.offsetHeight,
-          left: docLeft
-        }
-
-      case 'right':
-        return {
-          top: docTop + el.offsetHeight / 2,
-          left: docLeft + el.offsetWidth
-        }
-      case 'right-end':
-      case 'bottom-end':
-        return {
-          top: docTop + el.offsetHeight,
-          left: docLeft + el.offsetWidth
-        }
-      case 'bottom':
-        return {
-          top: docTop + el.offsetHeight,
-          left: docLeft + el.offsetWidth / 2
-        }
-    }
-  }
-
   function onMouseover() {
     hovered.value = true
-    if(!visible.value) {
+    if (!visible.value) {
       open()
       nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
     }
@@ -235,25 +179,29 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   }
 
   function handleDomMouseover(e: MouseEvent){
-    if (isPopover(e) || isTrigger(e)) {
-      if (closeTimerId.value) {
-        window.clearTimeout(closeTimerId.value!)
-        closeTimerId.value = null
-        hovered.value = true
-      }
-    } else {
-      if (hovered.value && visible.value) {
-        const offMouseover = () => {
-          if (closeTimerId.value) {
-            closeTimerId.value = null
-            document.removeEventListener('mouseover', handleDomMouseover)
-            close()
-          }
+    isPopover(e) || isTrigger(e) ? handleHoverMoveIn() : handleHoverMoveOut()
+  }
+
+  function handleHoverMoveIn() {
+    if (!closeTimerId.value) return
+    window.clearTimeout(closeTimerId.value!)
+    closeTimerId.value = null
+    hovered.value = true
+  }
+
+  function handleHoverMoveOut() {
+    if (!hovered.value) return
+    if (visible.value) {
+      const offMouseover = () => {
+        if (closeTimerId.value) {
+          closeTimerId.value = null
+          document.removeEventListener('mouseover', handleDomMouseover)
+          close()
         }
-        closeTimerId.value = setTimeout(offMouseover, 200)
       }
-      hovered.value = false
+      closeTimerId.value = setTimeout(offMouseover, 200)
     }
+    hovered.value = false
   }
 
   function handleDomMousedown(event: MouseEvent) {
@@ -267,7 +215,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
       document.removeEventListener('mousedown', handleDomMousedown)
       document.removeEventListener('mouseup', handleDomMouseup)
     }
-    if(mousedown.value) {
+    if (mousedown.value) {
       mousedown.value = false
     }
   }
@@ -275,10 +223,10 @@ export function usePopover(props: PopoverProps, context: SetupContext<['update:v
   return () => [
     context.slots.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
     <Teleport to="body">
-      <Transition name="popover-fade">
+      <Transition name={`tu-${props.transitionName}`}>
         {{
           default: () => visiblePopover.value ? (
-            <div class="tu-popover" ref={popoverRef} style={style.value}>
+            <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
               <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
               {props.hideArrow ? null : (
                 <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>

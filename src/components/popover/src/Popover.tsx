@@ -5,6 +5,7 @@ import { usePopover } from "./usePopover"
 const Popover = defineComponent({
   name: 'TuPopover',
   props: popoverProps,
+  emits: ['update:visible'],
   setup(props, context) {
     return usePopover(props, context)
   }

@@ -1,107 +1,48 @@
 
-// $tu-popover-bgcolor = #262626
-$tu-popover-bgcolor = #fff
-
+$popover-color = #fff
 $arrow = '.tu-popover-arrow'
 
 .tu-popover
-  // max-width 320px
   max-width 280px
   padding 8px 12px
   border-radius 3px
-  background-color $tu-popover-bgcolor
+  background-color $popover-color
   min-height 40px
   min-width 60px
   position absolute
   z-index 1000
   box-shadow 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)
 
-  &-arrow--top
+  &-arrow-wrapper, {$arrow}
     position absolute
+
+  {$arrow}
+    width 0
+    height 0
+    border-style solid
+    border-width 6px
+    border-color transparent
+
+  &-arrow--top
     bottom 0
     {$arrow}
-      position absolute
-      width 0
-      height 0
-      margin-left -6px
-      border-style solid
-      border-width 6px
       border-bottom-width 0
-      border-color transparent
-      border-top-color $tu-popover-bgcolor
+      border-top-color $popover-color
 
   &-arrow--left
-    position absolute
     right 0
     {$arrow}
-      position absolute
-      width 0
-      height 0
-      margin-top -6px
-      border-style solid
-      border-width 6px
       border-right-width 0
-      border-color transparent
-      border-left-color $tu-popover-bgcolor
+      border-left-color $popover-color
   
   &-arrow--right
-    position absolute
-    left 0
+    left -6px
     {$arrow}
-      position absolute
-      width 0
-      height 0
-      margin-left -6px
-      margin-bottom -6px
-      border-style solid
-      border-width 6px
       border-left-width 0
-      border-color transparent
-      border-right-color $tu-popover-bgcolor
-  
+      border-right-color $popover-color
+
   &-arrow--bottom
-    position absolute
-    top 0
+    top -6px
     {$arrow}
-      position absolute
-      width 0
-      height 0
-      margin-top -6px
-      margin-left -6px
-      border-style solid
-      border-width 6px
       border-top-width 0
-      border-color transparent
-      border-bottom-color $tu-popover-bgcolor
-
-/* --- 动画样式 */
-.popover-fade-enter-active {
-  animation tu-popover-fade-in var(--tu-transition-time)
-}
-
-.popover-fade-leave-active {
-  animation tu-popover-fade-out var(--tu-transition-time)
-}
-
-@keyframes tu-popover-fade-in {
-  0% {
-    transform scale(0.8)
-    opacity 0
-  }
-  100% {
-    stable()
-    transform scale(1)
-    opacity 1
-  }
-}
-
-@keyframes tu-popover-fade-out {
-  0% {
-    transform scale(1)
-    opacity 1
-  }
-  100% {
-    transform scale(0.8)
-    opacity 0
-  }
-}
+      border-bottom-color $popover-color
