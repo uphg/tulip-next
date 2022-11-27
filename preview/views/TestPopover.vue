@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-left: 200px;">
+  <div style="padding-left: 20px;">
     <h2>Popover</h2>
     <div class="popover-demo">
       <tu-popover :content="content">
@@ -54,7 +54,7 @@
         </tu-popover>
       </div>
       <div style="display: flex; width: 300px; padding: 12px 0; justify-content: space-between;">
-        <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 40px;">
           <tu-popover placement="left-start" :content="content" trigger="click">
             <tu-button>Left Start</tu-button>
           </tu-popover>
@@ -65,7 +65,7 @@
             <tu-button>Left End</tu-button>
           </tu-popover>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 16px; margin-left: 340px;">
+        <div style="display: flex; flex-direction: column; gap: 40px; margin-left: 340px;">
           <tu-popover placement="right-start" :content="content" trigger="click">
             <tu-button>Right Start</tu-button>
           </tu-popover>
@@ -89,13 +89,18 @@
         </tu-popover>
       </div>
     </div>
+    <div class="popover-demo">
+      <tu-popover :content="content" trigger="click" transition-name="fade">
+        <tu-button>过渡动画</tu-button>
+      </tu-popover>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const content = 'Hello, I am Jack. Hello, I am Jack. Hello, I am Jack. Hello, I am Jack. Hello, I am Jack.'
+const content = `哈哈哈哈哈哈哈哈哈哈哈哈哈哈`
 
 const visible = ref(false)
 const visible2 = ref(false)

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div style="padding: 100px 100px">
+    <div style="padding: 20px">
       <!-- <Test /> -->
       <!-- <TestCollapseTransition /> -->
       <!-- <TestTabs /> -->
