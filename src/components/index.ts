@@ -8,6 +8,7 @@ import { TuTabPane, TuTabs } from './tabs'
 import { TuExpandTransition } from './expand-transition'
 import { TuPagination } from './pagination'
 import { TuPopover } from './popover'
+import { TuTooltip } from './tooltip'
 
 const components = [
   TuButton,
@@ -23,6 +24,7 @@ const components = [
   TuDialog,
   TuPagination,
   TuPopover,
+  TuTooltip
 ]
 
 const { install } = makeInstaller(components)
@@ -40,6 +42,7 @@ export {
   TuTabPane,
   TuPagination,
   TuPopover,
+  TuTooltip,
 
   // utils
   useDialog,

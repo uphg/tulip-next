@@ -6,12 +6,12 @@ $arrow = '.tu-popover-arrow'
   max-width 280px
   padding 8px 12px
   border-radius 3px
-  background-color $popover-color
+  background-color var(--tu-popover-color)
   min-height 40px
   min-width 60px
   position absolute
   z-index 1000
-  box-shadow 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)
+  box-shadow var(--tu-box-shadow)
 
   &-arrow-wrapper, {$arrow}
     position absolute
@@ -27,22 +27,22 @@ $arrow = '.tu-popover-arrow'
     bottom 0
     {$arrow}
       border-bottom-width 0
-      border-top-color $popover-color
+      border-top-color var(--tu-popover-color)
 
   &-arrow--left
     right 0
     {$arrow}
       border-right-width 0
-      border-left-color $popover-color
+      border-left-color var(--tu-popover-color)
   
   &-arrow--right
     left -6px
     {$arrow}
       border-left-width 0
-      border-right-color $popover-color
+      border-right-color var(--tu-popover-color)
 
   &-arrow--bottom
     top -6px
     {$arrow}
       border-top-width 0
-      border-bottom-color $popover-color
+      border-bottom-color var(--tu-popover-color)

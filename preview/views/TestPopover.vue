@@ -94,6 +94,11 @@
         <tu-button>过渡动画</tu-button>
       </tu-popover>
     </div>
+    <div class="popover-demo">
+      <tu-tooltip :content="content" trigger="click">
+        <tu-button>点我</tu-button>
+      </tu-tooltip>
+    </div>
   </div>
 </template>
 
