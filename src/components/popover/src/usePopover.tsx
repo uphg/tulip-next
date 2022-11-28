@@ -34,102 +34,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   const popoverRef = ref<VNodeRef | null>(null)
   const zIndex = ref(2000)
   const doc = ref({ top: 0, left: 0 })
+  const popoverStyle = ref({})
+  const arrowStyle = ref({})
+  const arrowClass = ref({})
 
   const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
-  const popoverStyle = computed(() => {
-    const trigger = triggerRef.value.$el as HTMLElement
-    const popover = popoverRef.value as HTMLElement
-    const { top, left } = doc.value
-    const topToTop = `${top - popover?.offsetHeight - 8}px`
-    const leftToLeft = `${left - popover?.offsetWidth - 8}px`
-    const rightToLeft = `${left + trigger?.offsetWidth + 8}px`
-    const bottomToTop = `${top + trigger?.offsetHeight + 8}px`
-
-    const placementMap = {
-      'top-start': {
-        top: topToTop,
-        left: `${left}px`
-      },
-      'top': {
-        top: topToTop,
-        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
-      },
-      'top-end': {
-        top: topToTop,
-        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
-      },
-      'left-start': {
-        top: `${top}px`,
-        left: leftToLeft
-      },
-      'left': {
-        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px` ,
-        left: leftToLeft
-      },
-      'left-end': {
-        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px` ,
-        left: leftToLeft
-      },
-      'right-start': {
-        top: `${top}px`,
-        left: rightToLeft
-      },
-      'right': {
-        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px`,
-        left: rightToLeft
-      },
-      'right-end': {
-        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px`,
-        left: rightToLeft
-      },
-      'bottom-start': {
-        top: bottomToTop,
-        left: `${left}px`
-      },
-      'bottom': {
-        top: bottomToTop,
-        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
-      },
-      'bottom-end': {
-        top: bottomToTop,
-        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
-      }
-    }
-
-    return {
-      zIndex: zIndex.value || 2000,
-      ...placementMap[props.placement]
-    }
-  })
-  const arrowStyle = computed(() => {
-    if (props.hideArrow) return
-    const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
-    switch(props.placement) {
-      case 'top-start':
-      case 'bottom-start':
-        return { right: `${offsetWidth - arrowMargin}px` }
-      case 'top':
-      case 'bottom':
-        return { left: `${offsetWidth / 2 - 6}px` }
-      case 'top-end':
-      case 'bottom-end':
-        return { left: `${offsetWidth - 12 - arrowMargin}px` }
-      case 'left-start':
-      case 'right-start':
-        return { bottom: `${offsetHeight - arrowMargin}px` }
-      case 'left':
-      case 'right':
-        return { top: `${offsetHeight / 2 - 6}px` }
-      case 'left-end':
-      case 'right-end':
-        return { top: `${offsetHeight - 12 - arrowMargin}px` }
-    }
-  })
-  const arrowClass = computed(() => {
-    if (props.hideArrow) return
-    const type = arrowClassMap.find((item) => item[0].includes(props.placement))?.[1]
-    return { [`tu-popover-arrow--${type}`]: !!type }
-  })
 
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
@@ -220,10 +129,125 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     }
   }
 
+  function onBeforeEnter() {
+    if (props.hideArrow) return
+    const type = arrowClassMap.find((item) => item[0].includes(props.placement))?.[1]
+    arrowClass.value = { [`tu-popover-arrow--${type}`]: !!type }
+  }
+
+  function onEnter() {
+    loadStyle()
+  }
+
+  function onAfterLeave() {
+    resetStyle()
+  }
+
+  function loadStyle() {
+    const trigger = triggerRef.value.$el as HTMLElement
+    const popover = popoverRef.value as HTMLElement
+    const { top, left } = doc.value
+    const topToTop = `${top - popover?.offsetHeight - 8}px`
+    const leftToLeft = `${left - popover?.offsetWidth - 8}px`
+    const rightToLeft = `${left + trigger?.offsetWidth + 8}px`
+    const bottomToTop = `${top + trigger?.offsetHeight + 8}px`
+
+    const placementMap = {
+      'top-start': {
+        top: topToTop,
+        left: `${left}px`
+      },
+      'top': {
+        top: topToTop,
+        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
+      },
+      'top-end': {
+        top: topToTop,
+        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
+      },
+      'left-start': {
+        top: `${top}px`,
+        left: leftToLeft
+      },
+      'left': {
+        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px` ,
+        left: leftToLeft
+      },
+      'left-end': {
+        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px` ,
+        left: leftToLeft
+      },
+      'right-start': {
+        top: `${top}px`,
+        left: rightToLeft
+      },
+      'right': {
+        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px`,
+        left: rightToLeft
+      },
+      'right-end': {
+        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px`,
+        left: rightToLeft
+      },
+      'bottom-start': {
+        top: bottomToTop,
+        left: `${left}px`
+      },
+      'bottom': {
+        top: bottomToTop,
+        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
+      },
+      'bottom-end': {
+        top: bottomToTop,
+        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
+      }
+    }
+
+    popoverStyle.value = {
+      zIndex: zIndex.value || 2000,
+      ...placementMap[props.placement]
+    }
+
+    if (props.hideArrow) return
+    const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
+    switch(props.placement) {
+      case 'top-start':
+      case 'bottom-start':
+        arrowStyle.value = { right: `${offsetWidth - arrowMargin}px` }
+        break
+      case 'top':
+      case 'bottom':
+        arrowStyle.value = { left: `${offsetWidth / 2 - 6}px` }
+        break
+      case 'top-end':
+      case 'bottom-end':
+        arrowStyle.value = { left: `${offsetWidth - 12 - arrowMargin}px` }
+        break
+      case 'left-start':
+      case 'right-start':
+        arrowStyle.value = { bottom: `${offsetHeight - arrowMargin}px` }
+        break
+      case 'left':
+      case 'right':
+        arrowStyle.value = { top: `${offsetHeight / 2 - 6}px` }
+        break
+      case 'left-end':
+      case 'right-end':
+        arrowStyle.value = { top: `${offsetHeight - 12 - arrowMargin}px` }
+        break
+    }
+  }
+
+  function resetStyle() {
+    popoverStyle.value = {}
+    arrowStyle.value = {}
+    arrowClass.value = {}
+  }
+
   return () => [
     context.slots.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
     <Teleport to="body">
-      <Transition name={`tu-${props.transitionName}`}>
+      <Transition onBeforeEnter={onBeforeEnter} onEnter={onEnter} onAfterLeave={onAfterLeave} name={`tu-${props.transitionName}`}>
         {{
           default: () => visiblePopover.value ? (
             <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
