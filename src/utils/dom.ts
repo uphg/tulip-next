@@ -55,7 +55,7 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
 // 获取相对客户端定位
 export const getRelativeClientPosition = (el: Element | HTMLElement) => {
   const { left, top, right: toRight, bottom: toBottom } = el?.getBoundingClientRect() || {}
-  const { offsetWidth, offsetHeight } = document.body
+  const { offsetWidth, offsetHeight } = document.documentElement
   const right = offsetWidth - toRight
   const bottom = offsetHeight - toBottom
   return { left, top, right, bottom }

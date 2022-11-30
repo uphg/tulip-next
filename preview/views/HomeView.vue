@@ -5,7 +5,8 @@
       <!-- <TestCollapseTransition /> -->
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
-      <TestPopover />
+      <!-- <TestPopover /> -->
+      <TestPopoverScroll />
     </div>
   </main>
 </template>
@@ -16,6 +17,7 @@ import TestCollapseTransition from './TestCollapseTransition.vue'
 import TestTabs from './TestTabs.vue'
 import TestPagination from './TestPagination.vue'
 import TestPopover from './TestPopover.vue'
+import TestPopoverScroll from './TestPopoverScroll.vue'
 </script>
 
 <style lang="stylus">
