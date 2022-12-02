@@ -14,6 +14,11 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
+const placementSuffixMap = [
+  [/-start$/, 'start'],
+  [/-end$/, 'end'],
+]
+
 const arrowMargin = 10
 
 export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
@@ -44,119 +49,12 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
   const handleDomScroll = () => {
-    console.log('我滚动了')
-    const { top, bottom, left, right } = getRelativeClientPosition(popoverRef.value)
-    const placement = _placement.value
-    if (placement && /^bottom.*/.test(placement)) {
-      if (bottom + 6 < 0) {
-        _placement.value = placement.replace(/^bottom/, 'top') as PopoverProps['placement']
-      }
-      if (placement === 'bottom-start') {
-        if (right < 0) {
-          _placement.value = 'bottom'
-        }
-      }
-      if (placement === 'bottom') {
-        if (left < 0) {
-          _placement.value = 'bottom-start'
-        }
-        if (right < 0) {
-          _placement.value = 'bottom-end'
-        }
-      }
-      if (placement === 'bottom-end') {
-        if (left < 0) {
-          _placement.value = 'bottom'
-        }
-      }
-      loadArrowClass()
-      loadStyle()
-    }
+    updatePlacement()
+  }
 
-    if (placement && /^top.*/.test(placement)) {
-      if (top < 0) {
-        console.log('运行 top')
-        _placement.value = placement.replace(/^top/, 'bottom') as PopoverProps['placement']
-      }
-      if (placement === 'top-start') {
-        if (right < 0) {
-          _placement.value = 'top'
-        }
-      }
-      if (placement === 'top') {
-        if (left < 0) {
-          _placement.value = 'top-start'
-        }
-        if (right < 0) {
-          _placement.value = 'top-end'
-        }
-      }
-      if (placement === 'top-end') {
-        if (left < 0) {
-          _placement.value = 'top'
-        }
-      }
-      loadArrowClass()
-      loadStyle()
-    }
-
-    if (placement && /^left.*/.test(placement)) {
-      if (left < 0) {
-        _placement.value = placement.replace(/^left/, 'right') as PopoverProps['placement']
-      }
-      if (placement === 'left-end') {
-        if (top < 0) {
-          console.log('触发 left-end 的 top')
-          _placement.value = 'left'
-        }
-      }
-      if (placement === 'left') {
-        if (top < 0) {
-          _placement.value = 'left-start'
-        }
-        if (bottom < 0) {
-          _placement.value = 'left-end'
-        }
-      }
-
-      if (placement === 'left-start') {
-        if (bottom < 0) {
-          _placement.value = 'left'
-        }
-      }
-
-      loadArrowClass()
-      loadStyle()
-    }
-
-    if (placement && /^right.*/.test(placement)) {
-      if (right < 0) {
-        _placement.value = placement.replace(/^right/, 'left') as PopoverProps['placement']
-      }
-      if (placement === 'right-end') {
-        if (top < 0) {
-          console.log('触发 right-end 的 top')
-          _placement.value = 'right'
-        }
-      }
-      if (placement === 'right') {
-        if (top < 0) {
-          _placement.value = 'right-start'
-        }
-        if (bottom < 0) {
-          _placement.value = 'right-end'
-        }
-      }
-
-      if (placement === 'right-start') {
-        if (bottom < 0) {
-          _placement.value = 'right'
-        }
-      }
-
-      loadArrowClass()
-      loadStyle()
-    }
+  const handleDomResize = () => {
+    console.log('窗口尺寸变化')
+    updatePlacement()
   }
 
   function open() {
@@ -248,112 +146,17 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     }
   }
 
-  function onBeforeEnter() {
-    loadArrowClass()
-  }
-
   function onEnter() {
     loadStyle()
-  }
+  } 
 
   function onAfterLeave() {
     resetStyle()
   }
 
   function loadStyle() {
-    console.log('修改了')
-    const trigger = triggerRef.value.$el as HTMLElement
-    const popover = popoverRef.value as HTMLElement
-    const { top, left } = doc.value
-    const topToTop = `${top - popover?.offsetHeight - 8}px`
-    const leftToLeft = `${left - popover?.offsetWidth - 8}px`
-    const rightToLeft = `${left + trigger?.offsetWidth + 8}px`
-    const bottomToTop = `${top + trigger?.offsetHeight + 8}px`
-
-    const placementMap = {
-      'top-start': {
-        top: topToTop,
-        left: `${left}px`
-      },
-      'top': {
-        top: topToTop,
-        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
-      },
-      'top-end': {
-        top: topToTop,
-        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
-      },
-      'left-start': {
-        top: `${top}px`,
-        left: leftToLeft
-      },
-      'left': {
-        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px` ,
-        left: leftToLeft
-      },
-      'left-end': {
-        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px` ,
-        left: leftToLeft
-      },
-      'right-start': {
-        top: `${top}px`,
-        left: rightToLeft
-      },
-      'right': {
-        top: `${top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2}px`,
-        left: rightToLeft
-      },
-      'right-end': {
-        top: `${top + trigger?.offsetHeight - popover?.offsetHeight}px`,
-        left: rightToLeft
-      },
-      'bottom-start': {
-        top: bottomToTop,
-        left: `${left}px`
-      },
-      'bottom': {
-        top: bottomToTop,
-        left: `${left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2}px`
-      },
-      'bottom-end': {
-        top: bottomToTop,
-        left: `${left + trigger?.offsetWidth - popover?.offsetWidth}px`
-      }
-    }
-
-    popoverStyle.value = {
-      zIndex: zIndex.value || 2000,
-      ...placementMap[_placement.value]
-    }
-
-    if (props.hideArrow) return
-    const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
-    switch(_placement.value) {
-      case 'top-start':
-      case 'bottom-start':
-        arrowStyle.value = { right: `${offsetWidth - arrowMargin}px` }
-        break
-      case 'top':
-      case 'bottom':
-        arrowStyle.value = { left: `${offsetWidth / 2 - 6}px` }
-        break
-      case 'top-end':
-      case 'bottom-end':
-        arrowStyle.value = { left: `${offsetWidth - 12 - arrowMargin}px` }
-        break
-      case 'left-start':
-      case 'right-start':
-        arrowStyle.value = { bottom: `${offsetHeight - arrowMargin}px` }
-        break
-      case 'left':
-      case 'right':
-        arrowStyle.value = { top: `${offsetHeight / 2 - 6}px` }
-        break
-      case 'left-end':
-      case 'right-end':
-        arrowStyle.value = { top: `${offsetHeight - 12 - arrowMargin}px` }
-        break
-    }
+    updatePlacement()
+    updatePopoverStyle()
   }
 
   function resetStyle() {
@@ -362,24 +165,379 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     arrowClass.value = {}
   }
 
-  function loadArrowClass() {
+  function updatePopoverStyle() {
+    const style = getPopoverPosition(_placement.value)
+
+    popoverStyle.value = {
+      zIndex: zIndex.value || 2000,
+      top: `${style.top}px`,
+      left: `${style.left}px`
+    }
+
     if (props.hideArrow) return
+    arrowClass.value = getArrowClass()
+    arrowStyle.value = getArrowPosition()
+  }
+
+  function getPopoverToViewPosition(type: PopoverProps['placement']) {
+    const style = getPopoverPosition(type)
+    const { scrollTop, scrollLeft } = document.documentElement
+
+    return {
+      top: style.top - scrollTop,
+      left: style.left - scrollLeft,
+      bottom: document.documentElement.offsetHeight - (style.top - scrollTop + popoverRef.value.offsetHeight),
+      right: document.documentElement.offsetWidth - (style.left - scrollLeft + popoverRef.value.offsetWidth),
+    }
+  }
+
+  function getPopoverPosition(type: PopoverProps['placement']) {
+    const trigger = triggerRef.value.$el as HTMLElement
+    const popover = popoverRef.value as HTMLElement
+    const { top, left } = doc.value
+    const topToTop = top - popover?.offsetHeight - 8
+    const leftToLeft = left - popover?.offsetWidth - 8
+    const rightToLeft = left + trigger?.offsetWidth + 8
+    const bottomToTop = top + trigger?.offsetHeight + 8
+
+    const placementMap = {
+      'top-start': {
+        top: topToTop,
+        left: left
+      },
+      'top': {
+        top: topToTop,
+        left: left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2
+      },
+      'top-end': {
+        top: topToTop,
+        left: left + trigger?.offsetWidth - popover?.offsetWidth
+      },
+      'left-start': {
+        top: top,
+        left: leftToLeft
+      },
+      'left': {
+        top: top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2 ,
+        left: leftToLeft
+      },
+      'left-end': {
+        top: top + trigger?.offsetHeight - popover?.offsetHeight ,
+        left: leftToLeft
+      },
+      'right-start': {
+        top: top,
+        left: rightToLeft
+      },
+      'right': {
+        top: top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2,
+        left: rightToLeft
+      },
+      'right-end': {
+        top: top + trigger?.offsetHeight - popover?.offsetHeight,
+        left: rightToLeft
+      },
+      'bottom-start': {
+        top: bottomToTop,
+        left: left
+      },
+      'bottom': {
+        top: bottomToTop,
+        left: left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2
+      },
+      'bottom-end': {
+        top: bottomToTop,
+        left: left + trigger?.offsetWidth - popover?.offsetWidth
+      }
+    }
+
+    return placementMap[type]
+  }
+
+  function getArrowPosition() {
+    const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
+    switch(_placement.value) {
+      case 'top-start':
+      case 'bottom-start':
+        return { right: `${offsetWidth - arrowMargin}px` }
+      case 'top':
+      case 'bottom':
+        return { left: `${offsetWidth / 2 - 6}px` }
+      case 'top-end':
+      case 'bottom-end':
+        return { left: `${offsetWidth - 12 - arrowMargin}px` }
+      case 'left-start':
+      case 'right-start':
+        return { bottom: `${offsetHeight - arrowMargin}px` }
+      case 'left':
+      case 'right':
+        return { top: `${offsetHeight / 2 - 6}px` }
+      case 'left-end':
+      case 'right-end':
+        return { top: `${offsetHeight - 12 - arrowMargin}px` }
+    }
+  }
+
+  function getArrowClass() {
     const type = arrowClassMap.find((item) => item[0].includes(_placement.value))?.[1]
-    arrowClass.value = { [`tu-popover-arrow--${type}`]: !!type }
+    return { [`tu-popover-arrow--${type}`]: !!type }
+  }
+
+  function updatePlacement() {
+    const { top, bottom, left, right } = getPopoverToViewPosition(props.placement)
+
+    let prefix = props.placement.replace(/-[a-z]*$/, '')
+    let suffix = /-start$/.test(props.placement)
+      ? 'start'
+      : /-end$/.test(props.placement)
+        ? 'end'
+        : ''
+
+    let changed = false
+    if (top < 0) {
+      // --- top
+      if (/^top.*/.test(props.placement)) {
+        prefix = 'bottom'
+        changed = true
+      }
+
+      // --- left
+      if (props.placement === 'left-end') {
+        const middle = top + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        suffix = middle < 0 ? 'start' : ''
+        changed = true
+      }
+      if (props.placement === 'left') {
+        suffix = 'start'
+        changed = true
+      }
+
+      // --- right
+      if (props.placement === 'right-end') {
+        const middle = top + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        suffix = middle < 0 ? 'start' : ''
+        changed = true
+      }
+      if (props.placement === 'right') {
+        suffix = 'start'
+        changed = true
+      }
+    } else if (bottom > 0) {
+      // --- top
+      if (/^top.*/.test(props.placement) && /^bottom.*/.test(_placement.value)) {
+        prefix = 'top'
+        changed = true
+      }
+
+      // --- left
+      if (props.placement === 'left-end' && _placement.value !== `${prefix}-end`) {
+        suffix = 'end'
+        changed = true
+      }
+      if (props.placement === 'left' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+
+      // --- right
+      if (props.placement === 'right-end' && _placement.value !== `${prefix}-end`) {
+        suffix = 'end'
+        changed = true
+      }
+      if (props.placement === 'right' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+    }
+
+    if (left < 0) {
+      // --- top
+      if (props.placement === 'top-end') {
+        const middle = left + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        suffix = middle < 0 ? 'start' : ''
+        changed = true
+      }
+      if (props.placement === 'top') {
+        suffix = 'start'
+        changed = true
+      }
+
+      // --- bottom
+      if (props.placement === 'bottom-end') {
+        const middle = left + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        suffix = middle < 0 ? 'start' : ''
+        changed = true
+      }
+      if (props.placement === 'bottom') {
+        suffix = 'start'
+        changed = true
+      }
+
+      // --- left
+      if (/^left.*/.test(props.placement)) {
+        prefix = 'right'
+        changed = true
+      }
+    } else if (right > 0) {
+      // --- top
+      if (props.placement === 'top' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+      if (props.placement === 'top-end' && _placement.value !== `${prefix}-end`) {
+        suffix = 'end'
+        changed = true
+      }
+
+      // --- bottom
+      if (props.placement === 'bottom' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+      if (props.placement === 'bottom-end' && _placement.value !== `${prefix}-end`) {
+        suffix = 'end'
+        changed = true
+      }
+
+      // --- left
+      if (/^left.*/.test(props.placement) && /^right.*/.test(_placement.value)) {
+        prefix = 'left'
+        changed = true
+      }
+    }
+
+    if (right < 0) {
+      // --- top
+      if (props.placement === 'top-start') {
+        const middle = right + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        suffix = middle < 0 ? 'end' : ''
+        changed = true
+      }
+      if (props.placement === 'top') {
+        suffix = 'end'
+        changed = true
+      }
+
+      // --- bottom
+      if (props.placement === 'bottom-start') {
+        const middle = right + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        suffix = middle < 0 ? 'end' : ''
+        changed = true
+      }
+      if (props.placement === 'bottom') {
+        suffix = 'end'
+        changed = true
+      }
+
+      // --- right
+      if (/^right.*/.test(props.placement)) {
+        prefix = 'left'
+        changed = true
+      }
+    } else if (left > 0) {
+      // --- top
+      if (props.placement === 'top-start' && _placement.value !== `${prefix}-start`) {
+        suffix = 'start'
+        changed = true
+      }
+      if (props.placement === 'top' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+
+      // --- bottom
+      if (props.placement === 'bottom-start' && _placement.value !== `${prefix}-start`) {
+        suffix = 'start'
+        changed = true
+      }
+      if (props.placement === 'bottom' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+
+      // --- right
+      if (/^right.*/.test(props.placement) && /^left.*/.test(_placement.value)) {
+        prefix = 'right'
+        changed = true
+      }
+    }
+
+    if (bottom < 0) {
+      // --- bottom
+      if (/^bottom.*/.test(props.placement)) {
+        prefix = 'top'
+        changed = true
+      }
+
+      // --- left
+      if (props.placement === 'left-start') {
+        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        suffix = middle < 0 ? 'end' : ''
+        changed = true
+      }
+      if (props.placement === 'left') {
+        suffix = 'end'
+        changed = true
+      }
+
+      // --- right
+      if (props.placement === 'right-start') {
+        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        suffix = middle < 0 ? 'end' : ''
+        changed = true
+      }
+      if (props.placement === 'right') {
+        suffix = 'end'
+        changed = true
+      }
+    } else if (top > 0)  {
+      // --- bottom
+      if (/^bottom.*/.test(props.placement) && /^top.*/.test(_placement.value)) {
+        prefix = 'bottom'
+        changed = true
+      }
+
+      // --- left
+      if (props.placement === 'left-start' && _placement.value !== `${prefix}-start`) {
+        suffix = 'start'
+        changed = true
+      }
+      if (props.placement === 'left' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+
+      // --- right
+      if (props.placement === 'right-start' && _placement.value !== `${prefix}-start`) {
+        suffix = 'start'
+        changed = true
+      }
+      if (props.placement === 'right' && _placement.value !== prefix) {
+        suffix = ''
+        changed = true
+      }
+    }
+
+    if (changed) {
+      _placement.value = (suffix ? `${prefix}-${suffix}` : prefix) as PopoverProps['placement']
+      updatePopoverStyle()
+    }
   }
 
   function loadDomEventListener() {
     document.addEventListener('scroll', handleDomScroll)
+    window.addEventListener('resize', handleDomResize)
   }
 
   function unloadDomEventListener() {
     document.removeEventListener('scroll', handleDomScroll)
+    window.removeEventListener('resize', handleDomResize)
   }
 
   return () => [
     context.slots.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
     <Teleport to="body">
-      <Transition onBeforeEnter={onBeforeEnter} onEnter={onEnter} onAfterLeave={onAfterLeave} name={`tu-${props.transitionName}`}>
+      <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name={`tu-${props.transitionName}`}>
         {{
           default: () => visiblePopover.value ? (
             <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
