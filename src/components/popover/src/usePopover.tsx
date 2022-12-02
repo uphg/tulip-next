@@ -1,6 +1,6 @@
 import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from "vue"
 import type { PopoverProps } from './popoverProps'
-import { getRelativeDOMPosition, getRelativeClientPosition } from '../../../utils'
+import { getRelativeDOMPosition, debounce } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
@@ -12,11 +12,6 @@ const arrowClassMap = [
   [['left-start', 'left', 'left-end'], 'left'],
   [['right-start', 'right', 'right-end'], 'right'],
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
-]
-
-const placementSuffixMap = [
-  [/-start$/, 'start'],
-  [/-end$/, 'end'],
 ]
 
 const arrowMargin = 10
@@ -47,15 +42,6 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
 
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
-
-  const handleDomScroll = () => {
-    updatePlacement()
-  }
-
-  const handleDomResize = () => {
-    console.log('窗口尺寸变化')
-    updatePlacement()
-  }
 
   function open() {
     doc.value = getRelativeDOMPosition(triggerRef.value.$el)
@@ -147,19 +133,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   }
 
   function onEnter() {
-    loadStyle()
+    updatePlacement()
+    updatePopoverStyle()
   } 
 
   function onAfterLeave() {
-    resetStyle()
-  }
-
-  function loadStyle() {
-    updatePlacement()
-    updatePopoverStyle()
-  }
-
-  function resetStyle() {
     popoverStyle.value = {}
     arrowStyle.value = {}
     arrowClass.value = {}
@@ -525,13 +503,13 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   }
 
   function loadDomEventListener() {
-    document.addEventListener('scroll', handleDomScroll)
-    window.addEventListener('resize', handleDomResize)
+    document.addEventListener('scroll', updatePlacement)
+    window.addEventListener('resize', updatePlacement)
   }
 
   function unloadDomEventListener() {
-    document.removeEventListener('scroll', handleDomScroll)
-    window.removeEventListener('resize', handleDomResize)
+    document.removeEventListener('scroll', updatePlacement)
+    window.removeEventListener('resize', updatePlacement)
   }
 
   return () => [
