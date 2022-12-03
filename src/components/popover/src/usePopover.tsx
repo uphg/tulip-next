@@ -154,7 +154,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
       left: `${style.left}px`
     }
 
-    if (props.hideArrow) return
+    if (props.hideArrow || props.raw) return
     arrowClass.value = getArrowClass()
     arrowStyle.value = getArrowPosition()
   }
