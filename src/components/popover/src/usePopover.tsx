@@ -1,10 +1,11 @@
-import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from "vue"
+import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted, type VNode } from "vue"
 import type { PopoverProps } from './popoverProps'
 import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
-  className?: string 
+  className?: string,
+  children: () => VNode
 }
 
 const arrowClassMap = [
@@ -523,17 +524,17 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   return () => [
     context.slots.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
     <Teleport to="body">
-      <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name={`tu-${props.transitionName}`}>
+      <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
         {{
           default: () => visiblePopover.value ? (
             props.raw
               ? context.slots.content
                 && (
-                  <div class="tu-popover--raw" ref={popoverRef} style={popoverStyle.value}>
+                  <div class="tu-popover" ref={popoverRef} style={popoverStyle.value}>
                     {context.slots.content?.({ close })}
                   </div>
                 )
-              : <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
+              : <div class={['tu-popover tu-popover--default', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
                   <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
                   {props.hideArrow ? null : (
                     <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>

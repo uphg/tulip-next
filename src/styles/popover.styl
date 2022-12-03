@@ -6,14 +6,13 @@ base()
   white-space nowrap
 
 .tu-popover
-  max-width 280px
-  padding 8px 12px
-  border-radius 3px
-  background-color var(--tu-popover-color)
-  min-height 40px
   base()
-  &--raw
-    base()
+  &--default
+    max-width 280px
+    padding 8px 12px
+    border-radius 3px
+    background-color var(--tu-popover-color)
+    min-height 40px
 
   &-arrow-wrapper, {$arrow}
     position absolute

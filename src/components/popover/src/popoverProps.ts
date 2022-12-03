@@ -38,10 +38,6 @@ export const popoverProps = {
       return result
     }
   },
-  transitionName: {
-    type: String as PropType<'zoom' | 'fade'>,
-    default: 'zoom'
-  },
   hideArrow: Boolean as PropType<boolean>,
   raw: Boolean as PropType<boolean>
 }
