@@ -1,6 +1,6 @@
 import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from "vue"
 import type { PopoverProps } from './popoverProps'
-import { getRelativeDOMPosition, debounce } from '../../../utils'
+import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
@@ -14,6 +14,8 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
+const arrowHeight = 6
+const popoverMargin = 8
 const arrowMargin = 10
 
 export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
@@ -173,10 +175,10 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     const trigger = triggerRef.value.$el as HTMLElement
     const popover = popoverRef.value as HTMLElement
     const { top, left } = doc.value
-    const topToTop = top - popover?.offsetHeight - 8
-    const leftToLeft = left - popover?.offsetWidth - 8
-    const rightToLeft = left + trigger?.offsetWidth + 8
-    const bottomToTop = top + trigger?.offsetHeight + 8
+    const topToTop = top - popover?.offsetHeight - popoverMargin
+    const leftToLeft = left - popover?.offsetWidth - popoverMargin
+    const rightToLeft = left + trigger?.offsetWidth + popoverMargin
+    const bottomToTop = top + trigger?.offsetHeight + popoverMargin
 
     const placementMap = {
       'top-start': {
@@ -236,23 +238,29 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     const { offsetWidth, offsetHeight } = popoverRef.value || { offsetHeight: 0, offsetWidth: 0 }
     switch(_placement.value) {
       case 'top-start':
-      case 'bottom-start':
         return { right: `${offsetWidth - arrowMargin}px` }
       case 'top':
-      case 'bottom':
-        return { left: `${offsetWidth / 2 - 6}px` }
+        return { left: `${offsetWidth / 2 - arrowHeight}px` }
       case 'top-end':
-      case 'bottom-end':
         return { left: `${offsetWidth - 12 - arrowMargin}px` }
+      case 'bottom-start':
+        return { top: `-${arrowHeight}px`, right: `${offsetWidth - arrowMargin}px` }
+      case 'bottom':
+        return { top: `-${arrowHeight}px`, left: `${offsetWidth / 2 - arrowHeight}px` }
+      case 'bottom-end':
+        return { top: `-${arrowHeight}px`, left: `${offsetWidth - 12 - arrowMargin}px` }
       case 'left-start':
-      case 'right-start':
         return { bottom: `${offsetHeight - arrowMargin}px` }
       case 'left':
-      case 'right':
-        return { top: `${offsetHeight / 2 - 6}px` }
+        return { top: `${offsetHeight / 2 - arrowHeight}px` }
       case 'left-end':
-      case 'right-end':
         return { top: `${offsetHeight - 12 - arrowMargin}px` }
+      case 'right-start':
+        return { left: `-${arrowHeight}px`, bottom: `${offsetHeight - arrowMargin}px` }
+      case 'right':
+        return { left: `-${arrowHeight}px`, top: `${offsetHeight / 2 - arrowHeight}px` }
+      case 'right-end':
+        return { left: `-${arrowHeight}px`, top: `${offsetHeight - 12 - arrowMargin}px` }
     }
   }
 
