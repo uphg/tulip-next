@@ -526,14 +526,21 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
       <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name={`tu-${props.transitionName}`}>
         {{
           default: () => visiblePopover.value ? (
-            <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
-              <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
-              {props.hideArrow ? null : (
-                <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
-                  <div class="tu-popover-arrow"></div> 
+            props.raw
+              ? context.slots.content
+                && (
+                  <div class="tu-popover--raw" ref={popoverRef} style={popoverStyle.value}>
+                    {context.slots.content?.({ close })}
+                  </div>
+                )
+              : <div class={['tu-popover', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
+                  <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
+                  {props.hideArrow ? null : (
+                    <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
+                      <div class="tu-popover-arrow"></div> 
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
           ) : null
         }}
       </Transition>

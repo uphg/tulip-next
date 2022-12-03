@@ -42,5 +42,6 @@ export const popoverProps = {
     type: String as PropType<'zoom' | 'fade'>,
     default: 'zoom'
   },
-  hideArrow: Boolean as PropType<boolean>
+  hideArrow: Boolean as PropType<boolean>,
+  raw: Boolean as PropType<boolean>
 }

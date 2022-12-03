@@ -99,6 +99,16 @@
         <tu-button>点我</tu-button>
       </tu-tooltip>
     </div>
+    <div class="popover-demo">
+      <tu-popover trigger="click" raw>
+        <template #content>
+          <div style="background-color: #039be5; width: 200px; height: 200px;">
+            我的自定义内容
+          </div>
+        </template>
+        <tu-button>点我</tu-button>
+      </tu-popover>
+    </div>
   </div>
 </template>
 
