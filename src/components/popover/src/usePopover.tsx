@@ -4,8 +4,7 @@ import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
-  className?: string,
-  children: () => VNode
+  className?: string
 }
 
 const arrowClassMap = [
