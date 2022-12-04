@@ -1,5 +1,5 @@
 import { TAGKEY } from '../shared'
-import isObject from './isObject'
+import { isObject } from './isObject'
 import type { VNodeTypes } from 'vue'
 
 export function renderComponent<T extends { type: VNodeTypes }>(array: T[] | undefined, tag: string): T[] {

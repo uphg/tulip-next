@@ -1,4 +1,4 @@
-function flatMap<T>(array: T[], callback: Function) {
+export function flatMap<T>(array: T[], callback: Function) {
   const length = array?.length || 0
   const result = []
   for (let i = 0; i < length; i++) {
@@ -11,5 +11,3 @@ function flatMap<T>(array: T[], callback: Function) {
   }
   return result
 }
-
-export default flatMap

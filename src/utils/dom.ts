@@ -1,10 +1,10 @@
 import type { StyleElement } from '../interfaces'
-import isObject from './isObject'
-import camelize from "./camelize";
-import each from './each'
-import mergeClass from './internal/mergeClass'
-import splitClass from './internal/splitClass'
-import toString from './toString'
+import { isObject } from './isObject'
+import { camelize } from "./camelize";
+import { each } from './each'
+import { toString } from './toString'
+import { mergeClass } from './internal/mergeClass'
+import { splitClass } from './internal/splitClass'
 
 export function addClass(el: Element, ...args: string[] | string[][]) {
   const classNames = mergeClass(args)

@@ -1,1 +1,1 @@
-export default Array.isArray
+export const isArray = Array.isArray

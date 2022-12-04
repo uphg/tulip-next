@@ -1,8 +1,8 @@
-import isServer from './isServer'
+import { isServer } from './isServer'
 
 let scrollBarWidth: number
 
-const getScrollBarWidth: () => number = () => {
+export const getScrollBarWidth: () => number = () => {
   if (isServer) return 0
   if (scrollBarWidth !== undefined) return scrollBarWidth
 
@@ -27,5 +27,3 @@ const getScrollBarWidth: () => number = () => {
 
   return scrollBarWidth
 }
-
-export default getScrollBarWidth

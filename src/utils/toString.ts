@@ -1,5 +1,3 @@
-function toString(value: unknown) {
+export function toString(value: unknown) {
   return String(value)
 }
-
-export default toString

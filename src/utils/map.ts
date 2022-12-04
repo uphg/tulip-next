@@ -1,4 +1,4 @@
-function map<T, U>(
+export function map<T, U>(
   array: T[] | number,
   callback: (value: T | number, index: number, array: T[] | number) => U
 ): U[] {
@@ -13,5 +13,3 @@ function map<T, U>(
 
   return result
 }
-
-export default map
