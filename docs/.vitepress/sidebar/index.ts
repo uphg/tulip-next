@@ -17,7 +17,9 @@ export const sidebar = {
         { text: 'Switch 开关', link: '/docs/switch' },
         { text: 'Dialog 弹框', link: '/docs/dialog' },
         { text: 'Tabs 标签页', link: '/docs/tabs' },
-        { text: 'Pagination 分页', link: '/docs/pagination' }
+        { text: 'Pagination 分页', link: '/docs/pagination' },
+        { text: 'Popover 弹出信息', link: '/docs/popover' },
+        { text: 'Space 间距', link: '/docs/space' },
       ]
     }
   ]

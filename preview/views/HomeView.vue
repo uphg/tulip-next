@@ -5,8 +5,8 @@
       <!-- <TestCollapseTransition /> -->
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
-      <TestPopover />
-      <!-- <TestPopoverScroll /> -->
+      <!-- <TestPopover /> -->
+      <TestPopoverScroll />
     </div>
   </main>
 </template>

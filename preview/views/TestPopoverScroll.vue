@@ -3,13 +3,13 @@
     <h2>模拟滚动</h2>
     <p v-for="item in 40" :key="item">{{ item }}</p>
     <p style="width: 200em;">我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，我很长，</p>
-    <div style="padding-left: 90em; display: flex; flex-direction: column; gap: 16px;">
+    <div style="margin-left: 50em; width: 2000px; display: flex;">
       <tu-popover placement="top-start" v-model:visible="visible3" trigger="manual">
         <template #content>而我能够遇见你 怎能不是我幸运</template>
         <tu-button @click="(visible3 = !visible3)">Top Start</tu-button>
       </tu-popover>
       <tu-popover v-model:visible="visible2" trigger="manual">
-        <template #content>而我能够遇见你 怎能不是我幸运</template>
+        <template #content><div>而我能够遇见你 怎能不是我幸运。怎能不是我幸运 怎能不是我幸运</div></template>
         <tu-button @click="(visible2 = !visible2)">Top</tu-button>
       </tu-popover>
       <tu-popover placement="top-end" v-model:visible="visible" trigger="manual">
