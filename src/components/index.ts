@@ -9,6 +9,7 @@ import { TuExpandTransition } from './expand-transition'
 import { TuPagination } from './pagination'
 import { TuPopover } from './popover'
 import { TuTooltip } from './tooltip'
+import { TuSpace } from './space'
 
 const components = [
   TuButton,
@@ -24,7 +25,8 @@ const components = [
   TuDialog,
   TuPagination,
   TuPopover,
-  TuTooltip
+  TuTooltip,
+  TuSpace
 ]
 
 const { install } = makeInstaller(components)
@@ -43,6 +45,7 @@ export {
   TuPagination,
   TuPopover,
   TuTooltip,
+  TuSpace,
 
   // utils
   useDialog,

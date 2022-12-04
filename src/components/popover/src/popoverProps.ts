@@ -3,6 +3,11 @@ import { includes } from '../../../utils'
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>
 
+type PlacementTypes = 'top-start' | 'top' | 'top-end' |
+'left-start' | 'left' | 'left-end' |
+'right-start' | 'right' | 'right-end' |
+'bottom-start' | 'bottom' | 'bottom-end'
+
 const placementTypes = [
   'top-start', 'top', 'top-end',
   'left-start', 'left', 'left-end',
@@ -20,24 +25,18 @@ export const popoverProps = {
       return includes(triggerTypes, value)
     }
   },
-  content: String as PropType<string>,
   visible: {
     type: Boolean as PropType<boolean>,
     default: void 0
   },
   placement: {
-    type: String as PropType<
-      'top-start' | 'top' | 'top-end' |
-      'left-start' | 'left' | 'left-end' |
-      'right-start' | 'right' | 'right-end' |
-      'bottom-start' | 'bottom' | 'bottom-end'
-    >,
+    type: String as PropType<PlacementTypes>,
     default: 'top',
     validator(value: string) {
-      const result = includes(placementTypes, value)
-      return result
+      return includes(placementTypes, value)
     }
   },
+  content: String as PropType<string>,
   hideArrow: Boolean as PropType<boolean>,
   raw: Boolean as PropType<boolean>
 }

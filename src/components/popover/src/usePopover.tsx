@@ -1,4 +1,4 @@
-import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted, type VNode } from "vue"
+import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef } from "vue"
 import type { PopoverProps } from './popoverProps'
 import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
@@ -7,16 +7,16 @@ type UsePopoverOptions = {
   className?: string
 }
 
+const arrowHeight = 6
+const popoverMargin = 8
+const arrowMargin = 10
+
 const arrowClassMap = [
   [['top-start', 'top', 'top-end'], 'top'],
   [['left-start', 'left', 'left-end'], 'left'],
   [['right-start', 'right', 'right-end'], 'right'],
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
-
-const arrowHeight = 6
-const popoverMargin = 8
-const arrowMargin = 10
 
 export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
   const className = options?.className
@@ -75,6 +75,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   function onMouseover() {
     hovered.value = true
     if (!visible.value) {
+      // 进入
       open()
       nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
     }
@@ -106,14 +107,13 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   function handleHoverMoveOut() {
     if (!hovered.value) return
     if (visible.value) {
-      const offMouseover = () => {
+      closeTimerId.value = setTimeout(() => {
         if (closeTimerId.value) {
           closeTimerId.value = null
           document.removeEventListener('mouseover', handleDomMouseover)
           close()
         }
-      }
-      closeTimerId.value = setTimeout(offMouseover, 200)
+      }, 200)
     }
     hovered.value = false
   }
