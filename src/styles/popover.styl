@@ -1,18 +1,15 @@
 $arrow = '.tu-popover-arrow'
 
-base()
+.tu-popover
   position absolute
   box-shadow var(--tu-box-shadow)
-  white-space nowrap
-
-.tu-popover
-  base()
+  word-wrap break-word
+  width max-content
+  max-width 320px
   &--default
-    max-width 280px
     padding 8px 12px
     border-radius 3px
     background-color var(--tu-popover-color)
-    min-height 40px
 
   &-arrow-wrapper, {$arrow}
     position absolute
@@ -38,14 +35,12 @@ base()
   
   &-arrow--right
     left 0
-    // left -6px
     {$arrow}
       border-left-width 0
       border-right-color var(--tu-popover-color)
 
   &-arrow--bottom
     top 0
-    // top -6px
     {$arrow}
       border-top-width 0
       border-bottom-color var(--tu-popover-color)
