@@ -36,9 +36,18 @@ popover/placement
 
 :::
 
+## 自定义样式
+
+::: demo
+
+popover/raw
+
+:::
+
 <script setup lang="ts">
 import PopoverBase from '../examples/popover/base.vue'
 import PopoverTrigger from '../examples/popover/trigger.vue'
 import PopoverHideArrow from '../examples/popover/hide-arrow.vue'
 import PopoverPlacement from '../examples/popover/placement.vue'
+import PopoverRaw from '../examples/popover/raw.vue'
 </script>
