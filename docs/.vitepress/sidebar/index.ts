@@ -20,6 +20,7 @@ export const sidebar = {
         { text: 'Pagination 分页', link: '/docs/pagination' },
         { text: 'Popover 弹出信息', link: '/docs/popover' },
         { text: 'Space 间距', link: '/docs/space' },
+        { text: 'Tooltip 提示', link: '/docs/tooltip' },
       ]
     }
   ]
