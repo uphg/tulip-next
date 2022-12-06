@@ -1,3 +1,3 @@
 export function toPx(value: unknown) {
-  return (typeof value === 'string' ? parseInt(value as string, 2) : value) + 'px' 
+  return value ? (typeof value === 'string' ? parseInt(value as string, 2) : value) + 'px' : void 0
 }

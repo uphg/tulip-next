@@ -6,7 +6,8 @@
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
-      <TestPopoverScroll />
+      <!-- <TestPopoverScroll /> -->
+      <TestGrid />
     </div>
   </main>
 </template>
@@ -18,6 +19,7 @@ import TestTabs from './TestTabs.vue'
 import TestPagination from './TestPagination.vue'
 import TestPopover from './TestPopover.vue'
 import TestPopoverScroll from './TestPopoverScroll.vue'
+import TestGrid from './TestGrid.vue'
 </script>
 
 <style lang="stylus">
