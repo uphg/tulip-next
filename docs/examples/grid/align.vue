@@ -34,6 +34,7 @@
 <style scoped>
 .col-block {
   height: 48px;
+  min-height: 100%;
   background-color: #e5e9f2;
 }
 .col-block.large {
