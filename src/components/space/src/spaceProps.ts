@@ -1,11 +1,5 @@
-import { includes } from "../../../utils";
 import { h, type PropType } from "vue";
-
-type JustifyTypes = 'center' | 'start' | 'end' | 'space-between' | 'space-around' | 'space-evenly'
-type AlignTypes = 'start' | 'end' | 'center' | 'stretch'
-
-const justifyTypes = ['center', 'start', 'end', 'space-between', 'space-around', 'space-evenly']
-const alignTypes = ['start', 'end', 'center', 'stretch', 'baseline']
+import { includes,  alignTypes, justifyTypes, type AlignTypes, type JustifyTypes } from "../../../utils";
 
 export const spaceProps = {
   inline: Boolean as PropType<boolean>,

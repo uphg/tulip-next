@@ -1,8 +1,8 @@
 import { computed, defineComponent, h } from "vue"
 import { spaceProps } from "./spaceProps"
-import { toPx } from '../../../utils'
+import { toPx, toFlexPrefix } from '../../../utils'
 
-type sizeTypes = 'small' | 'medium' | 'large' 
+type SizeTypes = 'small' | 'medium' | 'large' 
 
 const sizeMap = {
   small: [4, 8],
@@ -25,7 +25,7 @@ const Space = defineComponent({
     const flexFlow = computed(() => `${props.vertical ? 'column' : 'row'} ${nowrap.value ? 'nowrap' : 'wrap'}`)
     const gap = computed(
       () => {
-        const defaults = sizeMap?.[props.size as sizeTypes]
+        const defaults = sizeMap?.[props.size as SizeTypes]
         return (defaults
           ? toGapAttr(defaults)
           : Array.isArray(props.size)
@@ -51,10 +51,6 @@ const Space = defineComponent({
     )
   }
 })
-
-function toFlexPrefix(value: unknown) {
-  return `${value === 'start' || value === 'end' ? 'flex-' : ''}${value}`
-}
 
 function toGapAttr(value: number[]) {
   if (value?.length < 2) return
