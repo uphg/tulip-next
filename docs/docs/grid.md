@@ -42,6 +42,16 @@ grid/justify
 
 :::
 
+## 垂直对齐
+
+用 `align` 定义垂直对齐方式
+
+::: demo
+
+grid/align
+
+:::
+
 
 <script setup lang="ts">
 import GridBase from '../examples/grid/base.vue'
@@ -49,4 +59,5 @@ import GridGutter from '../examples/grid/gutter.vue'
 import GridOffset from '../examples/grid/offset.vue'
 import GridRelative from '../examples/grid/relative.vue'
 import GridJustify from '../examples/grid/justify.vue'
+import GridAlign from '../examples/grid/align.vue'
 </script>
