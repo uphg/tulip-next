@@ -7,7 +7,8 @@ const Tooltip = defineComponent({
   props: popoverProps,
   emits: ['update:visible'],
   setup(props, context) {
-    return usePopover(props, context, { className: 'tu-tooltip' })
+    const { render } = usePopover(props, context, { className: 'tu-tooltip' })
+    return render
   }
 })
 

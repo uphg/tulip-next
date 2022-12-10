@@ -1,4 +1,4 @@
-import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef } from "vue"
+import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from "vue"
 import type { PopoverProps } from './popoverProps'
 import { getRelativeDOMPosition } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
@@ -18,7 +18,7 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
-export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
+export function usePopover(props: PopoverProps, context: Partial<SetupContext<'update:visible'[]>>, options?: UsePopoverOptions) {
   const className = options?.className
   const { getZIndex } = useMaxZIndex(window) || {}
   const on = {
@@ -41,12 +41,13 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   const arrowClass = ref({})
   const _placement = ref<PopoverProps['placement']>(props.placement)
 
+  const triggerEl = computed(() => triggerRef.value.$el || triggerRef.value)
   const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
 
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
   function open() {
-    doc.value = getRelativeDOMPosition(triggerRef.value.$el)
+    doc.value = getRelativeDOMPosition(triggerEl.value)
     zIndex.value = getZIndex?.() || 2000
     loadDomEventListener()
     updateVisible(true)
@@ -59,11 +60,11 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
   function updateVisible(value: boolean) {
     props.trigger !== 'manual' && (visible.value = value)
-    context.emit('update:visible', value)
+    context?.emit?.('update:visible', value)
   }
 
   function isTrigger(event: MouseEvent) {
-    const el = triggerRef.value.$el
+    const el = triggerEl.value
     return el && (el === event.target || el.contains(event.target))
   }
 
@@ -172,7 +173,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   }
 
   function getPopoverPosition(type: PopoverProps['placement']) {
-    const trigger = triggerRef.value.$el as HTMLElement
+    const trigger = triggerEl.value as HTMLElement
     const popover = popoverRef.value as HTMLElement
     const { top, left } = doc.value
     const topToTop = top - popover?.offsetHeight - popoverMargin
@@ -289,7 +290,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- left
       if (props.placement === 'left-end') {
-        const middle = top + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        const middle = top + popoverRef.value.offsetHeight / 2 - triggerEl.value.offsetHeight / 2
         suffix = middle < 0 ? 'start' : ''
         changed = true
       }
@@ -300,7 +301,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- right
       if (props.placement === 'right-end') {
-        const middle = top + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        const middle = top + popoverRef.value.offsetHeight / 2 - triggerEl.value.offsetHeight / 2
         suffix = middle < 0 ? 'start' : ''
         changed = true
       }
@@ -339,7 +340,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     if (left < 0) {
       // --- top
       if (props.placement === 'top-end') {
-        const middle = left + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        const middle = left + popoverRef.value.offsetWidth / 2 - triggerEl.value.offsetWidth / 2
         suffix = middle < 0 ? 'start' : ''
         changed = true
       }
@@ -350,7 +351,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- bottom
       if (props.placement === 'bottom-end') {
-        const middle = left + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        const middle = left + popoverRef.value.offsetWidth / 2 - triggerEl.value.offsetWidth / 2
         suffix = middle < 0 ? 'start' : ''
         changed = true
       }
@@ -395,7 +396,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     if (right < 0) {
       // --- top
       if (props.placement === 'top-start') {
-        const middle = right + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        const middle = right + popoverRef.value.offsetWidth / 2 - triggerEl.value.offsetWidth / 2
         suffix = middle < 0 ? 'end' : ''
         changed = true
       }
@@ -406,7 +407,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- bottom
       if (props.placement === 'bottom-start') {
-        const middle = right + popoverRef.value.offsetWidth / 2 - triggerRef.value.$el.offsetWidth / 2
+        const middle = right + popoverRef.value.offsetWidth / 2 - triggerEl.value.offsetWidth / 2
         suffix = middle < 0 ? 'end' : ''
         changed = true
       }
@@ -457,7 +458,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- left
       if (props.placement === 'left-start') {
-        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerEl.value.offsetHeight / 2
         suffix = middle < 0 ? 'end' : ''
         changed = true
       }
@@ -468,7 +469,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
 
       // --- right
       if (props.placement === 'right-start') {
-        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerRef.value.$el.offsetHeight / 2
+        const middle = bottom + popoverRef.value.offsetHeight / 2 - triggerEl.value.offsetHeight / 2
         suffix = middle < 0 ? 'end' : ''
         changed = true
       }
@@ -520,30 +521,44 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
     window.removeEventListener('resize', updatePlacement)
   }
 
-  return () => [
-    context.slots.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
-    <Teleport to="body">
-      <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
-        {{
-          default: () => visiblePopover.value ? (
-            props.raw
-              ? context.slots.content
-                && (
-                  <div class="tu-popover" ref={popoverRef} style={popoverStyle.value}>
-                    {context.slots.content?.({ close })}
-                  </div>
-                )
-              : <div class={['tu-popover tu-popover--default', { [className!]: !!className }]} ref={popoverRef} style={popoverStyle.value}>
-                  <div class="tu-popover__content">{props.content || context.slots.content?.({ close })}</div>
-                  {props.hideArrow ? null : (
-                    <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
-                      <div class="tu-popover-arrow"></div> 
+  return {
+    render: () => [
+      context.slots?.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
+      props.disabled ? null : (
+        <Teleport to="body">
+          <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+            {{
+              default: () => visiblePopover.value ? (
+                props.raw
+                  ? context.slots?.content
+                    && (
+                      <div
+                        class="tu-popover"
+                        ref={popoverRef}
+                        style={popoverStyle.value}
+                        {...context.attrs}
+                      >
+                        {context.slots?.content?.({ close })}
+                      </div>
+                    )
+                  : <div
+                      class={['tu-popover tu-popover--default', { [className!]: !!className }]}
+                      ref={popoverRef}
+                      style={popoverStyle.value}
+                      {...context.attrs}
+                    >
+                      <div class="tu-popover__content">{props.content || context.slots?.content?.({ close })}</div>
+                      {props.hideArrow ? null : (
+                        <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
+                          <div class="tu-popover-arrow"></div> 
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-          ) : null
-        }}
-      </Transition>
-    </Teleport>
-  ]
+              ) : null
+            }}
+          </Transition>
+        </Teleport>
+      )
+    ]
+  }
 }

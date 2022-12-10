@@ -6,8 +6,10 @@ const Popover = defineComponent({
   name: 'TuPopover',
   props: popoverProps,
   emits: ['update:visible'],
+  inheritAttrs: false,
   setup(props, context) {
-    return usePopover(props, context)
+    const { render } = usePopover(props, context)
+    return render
   }
 })
 

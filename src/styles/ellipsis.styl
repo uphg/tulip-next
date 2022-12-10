@@ -1,0 +1,12 @@
+$base = ".tu-ellipsis"
+
+{$base}
+  overflow hidden
+  &:not({$base}--line-clamp)
+    display inline-block
+    white-space nowrap
+    text-overflow ellipsis
+  &--line-clamp
+    display -webkit-box
+    -webkit-box-orient vertical
+    
