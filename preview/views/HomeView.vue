@@ -7,19 +7,21 @@
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
       <!-- <TestPopoverScroll /> -->
-      <TestGrid />
+      <!-- <TestGrid /> -->
+      <TestEllipsis />
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import Test from './Test.vue'
-import TestCollapseTransition from './TestCollapseTransition.vue'
-import TestTabs from './TestTabs.vue'
-import TestPagination from './TestPagination.vue'
+// import Test from './Test.vue'
+// import TestCollapseTransition from './TestCollapseTransition.vue'
+// import TestTabs from './TestTabs.vue'
+// import TestPagination from './TestPagination.vue'
 import TestPopover from './TestPopover.vue'
-import TestPopoverScroll from './TestPopoverScroll.vue'
-import TestGrid from './TestGrid.vue'
+// import TestPopoverScroll from './TestPopoverScroll.vue'
+// import TestGrid from './TestGrid.vue'
+import TestEllipsis from './TestEllipsis.vue'
 </script>
 
 <style lang="stylus">

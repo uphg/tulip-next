@@ -90,14 +90,15 @@
       </div>
     </div>
     <div class="popover-demo">
-      <tu-popover :content="content" trigger="click" transition-name="fade">
-        <tu-button>过渡动画</tu-button>
+      <tu-popover :content="content" trigger="click" :style="{ color: 'red' }" class="hi">
+        <tu-button>属性继承</tu-button>
       </tu-popover>
     </div>
     <div class="popover-demo">
-      <tu-tooltip :content="content" trigger="click">
+      <tu-tooltip :content="content" :disabled="disabled" trigger="click">
         <tu-button>点我</tu-button>
       </tu-tooltip>
+      <tu-button @click="disabled = !disabled">切换 disabled</tu-button>        
     </div>
     <div class="popover-demo">
       <tu-popover trigger="click" raw>
@@ -117,6 +118,7 @@ import { ref } from 'vue'
 
 const content = `哈哈哈哈哈哈哈哈哈哈哈哈哈哈`
 
+const disabled = ref(false)
 const visible = ref(false)
 const visible2 = ref(false)
 const visible3 = ref(false)
