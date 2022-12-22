@@ -8,7 +8,8 @@
       <!-- <TestPopover /> -->
       <!-- <TestPopoverScroll /> -->
       <!-- <TestGrid /> -->
-      <TestEllipsis />
+      <!-- <TestEllipsis /> -->
+      <TestCollapse />
     </div>
   </main>
 </template>
@@ -22,6 +23,7 @@ import TestPopover from './TestPopover.vue'
 // import TestPopoverScroll from './TestPopoverScroll.vue'
 // import TestGrid from './TestGrid.vue'
 import TestEllipsis from './TestEllipsis.vue'
+import TestCollapse from './TestCollapse.vue'
 </script>
 
 <style lang="stylus">

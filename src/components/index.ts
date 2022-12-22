@@ -13,6 +13,7 @@ import { TuSpace } from './space'
 import { TuRow } from './row'
 import { TuCol } from './col'
 import { TuEllipsis } from './ellipsis'
+import { TuCollapse, TuCollapseItem } from './collapse'
 
 const components = [
   TuButton,
@@ -32,7 +33,9 @@ const components = [
   TuSpace,
   TuRow,
   TuCol,
-  TuEllipsis
+  TuEllipsis,
+  TuCollapse,
+  TuCollapseItem
 ]
 
 const { install } = makeInstaller(components)
@@ -55,6 +58,8 @@ export {
   TuRow,
   TuCol,
   TuEllipsis,
+  TuCollapse,
+  TuCollapseItem,
 
   // utils
   useDialog,

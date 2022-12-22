@@ -1,0 +1,25 @@
+$base = ".tu-collapse-item"
+
+{$base}
+  border 1px solid var(--tu-border-color)
+  &:not(:last-child)
+    border-bottom 0
+  &__header
+    cursor pointer
+    display flex
+    align-items center
+    padding 12px 16px
+  &-arrow
+    display inline-flex
+    font-size 18px
+    margin-right 4px
+    transition transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)
+    &.active
+      transform rotate(90deg)
+  &__content
+    box-sizing border-box
+    padding 12px 16px
+    background-color #f7f8fa
+    border-top 1px solid var(--tu-border-color)
+
+      
