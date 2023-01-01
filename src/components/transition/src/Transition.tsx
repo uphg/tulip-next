@@ -1,4 +1,4 @@
-import { defineComponent, Transition } from "vue";
+import { defineComponent, Transition } from 'vue'
 
 const baseTransition = defineComponent({
   name: 'TuTransition',

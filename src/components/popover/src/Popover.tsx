@@ -1,6 +1,6 @@
-import { defineComponent } from "vue"
-import { popoverProps } from "./popoverProps"
-import { usePopover } from "./usePopover"
+import { defineComponent } from 'vue'
+import { popoverProps } from './popoverProps'
+import { usePopover } from './usePopover'
 
 const Popover = defineComponent({
   name: 'TuPopover',

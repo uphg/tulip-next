@@ -1,6 +1,6 @@
-import { isNil } from "../../../utils";
-import { computed, defineComponent, ref, type StyleValue, type PropType } from "vue";
-import { TuTooltip } from "../../tooltip";
+import { isNil } from '../../../utils'
+import { computed, defineComponent, ref, type StyleValue, type PropType } from 'vue'
+import { TuTooltip } from '../../tooltip'
 
 const ellipsisProps = {
   lineClamp: {

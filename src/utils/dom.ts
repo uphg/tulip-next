@@ -1,6 +1,6 @@
 import type { StyleElement } from '../interfaces'
 import { isObject } from './isObject'
-import { camelize } from "./camelize";
+import { camelize } from './camelize'
 import { each } from './each'
 import { toString } from './toString'
 import { mergeClass } from './internal/mergeClass'

@@ -1,4 +1,4 @@
-import type { App, Plugin } from "vue"
+import type { App, Plugin } from 'vue'
 import type { SFCWithInstall } from '../interfaces'
 
 interface Name {

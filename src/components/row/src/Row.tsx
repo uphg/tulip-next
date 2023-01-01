@@ -1,5 +1,5 @@
-import { includes, isArray, toPx, alignTypes, justifyTypes, toFlexPrefix, type AlignTypes, type JustifyTypes } from "../../../utils";
-import { computed, defineComponent, provide, readonly, type PropType } from "vue";
+import { includes, isArray, toPx, alignTypes, justifyTypes, toFlexPrefix, type AlignTypes, type JustifyTypes } from '../../../utils'
+import { computed, defineComponent, provide, readonly, type PropType } from 'vue'
 
 export const rowProps = {
   gutter: [Number, Array] as PropType<number | [number, number]>,

@@ -1,4 +1,4 @@
-import { isArray } from "./isArray";
+import { isArray } from './isArray'
 
 export function each<T>(
   obj: T[] | { [key: string]: T },

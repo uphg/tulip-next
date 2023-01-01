@@ -1,5 +1,5 @@
-import { computed, defineComponent, h } from "vue"
-import { spaceProps } from "./spaceProps"
+import { computed, defineComponent, h } from 'vue'
+import { spaceProps } from './spaceProps'
 import { toPx, toFlexPrefix } from '../../../utils'
 
 type SizeTypes = 'small' | 'medium' | 'large' 

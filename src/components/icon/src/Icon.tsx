@@ -1,4 +1,4 @@
-import { defineComponent, h, type Component, type PropType } from "vue";
+import { defineComponent, h, type Component, type PropType } from 'vue'
 
 const iconProps = {
   is: Object as PropType<Component>

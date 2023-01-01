@@ -1,4 +1,4 @@
-import { defineComponent, type ExtractPropTypes, type PropType } from "vue";
+import { defineComponent, type ExtractPropTypes, type PropType } from 'vue'
 import { TAGKEY } from '../../../shared'
 
 export type TabPaneProps = ExtractPropTypes<typeof tabPaneProps>

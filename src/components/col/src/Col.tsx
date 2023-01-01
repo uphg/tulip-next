@@ -1,5 +1,5 @@
-import { defineComponent, inject, type PropType, type Ref } from "vue";
-import { toPx } from "../../../utils";
+import { defineComponent, inject, type PropType, type Ref } from 'vue'
+import { toPx } from '../../../utils'
 
 export const colProps = {
   span: {

@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import { fileURLToPath, URL } from "url";
-import VueJSX from "@vitejs/plugin-vue-jsx";
+import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'url'
+import VueJSX from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
   plugins: [VueJSX()],

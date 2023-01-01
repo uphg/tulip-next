@@ -1,4 +1,4 @@
-import { defineComponent, ref, Transition } from 'vue';
+import { defineComponent, ref, Transition } from 'vue'
 import { addClass, getStyle, removeClass, setStyle } from '../../../utils'
 
 const transitionClass = 'tu-collapse-transition--active'

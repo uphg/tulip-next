@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 import { ref, computed } from 'vue'
 import { isNil } from '../../../utils'
 import { TuBaseWave } from '../../base-wave'

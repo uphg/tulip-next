@@ -1,4 +1,4 @@
-import { defineComponent, withDirectives, vShow, Teleport, Transition, watch, toRef } from 'vue';
+import { defineComponent, withDirectives, vShow, Teleport, Transition, watch, toRef } from 'vue'
 import { offBodyScroll, onBodyScroll } from '../../../utils'
 import type { PropType } from 'vue'
 

@@ -1,4 +1,4 @@
-import type { PropType, ExtractPropTypes } from "vue"
+import type { PropType, ExtractPropTypes } from 'vue'
 import { includes } from '../../../utils'
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>

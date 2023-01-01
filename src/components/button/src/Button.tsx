@@ -1,4 +1,4 @@
-import { defineComponent, ref, Transition, type Component, type PropType } from "vue";
+import { defineComponent, ref, Transition, type Component, type PropType } from 'vue'
 import LoadingIcon from './LoadingIcon'
 import { TuIcon } from '../../icon/index'
 import { TuBaseWave, type BaseWaveRef } from '../../base-wave'

@@ -1,5 +1,5 @@
-import { defineComponent, ref, watchEffect, type PropType, type SetupContext, type VNode } from "vue"
-import { renderComponent, setStyle } from "../../../utils"
+import { defineComponent, ref, watchEffect, type PropType, type SetupContext, type VNode } from 'vue'
+import { renderComponent, setStyle } from '../../../utils'
 
 const tabsProps = {
   value: {

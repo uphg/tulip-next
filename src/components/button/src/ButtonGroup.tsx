@@ -1,4 +1,4 @@
-import { defineComponent, type PropType } from "vue";
+import { defineComponent, type PropType } from 'vue'
 
 const buttonGroupProps = {
   vertical: Boolean as PropType<boolean>

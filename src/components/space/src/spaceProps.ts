@@ -1,5 +1,5 @@
-import { h, type PropType } from "vue";
-import { includes,  alignTypes, justifyTypes, type AlignTypes, type JustifyTypes } from "../../../utils";
+import { h, type PropType } from 'vue'
+import { includes,  alignTypes, justifyTypes, type AlignTypes, type JustifyTypes } from '../../../utils'
 
 export const spaceProps = {
   inline: Boolean as PropType<boolean>,
