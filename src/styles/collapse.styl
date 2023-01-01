@@ -1,8 +1,13 @@
-$base = ".tu-collapse-item"
+
+$base = ".tu-collapse"
 
 {$base}
   border 1px solid var(--tu-border-color)
-  &:not(:last-child)
+  border-radius 3px
+
+{$base}-item
+  border-bottom 1px solid var(--tu-border-color)
+  &:last-child
     border-bottom 0
   &__header
     cursor pointer
