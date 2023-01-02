@@ -1,2 +1,3 @@
 export type CollapseItemName = string | number
-export type CollapseActiveName = CollapseItemName | CollapseItemName[]
+export type CollapseActiveNames = CollapseItemName | CollapseItemName[]
+export type TriggerCollapseItem = (name: CollapseItemName | undefined) => void

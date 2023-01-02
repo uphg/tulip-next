@@ -1,11 +1,19 @@
-import { isArray, isNil } from '../../../utils'
-import { computed, defineComponent, provide, readonly, ref, type PropType } from 'vue'
+import { defineComponent, provide, ref, type ExtractPropTypes, type PropType } from 'vue'
+import type { CollapseActiveNames, CollapseItemName, TriggerCollapseItem } from './types'
+import { isNil } from '../../../utils'
 
-export type ActiveName = string | number | (string | number)[]
+export type CollapseProps = ExtractPropTypes<typeof collapseProps>
+export type CollapseContent = {
+  activeNames: CollapseActiveNames,
+  triggerCollapseItem: TriggerCollapseItem,
+  props: CollapseProps
+}
+
+export const collapseInjectionKey = 'tu.collapse'
 
 const collapseProps = {
   active: {
-    type: [String, Number, Array] as PropType<ActiveName>,
+    type: [String, Number, Array] as PropType<CollapseActiveNames>,
     default: ''
   },
   accordion: Boolean as PropType<boolean>
@@ -14,26 +22,31 @@ const collapseProps = {
 const Collapse = defineComponent({
   name: 'TuCollapse',
   props: collapseProps,
-  setup(props, context) {
-    const activeNames = ref<ActiveName>([])
-    
-    const onClickCollapseItem = (activeName: string | number) => {
-      if (isNil(activeName)) return
+  setup(props: CollapseProps, context) {
+    const collapse = ref<CollapseContent>({
+      activeNames: [],
+      triggerCollapseItem,
+      props
+    })
 
+    function triggerCollapseItem(name: CollapseItemName | undefined) {
+      if (isNil(name)) return
+
+      const { activeNames } = collapse.value
       if (props.accordion) {
-        activeNames.value = activeName
+        collapse.value.activeNames = activeNames === name ? '' : name
       } else {
-        const index = (activeNames?.value as (string | number)[]).indexOf(activeName)
+        const index = (activeNames as CollapseItemName[]).indexOf(name)
         if (index > -1) {
-          (activeNames.value as (string | number)[]).splice(index, 1)
+          (activeNames as CollapseItemName[]).splice(index, 1)
         } else {
-          (activeNames.value as (string | number)[]).push(activeName)
+          (activeNames as CollapseItemName[]).push(name)
         }
       }
     }
 
-    provide('activeNames', readonly(activeNames))
-    provide('onClickCollapseItem', onClickCollapseItem)
+    provide(collapseInjectionKey, collapse)
+
     return () => (
       <div class="tu-collapse">
         {context.slots.default?.()}

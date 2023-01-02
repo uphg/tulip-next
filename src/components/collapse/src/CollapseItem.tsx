@@ -1,8 +1,10 @@
 import { computed, defineComponent, inject, type Ref } from 'vue'
+import type { CollapseActiveNames } from './types'
+import { collapseInjectionKey, type CollapseContent } from './Collapse'
 import { TuIcon } from '../../icon'
 import { TuCollapseTransition } from '../../collapse-transition'
+import { isNil } from '../../../utils'
 import ArrowRightRoundSmall from '../../../icons/ArrowRightRoundSmall.vue'
-import type { ActiveName } from './Collapse'
 
 const collapseItemProps = {
   title: [String, Number],
@@ -13,13 +15,18 @@ const CollapseItem = defineComponent({
   name: 'TuCollapseItem',
   props: collapseItemProps,
   setup(props, context) {
-    const activeNames = inject<Ref<Readonly<ActiveName>>>('activeNames')
-    const isActive = computed(() => props.name && (activeNames?.value as (string | number)[]).includes(props.name))
-    const onClickCollapseItem = inject<(names: string | number | undefined) => void>('onClickCollapseItem')!
-   
+    const collapse = inject<Ref<CollapseContent>>(collapseInjectionKey)
+    const isActive = computed(() => {
+      if (isNil(props.name)) return false
+
+      return collapse?.value.props.accordion
+        ? props.name === collapse.value.activeNames
+        : (collapse?.value.activeNames as (string | number)[]).includes(props.name)
+    })
+
     return () => (
       <div class="tu-collapse-item">
-        <div class="tu-collapse-item__header" onClick={() => onClickCollapseItem(props.name)}>
+        <div class="tu-collapse-item__header" onClick={() => collapse?.value.triggerCollapseItem(props.name)}>
           <span class={['tu-collapse-item-arrow', { active: isActive.value }]}>
             <TuIcon><ArrowRightRoundSmall/></TuIcon>
           </span>
