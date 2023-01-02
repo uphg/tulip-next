@@ -17,7 +17,11 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
-export function usePopover(props: PopoverProps, context: Partial<SetupContext<'update:visible'[]>>, options?: UsePopoverOptions) {
+export function usePopover(
+  props: PopoverProps,
+  context: Partial<SetupContext<'update:visible'[]>>,
+  options?: UsePopoverOptions
+) {
   const className = options?.className
   const { getZIndex } = useMaxZIndex(window) || {}
   const on = {
