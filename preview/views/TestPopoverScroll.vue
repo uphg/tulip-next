@@ -86,7 +86,7 @@
         <tu-button @click="(visible12 = !visible12)">Right End</tu-button>
       </tu-popover>
 
-      <tu-popover placement="left-end" trigger="click">
+      <tu-popover placement="right-end" trigger="click" space="20">
         <template #content>
           <div>如果世间真的有天使</div>
           <div>毫无疑问 那一定是你</div>
@@ -101,7 +101,7 @@
           <div>抱一抱你</div>
           <div>不惧死亡的决心</div>
         </template>
-        <tu-button>过渡动画</tu-button>
+        <tu-button>点我点我</tu-button>
       </tu-popover>
     </div>
     <p v-for="item in 50" :key="item + 'a'">{{ item }}</p>

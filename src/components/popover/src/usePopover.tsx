@@ -1,14 +1,13 @@
 import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from 'vue'
 import type { PopoverProps } from './popoverProps'
-import { getRelativeDOMPosition } from '../../../utils'
+import { getRelativeDOMPosition, toNumber } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
   className?: string
 }
-
+// space
 const arrowHeight = 6
-const popoverMargin = 8
 const arrowMargin = 10
 
 const arrowClassMap = [
@@ -176,10 +175,10 @@ export function usePopover(props: PopoverProps, context: Partial<SetupContext<'u
     const trigger = triggerEl.value as HTMLElement
     const popover = popoverRef.value as HTMLElement
     const { top, left } = doc.value
-    const topToTop = top - popover?.offsetHeight - popoverMargin
-    const leftToLeft = left - popover?.offsetWidth - popoverMargin
-    const rightToLeft = left + trigger?.offsetWidth + popoverMargin
-    const bottomToTop = top + trigger?.offsetHeight + popoverMargin
+    const topToTop = top - popover?.offsetHeight - toNumber(props.space)
+    const leftToLeft = left - popover?.offsetWidth - toNumber(props.space)
+    const rightToLeft = left + trigger?.offsetWidth + toNumber(props.space)
+    const bottomToTop = top + trigger?.offsetHeight + toNumber(props.space)
 
     const placementMap = {
       'top-start': {

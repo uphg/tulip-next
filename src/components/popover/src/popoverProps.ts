@@ -37,6 +37,11 @@ export const popoverProps = {
     }
   },
   content: String as PropType<string>,
+  // Popover 与触发元素的间隙
+  space: {
+    type: [String, Number] as PropType<string | number>,
+    default: 8
+  },
   hideArrow: Boolean as PropType<boolean>,
   raw: Boolean as PropType<boolean>,
   disabled: Boolean as PropType<boolean>,

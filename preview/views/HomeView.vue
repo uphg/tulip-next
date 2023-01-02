@@ -6,10 +6,10 @@
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
-      <!-- <TestPopoverScroll /> -->
+      <TestPopoverScroll />
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
-      <TestCollapse />
+      <!-- <TestCollapse /> -->
     </div>
   </main>
 </template>
@@ -20,7 +20,7 @@
 // import TestTabs from './TestTabs.vue'
 // import TestPagination from './TestPagination.vue'
 import TestPopover from './TestPopover.vue'
-// import TestPopoverScroll from './TestPopoverScroll.vue'
+import TestPopoverScroll from './TestPopoverScroll.vue'
 // import TestGrid from './TestGrid.vue'
 import TestEllipsis from './TestEllipsis.vue'
 import TestCollapse from './TestCollapse.vue'
