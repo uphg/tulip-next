@@ -26,6 +26,9 @@ const Scrollbar = defineComponent({
     const scrollTopRef = ref(0)
     const scrollLeftRef = ref(0)
 
+    let memoYTop = 0
+    let memoMouseY = 0
+
     const containerHeight = computed(() => containerRef.value?.offsetHeight || 0)
     const contentHeight = computed(() => contentRef.value?.offsetHeight || 0)
     const railScrollTopRef = computed(() => {
@@ -54,8 +57,30 @@ const Scrollbar = defineComponent({
     })
     const yBarSizePx = computed(() => `${yBarSize.value}px`)
 
-    const handleScroll = (e: Event) => {
+    function handleScroll (e: Event) {
       scrollTopRef.value = containerRef.value.scrollTop
+    }
+
+    function handleYScrollMouseDown(e: MouseEvent) {
+      memoYTop = containerRef.value?.scrollTop || 0
+      memoMouseY = e.clientY
+      window.addEventListener('mousemove', handleYScrollMouseMove)
+      window.addEventListener('mouseup', handleYScrollMouseUp)
+    }
+
+    function handleYScrollMouseMove(e: MouseEvent) {
+      const moveSize = e.clientY - memoMouseY
+      const top = moveSize * (contentRef.value?.offsetHeight - containerRef.value?.offsetHeight) / (railYRef.value?.offsetHeight - railYBarRef.value?.offsetHeight)
+
+      containerRef.value?.scrollTo({
+        top: memoYTop + top,
+        left: 0
+      })
+    }
+
+    function handleYScrollMouseUp() {
+      window.removeEventListener('mousemove', handleYScrollMouseMove)
+      window.removeEventListener('mouseup', handleYScrollMouseUp)
     }
 
     return () => (
@@ -69,6 +94,7 @@ const Scrollbar = defineComponent({
               ref={railYBarRef}
               style={{ top: railScrollTopPx.value, height: yBarSizePx.value }}
               class="tu-scrollbar-rail__scrollbar"
+              onMousedown={handleYScrollMouseDown}
             ></div>
           </div>
         ) : null }
