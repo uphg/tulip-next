@@ -61,14 +61,20 @@ const Scrollbar = defineComponent({
       scrollTopRef.value = containerRef.value.scrollTop
     }
 
+    let yBarPressed = false
+
     function handleYScrollMouseDown(e: MouseEvent) {
+      console.log('触发按下')
       memoYTop = containerRef.value?.scrollTop || 0
       memoMouseY = e.clientY
+      yBarPressed = true
       window.addEventListener('mousemove', handleYScrollMouseMove)
       window.addEventListener('mouseup', handleYScrollMouseUp)
     }
 
     function handleYScrollMouseMove(e: MouseEvent) {
+      console.log('触发移动')
+      if (!yBarPressed) return
       const moveSize = e.clientY - memoMouseY
       const top = moveSize * (contentRef.value?.offsetHeight - containerRef.value?.offsetHeight) / (railYRef.value?.offsetHeight - railYBarRef.value?.offsetHeight)
 
@@ -78,7 +84,9 @@ const Scrollbar = defineComponent({
       })
     }
 
-    function handleYScrollMouseUp() {
+    function handleYScrollMouseUp(e: MouseEvent) {
+      yBarPressed = false
+      console.log('触发抬起')
       window.removeEventListener('mousemove', handleYScrollMouseMove)
       window.removeEventListener('mouseup', handleYScrollMouseUp)
     }

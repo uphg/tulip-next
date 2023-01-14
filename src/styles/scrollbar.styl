@@ -22,6 +22,9 @@ $base = ".tu-scrollbar"
   right 4px
   top 2px
   bottom 2px
+  cursor pointer
+  pointer-events all
+  user-select none // 禁止选择内部文字，造成滚动条抬起失效的 bug 
   &__scrollbar
     position absolute
     background-color rgba(0, 0, 0, 0.4)
