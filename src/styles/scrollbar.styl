@@ -1,7 +1,38 @@
 $base = ".tu-scrollbar"
 
 {$base}
+  position relative
   &-container
     overflow-y auto
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-track-piece,
+    &::-webkit-scrollbar-thumb
+      width 0
+      height 0
+      display none
+
     {$base}--direction-x
       overflow-x auto
+
+  &-content
+    overflow hidden
+
+{$base}-rail
+  position absolute
+  right 4px
+  top 2px
+  bottom 2px
+  &__scrollbar
+    position absolute
+    background-color rgba(0, 0, 0, 0.4)
+    border-radius 5px
+
+  &--vertical
+    width 5px
+    {$base}-rail__scrollbar
+      width 100%
+
+  &--horizontal
+    height 5px
+    {$base}-rail__scrollbar
+      height 100%
