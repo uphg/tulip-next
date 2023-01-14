@@ -6,10 +6,11 @@
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
-      <TestPopoverScroll />
+      <!-- <TestPopoverScroll /> -->
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
       <!-- <TestCollapse /> -->
+      <TestScrollbar />
     </div>
   </main>
 </template>
@@ -24,6 +25,7 @@ import TestPopoverScroll from './TestPopoverScroll.vue'
 // import TestGrid from './TestGrid.vue'
 import TestEllipsis from './TestEllipsis.vue'
 import TestCollapse from './TestCollapse.vue'
+import TestScrollbar from './TestScrollbar.vue'
 </script>
 
 <style lang="stylus">
