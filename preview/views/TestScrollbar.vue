@@ -1,6 +1,9 @@
 <template>
-  <tu-scrollbar class="demo-scrollbar">
-    <p v-for="item in 80" :key="item">Hi, Jack {{ item }}</p>
+  <tu-scrollbar class="demo-scrollbar" direction-x>
+    <p v-for="item in 50" :key="item">Hi, Jack {{ item }}</p>
+    <p style="width: 1000px;">
+      <span v-for="item in 100" :key="item + 'a'">Hi, Jack {{ item }}</span>
+    </p>
   </tu-scrollbar>
 </template>
 
