@@ -1,4 +1,4 @@
-import { isServer } from '../utils'
+import { isClient } from '../utils'
 
 const zIndexKey = Symbol('Maximum z-index')
 
@@ -7,7 +7,7 @@ export interface MaxZIndex extends Window {
 }
 
 export function useMaxZIndex(window: Window, initial = 2000) {
-  if (isServer) return {}
+  if (isClient) return {}
   if (!(window as MaxZIndex)[zIndexKey]) {
     (window as MaxZIndex)[zIndexKey] = initial
   }
