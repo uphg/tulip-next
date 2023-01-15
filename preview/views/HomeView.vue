@@ -10,7 +10,8 @@
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
       <!-- <TestCollapse /> -->
-      <TestScrollbar />
+      <!-- <TestScrollbar /> -->
+      <TestScrollbar2 />
     </div>
   </main>
 </template>
@@ -26,6 +27,7 @@ import TestPopoverScroll from './TestPopoverScroll.vue'
 import TestEllipsis from './TestEllipsis.vue'
 import TestCollapse from './TestCollapse.vue'
 import TestScrollbar from './TestScrollbar.vue'
+import TestScrollbar2 from './TestScrollbar2.vue'
 </script>
 
 <style lang="stylus">

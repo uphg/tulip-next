@@ -16,6 +16,7 @@ module.exports = {
     semi: ['warn', 'never'],
     'vue/multi-word-component-names': 'off',
     'vue/return-in-computed-property': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off'
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/no-unused-vars': 'off'
   }
 }
