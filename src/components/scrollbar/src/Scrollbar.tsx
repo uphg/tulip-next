@@ -1,5 +1,6 @@
+import { computed, defineComponent, onMounted, nextTick, ref, shallowRef, type PropType } from 'vue'
+import { toString } from '../../../utils'
 import { useMutationObserver } from '../../../composables/useMutationObserver'
-import { computed, defineComponent, onMounted, ref, shallowRef, type PropType } from 'vue'
 
 const scrollbarProps = {
   directionY: {
@@ -64,7 +65,8 @@ const Scrollbar = defineComponent({
         return
       }
       // Old: (containerHeight / contentHeight) * railYHeight
-      yBarSize.value = Math.min(railYHeight, (containerHeight! * railYHeight) / contentHeight)
+      const newBarSize = Math.min(railYHeight, (containerHeight! * railYHeight) / contentHeight)
+      yBarSize.value = newBarSize
     }
 
     function handleYScrollMouseDown(e: MouseEvent) {
@@ -77,15 +79,13 @@ const Scrollbar = defineComponent({
     function handleYScrollMouseMove(e: MouseEvent) {
       if (!yBarPressed) return
 
+      const railYHeight = Number(railY.value?.offsetHeight)
+      const railYBarHeight = Number(railYBar.value?.offsetHeight)
       const contentHeight = Number(content.value?.offsetHeight)
       const containerHeight = Number(container.value?.offsetHeight)
 
       const moveSize = e.clientY - memoMouseY
-      const top = moveSize * (
-          contentHeight - containerHeight
-        ) / (
-          Number(railY.value?.offsetHeight) - Number(railYBar.value?.offsetHeight)
-        )
+      const top = moveSize * (contentHeight - containerHeight) / (railYHeight - railYBarHeight)
       yScrollTo(memoYTop + top)
     }
 
