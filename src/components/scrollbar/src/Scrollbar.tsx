@@ -1,5 +1,5 @@
 import { computed, defineComponent, onMounted, nextTick, ref, shallowRef, type PropType } from 'vue'
-import { toString } from '../../../utils'
+import { toString, isNaN } from '../../../utils'
 import { useMutationObserver } from '../../../composables/useMutationObserver'
 
 const scrollbarProps = {
@@ -44,16 +44,26 @@ const Scrollbar = defineComponent({
     let yBarPressed = false
 
     function setRailScrollTop() {
-      const railYHeight = Number(railY.value?.offsetHeight)
       const contentHeight = Number(content.value?.offsetHeight)
       const containerHeight = Number(container.value?.offsetHeight)
-      if (contentHeight === null || containerHeight === null || railYHeight === null) {
+      if (isNaN(contentHeight) || isNaN(containerHeight)) {
         railScrollTop.value = 0
         return
       }
-      const heightDiff = contentHeight! - containerHeight
+
+      const railYHeight = Number(railY.value?.offsetHeight)
       const barHeight = Number(railYBar.value?.offsetHeight)
-      railScrollTop.value = (scrollTop.value * (railYHeight - barHeight)) / heightDiff
+      const heightDiff = contentHeight! - containerHeight
+      const rawRailScrollTop = (scrollTop.value / heightDiff) * (railYHeight - barHeight)
+      const newBarHeight = containerHeight / contentHeight * railYHeight
+      const railYUpperBound = railYHeight - newBarHeight
+
+      // 修复滚动条滚动距离过大的 bug
+      railScrollTop.value = rawRailScrollTop > railYUpperBound
+        ? railYUpperBound
+        : rawRailScrollTop < 0
+          ? 0
+          : rawRailScrollTop
     }
 
     function setYBarSize() {
@@ -76,6 +86,7 @@ const Scrollbar = defineComponent({
       window.addEventListener('mousemove', handleYScrollMouseMove)
       window.addEventListener('mouseup', handleYScrollMouseUp)
     }
+
     function handleYScrollMouseMove(e: MouseEvent) {
       if (!yBarPressed) return
 
@@ -86,7 +97,13 @@ const Scrollbar = defineComponent({
 
       const moveSize = e.clientY - memoMouseY
       const top = moveSize * (contentHeight - containerHeight) / (railYHeight - railYBarHeight)
-      yScrollTo(memoYTop + top)
+      const upperBound = contentHeight - containerHeight
+      const rawToScrollTop = memoYTop + top
+      const toScrollTop = rawToScrollTop < 0
+        ? 0
+          : rawToScrollTop > upperBound
+            ? upperBound : rawToScrollTop
+      yScrollTo(toScrollTop)
     }
 
     function handleYScrollMouseUp() {
@@ -101,17 +118,25 @@ const Scrollbar = defineComponent({
     let xBarPressed = false
 
     function setRailScrollLeft() {
-      const railXWidth = Number(railX.value?.offsetWidth)
       const contentWidth = Number(content.value?.offsetWidth)
       const containerWidth = Number(container.value?.offsetWidth)
-      if (contentWidth === null || containerWidth === null || railXWidth === null) {
+      if (isNaN(contentWidth) || isNaN(containerWidth)) {
         railScrollLeft.value = 0
         return
       }
+      const railXWidth = Number(railX.value?.offsetWidth)
+      const barWidth = Number(railXBar.value?.offsetWidth)
       const widthDiff = contentWidth - containerWidth
-      const barWidth = railXBar.value?.offsetWidth || 0
-      // Old: (scrollLeft / widthDiff) * (railXWidth - barWidth)
-      railScrollLeft.value = (scrollLeft.value * (railXWidth - barWidth)) / widthDiff
+      const rawRailScrollLeft = (scrollLeft.value / widthDiff) * (railXWidth - barWidth)
+      const newBarWidth = containerWidth / contentWidth * railXWidth
+      const railXUpperBound = railXWidth - newBarWidth
+
+      // 修复滚动条滚动距离过大的 bug
+      railScrollLeft.value = rawRailScrollLeft > railXUpperBound
+        ? railXUpperBound
+        : rawRailScrollLeft < 0
+          ? 0
+          : rawRailScrollLeft
     }
 
     function setXBarSize() {
@@ -156,8 +181,10 @@ const Scrollbar = defineComponent({
     function updateScrollbar() {
       scrollTop.value = container.value?.scrollTop || 0
       scrollLeft.value = container.value?.scrollLeft || 0
-      setRailScrollTop()
-      setRailScrollLeft()
+      nextTick(() => {
+        setRailScrollTop()
+        setRailScrollLeft()
+      })
       setYBarSize()
       setXBarSize()
     }
