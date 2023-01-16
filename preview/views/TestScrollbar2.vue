@@ -1,44 +1,55 @@
 <template>
+  <h3>Y 轴</h3>
   <tu-space style="margin-bottom: 20px;">
-    <tu-button @click="add">点我添加</tu-button>
-    <tu-button @click="remove">点我减少</tu-button>
-    <tu-button @click="updateKey">刷新组件</tu-button>
+    <tu-button @click="addY">Y 轴添加</tu-button>
+    <tu-button @click="removeY">Y 轴减少</tu-button>
   </tu-space>
-  <tu-scrollbar :key="key" class="demo-scrollbar" direction-x>
-    <p v-for="item in 30" :key="item">Hi, Jack {{ item }}</p>
+  <h3>X 轴</h3>
+  <tu-space style="margin-bottom: 20px;">
+    <tu-button @click="addX">X 轴添加</tu-button>
+    <tu-button @click="removeX">X 轴减少</tu-button>
+  </tu-space>
+  <tu-scrollbar class="demo-scrollbar">
+    <p v-for="item in listY" :key="item">Hi, Jack {{ item }}</p>
     <p style="width: max-content">
-      <span v-for="item in listx" :key="item + 'a'">Hi, Jack {{ item }}</span>
+      <span v-for="item in listX" :key="item + 'a'">Hi, Jack {{ item }}</span>
     </p>
   </tu-scrollbar>
 </template>
 
 <script setup lang="ts">
-import { TuScrollbar } from 'src/components'
-
 import { ref } from 'vue'
 
 // Jack 19 的 19 在最底部删除 4 个时复现（滚动条突出）
-const listy = ref(Array.from({ length: 22 }).map((_, index) => index + 1))
+const listY = ref(Array.from({ length: 22 }).map((_, index) => index + 1))
 // Jack 15 的 15 在最右侧删除 1 - 2 个时复现（滚动条突出）
-const listx = ref(Array.from({ length: 17 }).map((_, index) => index + 1))
+const listX = ref(Array.from({ length: 17 }).map((_, index) => index + 1))
 
-let count = listx.value.length
+let count = listX.value.length
 let key = 0
 
-const add = () => {
+const addY = () => {
   count+=1
-  listx.value.push(count)
+  listY.value.push(count)
 }
 
-const remove = () => {
+const removeY = () => {
   if (count <= 0) return
   count-=1
-  listx.value.splice(count, 1)
+  listY.value.splice(count, 1)
 }
 
-const updateKey = () => {
-  key+=1
+const addX = () => {
+  count+=1
+  listX.value.push(count)
 }
+
+const removeX = () => {
+  if (count <= 0) return
+  count-=1
+  listX.value.splice(count, 1)
+}
+
 </script>
 
 <style lang="stylus">
