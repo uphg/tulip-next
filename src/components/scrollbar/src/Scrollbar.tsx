@@ -1,10 +1,21 @@
-import { computed, defineComponent, onBeforeUnmount, onMounted, ref, shallowRef, type PropType } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref, shallowRef, h, Transition, vShow, withDirectives, nextTick, type PropType, type ShallowRef, type StyleValue } from 'vue'
 import { toPx, withAttrs } from '../../../utils'
 import { useMutationObserver, type useMutationObserverReturn } from '../../../composables/useMutationObserver'
 
 const scrollbarProps = {
+  trigger: {
+    type: String as PropType<'hover' | 'none'>,
+    default: 'hover'
+  },
   onScroll: Function as PropType<(e: Event) => void>
 }
+
+export const Wrapper = defineComponent({
+  name: 'TuWrapper',
+  setup(_, context) {
+    return () => context.slots.default?.()
+  }
+})
 
 const Scrollbar = defineComponent({
   name: 'TuScrollbar',
@@ -16,7 +27,7 @@ const Scrollbar = defineComponent({
     const trackX = shallowRef<HTMLElement | null>(null)
     const trackYBar = shallowRef<HTMLElement | null>(null)
     const trackXBar = shallowRef<HTMLElement | null>(null)
-
+    
     const containerScrollTop = ref(0)
     const containerScrollLeft = ref(0)
     const trackScrollTop = ref(0)
@@ -24,16 +35,18 @@ const Scrollbar = defineComponent({
     const trackYBarSize = ref(0)
     const trackXBarSize = ref(0)
     const contentListener = ref<useMutationObserverReturn | null>(null)
-
+    const hover = ref(false)
+    const xBarPressed = ref(false)
+    const yBarPressed = ref(false)
+    
     let memoYTop = 0
     let memoXLeft = 0
     let memoMouseY = 0
     let memoMouseX = 0
-    let xBarPressed = false
-    let yBarPressed = false
 
     const trackYBarHidden = computed(() => trackYBarSize.value >= withAttrs(trackY.value).offsetHeight)
     const trackXBarHidden = computed(() => trackXBarSize.value >= withAttrs(trackX.value).offsetWidth)
+    const triggerisNont = computed(() => props.trigger === 'none')
 
     function handleScroll(e: Event) {
       props.onScroll?.(e)
@@ -74,9 +87,8 @@ const Scrollbar = defineComponent({
       }
 
       const { offsetHeight: trackYHeight } = withAttrs(trackY.value)
-      const { offsetHeight: barHeight } = withAttrs(trackYBar.value)
       const heightDiff = contentHeight! - containerHeight
-      const rawRailScrollTop = (containerScrollTop.value / heightDiff) * (trackYHeight - barHeight)
+      const rawRailScrollTop = (containerScrollTop.value / heightDiff) * (trackYHeight - trackYBarSize.value)
       const newBarHeight = containerHeight / contentHeight * trackYHeight
       const trackYUpperBound = trackYHeight - newBarHeight
 
@@ -91,13 +103,13 @@ const Scrollbar = defineComponent({
     function handleYScrollMouseDown(e: MouseEvent) {
       memoYTop = container.value?.scrollTop || 0
       memoMouseY = e.clientY
-      yBarPressed = true
-      window.addEventListener('mousemove', handleYScrollMouseMove)
-      window.addEventListener('mouseup', handleYScrollMouseUp)
+      yBarPressed.value = true
+      document.addEventListener('mousemove', handleYScrollMouseMove)
+      document.addEventListener('mouseup', handleYScrollMouseUp)
     }
 
     function handleYScrollMouseMove(e: MouseEvent) {
-      if (!yBarPressed) return
+      if (!yBarPressed.value) return
 
       const { offsetHeight: trackYHeight } = withAttrs(trackY.value)
       const { offsetHeight: trackYBarHeight } = withAttrs(trackYBar.value)
@@ -119,9 +131,9 @@ const Scrollbar = defineComponent({
     }
 
     function handleYScrollMouseUp() {
-      yBarPressed = false
-      window.removeEventListener('mousemove', handleYScrollMouseMove)
-      window.removeEventListener('mouseup', handleYScrollMouseUp)
+      yBarPressed.value = false
+      document.removeEventListener('mousemove', handleYScrollMouseMove)
+      document.removeEventListener('mouseup', handleYScrollMouseUp)
     }
 
     function updateXBarSize() {
@@ -138,16 +150,15 @@ const Scrollbar = defineComponent({
     }
 
     function updateTrackXScrollLeft() {
-      const contentWidth = Number(content.value?.offsetWidth)
-      const containerWidth = Number(container.value?.offsetWidth)
+      const { offsetWidth: contentWidth } = withAttrs(content.value)
+      const { offsetWidth: containerWidth } = withAttrs(container.value)
       if (contentWidth === 0 || containerWidth === 0) {
         trackScrollLeft.value = 0
         return
       }
-      const trackXWidth = Number(trackX.value?.offsetWidth)
-      const barWidth = Number(trackXBar.value?.offsetWidth)
+      const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
       const widthDiff = contentWidth - containerWidth
-      const rawRailScrollLeft = (containerScrollLeft.value / widthDiff) * (trackXWidth - barWidth)
+      const rawRailScrollLeft = (containerScrollLeft.value / widthDiff) * (trackXWidth - trackXBarSize.value)
       const newBarWidth = containerWidth / contentWidth * trackXWidth
       const trackXUpperBound = trackXWidth - newBarWidth
 
@@ -162,13 +173,13 @@ const Scrollbar = defineComponent({
     function handleXScrollMouseDown(e: MouseEvent) {
       memoXLeft = container.value?.scrollLeft || 0
       memoMouseX = e.clientX
-      xBarPressed = true
-      window.addEventListener('mousemove', handleXScrollMouseMove)
-      window.addEventListener('mouseup', handleXScrollMouseUp)
+      xBarPressed.value = true
+      document.addEventListener('mousemove', handleXScrollMouseMove)
+      document.addEventListener('mouseup', handleXScrollMouseUp)
     }
 
     function handleXScrollMouseMove(e: MouseEvent) {
-      if (!xBarPressed) return
+      if (!xBarPressed.value) return
       const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
       const { offsetWidth: trackXBarWidth } = withAttrs(trackXBar.value)
       const { offsetWidth: contentWidth } = withAttrs(content.value)
@@ -189,9 +200,17 @@ const Scrollbar = defineComponent({
     }
 
     function handleXScrollMouseUp() {
-      xBarPressed = false
-      window.removeEventListener('mousemove', handleXScrollMouseMove)
-      window.removeEventListener('mouseup', handleXScrollMouseUp)
+      xBarPressed.value = false
+      document.removeEventListener('mousemove', handleXScrollMouseMove)
+      document.removeEventListener('mouseup', handleXScrollMouseUp)
+    }
+
+    function handleMouseEnter() {
+      hover.value = true
+    }
+
+    function handleMouseLeave() {
+      hover.value = false
     }
 
     function scrollToTop(top: number) {
@@ -217,54 +236,62 @@ const Scrollbar = defineComponent({
       updateBarSize()
     }
 
+    function renderBar(elRef: ShallowRef<HTMLElement | null>, style: StyleValue, onMousedown: (payload: MouseEvent) => void) {
+      return (
+        <div
+          ref={elRef}
+          style={style}
+          class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackYBarHidden.value }]}
+          onMousedown={onMousedown}
+        ></div>
+      )
+    }
+
+    context.expose({ update, scrollTo, scrollBy })
+
     onMounted(() => {
       updateBarSize()
       contentListener.value = useMutationObserver(content, () => {
-        updateBarSize()
+        update()
       }, { attributes: true, childList: true, subtree: true })
     })
 
     onBeforeUnmount(() => {
       contentListener.value?.stop()
-      if (yBarPressed) {
-        window.removeEventListener('mousemove', handleYScrollMouseMove)
-        window.removeEventListener('mouseup', handleYScrollMouseUp)
+      if (yBarPressed.value) {
+        document.removeEventListener('mousemove', handleYScrollMouseMove)
+        document.removeEventListener('mouseup', handleYScrollMouseUp)
       }
-      if (xBarPressed) {
-        window.removeEventListener('mousemove', handleXScrollMouseMove)
-        window.removeEventListener('mouseup', handleXScrollMouseUp)
+      if (xBarPressed.value) {
+        document.removeEventListener('mousemove', handleXScrollMouseMove)
+        document.removeEventListener('mouseup', handleXScrollMouseUp)
       }
     })
 
-    context.expose({
-      update,
-      scrollTo,
-      scrollBy
-    })
+    return () => {
+      const YBar = renderBar(trackYBar, { top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) }, handleYScrollMouseDown)
+      const XBar = renderBar(trackXBar, { left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) }, handleXScrollMouseDown)
 
-    return () => (
-      <div class={'tu-scrollbar'}>
-        <div ref={container} class={['tu-scrollbar-container']} onScroll={handleScroll}>
-          <div ref={content} class="tu-scrollbar-content">{context.slots.default?.()}</div>
+      return (
+        <div class={'tu-scrollbar'} onMouseenter={handleMouseEnter} onMouseleave={handleMouseLeave}>
+          <div ref={container} class={['tu-scrollbar-container']} onScroll={handleScroll}>
+            <div ref={content} class="tu-scrollbar-content">{context.slots.default?.()}</div>
+          </div>
+          <div ref={trackY} class="tu-scrollbar-track tu-scrollbar-track--vertical">
+            {triggerisNont.value ? YBar : (
+              <Transition name="tu-fade">
+                {withDirectives(YBar, [[vShow, hover.value || yBarPressed.value]])}
+              </Transition>
+            )}
+          </div>
+          <div ref={trackX} class="tu-scrollbar-track tu-scrollbar-track--horizontal">
+            {triggerisNont.value ? XBar : <Transition name="tu-fade">
+              {withDirectives(XBar, [[vShow, hover.value || xBarPressed.value]])}
+            </Transition>}
+          </div>
         </div>
-        <div ref={trackY} class="tu-scrollbar-track tu-scrollbar-track--vertical">
-          <div
-            ref={trackYBar}
-            style={{ top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) }}
-            class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackYBarHidden.value }]}
-            onMousedown={handleYScrollMouseDown}
-          ></div>
-        </div>
-        <div ref={trackX} class="tu-scrollbar-track tu-scrollbar-track--horizontal">
-          <div
-            ref={trackXBar}
-            style={{ left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) }}
-            class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackXBarHidden.value }]}
-            onMousedown={handleXScrollMouseDown}
-          ></div>
-        </div>
-      </div>
-    )
+      )
+    }
   }
 })
 
