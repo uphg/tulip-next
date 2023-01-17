@@ -1,7 +1,7 @@
 <template>
   <tu-button @click="visible = !visible">Toggle</tu-button>
   <div style="display: flex; margin-top: 20px; height: 100px;">
-    <transition name="tu-fade" mode="out-in">
+    <transition name="tu-fade">
       <div v-if="visible" class="transition-box">Fade</div>
     </transition>
   </div>
