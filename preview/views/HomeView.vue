@@ -12,6 +12,7 @@
       <!-- <TestCollapse /> -->
       <!-- <TestScrollbar /> -->
       <TestScrollbar2 />
+      <!-- <TestTransition /> -->
     </div>
   </main>
 </template>
@@ -28,6 +29,7 @@ import TestEllipsis from './TestEllipsis.vue'
 import TestCollapse from './TestCollapse.vue'
 import TestScrollbar from './TestScrollbar.vue'
 import TestScrollbar2 from './TestScrollbar2.vue'
+import TestTransition from './TestTransition'
 </script>
 
 <style lang="stylus">

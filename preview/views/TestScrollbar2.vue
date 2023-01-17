@@ -9,7 +9,7 @@
     <tu-button @click="addX">X 轴添加</tu-button>
     <tu-button @click="removeX">X 轴减少</tu-button>
   </tu-space>
-  <tu-scrollbar class="demo-scrollbar">
+  <tu-scrollbar ref="scrollbar" class="demo-scrollbar" trigger="none">
     <p v-for="item in listY" :key="item">Hi, Jack {{ item }}</p>
     <p style="width: max-content">
       <span v-for="item in listX" :key="item + 'a'">Hi, Jack {{ item }}</span>
@@ -18,7 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import 'src/styles/transition.styl'
 
 // Jack 19 的 19 在最底部删除 4 个时复现（滚动条突出）
 const listY = ref(Array.from({ length: 22 }).map((_, index) => index + 1))
@@ -49,6 +50,12 @@ const removeX = () => {
   count-=1
   listX.value.splice(count, 1)
 }
+
+const scrollbar = ref<null>(null)
+
+onMounted(() => {
+  scrollbar.value.scrollTo({ top: 200 })
+})
 
 </script>
 
