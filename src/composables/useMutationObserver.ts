@@ -4,6 +4,8 @@ import { defaultWindow, type ConfigurableWindow } from '../configurable'
 interface UseMutationObserverOptions extends MutationObserverInit, ConfigurableWindow { } 
 type MaybeElement = HTMLElement | SVGElement | undefined | null
 
+export type useMutationObserverReturn = ReturnType<typeof useMutationObserver>
+
 export function useMutationObserver(
   _target: MaybeElement | Ref<MaybeElement>,
   callback: MutationCallback,
