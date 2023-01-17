@@ -18,7 +18,7 @@ describe('Button', () => {
 
   it('type', () => {
     const wrapper = mount(TuButton, {
-      props: { type: 'primary' }
+      props: { hue: 'primary' }
     })
     expect(wrapper.classes()).toContain('tu-button--primary')
   })
@@ -37,9 +37,9 @@ describe('Button', () => {
     expect(wrapper.find('.tu-icon-close').exists()).toBeTruthy()
   })
 
-  it('nativeType', () => {
+  it('native type', () => {
     const wrapper = mount(TuButton, {
-      props: { nativeType: 'submit' }
+      props: { type: 'submit' }
     })
     expect(wrapper.attributes('type')).toBe('submit')
   })

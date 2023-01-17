@@ -104,8 +104,8 @@ button/group
 | ghost        | 按钮是否为透明背景 | `boolean`                                                    | `false`     |
 | icon         | 给按钮添加图标     | `string`                                                     | `undefined` |
 | iconPosition | 设置按钮图标的位置 | `'left' \| 'right' `                                         | `'left'`    |
-| type         | 按钮的类型         | `'default' \| 'primary' \| 'success' \| 'warning' \| 'info' \| 'error'` | `'default'` |
-| nativeType   | 原生 type 属性     | `'button' \| 'submit' \| 'reset'`                            | `'button'`  |
+| hue          | 按钮的类型         | `'default' \| 'primary' \| 'success' \| 'warning' \| 'info' \| 'error'` | `'default'` |
+| type         | 原生 type 属性     | `'button' \| 'submit' \| 'reset'`                            | `'button'`  |
 | loading      | 按钮 loading 状态  | `boolean`                                                    | `false`     |
 | disabled     | 按钮禁用状态       | `boolean`                                                    | `false`     |
 | text         | 显示文本按钮       | `boolean`                                                    | `false`     |

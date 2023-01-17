@@ -24,7 +24,7 @@ transition/zoom
 
 ## 滑动
 
-支持交错过渡的滑动渐变
+使用 `mode="out-in"` 添加交错过渡的滑动渐变
 
 ::: demo
 

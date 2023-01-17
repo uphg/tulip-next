@@ -5,11 +5,11 @@ import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
 import { TuExpandTransition } from '../../expand-transition'
 
 const buttonProps = {
-  type: {
+  hue: {
     type: String as PropType<'default' | 'primary' | 'success' | 'warning' | 'info' | 'error'>,
     default: 'default',
     validator: (value: string) => {
-      return [ 'default', 'primary', 'success', 'warning', 'info', 'error' ].includes(value)
+      return ['default', 'primary', 'success', 'warning', 'info', 'error'].includes(value)
     }
   },
   size: {
@@ -26,20 +26,20 @@ const buttonProps = {
       return ['left', 'right'].includes(value)
     }
   },
-  nativeType: {
+  type: {
     type: String as PropType<'button' | 'submit' | 'reset'>,
     default: 'button',
     validator: (value: string) => {
       return ['button', 'submit', 'reset'].includes(value)
     }
   },
-  loading: Boolean,
-  disabled: Boolean,
-  text: Boolean,
-  circle: Boolean,
-  round: Boolean,
-  dashed: Boolean,
-  ghost: Boolean
+  loading: Boolean as PropType<boolean>,
+  disabled: Boolean as PropType<boolean>,
+  text: Boolean as PropType<boolean>,
+  circle: Boolean as PropType<boolean>,
+  round: Boolean as PropType<boolean>,
+  dashed: Boolean as PropType<boolean>,
+  ghost: Boolean as PropType<boolean>
 }
 
 const Button = defineComponent({
@@ -48,12 +48,12 @@ const Button = defineComponent({
   setup(props, context) {
     const buttonRef = ref<Element | null>()
     const waveRef = ref<BaseWaveRef | null>(null)
-    const onClick = () => {
+    const handleClick = () => {
       waveRef.value?.triggerWave()
     }
 
     return () => {
-      const { type, size, text, dashed, ghost, circle, round, disabled, icon, loading, iconPosition, nativeType } = props
+      const { hue, size, text, dashed, ghost, circle, round, disabled, icon, loading, iconPosition, type } = props
       const slots = context.slots
       return (
         <button
@@ -61,7 +61,7 @@ const Button = defineComponent({
           class={[
             'tu-button',
             {
-              [`tu-button--${type}`]: type,
+              [`tu-button--${hue}`]: hue,
               [`tu-button--${size}`]: size,
               'tu-button--text': text,
               'tu-button--dashed': dashed,
@@ -70,9 +70,9 @@ const Button = defineComponent({
               'tu-button--round': round,
             }
           ]}
-          type={nativeType}
+          type={type}
           disabled={disabled}
-          onClick={onClick}
+          onClick={handleClick}
         >
           <TuExpandTransition>
             {icon || loading ? (
