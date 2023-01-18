@@ -3,22 +3,6 @@ import type { ScrollbarProps } from './scrollbarProps'
 import { toPx, withAttrs } from '../../../utils'
 import { useMutationObserver, type useMutationObserverReturn } from '../../../composables/useMutationObserver'
 
-type RenderBarOptions = {
-  onMousedown: (payload: MouseEvent) => void,
-  hidden: boolean
-}
-
-function renderBar(elRef: ShallowRef<HTMLElement | null>, style: StyleValue, options: RenderBarOptions) {
-  const { onMousedown, hidden } = options
-  return (
-    <div
-      ref={elRef} style={style}
-      class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': hidden }]}
-      onMousedown={onMousedown}
-    ></div>
-  )
-}
-
 export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   const container = shallowRef<HTMLElement | null>(null)
   const content = shallowRef<HTMLElement | null>(null)
@@ -257,16 +241,20 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   })
 
   return () => {
-    const YBar = renderBar(
-      trackYBar,
-      { top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) },
-      { onMousedown: handleYScrollMouseDown, hidden: trackYBarHidden.value }
+    const YBar = (
+      <div
+        ref={trackYBar} style={{ top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) }}
+        class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackYBarHidden.value }]}
+        onMousedown={handleYScrollMouseDown}
+      ></div>
     )
 
-    const XBar = renderBar(
-      trackXBar,
-      { left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) },
-      { onMousedown: handleXScrollMouseDown, hidden: trackXBarHidden.value}
+    const XBar = (
+      <div
+        ref={trackXBar} style={{ left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) }}
+        class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackXBarHidden.value }]}
+        onMousedown={handleXScrollMouseDown}
+      ></div>
     )
 
     return (
