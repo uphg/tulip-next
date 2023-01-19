@@ -1,10 +1,6 @@
 import { computed, defineComponent, type PropType } from 'vue'
 import Icon from '../../icon/src/Icon'
-import ArrowLeftRound from '../../../icons/ArrowLeftRound.vue'
-import ArrowRightRound from '../../../icons/ArrowRightRound.vue'
-import ArrowFastRewind from '../../../icons/ArrowFastRewind.vue'
-import ArrowFastForward from '../../../icons/ArrowFastForward.vue'
-import Ellipsis from '../../../icons/Ellipsis.vue'
+import { ArrowLeftRound, ArrowRightRound, ArrowFastRewind, ArrowFastForward, Ellipsis } from '../../../icons'
 
 const paginationProps = {
   current: {

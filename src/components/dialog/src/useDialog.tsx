@@ -1,11 +1,8 @@
+import { createApp, nextTick, ref, h, onMounted, type Component } from 'vue'
 import Dialog from './Dialog'
 import { TuButton } from '../../button/index'
 import { TuIcon } from '../../icon/index'
-import { createApp, nextTick, ref, h, onMounted, type Component } from 'vue'
-import CheckCircle from '../../../icons/CheckCircle.vue'
-import CloseCircle from '../../../icons/CloseCircle.vue'
-import infoCircle from '../../../icons/infoCircle.vue'
-import WarningCircle from '../../../icons/WarningCircle.vue'
+import { CheckCircle, CloseCircle, WarningCircle, InfoCircle } from '../../../icons'
 
 interface DialogOptions {
   icon: Component,
@@ -26,10 +23,10 @@ interface DialogApi {
   [key: string]: (options: DialogTypeOption) => DialogApi
 }
 
-const typeMap = [
+const typeMap: [string, Component][] = [
   ['success', CheckCircle],
   ['warning', WarningCircle],
-  ['info', infoCircle],
+  ['info', InfoCircle],
   ['error', CloseCircle],
 ]
 
@@ -84,7 +81,7 @@ const createDialog = (options: DialogOptions) => {
               h(
                 TuButton,
                 {
-                  type: 'primary',
+                  hue: 'primary',
                   size: 'small',
                   onClick: handleConfirm
                 },

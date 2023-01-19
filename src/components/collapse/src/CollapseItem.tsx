@@ -1,10 +1,9 @@
 import { computed, defineComponent, inject, type Ref } from 'vue'
-import type { CollapseActiveNames } from './types'
 import { collapseInjectionKey, type CollapseContent } from './Collapse'
 import { TuIcon } from '../../icon'
 import { TuCollapseTransition } from '../../collapse-transition'
 import { isNil } from '../../../utils'
-import ArrowRightRoundSmall from '../../../icons/ArrowRightRoundSmall.vue'
+import { ArrowRightRoundSmall } from '../../../icons'
 
 const collapseItemProps = {
   title: [String, Number],
