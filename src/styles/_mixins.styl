@@ -5,8 +5,7 @@ e(n)
 box-border()
   box-sizing border-box
 
-// --- Position
-inset(n)
+insets(n)
   top e(n)
   right e(n)
   bottom e(n)
@@ -54,15 +53,17 @@ mr(n)
 mb(n)
   margin-bottom e(n)
 
-// --- Placeholder
-// placeholder-color(color)
-//   &::placeholder
-//     color color
-//   &::-webkit-input-placeholder
-//     color color
-//   &:-moz-placeholder
-//     color color
-//   &::-moz-placeholder
-//     color color
-//   &:-ms-input-placeholder
-//     color color
+pop-fade(name, el)
+  .{name}-fade-enter-active {
+    animation: pop-overlay-fade-in var(--tu-animation-time);
+    {el} {
+      animation: pop-fade-in var(--tu-animation-time);
+    }
+  }
+
+  .{name}-fade-leave-active {
+    animation: pop-overlay-fade-out var(--tu-animation-time);
+    {el} {
+      animation: pop-fade-out var(--tu-animation-time);
+    }
+  }
