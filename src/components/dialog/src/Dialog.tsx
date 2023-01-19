@@ -89,7 +89,7 @@ export default defineComponent({
       return (
         <Teleport to="body" disabled={props.wrap}>
           <Transition
-            name="dialog-fade"
+            name="tu-dialog-fade"
             onAfterEnter={onAfterEnter}
             onAfterLeave={onAfterLeave}
           >
