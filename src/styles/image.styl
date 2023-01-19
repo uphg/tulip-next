@@ -3,3 +3,26 @@
   &-inner
     width 100%
     height 100%
+
+.tu-image-preview
+  pointer-events all
+  &-container
+    position fixed
+    inset 0
+  &-overlay
+    position absolute
+    inset 0
+    z-index -1
+    background-color rgba(0, 0, 0, 0.35)
+  &-wrapper
+    position absolute
+    inset 0
+    pointer-events none
+    display flex
+    justify-content center
+    align-items center
+    flex-wrap wrap
+
+
+/* --- 动画样式 */
+pop-fade('tu-image', '.tu-image-preview')

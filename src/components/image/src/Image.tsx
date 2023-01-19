@@ -1,4 +1,4 @@
-import { defineComponent, computed, type PropType } from 'vue'
+import { defineComponent, computed, type PropType, Teleport, h, ref,nextTick, onMounted, Transition } from 'vue'
 import { toPx } from '../../../utils'
 
 export const imageProps = {
@@ -24,11 +24,58 @@ const Image = defineComponent({
       width: toPx(props.width)
     }))
 
-    return () => (
-      <div class='tu-image' style={styles.value}>
-        <img class="tu-image-inner" style={{ objectFit: props.objectFit }} src={props.src} alt={props.alt}/>
-      </div>
-    )
+    const previewVisible = ref(false)
+
+    function handleClick() {
+      openPreview()
+    }
+
+    function handleClickOverlay(e: Event) {
+      e.preventDefault()
+      e.stopPropagation()
+      closePreview()
+    }
+
+    function openPreview() {
+      noScrolling()
+      nextTick(() => {})
+      previewVisible.value = true
+    }
+
+    function closePreview() {
+      // scrolling()
+      previewVisible.value = false
+    }
+
+    function noScrolling() {
+      document.documentElement.style.overflow = 'hidden'
+    }
+
+    function scrolling() {
+      document.documentElement.style.overflow = ''
+    }
+
+    return () => {
+      const Image = <img style={{ objectFit: props.objectFit }} src={props.src} alt={props.alt}/>
+      return [
+        <div class='tu-image' style={styles.value} onClick={handleClick}>
+          {h(Image, { class: 'tu-image-inner' })}
+        </div>,
+        <Teleport to="body">
+          <Transition name="tu-image-fade" onAfterLeave={scrolling}>
+            {previewVisible.value ? (
+              <div class='tu-image-preview-container'>
+                <div class="tu-image-preview-overlay" onClick={handleClickOverlay}></div>
+                <div class="tu-image-preview-wrapper">
+                  {h(Image, { class: 'tu-image-preview' })}
+                </div>
+              </div>
+            ) : null}
+          </Transition>
+          
+        </Teleport>
+      ]
+    }
   }
 })
 
