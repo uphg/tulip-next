@@ -8,8 +8,7 @@ const Popover = defineComponent({
   emits: ['update:visible'],
   inheritAttrs: false,
   setup(props, context) {
-    const { render } = usePopover(props, context)
-    return render
+    return usePopover(props, context)
   }
 })
 

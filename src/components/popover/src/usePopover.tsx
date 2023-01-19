@@ -524,44 +524,42 @@ export function usePopover(
     window.removeEventListener('resize', updatePlacement)
   }
 
-  return {
-    render: () => [
-      context.slots?.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
-      props.disabled ? null : (
-        <Teleport to="body">
-          <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
-            {{
-              default: () => visiblePopover.value ? (
-                props.raw
-                  ? context.slots?.content
-                    && (
-                      <div
-                        class="tu-popover"
-                        ref={popoverRef}
-                        style={popoverStyle.value}
-                        {...context.attrs}
-                      >
-                        {context.slots?.content?.({ close })}
-                      </div>
-                    )
-                  : <div
-                      class={['tu-popover tu-popover--default', { [className!]: !!className }]}
+  return () => [
+    context.slots?.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
+    props.disabled ? null : (
+      <Teleport to="body">
+        <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+          {{
+            default: () => visiblePopover.value ? (
+              props.raw
+                ? context.slots?.content
+                  && (
+                    <div
+                      class="tu-popover"
                       ref={popoverRef}
                       style={popoverStyle.value}
                       {...context.attrs}
                     >
-                      <div class="tu-popover__content">{props.content || context.slots?.content?.({ close })}</div>
-                      {props.hideArrow ? null : (
-                        <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
-                          <div class="tu-popover-arrow"></div> 
-                        </div>
-                      )}
+                      {context.slots?.content?.({ close })}
                     </div>
-              ) : null
-            }}
-          </Transition>
-        </Teleport>
-      )
-    ]
-  }
+                  )
+                : <div
+                    class={['tu-popover tu-popover--default', { [className!]: !!className }]}
+                    ref={popoverRef}
+                    style={popoverStyle.value}
+                    {...context.attrs}
+                  >
+                    <div class="tu-popover__content">{props.content || context.slots?.content?.({ close })}</div>
+                    {props.hideArrow ? null : (
+                      <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
+                        <div class="tu-popover-arrow"></div> 
+                      </div>
+                    )}
+                  </div>
+            ) : null
+          }}
+        </Transition>
+      </Teleport>
+    )
+  ]
 }
