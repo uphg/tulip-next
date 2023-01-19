@@ -10,8 +10,8 @@
     <div class="dialog-block">
       <p>我是自定义内容</p>
       <div class="dialog-options">
-        <tu-button type="info" @click="close">关闭</tu-button>
-        <tu-button type="success" @click="close">确认</tu-button>
+        <tu-button hue="info" @click="close">关闭</tu-button>
+        <tu-button hue="success" @click="close">确认</tu-button>
       </div>
     </div>
   </tu-dialog>

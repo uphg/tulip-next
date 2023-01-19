@@ -8,7 +8,7 @@
     <p>和少年的心气</p>
     <template #footer>
       <tu-button size="small" @click="close">取消</tu-button>
-      <tu-button type="primary" size="small" @click="close">确定</tu-button>
+      <tu-button hue="primary" size="small" @click="close">确定</tu-button>
     </template>
   </tu-dialog>
 </template>

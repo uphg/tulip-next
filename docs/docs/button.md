@@ -12,9 +12,6 @@ button/base
 
 :::
 
-<div class="tu-collapse-transition--active"></div>
-
-
 ## 大小
 
 按钮有三种大小。

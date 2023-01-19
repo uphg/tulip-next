@@ -23,6 +23,7 @@ export const sidebar = {
         { text: 'Grid 栅格', link: '/docs/grid' },
         { text: 'Tooltip 提示', link: '/docs/tooltip' },
         { text: 'Ellipsis 文本省略', link: '/docs/ellipsis' },
+        { text: 'Scrollbar 滚动条', link: '/docs/scrollbar' },
       ]
     }
   ]
