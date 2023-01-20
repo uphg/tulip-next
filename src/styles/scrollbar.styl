@@ -27,10 +27,11 @@ $base = ".tu-scrollbar"
 
 {$base}-track
   position absolute
-  pointer-events all
+  pointer-events none
   user-select none // 禁止选择内部文字，造成滚动条抬起失效的 bug 
 
   &__scrollbar
+    pointer-events all
     cursor pointer
     position absolute
     background-color rgba(0, 0, 0, 0.25)

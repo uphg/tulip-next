@@ -1,23 +1,22 @@
-import { computed, onBeforeUnmount, onMounted, ref, shallowRef, h, Transition, vShow, withDirectives, nextTick, type PropType, type ShallowRef, type StyleValue, type SetupContext } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, Transition, vShow, withDirectives, type SetupContext } from 'vue'
 import type { ScrollbarProps } from './scrollbarProps'
 import { toPx, withAttrs } from '../../../utils'
-import { useMutationObserver, type useMutationObserverReturn } from '../../../composables/useMutationObserver'
+import { useResizeObserver, type UseResizeObserverReturn } from '../../../composables/useResizeObserver'
 
 export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
-  const container = shallowRef<HTMLElement | null>(null)
-  const content = shallowRef<HTMLElement | null>(null)
-  const trackY = shallowRef<HTMLElement | null>(null)
-  const trackX = shallowRef<HTMLElement | null>(null)
-  const trackYBar = shallowRef<HTMLElement | null>(null)
-  const trackXBar = shallowRef<HTMLElement | null>(null)
-  
+  const container = ref<HTMLElement | null>(null)
+  const content = ref<HTMLElement | null>(null)
+  const trackY = ref<HTMLElement | null>(null)
+  const trackX = ref<HTMLElement | null>(null)
+
   const containerScrollTop = ref(0)
   const containerScrollLeft = ref(0)
   const trackScrollTop = ref(0)
   const trackScrollLeft = ref(0)
   const trackYBarSize = ref(0)
   const trackXBarSize = ref(0)
-  const contentListener = ref<useMutationObserverReturn | null>(null)
+
+  const contentListener = ref<UseResizeObserverReturn | null>(null)
   const hover = ref(false)
   const xBarPressed = ref(false)
   const yBarPressed = ref(false)
@@ -26,10 +25,10 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   let memoXLeft = 0
   let memoMouseY = 0
   let memoMouseX = 0
-
+  
+  const triggerisNont = computed(() => props.trigger === 'none')
   const trackYBarHidden = computed(() => trackYBarSize.value >= withAttrs(trackY.value).offsetHeight)
   const trackXBarHidden = computed(() => trackXBarSize.value >= withAttrs(trackX.value).offsetWidth)
-  const triggerisNont = computed(() => props.trigger === 'none')
 
   function handleScroll(e: Event) {
     props.onScroll?.(e)
@@ -57,8 +56,21 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
       return
     }
     // Old: (containerHeight / contentHeight) * trackYHeight
-    const newBarSize = Math.min(trackYHeight, (containerHeight! * trackYHeight) / contentHeight)
+    const newBarSize = Math.min(trackYHeight, (containerHeight * trackYHeight) / contentHeight)
     trackYBarSize.value = newBarSize
+  }
+
+  function updateXBarSize() {
+    const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
+    const { offsetWidth: contentWidth } = withAttrs(content.value)
+    const { offsetWidth: containerWidth } = withAttrs(container.value)
+    if (contentWidth === 0 || containerWidth === 0) {
+      trackXBarSize.value = 0
+      return
+    }
+
+    // Old: (containerWidth / contentWidth) * trackXWidth
+    trackXBarSize.value = Math.min(trackXWidth, (containerWidth * trackXWidth) / contentWidth)
   }
 
   function updateTrackYScrollTop() {
@@ -72,15 +84,13 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     const { offsetHeight: trackYHeight } = withAttrs(trackY.value)
     const heightDiff = contentHeight! - containerHeight
     const rawRailScrollTop = (containerScrollTop.value / heightDiff) * (trackYHeight - trackYBarSize.value)
-    const newBarHeight = containerHeight / contentHeight * trackYHeight
-    const trackYUpperBound = trackYHeight - newBarHeight
+    const newYBarHeight = containerHeight / contentHeight * trackYHeight
+    const trackYUpperBound = trackYHeight - newYBarHeight
 
     // 修复滚动条滚动距离过大的 bug
-    trackScrollTop.value = rawRailScrollTop > trackYUpperBound
+    trackScrollTop.value = Math.max(0, rawRailScrollTop > trackYUpperBound
       ? trackYUpperBound
-      : rawRailScrollTop < 0
-        ? 0
-        : rawRailScrollTop
+      : rawRailScrollTop)
   }
 
   function handleYScrollMouseDown(e: MouseEvent) {
@@ -95,12 +105,11 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     if (!yBarPressed.value) return
 
     const { offsetHeight: trackYHeight } = withAttrs(trackY.value)
-    const { offsetHeight: trackYBarHeight } = withAttrs(trackYBar.value)
     const { offsetHeight: contentHeight } = withAttrs(content.value)
     const { offsetHeight: containerHeight } = withAttrs(container.value)
 
     const moveSize = e.clientY - memoMouseY
-    const top = moveSize * (contentHeight - containerHeight) / (trackYHeight - trackYBarHeight)
+    const top = moveSize * (contentHeight - containerHeight) / (trackYHeight - trackYBarSize.value)
 
     const scrollTopUpperBound = contentHeight - containerHeight
     const rawScrollTop = memoYTop + top
@@ -119,19 +128,6 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     document.removeEventListener('mouseup', handleYScrollMouseUp)
   }
 
-  function updateXBarSize() {
-    const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
-    const { offsetWidth: contentWidth } = withAttrs(content.value)
-    const { offsetWidth: containerWidth } = withAttrs(container.value)
-    if (contentWidth === 0 || containerWidth === 0) {
-      trackXBarSize.value = 0
-      return
-    }
-
-    // Old: (containerWidth / contentWidth) * trackXWidth
-    trackXBarSize.value = Math.min(trackXWidth, (containerWidth * trackXWidth) / contentWidth)
-  }
-
   function updateTrackXScrollLeft() {
     const { offsetWidth: contentWidth } = withAttrs(content.value)
     const { offsetWidth: containerWidth } = withAttrs(container.value)
@@ -142,15 +138,13 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
     const widthDiff = contentWidth - containerWidth
     const rawRailScrollLeft = (containerScrollLeft.value / widthDiff) * (trackXWidth - trackXBarSize.value)
-    const newBarWidth = containerWidth / contentWidth * trackXWidth
-    const trackXUpperBound = trackXWidth - newBarWidth
+    const newXBarWidth = containerWidth / contentWidth * trackXWidth
+    const trackXUpperBound = trackXWidth - newXBarWidth
 
     // 修复滚动条滚动距离过大的 bug
-    trackScrollLeft.value = rawRailScrollLeft > trackXUpperBound
+    trackScrollLeft.value = Math.max(0, rawRailScrollLeft > trackXUpperBound
       ? trackXUpperBound
-      : rawRailScrollLeft < 0
-        ? 0
-        : rawRailScrollLeft
+      : rawRailScrollLeft)
   }
 
   function handleXScrollMouseDown(e: MouseEvent) {
@@ -164,12 +158,11 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   function handleXScrollMouseMove(e: MouseEvent) {
     if (!xBarPressed.value) return
     const { offsetWidth: trackXWidth } = withAttrs(trackX.value)
-    const { offsetWidth: trackXBarWidth } = withAttrs(trackXBar.value)
     const { offsetWidth: contentWidth } = withAttrs(content.value)
     const { offsetWidth: containerWidth } = withAttrs(container.value)
 
     const moveSize = e.clientX - memoMouseX
-    const left = moveSize * (contentWidth - containerWidth) / (trackXWidth - trackXBarWidth)
+    const left = moveSize * (contentWidth - containerWidth) / (trackXWidth - trackXBarSize.value)
 
     const rawScrollLeft = memoXLeft + left
     const scrollLeftUpperBound = contentWidth - containerWidth
@@ -223,9 +216,9 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
 
   onMounted(() => {
     updateBarSize()
-    contentListener.value = useMutationObserver(content, () => {
+    contentListener.value = useResizeObserver(content, () => {
       update()
-    }, { attributes: true, childList: true, subtree: true })
+    })
   })
 
   onBeforeUnmount(() => {
@@ -243,16 +236,20 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   return () => {
     const YBar = (
       <div
-        ref={trackYBar} style={{ top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) }}
-        class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackYBarHidden.value }]}
+        style={{ top: toPx(trackScrollTop.value), height: toPx(trackYBarSize.value) }}
+        class={['tu-scrollbar-track__scrollbar', {
+          'tu-scrollbar-track__scrollbar--hidden': trackYBarHidden.value
+        }]}
         onMousedown={handleYScrollMouseDown}
       ></div>
     )
 
     const XBar = (
       <div
-        ref={trackXBar} style={{ left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) }}
-        class={['tu-scrollbar-track__scrollbar', { 'tu-scrollbar-track__scrollbar--hidden': trackXBarHidden.value }]}
+        style={{ left: toPx(trackScrollLeft.value), width: toPx(trackXBarSize.value) }}
+        class={['tu-scrollbar-track__scrollbar', {
+          'tu-scrollbar-track__scrollbar--hidden': trackXBarHidden.value
+        }]}
         onMousedown={handleXScrollMouseDown}
       ></div>
     )

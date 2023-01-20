@@ -1,4 +1,4 @@
-import { isRef, type Ref } from 'vue'
+import { isRef, watch, type Ref } from 'vue'
 import { defaultWindow, type ConfigurableWindow } from '../configurable'
 
 interface UseMutationObserverOptions extends MutationObserverInit, ConfigurableWindow { } 
@@ -15,22 +15,33 @@ export function useMutationObserver(
   let observer: MutationObserver | undefined
   const target = isRef<MaybeElement>(_target) ? _target.value : _target
 
-  cleanup()
+  const stopWatch = watch(
+    () => target,
+    (el: MaybeElement) => {
+      cleanup()
 
-  if (window && target) {
-    observer = new MutationObserver(callback)
-    observer!.observe(target as HTMLElement, mutationOptions)
-  }
+      if (window && el) {
+        observer = new MutationObserver(callback)
+        observer.observe(el, mutationOptions)
+      }
+    },
+    { immediate: true }
+  )
 
   function cleanup() {
     if (observer) {
       observer.disconnect()
-      observer = undefined
+      observer = void 0
     }
   }
 
+  function stop() {
+    cleanup()
+    stopWatch()
+  }
+
   return {
-    stop: cleanup,
+    stop: stop,
     observer
   }
 }
