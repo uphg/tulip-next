@@ -1,4 +1,4 @@
-import { defineComponent, computed, type PropType, Teleport, h, ref,nextTick, onMounted, Transition, provide, inject, type Ref, readonly } from 'vue'
+import { defineComponent, computed, type PropType, Teleport, ref, Transition, inject } from 'vue'
 import { TuBaseIcon } from '../../base-icon'
 import { ArrowPrevious, ArrowNext, ArrowClockwise, ArrowCounterclockwise, MagnifierMinus, MagnifierPlus, ExpandOutlined, Close } from '../../../icons'
 import type { ImageGroupHandle } from './ImageGroup'
@@ -30,6 +30,7 @@ const ImagePreview = defineComponent({
     const index = ref(0)
     const scaleType = ref<ScaleType>(3)
     const rotate = ref(0)
+    const key = ref(0)
     const previewSrc = computed(() => {
       if (!imageGroupHandle) return (props.previewSrc || props.src)
       const { images, active } = imageGroupHandle
@@ -74,12 +75,14 @@ const ImagePreview = defineComponent({
     }
 
     function prevImage() {
+      key.value = key.value === 1 ? 0 : 1
       resetImage()
       const { setActive, active, images } = imageGroupHandle!
       setActive(active.value === 0 ? (images.value.length - 1) : active.value - 1)
     }
 
     function nextImage() {
+      key.value = key.value === 1 ? 0 : 1
       resetImage()
       const { setActive, active, images } = imageGroupHandle!
       setActive(active.value === (images.value.length - 1) ? 0 : active.value + 1)
@@ -106,15 +109,18 @@ const ImagePreview = defineComponent({
       setImages(length, src)
     }
 
+    function onEnter(el: Element) {
+    }
+
     updateImageGroup()
 
     return () => (
       <Teleport to="body">
-        <Transition name="tu-image-fade" onBeforeEnter={handleBeforeEnter} onAfterLeave={handleAfterLeave}>
+        <Transition name="tu-image-fade" onBeforeEnter={handleBeforeEnter} onEnter={onEnter} onAfterLeave={handleAfterLeave}>
           {props.visible ? (
             <div class='tu-image-preview-container'>
               <div class="tu-image-preview-overlay" onClick={handleClickOverlay}></div>
-              <div key={`${previewSrc.value}-${index.value}`} class="tu-image-preview-wrapper">
+              <div key={key.value} class="tu-image-preview-wrapper">
                 <img class="tu-image-preview"
                   style={{ transform: `rotate(${rotate.value}deg) scale(${[scaleMap[scaleType.value]]})` }}
                   src={previewSrc.value}
