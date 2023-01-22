@@ -5,7 +5,10 @@
     height 100%
 
 .tu-image-preview
+  transition transform 0.25s
   pointer-events all
+  max-height calc(100vh - 32px)
+  max-width calc(100vw - 32px)
   &-container
     position fixed
     inset 0
@@ -22,7 +25,33 @@
     justify-content center
     align-items center
     flex-wrap wrap
+  &-toolbar
+    height 48px
+    border-radius 24px
+    background-color rgba(0, 0, 0, 0.35)
+    position absolute
+    left 50%
+    bottom 36px
+    transform translateX(-50%)
+    padding 0 12px
+    display flex
+    align-items center
+    user-select none
+    color rgba(255, 255, 255, 0.9);
+    .tu-base-icon
+      cursor pointer
+      width 28px
+      height 28px
+      padding 0 8px
 
 
 /* --- 动画样式 */
-pop-fade('tu-image', '.tu-image-preview')
+pop-fade('tu-image', '.tu-image-preview-wrapper')
+
+// .tu-image-preview-fade-enter-active {
+//   animation: pop-fade-in var(--tu-animation-time);
+// }
+
+// .tu-image-preview-fade-leave-active {
+//   animation: pop-fade-out var(--tu-animation-time);
+// }

@@ -16,6 +16,7 @@ import { TuEllipsis } from './ellipsis'
 import { TuCollapse, TuCollapseItem } from './collapse'
 import { TuScrollbar } from './scrollbar'
 import { TuImage } from './image'
+import { TuImageGroup } from './image'
 
 const components = [
   TuButton,
@@ -39,7 +40,8 @@ const components = [
   TuCollapse,
   TuCollapseItem,
   TuScrollbar,
-  TuImage
+  TuImage,
+  TuImageGroup
 ]
 
 const { install } = makeInstaller(components)
@@ -66,6 +68,7 @@ export {
   TuCollapseItem,
   TuScrollbar,
   TuImage,
+  TuImageGroup,
 
   // utils
   useDialog,
