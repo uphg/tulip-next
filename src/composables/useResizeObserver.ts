@@ -1,19 +1,17 @@
-import { isRef, watch, type Ref } from 'vue'
+import { watch } from 'vue'
 import { defaultWindow, type ConfigurableWindow } from '../configurable'
+import { unrefElement, type MaybeComputedElementRef } from './unrefElement'
 
-interface UseResizeObserverOptions extends ResizeObserverOptions, ConfigurableWindow { } 
-type MaybeElement = HTMLElement | SVGElement | undefined | null
-
+export interface UseResizeObserverOptions extends ResizeObserverOptions, ConfigurableWindow { } 
 export type UseResizeObserverReturn = ReturnType<typeof useResizeObserver>
 
 export function useResizeObserver(
-  _target: MaybeElement | Ref<MaybeElement>,
+  target: MaybeComputedElementRef,
   callback: ResizeObserverCallback,
   options: UseResizeObserverOptions = {},
 ) {
   const { window = defaultWindow, ...observerOptions } = options
   let observer: ResizeObserver | undefined
-  const target = isRef<MaybeElement>(_target) ? _target.value : _target
 
   const cleanup = () => {
     if (observer) {
@@ -23,8 +21,8 @@ export function useResizeObserver(
   }
 
   const stopWatch = watch(
-    () => target,
-    (el) => {
+    () => unrefElement(target),
+    (el: Element | undefined) => {
       cleanup()
 
       if (window && el) {

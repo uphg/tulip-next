@@ -1,4 +1,4 @@
-import type { Plugin } from 'vue'
+import type { Plugin, Ref } from 'vue'
 
 export type ValueOf<T> = T[keyof T]
 

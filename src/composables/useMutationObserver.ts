@@ -1,5 +1,7 @@
-import { isRef, watch, type Ref } from 'vue'
+import type { MaybeElementRef } from '../types'
+import { isRef, watch } from 'vue'
 import { defaultWindow, type ConfigurableWindow } from '../configurable'
+import { unrefElement } from './unrefElement'
 
 interface UseMutationObserverOptions extends MutationObserverInit, ConfigurableWindow { } 
 type MaybeElement = HTMLElement | SVGElement | undefined | null
@@ -7,17 +9,16 @@ type MaybeElement = HTMLElement | SVGElement | undefined | null
 export type useMutationObserverReturn = ReturnType<typeof useMutationObserver>
 
 export function useMutationObserver(
-  _target: MaybeElement | Ref<MaybeElement>,
+  target: MaybeElementRef,
   callback: MutationCallback,
   options: UseMutationObserverOptions = {},
 ) {
   const { window = defaultWindow, ...mutationOptions } = options
   let observer: MutationObserver | undefined
-  const target = isRef<MaybeElement>(_target) ? _target.value : _target
 
   const stopWatch = watch(
-    () => target,
-    (el: MaybeElement) => {
+    () => unrefElement(target),
+    (el: Element | undefined) => {
       cleanup()
 
       if (window && el) {

@@ -17,6 +17,8 @@ import { TuCollapse, TuCollapseItem } from './collapse'
 import { TuScrollbar } from './scrollbar'
 import { TuImage } from './image'
 import { TuImageGroup } from './image'
+import { TuDraggable } from './draggable'
+import { useDraggable } from '../composables/useDraggable'
 
 const components = [
   TuButton,
@@ -41,7 +43,8 @@ const components = [
   TuCollapseItem,
   TuScrollbar,
   TuImage,
-  TuImageGroup
+  TuImageGroup,
+  TuDraggable
 ]
 
 const { install } = makeInstaller(components)
@@ -69,8 +72,10 @@ export {
   TuScrollbar,
   TuImage,
   TuImageGroup,
+  TuDraggable,
 
   // utils
   useDialog,
+  useDraggable,
   install
 }
