@@ -1,6 +1,6 @@
 import { h, ref, type VNodeRef, nextTick, computed, watch, Teleport, Transition, type SetupContext, toRef, onMounted } from 'vue'
 import type { PopoverProps } from './popoverProps'
-import { getRelativeDOMPosition, toNumber } from '../../../utils'
+import { getRelativeDOMPosition, toNumber, withAttrs } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 
 type UsePopoverOptions = {
@@ -23,7 +23,7 @@ export function usePopover(
   options?: UsePopoverOptions
 ) {
   const className = options?.className
-  const { getZIndex } = useMaxZIndex(window) || {}
+  const zIndex = useMaxZIndex()
   const on = {
     hover: { onMouseover },
     click: { onClick },
@@ -37,7 +37,7 @@ export function usePopover(
   const mousedown = ref(false)
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
-  const zIndex = ref(2000)
+  // const zIndex = ref(2000)
   const doc = ref({ top: 0, left: 0 })
   const popoverStyle = ref({})
   const arrowStyle = ref({})
@@ -51,7 +51,6 @@ export function usePopover(
 
   function open() {
     doc.value = getRelativeDOMPosition(triggerEl.value)
-    zIndex.value = getZIndex?.() || 2000
     loadDomEventListener()
     updateVisible(true)
   }
@@ -151,9 +150,8 @@ export function usePopover(
 
   function updatePopoverStyle() {
     const style = getPopoverPosition(_placement.value)
-
     popoverStyle.value = {
-      zIndex: zIndex.value || 2000,
+      zIndex: zIndex.value,
       top: `${style.top}px`,
       left: `${style.left}px`
     }
@@ -165,13 +163,14 @@ export function usePopover(
 
   function getPopoverToViewPosition(type: PopoverProps['placement']) {
     const style = getPopoverPosition(type)
-    const { scrollTop, scrollLeft } = document.documentElement
+    const { scrollTop, scrollLeft, offsetWidth: docWidth, offsetHeight: docHeight } = document.documentElement
+    const { offsetHeight: popoverHeight, offsetWidth: popoverWidth } = withAttrs(popoverRef.value)
 
     return {
       top: style.top - scrollTop,
       left: style.left - scrollLeft,
-      bottom: document.documentElement.offsetHeight - (style.top - scrollTop + popoverRef.value.offsetHeight),
-      right: document.documentElement.offsetWidth - (style.left - scrollLeft + popoverRef.value.offsetWidth),
+      right: docWidth - (style.left - scrollLeft + popoverWidth),
+      bottom: docHeight - (style.top - scrollTop + popoverHeight),
     }
   }
 
@@ -514,14 +513,20 @@ export function usePopover(
     }
   }
 
+  function handleDomResize() {
+    doc.value = getRelativeDOMPosition(triggerEl.value)
+    updatePopoverStyle()
+    updatePlacement()
+  }
+
   function loadDomEventListener() {
     document.addEventListener('scroll', updatePlacement)
-    window.addEventListener('resize', updatePlacement)
+    window.addEventListener('resize', handleDomResize)
   }
 
   function unloadDomEventListener() {
     document.removeEventListener('scroll', updatePlacement)
-    window.removeEventListener('resize', updatePlacement)
+    window.removeEventListener('resize', handleDomResize)
   }
 
   return () => [
