@@ -16,4 +16,3 @@ export default defineConfig({
     config: (md) => mdPlugin(md),
   }
 })
-
