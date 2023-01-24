@@ -1,11 +1,10 @@
-import type { MaybeElementRef } from '../types'
-import { isRef, watch } from 'vue'
-import { defaultWindow, type ConfigurableWindow } from '../configurable'
+import { watch } from 'vue'
 import { unrefElement } from './unrefElement'
+import { tryOnScopeDispose } from './tryOnScopeDispose'
+import { defaultWindow, type ConfigurableWindow } from '../configurable'
+import type { MaybeElementRef } from '../types'
 
 interface UseMutationObserverOptions extends MutationObserverInit, ConfigurableWindow { } 
-type MaybeElement = HTMLElement | SVGElement | undefined | null
-
 export type useMutationObserverReturn = ReturnType<typeof useMutationObserver>
 
 export function useMutationObserver(
@@ -40,6 +39,8 @@ export function useMutationObserver(
     cleanup()
     stopWatch()
   }
+
+  tryOnScopeDispose(stop)
 
   return {
     stop: stop,

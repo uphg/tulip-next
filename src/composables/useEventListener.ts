@@ -2,6 +2,7 @@ import { unref, watch } from 'vue'
 import { isArray } from '../utils'
 import type { Arrayable, MaybeComputedRef, MaybeElementRef, VueInstance } from '../types'
 import { unrefElement } from './unrefElement'
+import { tryOnScopeDispose } from './tryOnScopeDispose'
 
 export type UseEventListenerReturn = ReturnType<typeof useEventListener>
 
@@ -44,6 +45,8 @@ export function useEventListener(
     stopWatch()
     cleanup()
   }
+
+  tryOnScopeDispose(stop)
 
   return stop
 }

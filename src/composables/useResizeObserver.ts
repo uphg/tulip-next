@@ -1,5 +1,6 @@
 import { watch } from 'vue'
 import { defaultWindow, type ConfigurableWindow } from '../configurable'
+import { tryOnScopeDispose } from './tryOnScopeDispose'
 import { unrefElement, type MaybeComputedElementRef } from './unrefElement'
 
 export interface UseResizeObserverOptions extends ResizeObserverOptions, ConfigurableWindow { } 
@@ -38,6 +39,8 @@ export function useResizeObserver(
     cleanup()
     stopWatch()
   }
+
+  tryOnScopeDispose(stop)
 
   return {
     stop,

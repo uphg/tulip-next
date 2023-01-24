@@ -6,7 +6,7 @@ export function useTriggerWave() {
   const selfRef = ref<HTMLElement | null>(null)
   let animationTimerId: number | null = null
 
-  const destroyTimeout = () => {
+  const stop = () => {
     isWave.value = false
     typeof animationTimerId === 'number' && window.clearTimeout(animationTimerId)
     animationTimerId = null
@@ -14,14 +14,14 @@ export function useTriggerWave() {
 
   const triggerWave = () => {
     if (isWave.value) {
-      destroyTimeout()
+      stop()
     }
     nextTick(() => {
-      // 刷新
+      // 刷新 DOM
       void selfRef.value?.offsetHeight
       isWave.value = true
       animationTimerId = window.setTimeout(() => {
-        destroyTimeout()
+        stop()
       }, 1000)
     })
   }

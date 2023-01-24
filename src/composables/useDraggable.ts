@@ -6,6 +6,7 @@ import { defaultWindow } from '../configurable'
 import { toRefs } from './toRefs'
 import type { Position, MaybeElementRef, MaybeElement, Fn } from '../types'
 import {  } from 'fs'
+import { tryOnScopeDispose } from './tryOnScopeDispose'
 
 type UseDraggableOptions = {
   initialValue?: Position,
@@ -38,14 +39,14 @@ export function useDraggable(target: MaybeElementRef, options?: UseDraggableOpti
     pressedDelta.value = void 0
   }
 
+  function stop() {
+    cleanups.forEach(fn => fn())
+  }
+
   if (isClient) {
     cleanups[0] = useEventListener(target, 'pointerdown', start)
     cleanups[1] = useEventListener(draggingElement, 'pointermove', move)
     cleanups[2] = useEventListener(draggingElement, 'pointerup', end)
-  }
-
-  function cleanup() {
-    cleanups.forEach(fn => fn())
   }
 
   return {
@@ -53,6 +54,6 @@ export function useDraggable(target: MaybeElementRef, options?: UseDraggableOpti
     position,
     isDragging: computed(() => !!pressedDelta.value),
     style: computed(() => ({ left: `${position.value.x}px`, top: `${position.value.y}px` })),
-    cleanup
+    stop
   }
 }

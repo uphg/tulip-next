@@ -1,23 +1,33 @@
+import { defaultWindow } from '../configurable'
+import { customRef } from 'vue'
 import { isClient } from '../utils'
+import { tryOnScopeDispose } from './tryOnScopeDispose'
 
 const zIndexKey = Symbol('Maximum z-index')
 
 export interface MaxZIndex extends Window {
-  [zIndexKey]: number
+  [zIndexKey]: number | undefined
 }
 
-export function useMaxZIndex(window: Window, initial = 2000) {
-  if (isClient) return {}
-  if (!(window as MaxZIndex)[zIndexKey]) {
-    (window as MaxZIndex)[zIndexKey] = initial
+export function useMaxZIndex(initialValue = 2000, window?: Window) {
+  const global = defaultWindow as (MaxZIndex | undefined)
+
+  if (isClient && !global?.[zIndexKey]) {
+    global![zIndexKey] = initialValue
   }
 
-  return {
-    getZIndex() {
-      return ++(window as MaxZIndex)[zIndexKey]
-    },
-    setZIndex(value: number) {
-      (window as MaxZIndex)[zIndexKey] = value
-    }
+  function stop() {
+    global![zIndexKey] = void 0
   }
+
+  tryOnScopeDispose(stop)
+
+  return customRef(() => ({
+    get() {
+      return ++global![zIndexKey]!
+    },
+    set(newValue) {
+      global![zIndexKey] = newValue
+    }
+  }))
 }
