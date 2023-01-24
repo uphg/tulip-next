@@ -1,9 +1,11 @@
-import { computed, ref, toRef } from 'vue'
+import { computed, ref, toRef, watch, type Ref, type ToRefs } from 'vue'
 import { useEventListener } from './useEventListener'
 import { resolveUnref } from './resolveUnref'
 import { isClient } from '../utils'
 import { defaultWindow } from '../configurable'
+import { toRefs } from './toRefs'
 import type { Position, MaybeElementRef, MaybeElement, Fn } from '../types'
+import {  } from 'fs'
 
 type UseDraggableOptions = {
   initialValue?: Position,
@@ -47,9 +49,9 @@ export function useDraggable(target: MaybeElementRef, options?: UseDraggableOpti
   }
 
   return {
-    x: toRef(position.value, 'x'),
-    y: toRef(position.value, 'y'),
+    ...toRefs(position),
     position,
+    isDragging: computed(() => !!pressedDelta.value),
     style: computed(() => ({ left: `${position.value.x}px`, top: `${position.value.y}px` })),
     cleanup
   }

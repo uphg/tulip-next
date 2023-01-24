@@ -12,11 +12,11 @@ const Draggable = defineComponent({
   props: draggableProps,
   setup(props, context) {
     const drag = ref<HTMLElement | null>(null)
-    const { style } = useDraggable(drag, props)
+    const { x, y, style } = useDraggable(drag, props)
 
     return () => (
-      <div ref={drag} class="tu-draggable" style={style.value}>
-        {context.slots.default?.()}
+      <div ref={drag} class="tu-draggable" style={{ touchAction: 'none', ...style.value }}>
+        {context.slots.default?.({ x, y })}
       </div>
     )
   }

@@ -1,5 +1,7 @@
 import type { ComponentPublicInstance, ComputedRef, Ref } from 'vue'
 
+export type ObjectLike<T extends unknown = unknown> = Record<string | number | symbol, T>
+
 export type Fn = () => void
 
 export interface Position {

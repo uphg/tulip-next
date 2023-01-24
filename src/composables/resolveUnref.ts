@@ -1,6 +1,7 @@
 import { unref } from 'vue'
-import type { MaybeComputedRef } from '../types'
+import type { Fn, MaybeComputedRef } from '../types'
+import { isFunction } from '../utils'
 
 export function resolveUnref<T>(value: MaybeComputedRef<T>): T {
-  return typeof value === 'function' ? (value as Function)() : unref(value)
+  return isFunction(value) ? (value as Function)() : unref(value)
 }
