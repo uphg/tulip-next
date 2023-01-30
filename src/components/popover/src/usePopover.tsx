@@ -38,7 +38,7 @@ export function usePopover(
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
   // const zIndex = ref(2000)
-  const doc = ref({ top: 0, left: 0 })
+  const dom = ref({ top: 0, left: 0 })
   const popoverStyle = ref({})
   const arrowStyle = ref({})
   const arrowClass = ref({})
@@ -50,7 +50,7 @@ export function usePopover(
   props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
 
   function open() {
-    doc.value = getRelativeDOMPosition(triggerEl.value)
+    dom.value = getRelativeDOMPosition(triggerEl.value)
     loadDomEventListener()
     updateVisible(true)
   }
@@ -138,8 +138,7 @@ export function usePopover(
   }
 
   function onEnter() {
-    updatePlacement()
-    updatePopoverStyle()
+    update()
   } 
 
   function onAfterLeave() {
@@ -163,74 +162,76 @@ export function usePopover(
 
   function getPopoverToViewPosition(type: PopoverProps['placement']) {
     const style = getPopoverPosition(type)
-    const { scrollTop, scrollLeft, offsetWidth: docWidth, offsetHeight: docHeight } = document.documentElement
+    const { scrollTop, scrollLeft, offsetWidth: domWidth, offsetHeight: domHeight } = document.documentElement
     const { offsetHeight: popoverHeight, offsetWidth: popoverWidth } = withAttrs(popoverRef.value)
 
     return {
       top: style.top - scrollTop,
       left: style.left - scrollLeft,
-      right: docWidth - (style.left - scrollLeft + popoverWidth),
-      bottom: docHeight - (style.top - scrollTop + popoverHeight),
+      right: domWidth - (style.left - scrollLeft + popoverWidth),
+      bottom: domHeight - (style.top - scrollTop + popoverHeight),
     }
   }
 
   function getPopoverPosition(type: PopoverProps['placement']) {
-    const trigger = triggerEl.value as HTMLElement
-    const popover = popoverRef.value as HTMLElement
-    const { top, left } = doc.value
-    const topToTop = top - popover?.offsetHeight - toNumber(props.space)
-    const leftToLeft = left - popover?.offsetWidth - toNumber(props.space)
-    const rightToLeft = left + trigger?.offsetWidth + toNumber(props.space)
-    const bottomToTop = top + trigger?.offsetHeight + toNumber(props.space)
+    const popoverMargin = toNumber(props.space)
+    const { top: domTop, left: domLeft } = dom.value
+    const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(triggerEl.value as HTMLElement)
+    const { offsetHeight: popoverHeight, offsetWidth: popoverWidth } = withAttrs(popoverRef.value as HTMLElement)
+
+    const topToTop = domTop - popoverHeight - popoverMargin
+    const leftToLeft = domLeft - popoverWidth - popoverMargin
+    const bottomToTop = domTop + triggerHeight + popoverMargin
+    const rightToLeft = domLeft + triggerWidth + popoverMargin
 
     const placementMap = {
       'top-start': {
         top: topToTop,
-        left: left
+        left: domLeft
       },
       'top': {
         top: topToTop,
-        left: left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2
+        left: domLeft + triggerWidth / 2 - popoverWidth / 2
       },
       'top-end': {
         top: topToTop,
-        left: left + trigger?.offsetWidth - popover?.offsetWidth
+        left: domLeft + triggerWidth - popoverWidth
       },
       'left-start': {
-        top: top,
+        top: domTop,
         left: leftToLeft
       },
       'left': {
-        top: top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2 ,
+        top: domTop + triggerHeight / 2 - popoverHeight / 2 ,
         left: leftToLeft
       },
       'left-end': {
-        top: top + trigger?.offsetHeight - popover?.offsetHeight ,
+        top: domTop + triggerHeight - popoverHeight ,
         left: leftToLeft
       },
       'right-start': {
-        top: top,
+        top: domTop,
         left: rightToLeft
       },
       'right': {
-        top: top + trigger?.offsetHeight / 2 - popover?.offsetHeight / 2,
+        top: domTop + triggerHeight / 2 - popoverHeight / 2,
         left: rightToLeft
       },
       'right-end': {
-        top: top + trigger?.offsetHeight - popover?.offsetHeight,
+        top: domTop + triggerHeight - popoverHeight,
         left: rightToLeft
       },
       'bottom-start': {
         top: bottomToTop,
-        left: left
+        left: domLeft
       },
       'bottom': {
         top: bottomToTop,
-        left: left + trigger?.offsetWidth / 2 - popover?.offsetWidth / 2
+        left: domLeft + triggerWidth / 2 - popoverWidth / 2
       },
       'bottom-end': {
         top: bottomToTop,
-        left: left + trigger?.offsetWidth - popover?.offsetWidth
+        left: domLeft + triggerWidth - popoverWidth
       }
     }
 
@@ -514,9 +515,8 @@ export function usePopover(
   }
 
   function handleDomResize() {
-    doc.value = getRelativeDOMPosition(triggerEl.value)
-    updatePopoverStyle()
-    updatePlacement()
+    dom.value = getRelativeDOMPosition(triggerEl.value)
+    update()
   }
 
   function loadDomEventListener() {
@@ -528,6 +528,13 @@ export function usePopover(
     document.removeEventListener('scroll', updatePlacement)
     window.removeEventListener('resize', handleDomResize)
   }
+
+  function update() {
+    updatePopoverStyle()
+    updatePlacement()
+  }
+
+  context.expose?.({ update })
 
   return () => [
     context.slots?.default && h(context.slots.default?.()[0], { ref: triggerRef, ...on }),
