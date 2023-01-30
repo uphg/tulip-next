@@ -128,6 +128,9 @@ const visible12 = ref(false)
 
 <style lang="stylus">
 .popover-scroll-demo {
+  width 100%
+  height 100vh
+  overflow auto
   .tu-button {
     min-width: 100px;
   }
