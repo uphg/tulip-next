@@ -1,9 +1,10 @@
 <template>
   <div class="app">
-    <Sidebar />
+    <!-- <Sidebar />
     <main class="content">
       <RouterView />
-    </main>
+    </main> -->
+    <RouterView />
   </div>
 </template>
 
@@ -12,8 +13,8 @@ import Sidebar from './components/Sidebar.vue'
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
-<style scoped>
+<!-- <style scoped>
 .content {
   margin-left: 240px;
 }
-</style>
+</style> -->

@@ -6,7 +6,7 @@
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
-      <TestPopoverScroll />
+      <!-- <TestPopoverScroll /> -->
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
       <!-- <TestCollapse /> -->
@@ -16,6 +16,7 @@
       <!-- <TestImage /> -->
       <!-- <TestImage2 /> -->
       <!-- <TestDraggable /> -->
+      <TestPopupScroll />
     </div>
   </main>
 </template>
@@ -36,6 +37,7 @@ import TestTransition from './TestTransition'
 import TestImage from './TestImage.vue'
 // import TestImage2 from './TestImage2.vue'
 import TestDraggable from './TestDraggable.vue'
+import TestPopupScroll from './TestPopupScroll.vue'
 </script>
 
 <style lang="stylus">
