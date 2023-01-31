@@ -49,6 +49,5 @@ export const popoverProps = {
     default: 8
   },
   hideArrow: Boolean as PropType<boolean>,
-  raw: Boolean as PropType<boolean>,
-  disabled: Boolean as PropType<boolean>,
+  disabled: Boolean as PropType<boolean>
 }
