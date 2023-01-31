@@ -3,6 +3,12 @@ import type { PlacementTypes, PopoverTrigger } from '../../popover/src/popoverPr
 
 export type PopupProps = ExtractPropTypes<typeof popupProps>
 
+export type UpdatePopupStyle = {
+  zIndex?: number
+  top?: string
+  left?: string
+}
+
 export const popupProps = {
   disabled: Boolean as PropType<boolean>,
   visible: Boolean as PropType<boolean>,
@@ -17,5 +23,6 @@ export const popupProps = {
   popupMargin: {
     type: [String, Number] as PropType<string | number>,
     default: 0
-  }
+  },
+  updatePopup: Function as PropType<(value: UpdatePopupStyle) => void>
 }

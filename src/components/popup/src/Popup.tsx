@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, nextTick, ref, shallowRef, Teleport, toRef, Transition, watch, type ComponentPublicInstance } from 'vue'
 import { getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
-import { popupProps, type PopupProps } from './popupProps'
+import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import type { VueInstance } from '../../../types'
 
 const Popup = defineComponent({
@@ -13,7 +13,7 @@ const Popup = defineComponent({
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
 
     const dom = ref({ top: 0, left: 0 })
-    const popupStyle = ref({})
+    const popupStyle = ref<UpdatePopupStyle>({})
 
     const visible = ref(false)
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
@@ -136,6 +136,8 @@ const Popup = defineComponent({
         top: `${style.top}px`,
         left: `${style.left}px`
       }
+
+      props.updatePopup?.(popupStyle.value)
     }
   
     function getPopupToViewPosition(type: PopupProps['placement']) {
