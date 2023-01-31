@@ -2,8 +2,11 @@
   <div style="padding-left: 20px;">
     <h2>Popover</h2>
     <div class="popover-demo">
-      <tu-popover :content="content">
-        <tu-button>悬浮</tu-button>
+      <tu-popover>
+        <template #trigger>
+          <tu-button>悬浮</tu-button>
+        </template>
+        <p>{{ content }}</p>
       </tu-popover>
 
       <tu-popover :content="content" trigger="click">
@@ -116,7 +119,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const content = `哈哈哈哈哈哈哈哈哈哈哈哈哈哈`
+const content = ref(`哈哈哈哈哈哈哈哈哈哈哈哈哈哈`)
 
 const disabled = ref(false)
 const visible = ref(false)

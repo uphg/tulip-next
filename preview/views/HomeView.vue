@@ -5,7 +5,7 @@
       <!-- <TestCollapseTransition /> -->
       <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
-      <!-- <TestPopover /> -->
+      <TestPopover />
       <!-- <TestPopoverScroll /> -->
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
@@ -16,7 +16,7 @@
       <!-- <TestImage /> -->
       <!-- <TestImage2 /> -->
       <!-- <TestDraggable /> -->
-      <TestPopupScroll />
+      <!-- <TestPopupScroll /> -->
     </div>
   </main>
 </template>
