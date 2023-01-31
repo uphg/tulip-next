@@ -4,7 +4,7 @@ import { toNumber, withAttrs } from '../../../utils'
 import TuPopup from '../../popup/src/Popup'
 
 type UsePopoverOptions = {
-  className?: string
+  className?: string | string[]
 }
 
 type Popup = typeof TuPopup & { popup: HTMLElement, rawPlacement: Ref<PlacementTypes> }
@@ -18,7 +18,12 @@ const arrowClassMap = [
   [['bottom-start', 'bottom', 'bottom-end'], 'bottom'],
 ]
 
-export function usePopover(props: PopoverProps, context: SetupContext<'update:visible'[]>, options?: UsePopoverOptions) {
+export function usePopover(
+  props: PopoverProps,
+  context: SetupContext<'update:visible'[]>,
+  options?: UsePopoverOptions
+) {
+  const className = ['tu-popover tu-popover--default', options?.className]
   const popup = ref<Popup | null>(null)
   const arrowClass = ref({})
   const arrowStyle = ref({})
@@ -70,7 +75,7 @@ export function usePopover(props: PopoverProps, context: SetupContext<'update:vi
   return () => (
     <TuPopup
       ref={popup}
-      class={['tu-popover tu-popover--default']}
+      class={className}
       disabled={props.disabled}
       visible={props.visible}
       trigger={props.trigger}
