@@ -3,7 +3,9 @@ import { includes } from '../../../utils'
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>
 
-type PlacementTypes = 'top-start' | 'top' | 'top-end' |
+export type PopoverTrigger = 'hover' | 'click' | 'focus' | 'manual'
+
+export type PlacementTypes = 'top-start' | 'top' | 'top-end' |
 'left-start' | 'left' | 'left-end' |
 'right-start' | 'right' | 'right-end' |
 'bottom-start' | 'bottom' | 'bottom-end'
@@ -19,7 +21,7 @@ const triggerTypes = ['hover', 'click', 'focus', 'manual']
 
 export const popoverProps = {
   trigger: {
-    type: String as PropType<'hover' | 'click' | 'focus' | 'manual'>,
+    type: String as PropType<PopoverTrigger>,
     default: 'hover',
     validator(value: string) {
       return includes(triggerTypes, value)
@@ -38,7 +40,7 @@ export const popoverProps = {
   },
   content: String as PropType<string>,
   // Popover 与触发元素的间隙
-  space: {
+  popoverMargin: {
     type: [String, Number] as PropType<string | number>,
     default: 8
   },

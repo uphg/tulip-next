@@ -37,7 +37,6 @@ export function usePopover(
   const mousedown = ref(false)
   const triggerRef = ref<VNodeRef | null>(null)
   const popoverRef = ref<VNodeRef | null>(null)
-  // const zIndex = ref(2000)
   const dom = ref({ top: 0, left: 0 })
   const popoverStyle = ref({})
   const arrowStyle = ref({})
@@ -176,7 +175,7 @@ export function usePopover(
   }
 
   function getPopoverPosition(type: PopoverProps['placement']) {
-    const popoverMargin = toNumber(props.space)
+    const popoverMargin = toNumber(props.popoverMargin)
     const { top: domTop, left: domLeft } = dom.value
     const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(triggerEl.value as HTMLElement)
     const { offsetHeight: popoverHeight, offsetWidth: popoverWidth } = withAttrs(popoverRef.value as HTMLElement)
