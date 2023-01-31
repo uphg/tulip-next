@@ -163,13 +163,15 @@ export function usePopover(
   function getPopoverToViewPosition(type: PopoverProps['placement']) {
     const style = getPopoverPosition(type)
     const { scrollTop, scrollLeft, offsetWidth: domWidth, offsetHeight: domHeight } = document.documentElement
+    const width = Math.min(window.innerWidth, domWidth)
+    const height = Math.min(window.innerHeight, domHeight)
     const { offsetHeight: popoverHeight, offsetWidth: popoverWidth } = withAttrs(popoverRef.value)
 
     return {
       top: style.top - scrollTop,
       left: style.left - scrollLeft,
-      right: domWidth - (style.left - scrollLeft + popoverWidth),
-      bottom: domHeight - (style.top - scrollTop + popoverHeight),
+      right: width - (style.left - scrollLeft + popoverWidth),
+      bottom: height - (style.top - scrollTop + popoverHeight),
     }
   }
 
