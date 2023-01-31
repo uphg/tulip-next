@@ -16,7 +16,7 @@ const Popup = defineComponent({
     const popupStyle = ref({})
 
     const visible = ref(false)
-    const _placement = ref<PopupProps['placement']>(props.placement)
+    const rawPlacement = ref<PopupProps['placement']>(props.placement)
 
     const hovered = ref(false)
     const mousedown = ref(false)
@@ -130,9 +130,7 @@ const Popup = defineComponent({
     }
 
     function updatePopupStyle() {
-      const style = getPopupPosition(_placement.value)
-      console.log('style')
-      console.log(style)
+      const style = getPopupPosition(rawPlacement.value)
       popupStyle.value = {
         zIndex: zIndex.value,
         top: `${style.top}px`,
@@ -263,27 +261,27 @@ const Popup = defineComponent({
         }
       } else if (bottom > 0) {
         // --- top
-        if (/^top.*/.test(props.placement) && /^bottom.*/.test(_placement.value)) {
+        if (/^top.*/.test(props.placement) && /^bottom.*/.test(rawPlacement.value)) {
           prefix = 'top'
           changed = true
         }
   
         // --- left
-        if (props.placement === 'left-end' && _placement.value !== `${prefix}-end`) {
+        if (props.placement === 'left-end' && rawPlacement.value !== `${prefix}-end`) {
           suffix = 'end'
           changed = true
         }
-        if (props.placement === 'left' && _placement.value !== prefix) {
+        if (props.placement === 'left' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
   
         // --- right
-        if (props.placement === 'right-end' && _placement.value !== `${prefix}-end`) {
+        if (props.placement === 'right-end' && rawPlacement.value !== `${prefix}-end`) {
           suffix = 'end'
           changed = true
         }
-        if (props.placement === 'right' && _placement.value !== prefix) {
+        if (props.placement === 'right' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
@@ -319,27 +317,27 @@ const Popup = defineComponent({
         }
       } else if (right > 0) {
         // --- top
-        if (props.placement === 'top' && _placement.value !== prefix) {
+        if (props.placement === 'top' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
-        if (props.placement === 'top-end' && _placement.value !== `${prefix}-end`) {
+        if (props.placement === 'top-end' && rawPlacement.value !== `${prefix}-end`) {
           suffix = 'end'
           changed = true
         }
   
         // --- bottom
-        if (props.placement === 'bottom' && _placement.value !== prefix) {
+        if (props.placement === 'bottom' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
-        if (props.placement === 'bottom-end' && _placement.value !== `${prefix}-end`) {
+        if (props.placement === 'bottom-end' && rawPlacement.value !== `${prefix}-end`) {
           suffix = 'end'
           changed = true
         }
   
         // --- left
-        if (/^left.*/.test(props.placement) && /^right.*/.test(_placement.value)) {
+        if (/^left.*/.test(props.placement) && /^right.*/.test(rawPlacement.value)) {
           prefix = 'left'
           changed = true
         }
@@ -375,27 +373,27 @@ const Popup = defineComponent({
         }
       } else if (left > 0) {
         // --- top
-        if (props.placement === 'top-start' && _placement.value !== `${prefix}-start`) {
+        if (props.placement === 'top-start' && rawPlacement.value !== `${prefix}-start`) {
           suffix = 'start'
           changed = true
         }
-        if (props.placement === 'top' && _placement.value !== prefix) {
+        if (props.placement === 'top' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
   
         // --- bottom
-        if (props.placement === 'bottom-start' && _placement.value !== `${prefix}-start`) {
+        if (props.placement === 'bottom-start' && rawPlacement.value !== `${prefix}-start`) {
           suffix = 'start'
           changed = true
         }
-        if (props.placement === 'bottom' && _placement.value !== prefix) {
+        if (props.placement === 'bottom' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
   
         // --- right
-        if (/^right.*/.test(props.placement) && /^left.*/.test(_placement.value)) {
+        if (/^right.*/.test(props.placement) && /^left.*/.test(rawPlacement.value)) {
           prefix = 'right'
           changed = true
         }
@@ -431,34 +429,34 @@ const Popup = defineComponent({
         }
       } else if (top > 0)  {
         // --- bottom
-        if (/^bottom.*/.test(props.placement) && /^top.*/.test(_placement.value)) {
+        if (/^bottom.*/.test(props.placement) && /^top.*/.test(rawPlacement.value)) {
           prefix = 'bottom'
           changed = true
         }
   
         // --- left
-        if (props.placement === 'left-start' && _placement.value !== `${prefix}-start`) {
+        if (props.placement === 'left-start' && rawPlacement.value !== `${prefix}-start`) {
           suffix = 'start'
           changed = true
         }
-        if (props.placement === 'left' && _placement.value !== prefix) {
+        if (props.placement === 'left' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
   
         // --- right
-        if (props.placement === 'right-start' && _placement.value !== `${prefix}-start`) {
+        if (props.placement === 'right-start' && rawPlacement.value !== `${prefix}-start`) {
           suffix = 'start'
           changed = true
         }
-        if (props.placement === 'right' && _placement.value !== prefix) {
+        if (props.placement === 'right' && rawPlacement.value !== prefix) {
           suffix = ''
           changed = true
         }
       }
   
       if (changed) {
-        _placement.value = (suffix ? `${prefix}-${suffix}` : prefix) as PopupProps['placement']
+        rawPlacement.value = (suffix ? `${prefix}-${suffix}` : prefix) as PopupProps['placement']
         updatePopupStyle()
       }
     }
@@ -482,6 +480,8 @@ const Popup = defineComponent({
       updatePopupStyle()
       updatePlacement()
     }
+
+    context.expose({ update, rawPlacement, popup })
 
     return () => [
       context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...on }),
