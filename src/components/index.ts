@@ -18,6 +18,7 @@ import { TuScrollbar } from './scrollbar'
 import { TuImage } from './image'
 import { TuImageGroup } from './image'
 import { TuDraggable } from './draggable'
+import { TuPopup } from './popup'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -44,7 +45,8 @@ const components = [
   TuScrollbar,
   TuImage,
   TuImageGroup,
-  TuDraggable
+  TuDraggable,
+  TuPopup
 ]
 
 const { install } = makeInstaller(components)
@@ -73,6 +75,7 @@ export {
   TuImage,
   TuImageGroup,
   TuDraggable,
+  TuPopup,
 
   // utils
   useDialog,
