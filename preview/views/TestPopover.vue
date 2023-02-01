@@ -24,13 +24,19 @@
       </tu-popover>
 
       <tu-popover :visible="visible" :content="content" trigger="manual">
-        <tu-button @click="visible = !visible">手动</tu-button>
+        <template #trigger>
+          <tu-button @click="visible = !visible">手动</tu-button>
+        </template>
       </tu-popover>
       <tu-popover :visible="visible2" :content="content" trigger="manual">
-        <tu-button @click="visible2 = !visible2">手动</tu-button>
+        <template #trigger>
+          <tu-button @click="visible2 = !visible2">手动</tu-button>
+        </template>
       </tu-popover>
       <tu-popover :visible="visible3" :content="content" trigger="manual">
-        <tu-button @click="visible3 = !visible3">手动</tu-button>
+        <template #trigger>
+          <tu-button @click="visible3 = !visible3">手动</tu-button>
+        </template>
       </tu-popover>
     </div>
 
