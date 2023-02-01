@@ -6,7 +6,8 @@ import { tryOnScopeDispose } from './tryOnScopeDispose'
 const zIndexKey = Symbol('Maximum z-index')
 
 export interface MaxZIndex extends Window {
-  [zIndexKey]: number | undefined
+  [zIndexKey]: number | undefined,
+  elementZIndex: Map<HTMLElement, number>
 }
 
 export function useMaxZIndex(initialValue = 2000, window?: Window) {

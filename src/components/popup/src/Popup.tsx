@@ -1,8 +1,9 @@
-import { computed, defineComponent, h, nextTick, ref, shallowRef, Teleport, toRef, Transition, watch, type ComponentPublicInstance } from 'vue'
-import { getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
+import { computed, createApp, defineComponent, h, nextTick, onMounted, ref, shallowRef, Teleport, toRef, Transition, watch, withDirectives, type ComponentPublicInstance } from 'vue'
+import { addClass, getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
 import { useMaxZIndex } from '../../../composables/useMaxZIndex'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import type { VueInstance } from '../../../types'
+import { maxZIndex } from './v-max-zIndex'
 
 const Popup = defineComponent({
   name: 'TuPopup',
@@ -11,10 +12,11 @@ const Popup = defineComponent({
   setup(props, context) {
     const popup = shallowRef<HTMLElement | null>(null)
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
-
+    
     const dom = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle>({})
 
+    const initialize = ref(false)
     const visible = ref(false)
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
 
@@ -31,14 +33,66 @@ const Popup = defineComponent({
       manual: { },
     }[props.trigger]
 
-    const visiblePopover = computed(() => props.trigger === 'manual' ? props.visible : visible.value )
     const trigger = computed(() => (triggerEl.value as VueInstance)?.$el ?? triggerEl.value)
-    props.trigger === 'manual' && watch(toRef(props, 'visible'), value => value ? open() : close())
+    props.trigger === 'manual' && watch(toRef(props, 'visible'), value => {
+      value ? open() : close()
+    })
 
     function open() {
+      initialize.value ? openPopup() : initPopup()
+    }
+
+    function initPopup() {
+      const div = document.createElement('div')
+      div.className = 'tu-foothold'
+      div.style.zIndex = String(zIndex.value)
+      document.body.appendChild(div)
+      const app = createApp({
+        setup() {
+          onMounted(openPopup)
+          return renderPopup
+        }
+      })
+      app.mount(div)
+      initialize.value = true
+    }
+
+    function openPopup() {
       dom.value = getRelativeDOMPosition(trigger.value!)
       loadDomEventListener()
       updateVisible(true)
+    }
+
+    function renderPopup() {
+      return props.disabled ? null : (
+        withDirectives(
+          <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+            {{
+              default: () => (
+                visible.value ? context.slots?.default && (
+                  <div
+                    class="tu-popup"
+                    ref={popup}
+                    style={popupStyle.value}
+                    {...context.attrs}
+                  >
+                    {context.slots?.default?.({ close })}
+                  </div>
+                ) : null
+              )
+            }}
+          </Transition>,
+          [
+            [
+              maxZIndex,
+              {
+                enabled: true,
+                zIndex: 2000
+              }
+            ]
+          ]
+        )
+      )
     }
   
     function close() {
@@ -47,7 +101,7 @@ const Popup = defineComponent({
     }
   
     function updateVisible(value: boolean) {
-      props.trigger !== 'manual' && (visible.value = value)
+      visible.value = value
       context?.emit?.('update:visible', value)
     }
 
@@ -132,7 +186,6 @@ const Popup = defineComponent({
     function updatePopupStyle() {
       const style = getPopupPosition(rawPlacement.value)
       popupStyle.value = {
-        zIndex: zIndex.value,
         top: `${style.top}px`,
         left: `${style.left}px`
       }
@@ -485,29 +538,7 @@ const Popup = defineComponent({
 
     context.expose({ update, rawPlacement, popup })
 
-    return () => [
-      context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...on }),
-      props.disabled ? null : (
-        <Teleport to="body">
-          <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
-            {{
-              default: () => (
-                visiblePopover.value ? context.slots?.default && (
-                  <div
-                    class="tu-popup"
-                    ref={popup}
-                    style={popupStyle.value}
-                    {...context.attrs}
-                  >
-                    {context.slots?.default?.({ close })}
-                  </div>
-                ) : null
-              )
-            }}
-          </Transition>
-        </Teleport>
-      )
-    ]
+    return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...on })
   }
 })
 

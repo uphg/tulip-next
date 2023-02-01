@@ -84,8 +84,8 @@ export function usePopover(
       updatePopup={updatePopover}
     >{{
       trigger: context.slots.trigger,
-      default: () => [
-        <div class="tu-popover__content">{props.content || context.slots.default?.({ close })}</div>,
+      default: (params: { close: () => void }) => [
+        <div class="tu-popover__content">{props.content || context.slots.default?.(params)}</div>,
         props.hideArrow ? null : (
           <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
             <div class="tu-popover-arrow"></div> 

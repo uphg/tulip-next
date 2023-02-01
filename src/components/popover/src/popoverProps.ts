@@ -46,7 +46,7 @@ export const popoverProps = {
   },
   arrowMargin: {
     type: [String, Number] as PropType<string | number>,
-    default: 8
+    default: 10
   },
   hideArrow: Boolean as PropType<boolean>,
   disabled: Boolean as PropType<boolean>
