@@ -4,7 +4,9 @@
       <template #prefix>前缀</template>
       <TuTabPane name="a1" label="周董">爱在西元前</TuTabPane>
       <TuTabPane name="a2" label="李荣浩浩">李白</TuTabPane>
-      <TuTabPane name="a3" label="邓紫棋">泡沫</TuTabPane>
+      <TuTabPane name="a3" label="邓紫棋">
+        <tu-button>泡沫</tu-button>
+      </TuTabPane>
       <div>hi</div>
       <template #suffix>后缀</template>
     </TuTabs>

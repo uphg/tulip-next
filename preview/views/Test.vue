@@ -57,72 +57,72 @@
     <h2>文本按钮</h2>
     <div class="test-row">
       <tu-button icon="info" text>默认按钮</tu-button>
-      <tu-button type="primary" text>主要按钮</tu-button>
-      <tu-button type="success" text>成功按钮</tu-button>
-      <tu-button type="info" text>信息按钮</tu-button>
-      <tu-button type="warning" text>警告按钮</tu-button>
-      <tu-button type="error" text>错误按钮</tu-button>
+      <tu-button hue="primary" text>主要按钮</tu-button>
+      <tu-button hue="success" text>成功按钮</tu-button>
+      <tu-button hue="info" text>信息按钮</tu-button>
+      <tu-button hue="warning" text>警告按钮</tu-button>
+      <tu-button hue="error" text>错误按钮</tu-button>
     </div>
     <h2>圆角按钮</h2>
     <div class="test-row">
       <tu-button size="small" round>默认按钮</tu-button>
-      <tu-button size="small" type="primary" round>主要按钮</tu-button>
-      <tu-button size="small" type="success" round>成功按钮</tu-button>
-      <tu-button size="small" type="info" round>信息按钮</tu-button>
-      <tu-button size="small" type="warning" round>警告按钮</tu-button>
-      <tu-button size="small" type="error" round>错误按钮</tu-button>
+      <tu-button size="small" hue="primary" round>主要按钮</tu-button>
+      <tu-button size="small" hue="success" round>成功按钮</tu-button>
+      <tu-button size="small" hue="info" round>信息按钮</tu-button>
+      <tu-button size="small" hue="warning" round>警告按钮</tu-button>
+      <tu-button size="small" hue="error" round>错误按钮</tu-button>
     </div>
     <div class="test-row">
       <tu-button round>默认按钮</tu-button>
-      <tu-button type="primary" round>主要按钮</tu-button>
-      <tu-button type="success" round>成功按钮</tu-button>
-      <tu-button type="info" round>信息按钮</tu-button>
-      <tu-button type="warning" round>警告按钮</tu-button>
-      <tu-button type="error" round>错误按钮</tu-button>
+      <tu-button hue="primary" round>主要按钮</tu-button>
+      <tu-button hue="success" round>成功按钮</tu-button>
+      <tu-button hue="info" round>信息按钮</tu-button>
+      <tu-button hue="warning" round>警告按钮</tu-button>
+      <tu-button hue="error" round>错误按钮</tu-button>
     </div>
 
     <div class="test-row">
       <tu-button size="large" round>默认按钮</tu-button>
-      <tu-button size="large" type="primary" round>主要按钮</tu-button>
-      <tu-button size="large" type="success" round>成功按钮</tu-button>
-      <tu-button size="large" type="info" round>信息按钮</tu-button>
-      <tu-button size="large" type="warning" round>警告按钮</tu-button>
-      <tu-button size="large" type="error" round>错误按钮</tu-button>
+      <tu-button size="large" hue="primary" round>主要按钮</tu-button>
+      <tu-button size="large" hue="success" round>成功按钮</tu-button>
+      <tu-button size="large" hue="info" round>信息按钮</tu-button>
+      <tu-button size="large" hue="warning" round>警告按钮</tu-button>
+      <tu-button size="large" hue="error" round>错误按钮</tu-button>
     </div>
 
     <h2>圆角图标</h2>
     <div class="test-row">
       <tu-button icon="info" size="small" circle />
-      <tu-button icon="info" size="small" type="primary" circle />
-      <tu-button icon="info" size="small" type="success" circle />
-      <tu-button icon="info" size="small" type="info" circle />
-      <tu-button icon="info" size="small" type="warning" circle />
-      <tu-button icon="info" size="small" type="error" circle />
+      <tu-button icon="info" size="small" hue="primary" circle />
+      <tu-button icon="info" size="small" hue="success" circle />
+      <tu-button icon="info" size="small" hue="info" circle />
+      <tu-button icon="info" size="small" hue="warning" circle />
+      <tu-button icon="info" size="small" hue="error" circle />
     </div>
     <div class="test-row">
       <tu-button icon="info" circle />
-      <tu-button icon="info" type="primary" circle />
-      <tu-button icon="info" type="success" circle />
-      <tu-button icon="info" type="info" circle />
-      <tu-button icon="info" type="warning" circle />
-      <tu-button icon="info" type="error" circle />
+      <tu-button icon="info" hue="primary" circle />
+      <tu-button icon="info" hue="success" circle />
+      <tu-button icon="info" hue="info" circle />
+      <tu-button icon="info" hue="warning" circle />
+      <tu-button icon="info" hue="error" circle />
     </div>
     <div class="test-row">
       <tu-button icon="info" size="large" circle />
-      <tu-button icon="info" size="large" type="primary" circle />
-      <tu-button icon="info" size="large" type="success" circle />
-      <tu-button icon="info" size="large" type="info" circle />
-      <tu-button icon="info" size="large" type="warning" circle />
-      <tu-button icon="info" size="large" type="error" circle />
+      <tu-button icon="info" size="large" hue="primary" circle />
+      <tu-button icon="info" size="large" hue="success" circle />
+      <tu-button icon="info" size="large" hue="info" circle />
+      <tu-button icon="info" size="large" hue="warning" circle />
+      <tu-button icon="info" size="large" hue="error" circle />
     </div>
     <h2>基本按钮测试</h2>
     <div class="test-row">
       <tu-button>默认按钮</tu-button>
-      <tu-button type="primary">主要按钮</tu-button>
-      <tu-button type="success">成功按钮</tu-button>
-      <tu-button type="info">信息按钮</tu-button>
-      <tu-button type="warning">警告按钮</tu-button>
-      <tu-button type="error">错误按钮</tu-button>
+      <tu-button hue="primary">主要按钮</tu-button>
+      <tu-button hue="success">成功按钮</tu-button>
+      <tu-button hue="info">信息按钮</tu-button>
+      <tu-button hue="warning">警告按钮</tu-button>
+      <tu-button hue="error">错误按钮</tu-button>
     </div>
   </div>
 </template>

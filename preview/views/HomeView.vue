@@ -3,10 +3,10 @@
     <div>
       <!-- <Test /> -->
       <!-- <TestCollapseTransition /> -->
-      <!-- <TestTabs /> -->
+      <TestTabs />
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
-      <TestPopoverScroll />
+      <!-- <TestPopoverScroll /> -->
       <!-- <TestGrid /> -->
       <!-- <TestEllipsis /> -->
       <!-- <TestCollapse /> -->
@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
-// import Test from './Test.vue'
+import Test from './Test.vue'
 // import TestCollapseTransition from './TestCollapseTransition.vue'
-// import TestTabs from './TestTabs.vue'
+import TestTabs from './TestTabs.vue'
 // import TestPagination from './TestPagination.vue'
 import TestPopover from './TestPopover.vue'
 import TestPopoverScroll from './TestPopoverScroll.vue'
