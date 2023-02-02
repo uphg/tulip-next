@@ -1,9 +1,8 @@
-import { computed, createApp, defineComponent, h, nextTick, onMounted, ref, shallowRef, Teleport, toRef, Transition, watch, withDirectives, type ComponentPublicInstance } from 'vue'
-import { addClass, getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
-import { useMaxZIndex } from '../../../composables/useMaxZIndex'
+import { computed, createApp, defineComponent, h, nextTick, onMounted, onUnmounted, ref, shallowRef, toRef, Transition, watch } from 'vue'
+import { getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
+import zindexable, { updateZIndex } from './zindexble'
 import type { VueInstance } from '../../../types'
-import { maxZIndex } from './v-max-zIndex'
 
 const Popup = defineComponent({
   name: 'TuPopup',
@@ -12,19 +11,18 @@ const Popup = defineComponent({
   setup(props, context) {
     const popup = shallowRef<HTMLElement | null>(null)
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
+    const foothold = shallowRef<HTMLElement | null>(null)
     
     const dom = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle>({})
 
-    const initialize = ref(false)
     const visible = ref(false)
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
+    const initialize = ref(false)
 
     const hovered = ref(false)
     const mousedown = ref(false)
     const closeTimerId = ref<NodeJS.Timeout | null>(null)
-
-    const zIndex = useMaxZIndex()
 
     const on = {
       hover: { onMouseover },
@@ -43,9 +41,10 @@ const Popup = defineComponent({
     }
 
     function initPopup() {
+      console.log('初始化')
       const div = document.createElement('div')
       div.className = 'tu-foothold'
-      div.style.zIndex = String(zIndex.value)
+      foothold.value = div
       document.body.appendChild(div)
       const app = createApp({
         setup() {
@@ -54,10 +53,12 @@ const Popup = defineComponent({
         }
       })
       app.mount(div)
+      zindexable.elementZIndex.set(div, zindexable.nextZIndex)
       initialize.value = true
     }
 
     function openPopup() {
+      updateZIndex(foothold.value!)
       dom.value = getRelativeDOMPosition(trigger.value!)
       loadDomEventListener()
       updateVisible(true)
@@ -65,11 +66,10 @@ const Popup = defineComponent({
 
     function renderPopup() {
       return props.disabled ? null : (
-        withDirectives(
           <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
             {{
               default: () => (
-                visible.value ? context.slots?.default && (
+                visible.value ? (
                   <div
                     class="tu-popup"
                     ref={popup}
@@ -81,17 +81,7 @@ const Popup = defineComponent({
                 ) : null
               )
             }}
-          </Transition>,
-          [
-            [
-              maxZIndex,
-              {
-                enabled: true,
-                zIndex: 2000
-              }
-            ]
-          ]
-        )
+          </Transition>
       )
     }
   
@@ -535,6 +525,10 @@ const Popup = defineComponent({
       updatePopupStyle()
       updatePlacement()
     }
+
+    onUnmounted(() => {
+      zindexable.elementZIndex.delete(foothold.value!)
+    })
 
     context.expose({ update, rawPlacement, popup })
 
