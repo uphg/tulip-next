@@ -3,7 +3,7 @@
     <div>
       <!-- <Test /> -->
       <!-- <TestCollapseTransition /> -->
-      <TestTabs />
+      <!-- <TestTabs /> -->
       <!-- <TestPagination /> -->
       <!-- <TestPopover /> -->
       <!-- <TestPopoverScroll /> -->
@@ -16,7 +16,7 @@
       <!-- <TestImage /> -->
       <!-- <TestImage2 /> -->
       <!-- <TestDraggable /> -->
-      <!-- <TestPopupScroll /> -->
+      <TestPopupScroll />
     </div>
   </main>
 </template>
