@@ -7,6 +7,7 @@
       <div class="e-code-wrap" v-show="visible">
         <div class="e-code-source language-vue" v-html="decodeURIComponent(html)"></div>
         <button ref="copyEl" :class="['e-button-copy', { copied }]" @click="copy"></button>
+        <span v-if="lang" class="lang">{{ lang }}</span>
       </div>
     </TuCollapseTransition>
     <div class="control" @click="visible = !visible">{{ `${visible ? '收起' : '展开'}源码` }}</div>
@@ -28,7 +29,8 @@ const props = defineProps({
     default: ''
   },
   componentName: String,
-  part: [Object]
+  part: [Object],
+  lang: String
 })
 
 const visible = ref(false)
@@ -50,7 +52,7 @@ function copy() {
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 .e-demo {
   width: 100%;
   border-radius: 6px;
@@ -71,6 +73,7 @@ function copy() {
   margin: 0;
   border-radius: 0;
 }
+
 :deep(.e-code-source pre) {
   margin: 0;
   border-radius: 0;
@@ -87,6 +90,14 @@ function copy() {
 
 .e-code-wrap {
   position: relative;
+  &:hover .e-button-copy {
+    opacity: 1;
+  }
+
+  &:hover > .e-button-copy + .lang,
+  & > .e-button-copy:focus + .lang {
+    opacity: 0;
+  }
 }
 
 .e-button-copy {
@@ -109,18 +120,17 @@ function copy() {
   background-size: 20px;
   background-repeat: no-repeat;
   transition: opacity .4s;
-}
-.e-button-copy:hover {
-  background-color: var(--vp-code-copy-code-hover-bg);
-}
-.e-button-copy.copied {
-  border-radius: 0 4px 4px 0;
-  background-color: var(--vp-code-copy-code-hover-bg);
-  background-image: var(--vp-icon-copied);
-}
-.e-button-copy:hover,
-.e-button-copy:focus {
-  opacity: 1;
+  &:hover {
+    background-color: var(--vp-code-copy-code-hover-bg);
+  }
+  &.copied {
+    border-radius: 0 4px 4px 0;
+    background-color: var(--vp-code-copy-code-hover-bg);
+    background-image: var(--vp-icon-copied);
+  }
+  &:focus {
+    opacity: 1;
+  }
 }
 .e-button-copy.copied::before,
 .e-button-copy:hover.copied::before {
@@ -141,5 +151,15 @@ function copy() {
   background-color: var(--vp-code-copy-code-hover-bg);
   white-space: nowrap;
   content: 'Copied';
+}
+.lang {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  z-index: 2;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vp-c-text-dark-3);
+  transition: color .4s,opacity .4s;
 }
 </style>

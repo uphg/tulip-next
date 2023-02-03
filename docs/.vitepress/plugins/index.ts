@@ -45,6 +45,7 @@ async function mdPlugin(md) {
           source="${encodeURIComponent(source)}"
           html="${encodeURIComponent(HTMLCode)}"
           :part="${componentName}"
+          lang="vue"
         >`
       } else {
         return `</${demoTag}>`
