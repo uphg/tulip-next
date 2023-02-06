@@ -1,12 +1,10 @@
-import { computed, ref, toRef, watch, type Ref, type ToRefs } from 'vue'
+import { computed, ref } from 'vue'
 import { useEventListener } from './useEventListener'
 import { resolveUnref } from './resolveUnref'
+import { toRefs } from './toRefs'
 import { isClient } from '../utils'
 import { defaultWindow } from '../configurable'
-import { toRefs } from './toRefs'
 import type { Position, MaybeElementRef, MaybeElement, Fn } from '../types'
-import {  } from 'fs'
-import { tryOnScopeDispose } from './tryOnScopeDispose'
 
 type UseDraggableOptions = {
   initialValue?: Position,
