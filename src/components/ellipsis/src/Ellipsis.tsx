@@ -48,8 +48,8 @@ const Ellipsis = defineComponent({
     return () => (
       <TuTooltip trigger="hover" placement="top" disabled={tooltipDisabled.value}>
         {{
-          content: context.slots.tooltip || context.slots.default,
-          default: () => (
+          default: context.slots.tooltip || context.slots.default,
+          trigger: () => (
             <span
               ref={containerRef}
               class={className.value}
