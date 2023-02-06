@@ -38,6 +38,8 @@ popover/placement
 
 ## 自定义样式
 
+可以使用 `tu-popup` 组件封装一个自定义 Popover，所有 Popover 组件都是基于该组件
+
 ::: demo
 
 popover/raw
