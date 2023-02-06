@@ -41,7 +41,7 @@ const Image = defineComponent({
         <>
           <div class="tu-image" style={styles.value} onClick={openPreview}>
             {h(Image, { class: 'tu-image-inner' })}
-          </div>,
+          </div>
           {h(ImagePreview, {
             visible: previewVisible.value,
             previewSrc: props.previewSrc,
