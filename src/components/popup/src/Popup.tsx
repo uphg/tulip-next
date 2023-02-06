@@ -41,7 +41,6 @@ const Popup = defineComponent({
     }
 
     function initPopup() {
-      console.log('初始化')
       const div = document.createElement('div')
       div.className = 'tu-foothold'
       foothold.value = div
@@ -66,22 +65,22 @@ const Popup = defineComponent({
 
     function renderPopup() {
       return props.disabled ? null : (
-          <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
-            {{
-              default: () => (
-                visible.value ? (
-                  <div
-                    class="tu-popup"
-                    ref={popup}
-                    style={popupStyle.value}
-                    {...context.attrs}
-                  >
-                    {context.slots?.default?.({ close })}
-                  </div>
-                ) : null
-              )
-            }}
-          </Transition>
+        <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+          {{
+            default: () => (
+              visible.value ? (
+                <div
+                  class="tu-popup"
+                  ref={popup}
+                  style={popupStyle.value}
+                  {...context.attrs}
+                >
+                  {context.slots?.default?.({ close })}
+                </div>
+              ) : null
+            )
+          }}
+        </Transition>
       )
     }
   
