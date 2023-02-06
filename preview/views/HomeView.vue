@@ -14,9 +14,9 @@
       <!-- <TestScrollbar2 /> -->
       <!-- <TestTransition /> -->
       <!-- <TestImage /> -->
-      <!-- <TestImage2 /> -->
+      <TestImage2 />
       <!-- <TestDraggable /> -->
-      <TestPopupScroll />
+      <!-- <TestPopupScroll /> -->
     </div>
   </main>
 </template>
@@ -35,7 +35,7 @@ import TestScrollbar from './TestScrollbar.vue'
 import TestScrollbar2 from './TestScrollbar2.vue'
 import TestTransition from './TestTransition'
 import TestImage from './TestImage.vue'
-// import TestImage2 from './TestImage2.vue'
+import TestImage2 from './TestImage2.vue'
 import TestDraggable from './TestDraggable.vue'
 import TestPopupScroll from './TestPopupScroll.vue'
 </script>

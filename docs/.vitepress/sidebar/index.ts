@@ -25,6 +25,7 @@ export const sidebar = {
         { text: 'Ellipsis 文本省略', link: '/docs/ellipsis' },
         { text: 'Scrollbar 滚动条', link: '/docs/scrollbar' },
         { text: 'Draggable 拖拽', link: '/docs/draggable' },
+        { text: 'Image 图片', link: '/docs/image' },
       ]
     }
   ]
