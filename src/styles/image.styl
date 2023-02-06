@@ -12,6 +12,7 @@
   &-container
     position fixed
     inset 0
+    z-index 2000
   &-overlay
     position absolute
     inset 0
@@ -39,8 +40,9 @@
     user-select none
     color rgba(255, 255, 255, 0.9);
     .tu-base-icon
+      box-sizing border-box
       cursor pointer
-      width 28px
+      min-width 44px
       height 28px
       padding 0 8px
 
