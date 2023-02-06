@@ -2,58 +2,59 @@
   <div class="popover-placement-demo">
     <div class="placement-top">
       <tu-popover placement="top-start" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Top Start</tu-button>
+        <template #trigger><tu-button>Top Start</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Top</tu-button>
+        <template #trigger><tu-button>Top</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="top-end" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Top End</tu-button>
+        <template #trigger><tu-button>Top End</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
     </div>
     <div class="placement-left">
       <tu-popover placement="left-start" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Left Start</tu-button>
+        <template #trigger><tu-button>Left Start</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="left" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Left</tu-button>
+        <template #trigger><tu-button>Left</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="left-end" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Left End</tu-button>
+        <template #trigger><tu-button>Left End</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
     </div>
     <div class="placement-right">
       <tu-popover placement="right-start" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Right Start</tu-button>
+        <template #trigger><tu-button>Right Start</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="right" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Right</tu-button>
+        <template #trigger><tu-button>Right</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="right-end" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Right End</tu-button>
+        <template #trigger><tu-button>Right End</tu-button></template>
+        <div class="text">哦</div>
+        
       </tu-popover>
     </div>
     <div class="placement-bottom">
       <tu-popover placement="bottom-start" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Bottom Start</tu-button>
+        <template #trigger><tu-button>Bottom Start</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="bottom" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Bottom</tu-button>
+        <template #trigger><tu-button>Bottom</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
       <tu-popover placement="bottom-end" trigger="click">
-        <template #content><div class="text">哦</div></template>
-        <tu-button>Bottom End</tu-button>
+        <template #trigger><tu-button>Bottom End</tu-button></template>
+        <div class="text">哦</div>
       </tu-popover>
     </div>
   </div>

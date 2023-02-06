@@ -1,5 +1,7 @@
 <template>
   <tu-tooltip content="塔拉普拉 塔拉普鲁 塞拉奇纳迪">
-    <tu-button>Kulkarni</tu-button>
+    <template #trigger>
+      <tu-button>Kulkarni</tu-button>
+    </template>
   </tu-tooltip>
 </template>
