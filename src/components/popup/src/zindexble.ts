@@ -1,21 +1,21 @@
-const zindexable = {
+const context = {
   nextZIndex: 2000,
   elementZIndex: new Map<HTMLElement, number>(),
 }
 
 export function cumulativeZIndex(el: HTMLElement) {
-  zindexable.nextZIndex = zindexable.nextZIndex + 1
-  zindexable.elementZIndex.set(el, zindexable.nextZIndex)
-  el.style.zIndex = String(zindexable.nextZIndex)
+  context.nextZIndex = context.nextZIndex + 1
+  context.elementZIndex.set(el, context.nextZIndex)
+  el.style.zIndex = String(context.nextZIndex)
 }
 
 export function updateZIndex(el: HTMLElement) {
-  const prevZIndex = zindexable.elementZIndex.get(el)
+  const prevZIndex = context.elementZIndex.get(el)
   if (prevZIndex) {
-    prevZIndex < zindexable.nextZIndex ? cumulativeZIndex(el) : zindexable.nextZIndex = prevZIndex
+    prevZIndex < context.nextZIndex ? cumulativeZIndex(el) : context.nextZIndex = prevZIndex
   } else {
     cumulativeZIndex(el)
   }
 }
 
-export default zindexable
+export default context

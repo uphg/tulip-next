@@ -2,6 +2,7 @@ import { computed, createApp, defineComponent, h, nextTick, onMounted, onUnmount
 import { getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import zindexable, { updateZIndex } from './zindexble'
+import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
 import type { VueInstance } from '../../../types'
 
 const Popup = defineComponent({
@@ -181,19 +182,18 @@ const Popup = defineComponent({
 
       props.updatePopup?.(popupStyle.value)
     }
-  
+
     function getPopupToViewPosition(type: PopupProps['placement']) {
       const style = getPopupPosition(type)
-      const { scrollTop, scrollLeft, offsetWidth: domWidth, offsetHeight: domHeight } = document.documentElement
-      const width = Math.min(window.innerWidth, domWidth)
-      const height = Math.min(window.innerHeight, domHeight)
+      const { scrollTop, scrollLeft } = document.documentElement
+      const { width: viewWidth, height: viewHeight } = ensureViewBoundingRect()
       const { offsetHeight: popupHeight, offsetWidth: popupWidth } = withAttrs(popup.value)
   
       return {
         top: style.top - scrollTop,
         left: style.left - scrollLeft,
-        right: width - (style.left - scrollLeft + popupWidth),
-        bottom: height - (style.top - scrollTop + popupHeight),
+        right: viewWidth - (style.left - scrollLeft + popupWidth),
+        bottom: viewHeight - (style.top - scrollTop + popupHeight),
       }
     }
   
