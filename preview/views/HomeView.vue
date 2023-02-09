@@ -14,9 +14,9 @@
       <!-- <TestScrollbar2 /> -->
       <!-- <TestTransition /> -->
       <!-- <TestImage /> -->
-      <TestImage2 />
+      <!-- <TestImage2 /> -->
       <!-- <TestDraggable /> -->
-      <!-- <TestPopupScroll /> -->
+      <TestPopupScroll />
     </div>
   </main>
 </template>

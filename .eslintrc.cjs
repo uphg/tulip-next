@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     quotes: ['warn', 'single', { 'allowTemplateLiterals': true }],
     semi: ['warn', 'never'],
+    'no-constant-condition': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/return-in-computed-property': 'off',
     '@typescript-eslint/consistent-type-imports': 'off',
