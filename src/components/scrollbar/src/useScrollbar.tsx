@@ -1,6 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, ref, Transition, vShow, withDirectives, type SetupContext } from 'vue'
 import type { ScrollbarProps } from './scrollbarProps'
-import { toPx, withAttrs } from '../../../utils'
+import { toPx, withAttrs, on, off } from '../../../utils'
 import { useResizeObserver, type UseResizeObserverReturn } from '../../../composables/useResizeObserver'
 
 export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
@@ -32,12 +32,12 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
 
   function handleScroll(e: Event) {
     props.onScroll?.(e)
-    updateScrollState()
+    updateScrollStatus()
     updateTrackYScrollTop()
     updateTrackXScrollLeft()
   }
 
-  function updateScrollState() {
+  function updateScrollStatus() {
     containerScrollTop.value = container.value?.scrollTop || 0
     containerScrollLeft.value = container.value?.scrollLeft || 0
   }
@@ -97,8 +97,8 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     memoYTop = container.value?.scrollTop || 0
     memoMouseY = e.clientY
     yBarPressed.value = true
-    document.addEventListener('mousemove', handleYScrollMouseMove)
-    document.addEventListener('mouseup', handleYScrollMouseUp)
+    on(document, 'mousemove', handleYScrollMouseMove)
+    on(document, 'mouseup', handleYScrollMouseUp)
   }
 
   function handleYScrollMouseMove(e: MouseEvent) {
@@ -124,8 +124,9 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
 
   function handleYScrollMouseUp() {
     yBarPressed.value = false
-    document.removeEventListener('mousemove', handleYScrollMouseMove)
-    document.removeEventListener('mouseup', handleYScrollMouseUp)
+
+    off(document, 'mousemove', handleYScrollMouseMove)
+    off(document, 'mouseup', handleYScrollMouseUp)
   }
 
   function updateTrackXScrollLeft() {
@@ -151,8 +152,8 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     memoXLeft = container.value?.scrollLeft || 0
     memoMouseX = e.clientX
     xBarPressed.value = true
-    document.addEventListener('mousemove', handleXScrollMouseMove)
-    document.addEventListener('mouseup', handleXScrollMouseUp)
+    on(document, 'mousemove', handleXScrollMouseMove)
+    on(document, 'mouseup', handleXScrollMouseUp)
   }
 
   function handleXScrollMouseMove(e: MouseEvent) {
@@ -177,8 +178,9 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
 
   function handleXScrollMouseUp() {
     xBarPressed.value = false
-    document.removeEventListener('mousemove', handleXScrollMouseMove)
-    document.removeEventListener('mouseup', handleXScrollMouseUp)
+
+    off(document, 'mousemove', handleXScrollMouseMove)
+    off(document, 'mouseup', handleXScrollMouseUp)
   }
 
   function handleMouseEnter() {
@@ -206,7 +208,7 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function update() {
-    updateScrollState()
+    updateScrollStatus()
     updateTrackYScrollTop()
     updateTrackXScrollLeft()
     updateBarSize()
@@ -224,12 +226,12 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   onBeforeUnmount(() => {
     contentListener.value?.stop()
     if (yBarPressed.value) {
-      document.removeEventListener('mousemove', handleYScrollMouseMove)
-      document.removeEventListener('mouseup', handleYScrollMouseUp)
+      off(document, 'mousemove', handleYScrollMouseMove)
+      off(document, 'mouseup', handleYScrollMouseUp)
     }
     if (xBarPressed.value) {
-      document.removeEventListener('mousemove', handleXScrollMouseMove)
-      document.removeEventListener('mouseup', handleXScrollMouseUp)
+      off(document, 'mousemove', handleXScrollMouseMove)
+      off(document, 'mouseup', handleXScrollMouseUp)
     }
   })
 

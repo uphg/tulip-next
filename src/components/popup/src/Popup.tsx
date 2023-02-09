@@ -114,8 +114,8 @@ const Popup = defineComponent({
       } else {
         open()
         nextTick(() => {
-          document.addEventListener('mousedown', handleDomMousedown)
-          document.addEventListener('mouseup', handleDomMouseup)
+          on(document, 'mousedown', handleDomMousedown)
+          on(document, 'mouseup', handleDomMouseup)
         })
       }
     }
@@ -137,7 +137,7 @@ const Popup = defineComponent({
         closeTimerId.value = setTimeout(() => {
           if (closeTimerId.value) {
             closeTimerId.value = null
-            document.removeEventListener('mouseover', handleDomMouseover)
+            off(document, 'mouseover', handleDomMouseover)
             close()
           }
         }, 200)
@@ -153,8 +153,8 @@ const Popup = defineComponent({
     function handleDomMouseup(event: MouseEvent) {
       if (!isTrigger(event) && !isPopup(event) && mousedown.value) {
         close()
-        document.removeEventListener('mousedown', handleDomMousedown)
-        document.removeEventListener('mouseup', handleDomMouseup)
+        off(document, 'mousedown', handleDomMousedown)
+        off(document, 'mouseup', handleDomMouseup)
       }
       if (mousedown.value) {
         mousedown.value = false
