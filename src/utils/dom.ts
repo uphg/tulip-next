@@ -74,3 +74,11 @@ export const getRelativeDOMPosition = (el: Element | HTMLElement) => {
 export const getRect = (el: HTMLElement | null, property: string)=>{
   return el?.getBoundingClientRect?.()[property as keyof DOMRect] as number
 }
+
+export function getParentNode(node: Node): Node | null {
+  // document type
+  if (node.nodeType === 9) {
+    return null
+  }
+  return node.parentNode
+}

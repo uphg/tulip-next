@@ -33,3 +33,8 @@ export type MaybeComputedRef<T> = MaybeReadonlyRef<T> | MaybeRef<T>
  * ```
  */
 export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
+
+
+export interface EventHandler<Evt extends Event = any> {
+  (e: Evt): void
+}

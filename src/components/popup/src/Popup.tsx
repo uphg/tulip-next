@@ -1,9 +1,9 @@
 import { computed, createApp, defineComponent, h, nextTick, onMounted, onUnmounted, ref, shallowRef, toRef, Transition, watch } from 'vue'
-import { getRelativeDOMPosition, isTarget, toNumber, withAttrs } from '../../../utils'
+import { getRelativeDOMPosition, isTarget, toNumber, withAttrs, on, off } from '../../../utils'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import zindexable, { updateZIndex } from './zindexble'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
-import type { VueInstance } from '../../../types'
+import type { Fn, VueInstance } from '../../../types'
 
 const Popup = defineComponent({
   name: 'TuPopup',
@@ -25,7 +25,9 @@ const Popup = defineComponent({
     const mousedown = ref(false)
     const closeTimerId = ref<NodeJS.Timeout | null>(null)
 
-    const on = {
+    let scrollableNodes: Array<Element | Document> = [] // p, div, document
+
+    const events = {
       hover: { onMouseover },
       click: { onClick },
       focus: { onFocus: open, onBlur: close },
@@ -60,7 +62,8 @@ const Popup = defineComponent({
     function openPopup() {
       updateZIndex(foothold.value!)
       dom.value = getRelativeDOMPosition(trigger.value!)
-      loadDomEventListener()
+      loadScrollListener()
+      loadResizeListener()
       updateVisible(true)
     }
 
@@ -86,7 +89,8 @@ const Popup = defineComponent({
     }
   
     function close() {
-      unloadDomEventListener()
+      unloadScrollListener()
+      unloadResizeListener()
       updateVisible(false)
     }
   
@@ -100,7 +104,7 @@ const Popup = defineComponent({
       if (!visible.value) {
         // 进入
         open()
-        nextTick(() => document.addEventListener('mouseover', handleDomMouseover))
+        nextTick(() => on(document, 'mouseover', handleDomMouseover))
       }
     }
 
@@ -166,21 +170,11 @@ const Popup = defineComponent({
     }
 
     function onEnter() {
-      update()
+      updatePosition()
     } 
   
     function onAfterLeave() {
       popupStyle.value = {}
-    }
-
-    function updatePopupStyle() {
-      const style = getPopupPosition(rawPlacement.value)
-      popupStyle.value = {
-        top: `${style.top}px`,
-        left: `${style.left}px`
-      }
-
-      props.updatePopup?.(popupStyle.value)
     }
 
     function getPopupToViewPosition(type: PopupProps['placement']) {
@@ -260,6 +254,16 @@ const Popup = defineComponent({
       }
   
       return placementMap[type]
+    }
+
+    function updatePopupStyle() {
+      const style = getPopupPosition(rawPlacement.value)
+      popupStyle.value = {
+        top: `${style.top}px`,
+        left: `${style.left}px`
+      }
+
+      props.updatePopup?.(popupStyle.value)
     }
   
     function updatePlacement() {
@@ -507,20 +511,42 @@ const Popup = defineComponent({
   
     function handleDomResize() {
       dom.value = getRelativeDOMPosition(trigger.value!)
-      update()
+      updatePosition()
     }
-  
-    function loadDomEventListener() {
-      document.addEventListener('scroll', updatePlacement)
-      window.addEventListener('resize', handleDomResize)
+
+    function loadScrollListener() {
+      let scrollNode: Element | Document | null = trigger.value
+      while (true) {
+        scrollNode = getScrollParent(scrollNode)
+        if (scrollNode === null) break
+        scrollableNodes.push(scrollNode)
+      }
+      for (const el of scrollableNodes) {
+        on(el, 'scroll', onScroll)
+      }
     }
-  
-    function unloadDomEventListener() {
-      document.removeEventListener('scroll', updatePlacement)
-      window.removeEventListener('resize', handleDomResize)
+
+    function unloadScrollListener() {
+      for (const el of scrollableNodes) {
+        off(el, 'scroll', onScroll)
+      }
+      scrollableNodes = []
     }
-  
-    function update() {
+
+    function loadResizeListener() {
+      on(window, 'resize', handleDomResize)
+    }
+
+    function unloadResizeListener() {
+      off(window, 'resize', handleDomResize)
+    }
+
+    function onScroll() {
+      dom.value = getRelativeDOMPosition(trigger.value!)
+      updatePosition()
+    }
+
+    function updatePosition() {
       updatePopupStyle()
       updatePlacement()
     }
@@ -529,10 +555,40 @@ const Popup = defineComponent({
       zindexable.elementZIndex.delete(foothold.value!)
     })
 
-    context.expose({ update, rawPlacement, popup })
+    context.expose({ update: updatePosition, rawPlacement, popup })
 
-    return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...on })
+    return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...events })
   }
 })
+
+const reOverflowScroll = /(auto|scroll|overlay)/
+
+function getParentNode(node: Node): Node | null {
+  // document type === 9
+  return node.nodeType === 9 ? null : node.parentNode
+}
+
+function getScrollParent(node: Node | null): HTMLElement | Document | null {
+  if (node === null) return null
+
+  const parentNode = getParentNode(node) as HTMLElement
+
+  if (parentNode === null) {
+    return null
+  }
+
+  if (parentNode.nodeType === 9) {
+    return document
+  }
+
+  if (parentNode?.nodeType === 1) {
+    const { overflow, overflowX, overflowY } = getComputedStyle(parentNode)    
+    if (reOverflowScroll.test(overflow + overflowX + overflowY)) {
+      return parentNode
+    }
+  }
+
+  return getScrollParent(parentNode)
+}
 
 export default Popup
