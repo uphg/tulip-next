@@ -1,0 +1,40 @@
+$base = '.tu-selection-input'
+
+{$base}
+  display inline-flex
+  position relative
+  min-width 240px
+  min-height 34px
+  line-height 34px
+  border-radius 3px
+  padding 0 12px
+  &:hover
+    {$base}__border
+      border-color var(--tu-color-primary)
+  &--focus
+    {$base}__border
+      border-color var(--tu-color-primary)
+      box-shadow var(--tu-wave-active-box-shadow)
+  &:focus, &:focus-visible
+    outline none
+
+  &__wrapper
+    width 100%
+    position relative
+  
+  &__content
+    line-height inherit 
+
+  &__placeholder
+    color var(--tu-placeholder-color)
+    position absolute
+    inset 0
+
+  &__border
+    box-border()
+    position absolute
+    inset 0
+    pointer-events none
+    border-radius inherit
+    border 1px solid var(--tu-border-color)
+    transition var(--tu-box-shadow-transition), var(--tu-border-color-transition)

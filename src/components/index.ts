@@ -19,6 +19,8 @@ import { TuImage } from './image'
 import { TuImageGroup } from './image'
 import { TuDraggable } from './draggable'
 import { TuPopup } from './popup'
+import { TuCascader } from './cascader'
+import { TuSelectionInput } from './selection-input'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -46,7 +48,9 @@ const components = [
   TuImage,
   TuImageGroup,
   TuDraggable,
-  TuPopup
+  TuPopup,
+  TuCascader,
+  TuSelectionInput
 ]
 
 const { install } = makeInstaller(components)
@@ -76,6 +80,8 @@ export {
   TuImageGroup,
   TuDraggable,
   TuPopup,
+  TuCascader,
+  TuSelectionInput,
 
   // utils
   useDialog,

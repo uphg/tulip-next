@@ -10,8 +10,8 @@ const inputProps = {
     type: String as PropType<'text' | 'password' | 'textarea'>,
     default: 'text'
   },
-  disabled: Boolean,
-  placeholder: String
+  placeholder: String as PropType<string>,
+  disabled: Boolean as PropType<boolean>
 }
 
 const Input = defineComponent({
@@ -106,7 +106,6 @@ const Input = defineComponent({
             </div>
           )}
           <div class="tu-input__border" />
-          <div class="tu-input__state-border" />
         </div>
       )
     }
