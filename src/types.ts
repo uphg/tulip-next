@@ -9,11 +9,14 @@ export interface Position {
   y: number
 }
 
+export interface EventHandler<T, Evt extends Event = any> {
+  (this: T, ev: Evt): void
+}
+
 export type VueInstance = ComponentPublicInstance
 export type MaybeElement = HTMLElement | SVGElement | VueInstance | undefined | null
 export type MaybeElementRef = MaybeRef<MaybeElement>
 export type MaybeRef<T> = T | Ref<T>
-
 export type Arrayable<T> = T[] | T
 
 /**
@@ -33,8 +36,3 @@ export type MaybeComputedRef<T> = MaybeReadonlyRef<T> | MaybeRef<T>
  * ```
  */
 export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
-
-
-export interface EventHandler<Evt extends Event = any> {
-  (e: Evt): void
-}

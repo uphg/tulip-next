@@ -10,11 +10,11 @@ export interface EventDelegHandler {
 export type EventDelegOptions = boolean | EventListenerOptions | undefined
 export type EventDelegElement = Element | Document | Window
 
-export function on(
-  el: EventDelegElement,
+export function on<T extends EventDelegElement>(
+  el: T,
   eventName: string,
-  selector: string | EventHandler,
-  handler?: EventHandler | EventDelegOptions,
+  selector: string | EventHandler<T>,
+  handler?: EventHandler<T> | EventDelegOptions,
   options?: EventDelegOptions
 ) {
   if (!el || !eventName || !selector) return
@@ -40,10 +40,10 @@ export function on(
   return el
 }
 
-export function off(
-  el: EventDelegElement,
+export function off<T extends EventDelegElement>(
+  el: T,
   eventName: string,
-  handler: EventHandler,
+  handler: EventHandler<T>,
   options?: EventDelegOptions
 ) {
   if (!el || !eventName || !handler) return
