@@ -3,7 +3,7 @@ import { getRelativeDOMPosition, isTarget, toNumber, withAttrs, on, off } from '
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import zindexable, { updateZIndex } from './zindexble'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
-import type { Fn, VueInstance } from '../../../types'
+import type { VueInstance } from '../../../types'
 
 const Popup = defineComponent({
   name: 'TuPopup',
@@ -136,6 +136,7 @@ const Popup = defineComponent({
       if (visible.value) {
         closeTimerId.value = setTimeout(() => {
           if (closeTimerId.value) {
+            window.clearTimeout(closeTimerId.value)
             closeTimerId.value = null
             off(document, 'mouseover', handleDomMouseover)
             close()
@@ -552,7 +553,7 @@ const Popup = defineComponent({
     }
 
     onUnmounted(() => {
-      zindexable.elementZIndex.delete(foothold.value!)
+      foothold.value && zindexable.elementZIndex.delete(foothold.value)
     })
 
     context.expose({ update: updatePosition, rawPlacement, popup })
