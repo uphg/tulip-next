@@ -26,32 +26,32 @@ const Popup = defineComponent({
     let scrollableNodes: Array<Element | Document> = [] // p, div, document
 
     watch(toRef(props, 'visible'), value => {
-      value ? open() : close()
+      value ? handleOpen() : handleClose()
     })
 
-    function open() {
-      initialize.value ? openPopup() : initPopup()
+    function handleOpen() {
+      initialize.value ? handleOpenPopup() : initPopup()
     }
 
     function initPopup() {
       const div = document.createElement('div')
       div.className = 'tu-foothold'
       foothold.value = div
-
       document.body.appendChild(div)
+
       footholdApp.value = createApp({
         setup() {
           const visible = ref(false)
-          const stop = watch(toRef(props, 'visible'), (value) => {
+          const stopWatchHandle = watch(toRef(props, 'visible'), (value) => {
             visible.value = value!
           })
 
           onMounted(() => {
-            openPopup()
             visible.value = props.visible!
+            handleOpenPopup()
           })
 
-          onUnmounted(stop)
+          onUnmounted(stopWatchHandle)
           return () => props.disabled ? null : (
             <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
               {{
@@ -72,20 +72,20 @@ const Popup = defineComponent({
           )
         }
       })
-      footholdApp.value.mount(div)
 
+      footholdApp.value.mount(div)
       zindexable.elementZIndex.set(div, zindexable.nextZIndex)
       initialize.value = true
     }
 
-    function openPopup() {
+    function handleOpenPopup() {
       updateZIndex(foothold.value!)
       dom.value = getRelativeDOMPosition(trigger.value)
       loadScrollListener()
       loadResizeListener()
     }
 
-    function close() {
+    function handleClose() {
       unloadScrollListener()
       unloadResizeListener()
     }
@@ -187,7 +187,7 @@ const Popup = defineComponent({
         left: `${style.left}px`
       }
 
-      props.updatePopup?.(popupStyle.value)
+      props.onUpdateStyle?.(popupStyle.value)
     }
   
     function updatePlacement() {
@@ -482,7 +482,7 @@ const Popup = defineComponent({
       }
     })
 
-    context.expose({ update: updatePosition, rawPlacement, popup, trigger })
+    context.expose({ updatePosition, rawPlacement, popup, trigger })
 
     return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl })
   }

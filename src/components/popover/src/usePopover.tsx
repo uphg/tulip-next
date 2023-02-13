@@ -81,7 +81,7 @@ export function usePopover(
     return { [`tu-popover-arrow--${type}`]: !!type }
   }
 
-  function updatePopover() {
+  function onUpdateStyle() {
     if (props.hideArrow) return
     arrowClass.value = getArrowClass()
     arrowStyle.value = getArrowPosition()
@@ -96,7 +96,7 @@ export function usePopover(
       trigger={props.trigger}
       placement={props.placement}
       popupMargin={props.popoverMargin}
-      updatePopup={updatePopover}
+      onUpdateStyle={onUpdateStyle}
     >{{
       trigger: context.slots.trigger && (() => h(context.slots.trigger!()[0], { ...events })),
       default: (params: { close: Fn }) => [

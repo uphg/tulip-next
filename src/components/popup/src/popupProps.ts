@@ -22,6 +22,6 @@ export const popupProps = {
     type: [String, Number] as PropType<string | number>,
     default: 0
   },
-  updatePopup: Function as PropType<(value: UpdatePopupStyle) => void>,
-  width: [Number, String] as PropType<number | string | 'trigger'>
+  width: [Number, String] as PropType<number | string | 'trigger'>,
+  onUpdateStyle: Function as PropType<(value: UpdatePopupStyle) => void>,
 }
