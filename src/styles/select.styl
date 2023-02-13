@@ -1,0 +1,24 @@
+.tu-select
+  cursor pointer
+  display inline-flex
+  position relative
+  &-options
+    padding 4px
+  &-option-item
+    box-border()
+    cursor pointer
+    min-height 34px
+    padding 5px 12px
+    display flex
+    align-items center
+    border-radius 3px
+    transition background-color 0.25s
+    &:hover
+      background-color #f3f3f5
+    &--active
+      color var(--tu-color-primary)
+
+.tu-select-menu
+  border-radius 3px
+  background-color #fff
+  box-shadow var(--tu-menu-box-shadow)

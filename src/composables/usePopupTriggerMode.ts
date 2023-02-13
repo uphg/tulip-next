@@ -1,17 +1,23 @@
-import { computed, nextTick, ref, type Ref } from 'vue'
+import { computed, nextTick, ref, watch, type Ref } from 'vue'
 import { on, off, isTarget } from '../utils'
 import { unrefElement } from './unrefElement'
 import type { Fn, MaybeElementRef, VueInstance, MaybeElement, PopupTrigger } from '../types'
 
 export type UsePopupTriggerOptions = {
   popup: MaybeElementRef,
-  triggerMode: PopupTrigger,
+  triggerMode: PopupTrigger
+}
+
+export type UsePopupTriggerModeReturn = {
+  visible: Ref<boolean>,
+  events: { [k: string]: Fn },
   open: Fn,
-  close: Fn
+  close: Fn,
+  [k: string]: unknown
 }
 
 export function usePopupTriggerMode(_trigger: MaybeElementRef, options: UsePopupTriggerOptions) {
-  const { popup: _popup, triggerMode, open, close } = options
+  const { popup: _popup, triggerMode } = options
 
   const visible = ref(false)
   const trigger = computed(() => unrefElement(_trigger))
@@ -25,25 +31,21 @@ export function usePopupTriggerMode(_trigger: MaybeElementRef, options: UsePopup
     return isTarget(popup.value, event)
   }
 
-  const events = {
-    hover: useHoverTrigger(visible, { open, close, isPopup, isTrigger }),
-    click: useClickTrigger(visible, { open, close, isPopup, isTrigger }),
-    focus: { onFocus: open, onBlur: close },
-    manual: { },
-  }[triggerMode]
-
-  return { visible, popup, trigger, events }
+  return {
+    hover: useHoverTrigger(visible, { isPopup, isTrigger }),
+    click: useClickTrigger(visible, { isPopup, isTrigger }),
+    focus: useFocusTrigger(visible),
+    manual: { visible, events: {}, ...generateSwitch(visible) },
+  }[triggerMode] as UsePopupTriggerModeReturn
 }
 
 type TriggerModeOptions = {
-  open: Fn,
-  close: Fn,
   isPopup: (e: MouseEvent) => boolean,
   isTrigger: (e: MouseEvent) => boolean
 }
 
 function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
-  const { open, close, isPopup, isTrigger } = options
+  const { isPopup, isTrigger } = options
   const hovered = ref(false)
   const closeTimerId = ref<NodeJS.Timeout | null>(null)
 
@@ -51,9 +53,24 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
     hovered.value = true
     if (!visible.value) {
       // 进入
-      open()
+      visible.value = true
       nextTick(() => on(document, 'mouseover', handleDomMouseover))
     }
+  }
+
+  function handleHoverMoveOut() {
+    if (!hovered.value) return
+    if (visible.value) {
+      closeTimerId.value = setTimeout(() => {
+        if (closeTimerId.value) {
+          window.clearTimeout(closeTimerId.value)
+          closeTimerId.value = null
+          off(document, 'mouseover', handleDomMouseover)
+          visible.value = false
+        }
+      }, 200)
+    }
+    hovered.value = false
   }
 
   function handleDomMouseover(e: MouseEvent){
@@ -67,37 +84,20 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
     hovered.value = true
   }
 
-  function handleHoverMoveOut() {
-    if (!hovered.value) return
-    if (visible.value) {
-      closeTimerId.value = setTimeout(() => {
-        if (closeTimerId.value) {
-          window.clearTimeout(closeTimerId.value)
-          closeTimerId.value = null
-          off(document, 'mouseover', handleDomMouseover)
-          close()
-        }
-      }, 200)
-    }
-    hovered.value = false
-  }
+  const events = { onMouseover }
 
-  return { onMouseover }
+  return { visible, events, open: onMouseover, close: handleHoverMoveOut }
 }
 
 function useClickTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
-  const { open, close, isPopup, isTrigger } = options
+  const { isPopup, isTrigger } = options
   const mousedown = ref(false)
 
   function onClick() {
     if (visible.value) {
-      close()
+      visible.value = false
     } else {
       open()
-      nextTick(() => {
-        on(document, 'mousedown', handleDomMousedown)
-        on(document, 'mouseup', handleDomMouseup)
-      })
     }
   }
 
@@ -109,13 +109,36 @@ function useClickTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   function handleDomMouseup(event: MouseEvent) {
     if (!isTrigger(event) && !isPopup(event) && mousedown.value) {
       close()
-      off(document, 'mousedown', handleDomMousedown)
-      off(document, 'mouseup', handleDomMouseup)
     }
     if (mousedown.value) {
       mousedown.value = false
     }
   }
 
-  return { onClick }
+  function open() {
+    visible.value = true
+    nextTick(() => {
+      on(document, 'mousedown', handleDomMousedown)
+      on(document, 'mouseup', handleDomMouseup)
+    })
+  }
+
+  function close() {
+    visible.value = false
+    off(document, 'mousedown', handleDomMousedown)
+    off(document, 'mouseup', handleDomMouseup)
+  }
+
+  const events = { onClick }
+
+  return { visible, events, open, close }
+}
+
+function useFocusTrigger(visible: Ref<boolean>) {
+  const { open, close } = generateSwitch(visible)
+  return { visible, events: { onFocus: open, onBlur: close }, open, close }
+}
+
+function generateSwitch(visible: Ref<boolean>) {
+  return { open() { visible.value = true }, close() { visible.value = false } }
 }

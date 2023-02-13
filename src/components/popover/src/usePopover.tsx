@@ -38,12 +38,7 @@ export function usePopover(
   const rawPlacement = computed(() => unref((popup.value as Popup)?.rawPlacement))
   const popoverVisible = computed(() => props.trigger === 'manual' ? props.visible : visible.value)
 
-  const { events, visible } = usePopupTriggerMode(trigger, {
-    popup: popover,
-    triggerMode: props.trigger,
-    open: () => visible.value = true,
-    close: () => visible.value = false
-  })
+  const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popover, triggerMode: props.trigger })
 
   function getArrowPosition() {
     const { offsetWidth: popoverWidth, offsetHeight: popoverHeight } = withAttrs(popover.value)
@@ -98,8 +93,8 @@ export function usePopover(
       onUpdateStyle={onUpdateStyle}
     >{{
       trigger: context.slots.trigger && (() => h(context.slots.trigger!()[0], { ...events })),
-      default: (params: { close: Fn }) => [
-        <div class="tu-popover__content">{props.content || context.slots.default?.(params)}</div>,
+      default: () => [
+        <div class="tu-popover__content">{props.content || context.slots.default?.({ close })}</div>,
         props.hideArrow ? null : (
           <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>
             <div class="tu-popover-arrow"></div> 

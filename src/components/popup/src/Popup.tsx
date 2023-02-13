@@ -63,7 +63,7 @@ const Popup = defineComponent({
                       style={popupStyle.value}
                       {...context.attrs}
                     >
-                      {context.slots?.default?.({ close })}
+                      {context.slots?.default?.()}
                     </div>
                   ) : null
                 )

@@ -29,16 +29,8 @@ const Cascader = defineComponent({
     const popup = ref<HTMLElement | null>(null)
     const input = computed(() => isArray(props.value) ? props.value.join(' / ') : props.value || '')
 
-    const { events, visible } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click', open, close })
+    const { events, visible } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
-
-    function open() {
-      visible.value = true
-    }
-
-    function close() {
-      visible.value = false
-    }
 
     return () => (
       <TuPopup
@@ -48,9 +40,9 @@ const Cascader = defineComponent({
       >
         {{
           trigger: () => (
-            <div ref={triggerEl} class="tu-cascader">
-              <TuSelectionInput value={input.value} focus={visible.value} onClick={onClick}>
-                {{ suffix:() => <TuBaseIcon is={ArrowBottomSmallRound} /> }}
+            <div ref={triggerEl} class="tu-cascader" onClick={onClick}>
+              <TuSelectionInput value={input.value} focus={visible.value}>
+                {{ suffix:() => <TuBaseIcon is={ArrowBottomSmallRound}/> }}
               </TuSelectionInput>
             </div>
           ),
