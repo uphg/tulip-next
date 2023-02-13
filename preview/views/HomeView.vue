@@ -17,7 +17,8 @@
       <!-- <TestImage2 /> -->
       <!-- <TestDraggable /> -->
       <!-- <TestPopupScroll /> -->
-      <TestCascader />
+      <!-- <TestCascader /> -->
+      <TestSelect />
       <!-- <TestSelectionInput /> -->
     </div>
   </main>
@@ -42,6 +43,7 @@ import TestDraggable from './TestDraggable.vue'
 import TestPopupScroll from './TestPopupScroll.vue'
 import TestCascader from './TestCascader.vue'
 import TestSelectionInput from './TestSelectionInput.vue'
+import TestSelect from './TestSelect.vue'
 </script>
 
 <style lang="stylus">
