@@ -5,7 +5,7 @@
     </div>
     <TuCollapseTransition>
       <div class="e-code-wrap tu-dark" v-show="visible">
-        <tu-scrollbar>
+        <tu-scrollbar class="e-code-scrollbar">
           <div class="e-code-source language-vue" v-html="decodeURIComponent(html)"></div>
         </tu-scrollbar>
         <button ref="copyEl" :class="['e-button-copy', { copied }]" @click="copy"></button>
@@ -99,6 +99,10 @@ function copy() {
   & > .e-button-copy:focus + .lang {
     opacity: 0;
   }
+}
+
+.e-code-scrollbar {
+  max-height: 800px;
 }
 
 .e-button-copy {
