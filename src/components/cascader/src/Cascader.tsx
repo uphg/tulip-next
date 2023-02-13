@@ -43,17 +43,14 @@ const Cascader = defineComponent({
     return () => (
       <TuPopup
         visible={visible.value}
-        trigger={'manual'}
-        placement={'bottom-start'}
+        placement="bottom-start"
         popupMargin="3"
       >
         {{
           trigger: () => (
             <div ref={triggerEl} class="tu-cascader">
               <TuSelectionInput value={input.value} focus={visible.value} onClick={onClick}>
-                {{
-                  suffix:() => <TuBaseIcon is={ArrowBottomSmallRound} />
-                }}
+                {{ suffix:() => <TuBaseIcon is={ArrowBottomSmallRound} /> }}
               </TuSelectionInput>
             </div>
           ),

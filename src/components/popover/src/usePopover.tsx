@@ -93,7 +93,6 @@ export function usePopover(
       class={className}
       disabled={props.disabled}
       visible={popoverVisible.value}
-      trigger={props.trigger}
       placement={props.placement}
       popupMargin={props.popoverMargin}
       onUpdateStyle={onUpdateStyle}
