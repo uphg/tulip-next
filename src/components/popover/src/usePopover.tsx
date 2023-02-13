@@ -1,13 +1,19 @@
-import { ref, computed, type SetupContext, unref, type Ref } from 'vue'
+import { ref, h, computed, type SetupContext, unref, type Ref, watch, toRef, onMounted } from 'vue'
 import type { PlacementTypes, PopoverProps } from './popoverProps'
 import { toNumber, withAttrs } from '../../../utils'
 import TuPopup from '../../popup/src/Popup'
+import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
+import type { Fn } from '../../../types'
 
 type UsePopoverOptions = {
   className?: string | string[]
 }
 
-type Popup = typeof TuPopup & { popup: HTMLElement, rawPlacement: Ref<PlacementTypes> }
+type Popup = typeof TuPopup & {
+  popup: HTMLElement,
+  trigger: HTMLElement,
+  rawPlacement: Ref<PlacementTypes>
+}
 
 // space
 const arrowHeight = 6
@@ -27,8 +33,17 @@ export function usePopover(
   const popup = ref<Popup | null>(null)
   const arrowClass = ref({})
   const arrowStyle = ref({})
-  const popover = computed(() => (popup.value as Popup).popup)
+  const popover = computed(() => popup.value?.popup)
+  const trigger = computed(() => popup.value?.trigger)
   const rawPlacement = computed(() => unref((popup.value as Popup)?.rawPlacement))
+  const popoverVisible = computed(() => props.trigger === 'manual' ? props.visible : visible.value)
+
+  const { events, visible } = usePopupTriggerMode(trigger, {
+    popup: popover,
+    triggerMode: props.trigger,
+    open: () => visible.value = true,
+    close: () => visible.value = false
+  })
 
   function getArrowPosition() {
     const { offsetWidth: popoverWidth, offsetHeight: popoverHeight } = withAttrs(popover.value)
@@ -77,14 +92,14 @@ export function usePopover(
       ref={popup}
       class={className}
       disabled={props.disabled}
-      visible={props.visible}
+      visible={popoverVisible.value}
       trigger={props.trigger}
       placement={props.placement}
       popupMargin={props.popoverMargin}
       updatePopup={updatePopover}
     >{{
-      trigger: context.slots.trigger,
-      default: (params: { close: () => void }) => [
+      trigger: context.slots.trigger && (() => h(context.slots.trigger!()[0], { ...events })),
+      default: (params: { close: Fn }) => [
         <div class="tu-popover__content">{props.content || context.slots.default?.(params)}</div>,
         props.hideArrow ? null : (
           <div class={['tu-popover-arrow-wrapper', arrowClass.value]} style={arrowStyle.value}>

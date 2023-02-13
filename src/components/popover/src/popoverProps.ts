@@ -1,9 +1,8 @@
 import type { PropType, ExtractPropTypes } from 'vue'
+import type { PopupTrigger } from '../../../types'
 import { includes } from '../../../utils'
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>
-
-export type PopoverTrigger = 'hover' | 'click' | 'focus' | 'manual'
 
 export type PlacementTypes = 'top-start' | 'top' | 'top-end' |
 'left-start' | 'left' | 'left-end' |
@@ -21,7 +20,7 @@ const triggerTypes = ['hover', 'click', 'focus', 'manual']
 
 export const popoverProps = {
   trigger: {
-    type: String as PropType<PopoverTrigger>,
+    type: String as PropType<PopupTrigger>,
     default: 'hover',
     validator(value: string) {
       return includes(triggerTypes, value)

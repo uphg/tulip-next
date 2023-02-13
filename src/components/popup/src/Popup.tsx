@@ -1,41 +1,31 @@
-import { computed, createApp, defineComponent, h, nextTick, onMounted, onUnmounted, ref, shallowRef, toRef, Transition, watch } from 'vue'
-import { getRelativeDOMPosition, isTarget, toNumber, withAttrs, on, off } from '../../../utils'
+import { computed, createApp, defineComponent, h, onMounted, onUnmounted, ref, shallowRef, toRef, Transition, watch, watchEffect, type App } from 'vue'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import zindexable, { updateZIndex } from './zindexble'
+import { getRelativeDOMPosition, toNumber, withAttrs, on, off, toPx } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
 import type { VueInstance } from '../../../types'
+import { unrefElement } from '../../../composables/unrefElement'
 
 const Popup = defineComponent({
   name: 'TuPopup',
   inheritAttrs: false,
   props: popupProps,
+  emits: ['update:visible'],
   setup(props, context) {
     const popup = shallowRef<HTMLElement | null>(null)
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
     const foothold = shallowRef<HTMLElement | null>(null)
+    const footholdApp = ref<App<Element> | null>(null)
     
     const dom = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle>({})
-
-    const visible = ref(false)
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
     const initialize = ref(false)
-
-    const hovered = ref(false)
-    const mousedown = ref(false)
-    const closeTimerId = ref<NodeJS.Timeout | null>(null)
+    const trigger = computed(() => unrefElement(triggerEl))
 
     let scrollableNodes: Array<Element | Document> = [] // p, div, document
 
-    const events = {
-      hover: { onMouseover },
-      click: { onClick },
-      focus: { onFocus: open, onBlur: close },
-      manual: { },
-    }[props.trigger]
-
-    const trigger = computed(() => (triggerEl.value as VueInstance)?.$el ?? triggerEl.value)
-    props.trigger === 'manual' && watch(toRef(props, 'visible'), value => {
+    watch(toRef(props, 'visible'), value => {
       value ? open() : close()
     })
 
@@ -47,127 +37,57 @@ const Popup = defineComponent({
       const div = document.createElement('div')
       div.className = 'tu-foothold'
       foothold.value = div
+
       document.body.appendChild(div)
-      const app = createApp({
+      footholdApp.value = createApp({
         setup() {
-          onMounted(openPopup)
-          return renderPopup
+          const visible = ref(false)
+          const stop = watch(toRef(props, 'visible'), (value) => {
+            visible.value = value!
+          })
+
+          onMounted(() => {
+            openPopup()
+            visible.value = props.visible!
+          })
+
+          onUnmounted(stop)
+          return () => props.disabled ? null : (
+            <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+              {{
+                default: () => (
+                  visible.value ? (
+                    <div
+                      class="tu-popup"
+                      ref={popup}
+                      style={popupStyle.value}
+                      {...context.attrs}
+                    >
+                      {context.slots?.default?.({ close })}
+                    </div>
+                  ) : null
+                )
+              }}
+            </Transition>
+          )
         }
       })
-      app.mount(div)
+      footholdApp.value.mount(div)
+
       zindexable.elementZIndex.set(div, zindexable.nextZIndex)
       initialize.value = true
     }
 
     function openPopup() {
       updateZIndex(foothold.value!)
-      dom.value = getRelativeDOMPosition(trigger.value!)
+      dom.value = getRelativeDOMPosition(trigger.value)
       loadScrollListener()
       loadResizeListener()
-      updateVisible(true)
     }
 
-    function renderPopup() {
-      return props.disabled ? null : (
-        <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
-          {{
-            default: () => (
-              visible.value ? (
-                <div
-                  class="tu-popup"
-                  ref={popup}
-                  style={popupStyle.value}
-                  {...context.attrs}
-                >
-                  {context.slots?.default?.({ close })}
-                </div>
-              ) : null
-            )
-          }}
-        </Transition>
-      )
-    }
-  
     function close() {
       unloadScrollListener()
       unloadResizeListener()
-      updateVisible(false)
-    }
-  
-    function updateVisible(value: boolean) {
-      visible.value = value
-      context?.emit?.('update:visible', value)
-    }
-
-    function onMouseover() {
-      hovered.value = true
-      if (!visible.value) {
-        // 进入
-        open()
-        nextTick(() => on(document, 'mouseover', handleDomMouseover))
-      }
-    }
-
-    function onClick() {
-      if (visible.value) {
-        close()
-      } else {
-        open()
-        nextTick(() => {
-          on(document, 'mousedown', handleDomMousedown)
-          on(document, 'mouseup', handleDomMouseup)
-        })
-      }
-    }
-  
-    function handleDomMouseover(e: MouseEvent){
-      isPopup(e) || isTrigger(e) ? handleHoverMoveIn() : handleHoverMoveOut()
-    }
-  
-    function handleHoverMoveIn() {
-      if (!closeTimerId.value) return
-      window.clearTimeout(closeTimerId.value!)
-      closeTimerId.value = null
-      hovered.value = true
-    }
-  
-    function handleHoverMoveOut() {
-      if (!hovered.value) return
-      if (visible.value) {
-        closeTimerId.value = setTimeout(() => {
-          if (closeTimerId.value) {
-            window.clearTimeout(closeTimerId.value)
-            closeTimerId.value = null
-            off(document, 'mouseover', handleDomMouseover)
-            close()
-          }
-        }, 200)
-      }
-      hovered.value = false
-    }
-  
-    function handleDomMousedown(event: MouseEvent) {
-      if (isPopup(event)) return
-      mousedown.value = true
-    }
-  
-    function handleDomMouseup(event: MouseEvent) {
-      if (!isTrigger(event) && !isPopup(event) && mousedown.value) {
-        close()
-        off(document, 'mousedown', handleDomMousedown)
-        off(document, 'mouseup', handleDomMouseup)
-      }
-      if (mousedown.value) {
-        mousedown.value = false
-      }
-    }
-
-    function isTrigger(event: MouseEvent) {
-      return isTarget(trigger.value, event)
-    }
-  
-    function isPopup(event: MouseEvent) {
-      return isTarget(popup.value, event)
     }
 
     function onEnter() {
@@ -192,11 +112,12 @@ const Popup = defineComponent({
       }
     }
   
-    function getPopupPosition(type: PopupProps['placement']) {
+    function getPopupPosition(type: PopupProps['placement'], options?: { width: number }) {
       const popupMargin = toNumber(props.popupMargin)
       const { top: domTop, left: domLeft } = dom.value
-      const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value as HTMLElement)
-      const { offsetHeight: popupHeight, offsetWidth: popupWidth } = withAttrs(popup.value as HTMLElement)
+      const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value)
+      const { offsetHeight: popupHeight } = withAttrs(popup.value)
+      const popupWidth = options?.width ?? withAttrs(popup.value).offsetWidth
   
       const topToTop = domTop - popupHeight - popupMargin
       const leftToLeft = domLeft - popupWidth - popupMargin
@@ -258,8 +179,10 @@ const Popup = defineComponent({
     }
 
     function updatePopupStyle() {
-      const style = getPopupPosition(rawPlacement.value)
+      const width = props.width === 'trigger' ? trigger.value.offsetWidth : props.width
+      const style = getPopupPosition(rawPlacement.value, { width })
       popupStyle.value = {
+        width: toPx(width),
         top: `${style.top}px`,
         left: `${style.left}px`
       }
@@ -511,7 +434,7 @@ const Popup = defineComponent({
     }
   
     function handleDomResize() {
-      dom.value = getRelativeDOMPosition(trigger.value!)
+      dom.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
 
@@ -543,7 +466,7 @@ const Popup = defineComponent({
     }
 
     function onScroll() {
-      dom.value = getRelativeDOMPosition(trigger.value!)
+      dom.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
 
@@ -553,12 +476,15 @@ const Popup = defineComponent({
     }
 
     onUnmounted(() => {
-      foothold.value && zindexable.elementZIndex.delete(foothold.value)
+      if (foothold.value) {
+        zindexable.elementZIndex.delete(foothold.value)
+        footholdApp.value!.unmount()
+      }
     })
 
-    context.expose({ update: updatePosition, rawPlacement, popup })
+    context.expose({ update: updatePosition, rawPlacement, popup, trigger })
 
-    return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl, ...events })
+    return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl })
   }
 })
 

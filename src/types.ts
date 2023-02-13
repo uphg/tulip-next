@@ -36,3 +36,6 @@ export type MaybeComputedRef<T> = MaybeReadonlyRef<T> | MaybeRef<T>
  * ```
  */
 export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
+
+
+export type PopupTrigger = 'hover' | 'click' | 'focus' | 'manual'
