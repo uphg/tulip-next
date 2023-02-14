@@ -3,7 +3,7 @@ import type { PlacementTypes, PopoverProps } from './popoverProps'
 import { toNumber, withAttrs } from '../../../utils'
 import TuPopup from '../../popup/src/Popup'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
-import type { Fn } from '../../../types'
+import type { ElementStyle } from '../../../types'
 
 type UsePopoverOptions = {
   className?: string | string[]
@@ -32,10 +32,10 @@ export function usePopover(
   const className = ['tu-popover tu-popover--default', options?.className]
   const popup = ref<Popup | null>(null)
   const arrowClass = ref({})
-  const arrowStyle = ref({})
+  const arrowStyle = ref<ElementStyle>({})
   const popover = computed(() => popup.value?.popup)
   const trigger = computed(() => popup.value?.trigger)
-  const rawPlacement = computed(() => unref((popup.value as Popup)?.rawPlacement))
+  const rawPlacement = computed(() => unref(popup.value?.rawPlacement))
   const popoverVisible = computed(() => props.trigger === 'manual' ? props.visible : visible.value)
 
   const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popover, triggerMode: props.trigger })
@@ -72,7 +72,7 @@ export function usePopover(
   }
 
   function getArrowClass() {
-    const type = arrowClassMap.find((item) => item[0].includes(rawPlacement.value))?.[1]
+    const type = rawPlacement.value && arrowClassMap.find((item) => item[0].includes(rawPlacement.value!))?.[1]
     return { [`tu-popover-arrow--${type}`]: !!type }
   }
 
