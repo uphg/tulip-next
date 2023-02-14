@@ -3,8 +3,26 @@ import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps
 import zindexable, { updateZIndex } from './zindexble'
 import { getRelativeDOMPosition, toNumber, withAttrs, on, off, toPx } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
-import type { Fn, VueInstance } from '../../../types'
+import type { ElementStyle, Fn, VueInstance } from '../../../types'
 import { unrefElement } from '../../../composables/unrefElement'
+
+const originMap = {
+  'top-start': 'bottom left',
+  'top': 'bottom',
+  'top-end': 'bottom right',
+
+  'left-start': 'top right',
+  'left': 'right',
+  'left-end': 'bottom right',
+
+  'right-start': 'top left',
+  'right': 'left',
+  'right-end': 'bottom left',
+
+  'bottom-start': 'top left',
+  'bottom': 'top',
+  'bottom-end': 'top right'
+}
 
 const Popup = defineComponent({
   name: 'TuPopup',
@@ -18,7 +36,7 @@ const Popup = defineComponent({
     const footholdApp = ref<App<Element> | null>(null)
     
     const dom = ref({ top: 0, left: 0 })
-    const popupStyle = ref<UpdatePopupStyle>({})
+    const popupStyle = ref<UpdatePopupStyle & ElementStyle>({})
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
     const initialize = ref(false)
     const trigger = computed(() => unrefElement(triggerEl))
@@ -196,7 +214,8 @@ const Popup = defineComponent({
       popupStyle.value = {
         width: toPx(width),
         top: `${style.top}px`,
-        left: `${style.left}px`
+        left: `${style.left}px`,
+        transformOrigin: originMap[rawPlacement.value]
       }
 
       props.onUpdateStyle?.(popupStyle.value)

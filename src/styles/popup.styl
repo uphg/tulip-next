@@ -13,3 +13,19 @@
   z-index auto
   & > *
     pointer-events all
+
+$popup = '.tu-popup'
+
+{$popup}-enter-from
+  transform scale3d(0.8, 0.8, 1)
+
+{$popup}-leave-active
+  transform scale3d(0.8, 0.8, 1)
+
+{$popup}-enter-active,
+{$popup}-leave-active
+  transition opacity 0.25s ease, transform 0.25s ease
+
+{$popup}-enter-from,
+{$popup}-leave-to
+  opacity 0
