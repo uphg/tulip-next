@@ -10,10 +10,10 @@ $base = '.tu-selection-input'
   padding 0 12px
   &:hover
     {$base}__border
-      border-color var(--tu-color-primary)
+      border-color var(--tu-primary-color)
   &--focus
     {$base}__border
-      border-color var(--tu-color-primary)
+      border-color var(--tu-primary-color)
       box-shadow var(--tu-wave-active-box-shadow)
   &:focus, &:focus-visible
     outline none
@@ -28,14 +28,14 @@ $base = '.tu-selection-input'
   &__suffix
     display flex
     align-items center
-    margin-right -2px
     .tu-base-icon
       width 16px
       height 16px
-      color #c2c2c2;
+      margin-right -2px
+      color var(--tu-text-color-placeholder)
 
   &__placeholder
-    color var(--tu-placeholder-color)
+    color var(--tu-text-color-placeholder)
     position absolute
     inset 0
 

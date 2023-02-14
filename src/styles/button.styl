@@ -85,7 +85,7 @@ type-style(base, light, dark)
   position relative
   min-height $button-height
   font-size 14px
-  color var(--tu-color-text-primary)
+  color var(--tu-text-color-primary)
   background-color #ffffff
   border-radius var(--tu-border-radius)
   cursor pointer
@@ -134,12 +134,12 @@ type-style(base, light, dark)
 
 {$base}
   &--default
-    --ripple-color var(--tu-color-primary)
+    --ripple-color var(--tu-primary-color)
     border-default(var(--tu-button-border-color))
     &:hover, &:focus
-      line-color(var(--tu-color-primary))
+      line-color(var(--tu-primary-color))
     &:active
-      line-color(var(--tu-color-primary-dark))
+      line-color(var(--tu-primary-color-dark))
     &{$base}--dashed
       background-color #0000
       {$base}__border, {$base}__state-border
@@ -148,15 +148,15 @@ type-style(base, light, dark)
       background-color #0000
 
   &--primary
-    type-style(var(--tu-color-primary), var(--tu-color-primary-light), var(--tu-color-primary-dark))
+    type-style(var(--tu-primary-color), var(--tu-primary-color-light), var(--tu-primary-color-dark))
   &--success
-    type-style(var(--tu-color-success), var(--tu-color-success-hover), var(--tu-color-success-active))
+    type-style(var(--tu-success-color), var(--tu-success-color-hover), var(--tu-success-color-pressed))
   &--info
-    type-style(var(--tu-color-info), var(--tu-color-info-hover), var(--tu-color-info-active))
+    type-style(var(--tu-info-color), var(--tu-info-color-hover), var(--tu-info-color-pressed))
   &--warning
-    type-style(var(--tu-color-warning), var(--tu-color-warning-hover), var(--tu-color-warning-active))
+    type-style(var(--tu-warning-color), var(--tu-warning-color-hover), var(--tu-warning-color-pressed))
   &--error
-    type-style(var(--tu-color-error), var(--tu-color-error-hover), var(--tu-color-error-active))
+    type-style(var(--tu-error-color), var(--tu-error-color-hover), var(--tu-error-color-pressed))
 
   &{$base}--round
     shape($round-padding, $rounded-size)
@@ -193,6 +193,6 @@ type-style(base, light, dark)
     padding 0
     min-height auto
     &--default
-      color var(--tu-color-text-primary)
+      color var(--tu-text-color-primary)
 
 
