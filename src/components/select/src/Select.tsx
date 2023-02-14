@@ -1,7 +1,7 @@
 import { computed, defineComponent, ref, nextTick, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
-import { ArrowBottomSmallRound, Tick } from '../../../icons'
+import { ArrowBottomRoundSmall, Tick } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn } from '../../../types'
@@ -55,7 +55,7 @@ const Select = defineComponent({
           trigger: () => (
             <div ref={triggerEl} class="tu-select" onClick={onClick}>
               <TuSelectionInput value={input.value} focus={visible.value}>
-                {{ suffix:() => <TuBaseIcon is={ArrowBottomSmallRound}/> }}
+                {{ suffix:() => <TuBaseIcon is={ArrowBottomRoundSmall}/> }}
               </TuSelectionInput>
             </div>
           ),

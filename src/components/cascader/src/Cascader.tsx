@@ -2,7 +2,7 @@ import { computed, defineComponent, ref, nextTick, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { isArray } from '../../../utils'
-import { ArrowBottomSmallRound } from '../../../icons'
+import { ArrowBottomRoundSmall } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn } from '../../../types'
@@ -42,7 +42,7 @@ const Cascader = defineComponent({
           trigger: () => (
             <div ref={triggerEl} class="tu-cascader" onClick={onClick}>
               <TuSelectionInput value={input.value} focus={visible.value}>
-                {{ suffix:() => <TuBaseIcon is={ArrowBottomSmallRound}/> }}
+                {{ suffix:() => <TuBaseIcon is={ArrowBottomRoundSmall}/> }}
               </TuSelectionInput>
             </div>
           ),
