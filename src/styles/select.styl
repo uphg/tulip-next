@@ -14,13 +14,25 @@
     &-item
       box-border()
       cursor pointer
-      min-height 34px
-      padding 5px 12px
+      min-height var(--tu-select-min-height)
+      padding 5px var(--tu-select-column-padding)
+      padding-right calc(var(--tu-select-column-padding) + 20px)
+      position relative
       display flex
       align-items center
       border-radius 3px
       font-size var(--tu-font-size)
       transition background-color 0.25s
+    &__check
+      width 16px
+      height 16px
+      margin-top auto
+      margin-bottom auto
+      position absolute
+      top 0
+      right var(--tu-select-column-padding)
+      bottom 0
+      color var(--tu-color-primary)
 
 .tu-select-menu
   border-radius 3px

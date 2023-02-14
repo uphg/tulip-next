@@ -1,7 +1,7 @@
 import { computed, defineComponent, ref, nextTick, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
-import { ArrowBottomSmallRound } from '../../../icons'
+import { ArrowBottomSmallRound, Tick } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn } from '../../../types'
@@ -72,7 +72,10 @@ const Select = defineComponent({
                       key={index + 'opt'}
                       onClick={() => handleClickOptionItem(item)}
                       onMousemove={() => handleMousemoveOptionItem(item)}
-                    >{item.label}</div>
+                    >
+                      <span class="tu-select-option__content">{item.label}</span>
+                      {item.value === props.value ? <TuBaseIcon class="tu-select-option__check" is={Tick} /> : null}
+                    </div>
                   ))}
                 </div>
               </TuScrollbar>
