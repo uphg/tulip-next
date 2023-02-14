@@ -2,21 +2,25 @@
   cursor pointer
   display inline-flex
   position relative
+  font-size var(--tu-font-size)
   &-options
     padding 4px
-  &-option-item
-    box-border()
-    cursor pointer
-    min-height 34px
-    padding 5px 12px
-    display flex
-    align-items center
-    border-radius 3px
-    transition background-color 0.25s
-    &:hover
+
+  &-option
+    &--checkmark
       background-color #f3f3f5
     &--active
       color var(--tu-color-primary)
+    &-item
+      box-border()
+      cursor pointer
+      min-height 34px
+      padding 5px 12px
+      display flex
+      align-items center
+      border-radius 3px
+      font-size var(--tu-font-size)
+      transition background-color 0.25s
 
 .tu-select-menu
   border-radius 3px

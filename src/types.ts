@@ -39,3 +39,4 @@ export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
 
 
 export type PopupTrigger = 'hover' | 'click' | 'focus' | 'manual'
+export type ElementStyle = undefined | Record<string, string | undefined>

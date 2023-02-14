@@ -3,7 +3,7 @@ import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps
 import zindexable, { updateZIndex } from './zindexble'
 import { getRelativeDOMPosition, toNumber, withAttrs, on, off, toPx } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
-import type { VueInstance } from '../../../types'
+import type { Fn, VueInstance } from '../../../types'
 import { unrefElement } from '../../../composables/unrefElement'
 
 const Popup = defineComponent({
@@ -53,7 +53,17 @@ const Popup = defineComponent({
 
           onUnmounted(stopWatchHandle)
           return () => props.disabled ? null : (
-            <Transition onEnter={onEnter} onAfterLeave={onAfterLeave} name="tu-zoom">
+            <Transition
+              onBeforeEnter={props.onBeforeEnter}
+              onEnter={handleEnter}
+              onAfterEnter={props.onAfterEnter}
+              onEnterCancelled={props.onEnterCancelled}
+              onBeforeLeave={props.onBeforeLeave}
+              onLeave={props.onLeave}
+              onAfterLeave={handleAfterLeave}
+              onLeaveCancelled={props.onLeaveCancelled}
+              name="tu-zoom"
+            >
               {{
                 default: () => (
                   visible.value ? (
@@ -90,12 +100,14 @@ const Popup = defineComponent({
       unloadResizeListener()
     }
 
-    function onEnter() {
+    function handleEnter(el: Element, done: Fn) {
       updatePosition()
+      props.onEnter?.(el, done)
     } 
   
-    function onAfterLeave() {
+    function handleAfterLeave(el: Element) {
       popupStyle.value = {}
+      props.onAfterLeave?.(el)
     }
 
     function getPopupToViewPosition(type: PopupProps['placement']) {

@@ -7,26 +7,40 @@ import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn } from '../../../types'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 
-type OptionItem = { label: string, value: string | number | symbol }
+type SelectValue = string | number | symbol
+type SelectOptionItem = { label: string, value: SelectValue }
 
 const Select = defineComponent({
   name: 'TuSelect',
   props: {
-    value: [String, Number, Symbol] as PropType<string | number | symbol>,
-    options: Array as PropType<OptionItem[]>
+    value: [String, Number, Symbol] as PropType<SelectValue>,
+    options: Array as PropType<SelectOptionItem[]>
   },
   emits: ['update:value'],
   setup(props, context) {
     const triggerEl = ref<HTMLElement | null>(null)
     const popup = ref<HTMLElement | null>(null)
+    const checkmark = ref(getDefaultCheckmark())
     const input = computed(() => props.options?.find((item) => item.value === props.value)?.label)
 
     const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
 
-    function onClickOptionItem(item: OptionItem) {
+    function handleClickOptionItem(item: SelectOptionItem) {
       context.emit('update:value', item.value)
       close()
+    }
+
+    function handleMousemoveOptionItem(item: SelectOptionItem) {
+      checkmark.value = item.value
+    }
+
+    function onAfterLeave() {
+      checkmark.value = getDefaultCheckmark()
+    }
+
+    function getDefaultCheckmark() {
+      return props.value ?? props.options?.[0]?.value
     }
 
     return () => (
@@ -35,6 +49,7 @@ const Select = defineComponent({
         placement="bottom-start"
         popupMargin="3"
         width="trigger"
+        onAfterLeave={onAfterLeave}
       >
         {{
           trigger: () => (
@@ -50,9 +65,13 @@ const Select = defineComponent({
                 <div class="tu-select-options">
                   {props.options?.map((item, index) => (
                     <div
-                      class={['tu-select-option-item', { 'tu-select-option-item--active': item.value === props.value }]}
+                      class={['tu-select-option-item', {
+                        'tu-select-option--active': item.value === props.value,
+                        'tu-select-option--checkmark': item.value === checkmark.value 
+                      }]}
                       key={index + 'opt'}
-                      onClick={() => onClickOptionItem(item)}
+                      onClick={() => handleClickOptionItem(item)}
+                      onMousemove={() => handleMousemoveOptionItem(item)}
                     >{item.label}</div>
                   ))}
                 </div>

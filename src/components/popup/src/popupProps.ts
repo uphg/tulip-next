@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { PlacementTypes } from '../../popover/src/popoverProps'
-import type { PopupTrigger } from '../../../types'
+import type { Fn, PopupTrigger } from '../../../types'
 
 export type PopupProps = ExtractPropTypes<typeof popupProps>
 
@@ -24,4 +24,12 @@ export const popupProps = {
   },
   width: [Number, String] as PropType<number | string | 'trigger'>,
   onUpdateStyle: Function as PropType<(value: UpdatePopupStyle) => void>,
+  onBeforeEnter: Function as PropType<(el: Element) => void>,
+  onEnter: Function as PropType<(el: Element, done: Fn) => void>,
+  onAfterEnter: Function as PropType<(el: Element) => void>,
+  onEnterCancelled: Function as PropType<(el: Element) => void>,
+  onBeforeLeave: Function as PropType<(el: Element) => void>,
+  onLeave: Function as PropType<(el: Element, done: Fn) => void>,
+  onAfterLeave: Function as PropType<(el: Element) => void>,
+  onLeaveCancelled: Function as PropType<(el: Element) => void>
 }
