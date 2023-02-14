@@ -21,8 +21,8 @@ const CollapseTransition = defineComponent({
   
     function enter(el: Element) {
       void el.scrollHeight
-      const marginTop = el.getAttribute('data-old-margin-top') || ''
-      const marginBottom = el.getAttribute('data-old-margin-bottom') || ''
+      const marginTop = el.getAttribute('data-old-margin-top') ?? ''
+      const marginBottom = el.getAttribute('data-old-margin-bottom') ?? ''
       setStyle(el, { height: `${el.scrollHeight}px`, marginTop, marginBottom })
     }
   
@@ -53,8 +53,8 @@ const CollapseTransition = defineComponent({
   
     function afterLeave(el: Element) {
       leaveStatus.value = false
-      const marginTop = el.getAttribute('data-old-margin-top') || ''
-      const marginBottom = el.getAttribute('data-old-margin-bottom') || ''
+      const marginTop = el.getAttribute('data-old-margin-top') ?? ''
+      const marginBottom = el.getAttribute('data-old-margin-bottom') ?? ''
       removeClass(el, transitionClass)
       setStyle(el, { height: '', marginTop, marginBottom })
     }

@@ -38,8 +38,8 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function updateScrollStatus() {
-    containerScrollTop.value = container.value?.scrollTop || 0
-    containerScrollLeft.value = container.value?.scrollLeft || 0
+    containerScrollTop.value = container.value?.scrollTop ?? 0
+    containerScrollLeft.value = container.value?.scrollLeft ?? 0
   }
 
   function updateBarSize() {
@@ -149,7 +149,7 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function handleXScrollMouseDown(e: MouseEvent) {
-    memoXLeft = container.value?.scrollLeft || 0
+    memoXLeft = container.value?.scrollLeft ?? 0
     memoMouseX = e.clientX
     xBarPressed.value = true
     on(document, 'mousemove', handleXScrollMouseMove)

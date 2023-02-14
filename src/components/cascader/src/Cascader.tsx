@@ -27,7 +27,7 @@ const Cascader = defineComponent({
   setup(props, context) {
     const triggerEl = ref<HTMLElement | null>(null)
     const popup = ref<HTMLElement | null>(null)
-    const input = computed(() => isArray(props.value) ? props.value.join(' / ') : props.value || '')
+    const input = computed(() => isArray(props.value) ? props.value.join(' / ') : props.value ?? '')
 
     const { events, visible } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }

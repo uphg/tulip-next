@@ -75,7 +75,7 @@ const Button = defineComponent({
           onClick={handleClick}
         >
           <TuExpandTransition>
-            {icon || loading ? (
+            {icon ?? loading ? (
               <span
                 class={[
                   'tu-button__icon',
