@@ -1,7 +1,65 @@
-.tu-cascader
+$base = '.tu-cascader'
+$option = $base + '-option'
+
+{$base}
+  cursor pointer
   display inline-flex
   position relative
 
-.tu-cascader-menu
+{$base}-menu
   background-color #fff
   box-shadow var(--tu-menu-box-shadow)
+  border-radius 3px
+  overflow hidden
+  display flex
+  width max-content
+
+{$base}-submenu
+  --tu-disabled-bg-color rgba(46, 51, 56, 0.05)
+  height 220px
+  &:not(:first-child)
+    border-left 1px solid var(--tu-border-color-light)
+
+{$option}
+  box-border()
+  position relative
+  display flex
+  justify-content space-between
+  align-items center
+  cursor pointer
+  min-height var(--tu-select-min-height)
+  min-width 180px
+  padding-left 18px
+  font-size var(--tu-font-size)
+  transition background-color 0.25s
+  &:hover
+    background-color #f3f3f5
+
+  &--pending
+    background-color #f3f3f5
+    {$option}__icon--checkmark
+      color var(--tu-primary-color)
+
+  &--disabled
+    color var(--tu-disabled-color)
+    background-color #0000
+    cursor not-allowed
+    &__suffix
+      color var(--tu-disabled-color)
+    &:hover
+      background-color #0000
+  &--pending&--disabled
+    background-color var(--tu-disabled-bg-color)
+    {$option}__icon--checkmark
+      color var(--tu-primary-color-light)
+
+  &__suffix
+    width 32px
+    color var(--tu-text-color-secondary)
+    display flex
+    justify-content center
+    align-items center
+
+  &__icon
+    width 16px
+    height 16px
