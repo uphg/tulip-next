@@ -1,20 +1,21 @@
 <template>
   <div style="padding: 30px">
     <br v-for="item in 10" :key="item"/>
-    <tu-select v-model:value="value" :options="options" />
-    <tu-select v-model:value="value2" :options="options" />
+    <div><tu-select v-model:value="value" :options="options"/></div>
+    <br />
+    <div><tu-select v-model:value="value2" :options="options"/></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const value = ref(5)
+const value = ref(1)
 const value2 = ref(null)
 
 const options = ref([
   { label: '选项1', value: 0 },
-  { label: '选项2', value: 1 },
+  { label: '选项2', value: 1, disabled: true },
   { label: '选项3', value: 2 },
   { label: '选项4', value: 3 },
   { label: '选项5', value: 4 },
