@@ -4,11 +4,10 @@ import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall, Tick } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
-import type { Fn } from '../../../types'
+import type { Fn, SelectValue } from '../../../types'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 
-type SelectValue = string | number | symbol
-type SelectOptionItem = { label: string, value: SelectValue }
+type SelectOptionItem = { label: string, value: SelectValue, disabled?: boolean }
 
 const Select = defineComponent({
   name: 'TuSelect',
@@ -65,16 +64,17 @@ const Select = defineComponent({
                 <div class="tu-select-options">
                   {props.options?.map((item, index) => (
                     <div
-                      class={['tu-select-option-item', {
-                        'tu-select-option--active': item.value === props.value,
-                        'tu-select-option--checkmark': item.value === checkmark.value 
+                      class={['tu-select-option', {
+                        'tu-select-option--disabled': !!item?.disabled,
+                        'tu-select-option--selected': item.value === props.value,
+                        'tu-select-option--pending': item.value === checkmark.value && !item?.disabled
                       }]}
                       key={index + 'opt'}
-                      onClick={() => handleClickOptionItem(item)}
+                      onClick={!item?.disabled ? (() => handleClickOptionItem(item)) : void 0}
                       onMousemove={() => handleMousemoveOptionItem(item)}
                     >
                       <span class="tu-select-option__content">{item.label}</span>
-                      {item.value === props.value ? <TuBaseIcon class="tu-select-option__check" is={Tick} /> : null}
+                      {item.value === props.value ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}
                     </div>
                   ))}
                 </div>

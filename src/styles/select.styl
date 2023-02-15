@@ -7,23 +7,29 @@
     padding 4px
 
   &-option
-    &--checkmark
-      background-color #f3f3f5
-    &--active
+    box-border()
+    cursor pointer
+    min-height var(--tu-select-min-height)
+    padding 5px var(--tu-select-column-padding)
+    padding-right calc(var(--tu-select-column-padding) + 20px)
+    position relative
+    display flex
+    align-items center
+    border-radius 3px
+    font-size var(--tu-font-size)
+    transition background-color 0.25s
+    &--selected
       color var(--tu-primary-color)
-    &-item
-      box-border()
-      cursor pointer
-      min-height var(--tu-select-min-height)
-      padding 5px var(--tu-select-column-padding)
-      padding-right calc(var(--tu-select-column-padding) + 20px)
-      position relative
-      display flex
-      align-items center
-      border-radius 3px
-      font-size var(--tu-font-size)
-      transition background-color 0.25s
-    &__check
+    &--pending
+      background-color #f3f3f5
+    &--disabled
+      color var(--tu-disabled-color)
+      background-color #0000
+      cursor not-allowed
+    &--selected&--disabled
+      color var(--tu-primary-color-light)
+
+    &__icon--checkmark
       width 16px
       height 16px
       margin-top auto
@@ -32,7 +38,7 @@
       top 0
       right var(--tu-select-column-padding)
       bottom 0
-      color var(--tu-primary-color)
+      color inherit
 
 .tu-select-menu
   border-radius 3px

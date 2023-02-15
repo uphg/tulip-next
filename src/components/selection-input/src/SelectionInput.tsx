@@ -4,7 +4,7 @@ const SelectionInput = defineComponent({
   name: 'TuSelectionInput',
   props: {
     value: {
-      type: [String, Number, null] as PropType<string | number | null>,
+      type: [String, Number, Symbol, null] as PropType<string | number | symbol | null>,
       default: ''
     },
     placeholder: String as PropType<string>,
