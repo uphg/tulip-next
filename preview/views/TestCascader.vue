@@ -13,7 +13,7 @@ import { ref } from 'vue'
 
 const value = ref(null)
 const value2 = ref(['1', '1-2'])
-const value3 = ref(['2', '2-2',  '2-2-3'])
+const value3 = ref(['2', '2-5',  '2-5-10'])
 
 const options = ref([
   {
@@ -284,6 +284,30 @@ const options = ref([
           {
             label: '选项 2-5-5',
             value: '2-5-5'
+          },
+          {
+            label: '选项 2-5-6',
+            value: '2-5-6'
+          },
+          {
+            label: '选项 2-5-7',
+            value: '2-5-7'
+          },
+          {
+            label: '选项 2-5-8',
+            value: '2-5-8'
+          },
+          {
+            label: '选项 2-5-9',
+            value: '2-5-9'
+          },
+          {
+            label: '选项 2-5-10',
+            value: '2-5-10'
+          },
+          {
+            label: '选项 2-5-11',
+            value: '2-5-11'
           },
         ]
       }
