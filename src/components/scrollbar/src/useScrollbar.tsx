@@ -214,7 +214,7 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     updateBarSize()
   }
 
-  context.expose({ update, scrollTo, scrollBy })
+  context.expose({ update, scrollTo, scrollBy, container })
 
   onMounted(() => {
     updateBarSize()

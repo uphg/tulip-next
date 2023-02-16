@@ -46,6 +46,8 @@ const Select = defineComponent({
       if (selectedIndex.value && selectedIndex.value > 5) {
         const container = scrollbar.value?.container
         const { offsetHeight: containerHeight } = withAttrs(container)
+        console.log('containerHeight')
+        console.log(containerHeight)
         const height = (selectedIndex.value + 1) * 34 - containerHeight + 8 // 8 为 padding 间隙误差
         scrollbar.value?.scrollTo({ top: height })
       }
