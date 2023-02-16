@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const value = ref(1)
+const value = ref(9)
 const value2 = ref(null)
 
 const options = ref([

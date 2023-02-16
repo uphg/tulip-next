@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import Tulp from 'src/index'
+import Tulp from '../src/index'
 
 import App from './App.vue'
 import router from './router'
