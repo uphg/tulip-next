@@ -41,3 +41,8 @@ export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
 export type PopupTrigger = 'hover' | 'click' | 'focus' | 'manual'
 export type ElementStyle = undefined | Record<string, string | undefined>
 export type SelectValue = number | string | symbol | null
+
+export type Scrollbar = {
+  container: HTMLElement | null,
+  scrollTo: (options?: ScrollToOptions) => void
+}

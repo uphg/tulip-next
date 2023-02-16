@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, toRef, watch } from 'vue'
+import { defineComponent, ref, onMounted, toRef, watch, provide } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall } from '../../../icons'
@@ -7,6 +7,7 @@ import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn, SelectValue } from '../../../types'
 import { cascaderProps, type CascaderOption } from './cascaderProps'
 import CascaderSubmenu from './CascaderSubmenu'
+import { useEmitter } from '../../../utils'
 
 const Cascader = defineComponent({
   name: 'TuCascader',
@@ -18,6 +19,7 @@ const Cascader = defineComponent({
     const input = ref('')
     const selected = ref<CascaderOption[] | []>([])
 
+    const emitter = useEmitter()
     const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
 
@@ -27,6 +29,10 @@ const Cascader = defineComponent({
       const nextIndex = index + 1
       selected.value[index].value = option.value
       selected.value[index].label = option.label
+
+      if (selected.value.length > nextIndex) {
+        selected.value.splice(nextIndex, selected.value.length - nextIndex)
+      }
 
       if (option.children?.length) {
         selected.value[nextIndex] = {
@@ -39,6 +45,10 @@ const Cascader = defineComponent({
         updateValue()
         close()
       }
+    }
+
+    function onEnter() {
+      emitter.emit('onEnter')
     }
 
     function onAfterLeave() {
@@ -102,6 +112,7 @@ const Cascader = defineComponent({
         visible={visible.value}
         placement="bottom-start"
         popupMargin="3"
+        onEnter={onEnter}
         onAfterLeave={onAfterLeave}
       >
         {{
@@ -118,6 +129,7 @@ const Cascader = defineComponent({
                 <CascaderSubmenu
                   value={selected.value[index].value}
                   options={item.children}
+                  emitter={emitter}
                   onUpdateValue={(option: CascaderOption) => handleClickOption(index, option)}
                 />
               ))}

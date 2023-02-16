@@ -16,9 +16,11 @@ $option = $base + '-option'
 
 {$base}-submenu
   --tu-disabled-bg-color rgba(46, 51, 56, 0.05)
-  height 220px
+  height calc(var(--tu-option-height) * 6.6)
   &:not(:first-child)
     border-left 1px solid var(--tu-border-color-light)
+  & > .tu-scrollbar
+    height 100%
 
 {$option}
   box-border()
