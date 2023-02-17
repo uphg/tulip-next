@@ -8,13 +8,13 @@ import type { Fn, SelectValue, Scrollbar } from '../../../types'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import { withAttrs } from '../../../utils'
 
-type SelectOptionItem = { label: string, value: SelectValue, disabled?: boolean }
+export type SelectOption = { label: string, value: SelectValue, disabled?: boolean }
 
 const Select = defineComponent({
   name: 'TuSelect',
   props: {
     value: [String, Number, Symbol] as PropType<SelectValue>,
-    options: Array as PropType<SelectOptionItem[]>
+    options: Array as PropType<SelectOption[]>
   },
   emits: ['update:value'],
   setup(props, context) {
@@ -28,12 +28,12 @@ const Select = defineComponent({
     const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
 
-    function handleClickOption(item: SelectOptionItem) {
+    function handleClickOption(item: SelectOption) {
       context.emit('update:value', item.value)
       close()
     }
 
-    function handleMousemoveOption(item: SelectOptionItem) {
+    function handleMousemoveOption(item: SelectOption) {
       checkmark.value = item.value
     }
 
