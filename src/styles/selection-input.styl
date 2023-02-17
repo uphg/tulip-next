@@ -1,9 +1,9 @@
 $base = '.tu-selection-input'
 
 {$base}
-  display inline-flex
+  display flex
   position relative
-  min-width 240px
+  min-width 280px
   min-height 34px
   line-height 34px
   border-radius 3px
@@ -37,6 +37,8 @@ $base = '.tu-selection-input'
 
   &__placeholder
     color var(--tu-text-color-placeholder)
+    font-size var(--tu-font-size)
+    line-height inherit
     position absolute
     inset 0
 
