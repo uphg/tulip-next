@@ -67,15 +67,16 @@ const Cascader = defineComponent({
       const optionValues = [...value]
       let options = props.options
 
-      while (optionValues.length) {
+      while (optionValues.length && options?.length) {
         const value = optionValues.shift()
-        const option = options?.find(option => option.value === value)
+        const option = options?.find((option) => option?.value === value)
         if (option) {
-          result.push({
+          const newOption: CascaderOption = {
             value: option.value,
             label: option.label,
             children: options!
-          })
+          }
+          result.push(newOption)
           options = option?.children
           if (!options) {
             return result

@@ -41,6 +41,7 @@ const CascaderSubmenu = defineComponent({
         <TuScrollbar ref={scrollbar}>
           <div class="tu-cascader-options">
             {props.options?.map((item, index) => {
+              if (!item) return null
               if (!item.children && item.value === props.value) {
                 selectedIndex.value = index
               }

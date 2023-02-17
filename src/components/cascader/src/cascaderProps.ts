@@ -7,7 +7,7 @@ export interface CascaderOption {
   label: string | number | null,
   value: string | number | symbol | null,
   disabled?: boolean,
-  children: CascaderOption[]
+  children?: CascaderOption[]
 }
 
 export const cascaderProps = {
