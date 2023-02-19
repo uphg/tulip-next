@@ -2,19 +2,13 @@
   <div class="app">
     <!-- <Sidebar />
     <main class="content">
-      <RouterView />
+      <HomeView />
     </main> -->
-    <RouterView />
+    <HomeView />
   </div>
 </template>
 
 <script setup lang="ts">
 import Sidebar from './components/Sidebar.vue'
-import { RouterLink, RouterView } from 'vue-router'
+import HomeView from './views/HomeView.vue'
 </script>
-
-<!-- <style scoped>
-.content {
-  margin-left: 240px;
-}
-</style> -->
