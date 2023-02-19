@@ -12,6 +12,7 @@ export type SelectOption = { label: string, value: SelectValue, disabled?: boole
 
 const Select = defineComponent({
   name: 'TuSelect',
+  inheritAttrs: false,
   props: {
     value: [String, Number, Symbol] as PropType<SelectValue>,
     options: Array as PropType<SelectOption[]>

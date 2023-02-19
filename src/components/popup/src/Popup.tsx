@@ -33,8 +33,8 @@ const Popup = defineComponent({
     const popup = shallowRef<HTMLElement | null>(null)
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
     const foothold = shallowRef<HTMLElement | null>(null)
+
     const footholdApp = ref<App<Element> | null>(null)
-    
     const dom = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle & ElementStyle>({})
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
@@ -211,6 +211,7 @@ const Popup = defineComponent({
     function updatePopupStyle() {
       const width = props.width === 'trigger' ? trigger.value.offsetWidth : props.width
       const style = getPopupPosition(rawPlacement.value, { width })
+
       popupStyle.value = {
         width: toPx(width),
         top: `${style.top}px`,
