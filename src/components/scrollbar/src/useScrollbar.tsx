@@ -1,6 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, Transition, vShow, withDirectives, type SetupContext } from 'vue'
 import type { ScrollbarProps } from './scrollbarProps'
-import { toPx, withAttrs, on, off, toNumber } from '../../../utils'
+import { toPx, on, off } from '../../../utils'
 import { useResizeObserver, type UseResizeObserverReturn } from '../../../composables/useResizeObserver'
 
 export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
@@ -49,40 +49,38 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function updateYBarSize() {
-    const { offsetHeight: contentHeight } = withAttrs(content.value)
-    const { offsetHeight: containerHeight } = withAttrs(container.value)
-    const { offsetHeight: yTrackHeight } = withAttrs(yTrack.value)
-    if (contentHeight === 0 || containerHeight === 0) {
+    if (!content.value || !container.value || !yTrack.value) {
       yTrackBarSize.value = 0
-      return
+      return 
     }
+    const { offsetHeight: contentHeight } = content.value
+    const { offsetHeight: containerHeight } = container.value
+    const { offsetHeight: yTrackHeight } = yTrack.value
     // Old: (containerHeight / contentHeight) * yTrackHeight
     const newBarSize = Math.min(yTrackHeight, (containerHeight * yTrackHeight) / contentHeight)
     yTrackBarSize.value = newBarSize
   }
 
   function updateXBarSize() {
-    const { offsetWidth: xTrackWidth } = withAttrs(xTrack.value)
-    const { offsetWidth: contentWidth } = withAttrs(content.value)
-    const { offsetWidth: containerWidth } = withAttrs(container.value)
-    if (contentWidth === 0 || containerWidth === 0) {
+    if (!content.value || !container.value || !xTrack.value) {
       xTrackBarSize.value = 0
       return
     }
-
+    const { offsetWidth: xTrackWidth } = xTrack.value
+    const { offsetWidth: contentWidth } = content.value
+    const { offsetWidth: containerWidth } = container.value
     // Old: (containerWidth / contentWidth) * xTrackWidth
     xTrackBarSize.value = Math.min(xTrackWidth, (containerWidth * xTrackWidth) / contentWidth)
   }
 
   function updateYTrackScrollTop() {
-    const { offsetHeight: contentHeight } = withAttrs(content.value)
-    const { offsetHeight: containerHeight } = withAttrs(container.value)
-    if (contentHeight === 0 || containerHeight === 0) {
+    if (!content.value || !container.value || !yTrack.value) {
       yTrackScrollTop.value = 0
       return
     }
-
-    const { offsetHeight: yTrackHeight } = withAttrs(yTrack.value)
+    const { offsetHeight: contentHeight } = content.value
+    const { offsetHeight: containerHeight } = container.value
+    const { offsetHeight: yTrackHeight } = yTrack.value
     const heightDiff = contentHeight! - containerHeight
     const rawRailScrollTop = (containerScrollTop.value / heightDiff) * (yTrackHeight - yTrackBarSize.value)
     const newYBarHeight = containerHeight / contentHeight * yTrackHeight
@@ -103,11 +101,11 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function handleYScrollMouseMove(e: MouseEvent) {
-    if (!yBarPressed.value) return
+    if (!yBarPressed.value || !content.value || !container.value || !yTrack.value) return
 
-    const { offsetHeight: yTrackHeight } = withAttrs(yTrack.value)
-    const { offsetHeight: contentHeight } = withAttrs(content.value)
-    const { offsetHeight: containerHeight } = withAttrs(container.value)
+    const { offsetHeight: contentHeight } = content.value
+    const { offsetHeight: containerHeight } = container.value
+    const { offsetHeight: yTrackHeight } = yTrack.value
 
     const moveSize = e.clientY - mouseY
     const top = moveSize * (contentHeight - containerHeight) / (yTrackHeight - yTrackBarSize.value)
@@ -131,13 +129,13 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function updateXTrackScrollLeft() {
-    const { offsetWidth: contentWidth } = withAttrs(content.value)
-    const { offsetWidth: containerWidth } = withAttrs(container.value)
-    if (contentWidth === 0 || containerWidth === 0) {
+    if (!content.value || !container.value || !xTrack.value) {
       xTrackScrollLeft.value = 0
       return
     }
-    const { offsetWidth: xTrackWidth } = withAttrs(xTrack.value)
+    const { offsetWidth: contentWidth } = content.value
+    const { offsetWidth: containerWidth } = container.value
+    const { offsetWidth: xTrackWidth } = xTrack.value
     const widthDiff = contentWidth - containerWidth
     const rawRailScrollLeft = (containerScrollLeft.value / widthDiff) * (xTrackWidth - xTrackBarSize.value)
     const newXBarWidth = containerWidth / contentWidth * xTrackWidth
@@ -158,10 +156,10 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   }
 
   function handleXScrollMouseMove(e: MouseEvent) {
-    if (!xBarPressed.value) return
-    const { offsetWidth: xTrackWidth } = withAttrs(xTrack.value)
-    const { offsetWidth: contentWidth } = withAttrs(content.value)
-    const { offsetWidth: containerWidth } = withAttrs(container.value)
+    if (!xBarPressed.value || !content.value || !container.value || !xTrack.value) return
+    const { offsetWidth: contentWidth } = content.value
+    const { offsetWidth: containerWidth } = container.value
+    const { offsetWidth: xTrackWidth } = xTrack.value
 
     const moveSize = e.clientX - mouseX
     const left = moveSize * (contentWidth - containerWidth) / (xTrackWidth - xTrackBarSize.value)
@@ -215,13 +213,9 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     updateBarSize()
   }
 
-  context.expose({ update, scrollTo, scrollBy, container })
-
   onMounted(() => {
     updateBarSize()
-    contentResizeObserver.value = useResizeObserver(content, () => {
-      update()
-    })
+    contentResizeObserver.value = useResizeObserver(content, update)
   })
 
   onBeforeUnmount(() => {
@@ -235,6 +229,8 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
       off(document, 'mouseup', handleXScrollMouseUp)
     }
   })
+
+  context.expose({ update, scrollTo, scrollBy, container })
 
   return () => {
     const YBar = (
