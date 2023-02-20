@@ -115,13 +115,6 @@ button/group
 | -------- | ------------------ | --------- | ------- |
 | vertical | 是否竖直排列按钮组 | `boolean` | `false` |
 
-## Button Group 插槽
-
-| 名称    | 参数        | 说明                   |
-| ------- | ----------- | ---------------------- |
-| default | button 按钮 | 用于添加按钮组中的按钮 |
-
-
 <script setup lang="ts">
 import ButtonBase from '../examples/button/base.vue'
 import ButtonSize from '../examples/button/size.vue'

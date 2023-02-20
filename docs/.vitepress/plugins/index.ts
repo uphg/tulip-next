@@ -22,7 +22,7 @@ async function mdPlugin(md) {
     },
 
     render(tokens, idx) {
-      const m = tokens[idx].info.trim().match(demoRegex)
+      // const m = tokens[idx].info.trim().match(demoRegex)
       if (tokens[idx].nesting === 1 /* means the tag is opening */) {
         const sourceFileToken = tokens[idx + 2]
         if (!sourceFileToken) return

@@ -117,14 +117,14 @@ function copy() {
   border-radius: 4px;
   width: 40px;
   height: 40px;
-  background-color: var(--vp-code-block-bg);
+  background-color: transparent;
   opacity: 0;
   cursor: pointer;
   background-image: var(--vp-icon-copy);
   background-position: 50%;
   background-size: 20px;
   background-repeat: no-repeat;
-  transition: opacity .4s;
+  transition: background-color, opacity .4s;
   &:hover {
     background-color: var(--vp-code-copy-code-hover-bg);
   }

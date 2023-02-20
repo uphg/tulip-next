@@ -4,8 +4,7 @@ export const sidebar = {
       text: '介绍',
       items: [
         { text: 'Tulp UI', link: '/docs/introduction' },
-        { text: '快速开始', link: '/docs/getting-started' },
-        { text: 'Demo', link: '/docs/demo' },
+        { text: '快速开始', link: '/docs/getting-started' }
       ]
     },
     {
@@ -26,6 +25,8 @@ export const sidebar = {
         { text: 'Scrollbar 滚动条', link: '/docs/scrollbar' },
         { text: 'Draggable 拖拽', link: '/docs/draggable' },
         { text: 'Image 图片', link: '/docs/image' },
+        { text: 'Cascader 级联选择', link: '/docs/cascader' },
+        { text: 'Select 级联选择', link: '/docs/select' }
       ]
     }
   ]

@@ -1,28 +1,35 @@
 ---
 layout: home
 
-title: VitePress
-titleTemplate: Vite & Vue Powered Static Site Generator
+title: Tulip
+titleTemplate: A Vue 3 component library
 
 hero:
-  name: VitePress
-  text: Vite & Vue Powered Static Site Generator
-  tagline: Simple, powerful, and performant. Meet the modern SSG framework you've always wanted.
+  name: Tulip
+  text: Vue3 UI 组件库
+  tagline: 全部使用 TypeScript 编写，样式与组件分离，支持 Tree Shaking
+  image:
+    src: /logo.svg
+    alt: Vite
   actions:
     - theme: brand
-      text: Get Started
+      text: 快速开始
       link: /docs/getting-started
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/vuejs/vitepress
+      text: 在 GitHub 上查看
+      link: https://github.com/uphg/tulp-next
 
 features:
-  - title: "Vite: The DX that can't be beat"
-    details: Feel the speed of Vite. Instant server start and lightning fast HMR that stays fast regardless of the app size.
-  - title: Designed to be simplicity first
-    details: With Markdown-centered content, it's built to help you focus on writing and deployed with minimum configuration.
-  - title: Power of Vue meets Markdown
-    details: Enhance your content with all the features of Vue in Markdown, while being able to customize your site with Vue.
-  - title: Fully static yet still dynamic
-    details: Go wild with true SSG + SPA architecture. Static on page load, but engage users with 100% interactivity from there.
+  - icon: 🚀
+    title: Vue 3
+    details: 基于 Proxy 的响应式对象，较为完善的 Vite 工具链，script setup 更简洁的组合式 API 语法
+  - icon: 🦾
+    title: TypeScript
+    details: JavaScript 的语法超集，基于 JavaScript 语言的基础上添加了静态类型验证
+  - icon: 🌳
+    title: Tree Shaking
+    details: 使用 Tree-Shaking 机制排除组件中未引用的代码（dead code）
+  - icon: 💡
+    title: 可读性良好的代码
+    details: 简洁明了的函数、变量命名，统一的代码风格，尽量简化函数的逻辑
 ---
