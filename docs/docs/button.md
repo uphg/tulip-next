@@ -4,31 +4,11 @@
 
 ## 基本用法
 
-使用 type 改变它的默认主题色
+使用 hue 改变它的默认主题色
 
 ::: demo
 
 button/base
-
-:::
-
-## 大小
-
-按钮有三种大小。
-
-::: demo
-
-button/size
-
-:::
-
-## 虚线按钮
-
-使用 `dashed` 设置虚线按钮。
-
-::: demo
-
-button/dashed
 
 :::
 
@@ -42,23 +22,31 @@ button/icon
 
 :::
 
-## 文本按钮
-
-按钮可以是文本。
+## 禁用状态
 
 ::: demo
 
-button/text
+button/disabled
 
 :::
 
-## 形状
+## 加载状态
 
-按钮有多种形状。
+按钮有 loading 状态。
 
 ::: demo
 
-button/shape
+button/loading
+
+:::
+
+## 虚线按钮
+
+使用 `dashed` 设置虚线按钮。
+
+::: demo
+
+button/dashed
 
 :::
 
@@ -72,13 +60,33 @@ button/ghost
 
 :::
 
-## 加载状态
+## 大小
 
-按钮有 loading 状态。
+按钮有三种大小。
 
 ::: demo
 
-button/loading
+button/size
+
+:::
+
+## 形状
+
+按钮有多种形状。
+
+::: demo
+
+button/shape
+
+:::
+
+## 文本按钮
+
+按钮可以是文本。
+
+::: demo
+
+button/text
 
 :::
 
@@ -125,6 +133,7 @@ import ButtonShape from '../examples/button/shape.vue'
 import ButtonGhost from '../examples/button/ghost.vue'
 import ButtonLoading from '../examples/button/loading.vue'
 import ButtonGroup from '../examples/button/group.vue'
+import ButtonDisabled from '../examples/button/disabled.vue'
 </script>
 
 <style lang="stylus">
