@@ -5,14 +5,7 @@ import { TuIcon } from '../../icon/index'
 import { CheckCircle, CloseCircle, WarningCircle, InfoCircle } from '../../../icons'
 
 interface DialogOptions {
-  icon: Component,
-  title?: string
-  content?: string,
-  confirm: () => void,
-  cancel: () => void
-}
-
-interface DialogTypeOption {
+  icon?: Component,
   title?: string
   content?: string,
   confirm?: () => void,
@@ -20,7 +13,7 @@ interface DialogTypeOption {
 }
 
 interface DialogApi {
-  [key: string]: (options: DialogTypeOption) => DialogApi
+  [key: string]: (options: DialogOptions) => { destroy: () => void }
 }
 
 const typeMap: [string, Component][] = [
@@ -30,7 +23,7 @@ const typeMap: [string, Component][] = [
   ['error', CloseCircle],
 ]
 
-const createDialog = (options: DialogOptions) => {
+function createDialog(options: DialogOptions) {
   const { icon, title, content, cancel, confirm } = options
   const div = document.createElement('div')
   document.body.appendChild(div)
@@ -38,11 +31,12 @@ const createDialog = (options: DialogOptions) => {
   const app = createApp({
     setup() {
       const visible = ref(false)
-      const handleCancel = () => {
+
+      function handleCancel() {
         visible.value = false
         cancel?.()
       }
-      const handleConfirm = () => {
+      function handleConfirm() {
         visible.value = false
         confirm?.()
       }
@@ -55,7 +49,7 @@ const createDialog = (options: DialogOptions) => {
         <Dialog
           title={title}
           v-model={[visible.value, 'visible']}
-          onClosed={unmounDialog}
+          onClosed={destroy}
         >
           {{
             header: () => [
@@ -94,32 +88,34 @@ const createDialog = (options: DialogOptions) => {
     }
   })
 
-  const mounDialog = () => {
+  function moun() {
     app.mount(div)
     div.remove()
   }
 
-  const unmounDialog = () => {
+  function destroy() {
     app.unmount()
   }
 
-  mounDialog()
+  moun()
+
+  return {
+    destroy
+  }
 }
 
-const createTypeApi = (icon: Component, api: DialogApi) => (
-  (options?: DialogTypeOption) => {
-    createDialog({ icon, ...options } as DialogOptions)
-    return api
+function createTypeApi(icon: Component) {
+  return (options?: DialogOptions) => {
+    return createDialog({ icon, ...options })
   }
-)
+}
 
-export const useDialog = () => {
-
-  const api = {} as DialogApi
+export function useDialog() {
+  const api: DialogApi = {} 
 
   typeMap.forEach((item) => {
     const [type, icon] = item
-    api[type] = createTypeApi(icon, api)
+    api[type] = createTypeApi(icon)
   })
 
   return api

@@ -22,29 +22,29 @@ export default defineComponent({
   setup(props, context) {
     const { emit } = context
 
-    const close = () => {
+    function close() {
       emit('update:visible', false)
     }
 
-    const handleOpen = () => {
+    function handleOpen() {
       emit('open')
       offBodyScroll()
     }
 
-    const handleClose = () => {
+    function handleClose() {
       emit('close')
     }
 
-    const onAfterEnter = () => {
+    function onAfterEnter() {
       emit('opened')
     }
 
-    const onAfterLeave = () => {
+    function onAfterLeave() {
       emit('closed')
       onBodyScroll()
     }
 
-    const handleMaskClick = (event: Event) => {
+    function handleMaskClick(event: Event) {
       emit('maskClick', event)
       props.maskClosable && close()
     }
