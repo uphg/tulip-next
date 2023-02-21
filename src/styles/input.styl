@@ -1,6 +1,34 @@
 @require './_mixins'
 
 $base = '.tu-input'
+$success-box-shadow-focus = 0 0 0 2px rgba(24, 160, 88, 0.2)
+$warning-box-shadow-focus = 0 0 0 2px rgba(240, 160, 32, 0.2)
+$error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
+
+{$base}
+  --tu-border-color-hover var(--tu-primary-color)
+  --tu-border-color-disabled rgb(224, 224, 230)
+  --tu-box-shadow-focus $wave-active-box-shadow
+  --tu-bg-color-disabled rgb(250, 250, 252)
+  --tu-clear-color rgba(194, 194, 194, 1)
+  --tu-clear-color-hover rgba(146, 146, 146, 1)
+  --tu-loading-color var(--tu-primary-color)
+  &--status
+    &-success
+      --tu-border-color var(--tu-success-color)
+      --tu-border-color-hover var(--tu-success-color)
+      --tu-box-shadow-focus $success-box-shadow-focus
+      --tu-loading-color var(--tu-success-color)
+    &-warning
+      --tu-border-color var(--tu-warning-color)
+      --tu-border-color-hover var(--tu-warning-color)
+      --tu-box-shadow-focus $warning-box-shadow-focus
+      --tu-loading-color var(--tu-warning-color)
+    &-error
+      --tu-border-color var(--tu-error-color)
+      --tu-border-color-hover var(--tu-error-color)
+      --tu-box-shadow-focus $error-box-shadow-focus
+      --tu-loading-color var(--tu-error-color)
 
 {$base}
   box-border()
@@ -11,11 +39,14 @@ $base = '.tu-input'
   font-size var(--tu-font-size)
   font-family inherit
   line-height 1.5
+
   &__wrapper
-    padding-left 14px
-    padding-right 14px
-    display inline-flex
+    min-width 240px
+    padding-left 12px
+    padding-right 12px
+    display flex
     flex-grow 1
+
   &__border
     box-border()
     position absolute
@@ -26,25 +57,78 @@ $base = '.tu-input'
     transition var(--tu-box-shadow-transition), var(--tu-border-color-transition)
   &:hover
     {$base}__border
-      border-color var(--tu-primary-color)
-  &--focus
-    {$base}__border
-      border-color var(--tu-primary-color)
-      box-shadow var(--tu-wave-active-box-shadow)
+      border-color var(--tu-border-color-hover)
 
   &__prefix, &__suffix
     white-space nowrap
     display inline-flex
     justify-content center
     align-items center
+
   &__prefix
     margin-right 4px
+
   &__suffix
     margin-left 4px
+
+  .tu-base-icon > svg
+    cursor pointer
+    wdith 16px
+    height 16px
+
+  &-clear
+    position relative
+    width 1rem
+    height 1rem
+    &__inner
+      cursor pointer
+      width 100%
+      height 100%
+      position absolute
+      left 50%
+      top 50%
+      transform translateX(-50%) translateY(-50%)
+      font-size 16px
+      color var(--tu-clear-color)
+      transition color 0.25s
+      &:hover
+        color var(--tu-clear-color-hover)
+
+  &-loading
+    color var(--tu-loading-color)
+
+  &&--focus
+    {$base}__border
+      border-color var(--tu-border-color-hover)
+      box-shadow var(--tu-box-shadow-focus)
+  
+  &{$base}--disabled
+    cursor not-allowed
+    background-color var(--tu-bg-color-disabled)
+    {$base}__inner
+      cursor not-allowed
+    {$base}__border
+      border-color var(--tu-border-color-disabled)
+
+  &--small
+    {$base}__wrapper
+      padding-left 10px
+      padding-right 10px
+    {$base}__inner
+      line-height 28px
+  
+  &--large
+    font-size 15px
+    {$base}__wrapper
+      padding-left 14px
+      padding-right 14px
+    {$base}__inner
+      line-height 40px
 
 {$base}__inner-wrap
   display inline-flex
   flex-grow 1
+
 {$base}__inner
   box-border()
   width 100%
