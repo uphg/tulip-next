@@ -1,6 +1,7 @@
 export { each } from './each'
 export { map } from './map'
 export { flatMap } from './flatMap'
+export { pick } from './pick'
 export { isNil } from './isNil'
 export { isNaN } from './isNaN'
 export { isObject } from './isObject'

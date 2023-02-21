@@ -1,8 +1,8 @@
 :root
   // 主题色
   --tu-primary-color #1a73e8
-  --tu-primary-color-light #5d9cef
-  --tu-primary-color-dark #135bb9
+  --tu-primary-color-hover #5d9cef
+  --tu-primary-color-pressed #135bb9
 
   // 成功
   --tu-success-color #34A853
@@ -29,8 +29,8 @@
   --tu-text-color-secondary #767c82
   --tu-text-color-tertiary #c2c2c2
   --tu-text-color-placeholder var(--tu-text-color-tertiary)
-  --tu-disabled-color var(--tu-text-color-tertiary)
-  --tu-disabled-bg-color rgb(250, 250, 252)
+  --tu-text-color-disabled var(--tu-text-color-tertiary)
+  --tu-bg-color-disabled rgb(250, 250, 252)
 
   --tu-wave-box-shadow 0 0 0 2.2px rgba(0, 0, 0, 0.05)
   --tu-wave-active-box-shadow 0 0 0 2.2px rgba(68, 99, 209, 0.2)
@@ -44,11 +44,6 @@
   --tu-border-color-dark #9ca3af
 
   --tu-border-radius 3px
-  --tu-border-radius-round 18px
-  --tu-border-radius-small-round 16px
-  --tu-border-radius-small-circle 16px
-  --tu-border-radius-big-round 20px
-  --tu-border-radius-big-circle 20px
 
   // 过渡效果
   --tu-transition-time 0.25s
@@ -60,37 +55,6 @@
   --tu-box-shadow-transition box-shadow var(--tu-transition-time) var(--tu-transition-effect)
 
   --tu-box-shadow 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)
-
-  /* Button default */
-  --tu-button-height 34px
-  --tu-button-border-color #dcdfe6
-  --tu-button-border-radius var(--tu-border-radius)
-  --tu-button-icon-size 16px
- 
-  /* Button small */
-  --tu-button-small-font-size 13px
-  --tu-button-small-height 28px
-  --tu-button-small-padding 14px
-  --tu-button-small-padding-round 18px
-  --tu-button-small-padding-circle 6.5px
-  --tu-button-small-icon-size 15px
-
-  /* Button large */
-  --tu-button-large-font-size 15px
-  --tu-button-large-height 40px
-  --tu-button-large-padding 18px
-  --tu-button-large-padding-round 25px
-  --tu-button-large-padding-circle 11px
-  --tu-button-large-icon-size 18px
-
-  /* -- Input */
-  --tu-input-border-color var(--tu-primary-color)
-  --tu-input-padding 0 14px
-  --tu-input-line-height 34px
-  --tu-input-placeholder-color #C0C4CC
-  --tu-input-disabled-bg-color #f3f4f6
-  --tu-textarea-line-height 1.5
-  --tu-textarea-padding 6px 14px
 
   /* Switch */
   --tu-switch-height 22px
@@ -124,3 +88,7 @@
 .tu-dark
   --tu-scrollbar-color rgba(255, 255, 255, 0.25)
   --tu-scrollbar-color-hover rgba(255, 255, 255, 0.35)
+
+
+// 变量
+$wave-active-box-shadow = 0 0 0 2.2px rgba(68, 99, 209, 0.2)

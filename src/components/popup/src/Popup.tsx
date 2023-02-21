@@ -1,12 +1,12 @@
-import { computed, createApp, defineComponent, h, onMounted, onUnmounted, ref, shallowRef, toRef, Transition, watch, watchEffect, type App } from 'vue'
+import { computed, createApp, defineComponent, h, onMounted, onBeforeUnmount, ref, shallowRef, toRef, Transition, watch, type App, type Ref } from 'vue'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
 import zindexable, { updateZIndex } from './zindexble'
-import { getRelativeDOMPosition, toNumber, withAttrs, on, off, toPx } from '../../../utils'
+import { getRelativeDOMPosition, getScrollParent, toNumber, withAttrs, on, off, toPx } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
 import type { ElementStyle, Fn, VueInstance } from '../../../types'
 import { unrefElement } from '../../../composables/unrefElement'
 
-const originMap = {
+const transformOriginMap = {
   'top-start': 'bottom left',
   'top': 'bottom',
   'top-end': 'bottom right',
@@ -51,6 +51,18 @@ const Popup = defineComponent({
       initialize.value ? handleOpenPopup() : initPopup()
     }
 
+    function handleClose() {
+      unloadScrollListener()
+      unloadResizeListener()
+    }
+
+    function handleOpenPopup() {
+      updateZIndex(foothold.value!)
+      dom.value = getRelativeDOMPosition(trigger.value)
+      loadScrollListener()
+      loadResizeListener()
+    }
+
     function initPopup() {
       const div = document.createElement('div')
       div.className = 'tu-foothold'
@@ -69,7 +81,7 @@ const Popup = defineComponent({
             handleOpenPopup()
           })
 
-          onUnmounted(stopWatchHandle)
+          onBeforeUnmount(stopWatchHandle)
           return () => props.disabled ? null : (
             <Transition
               onBeforeEnter={props.onBeforeEnter}
@@ -106,18 +118,6 @@ const Popup = defineComponent({
       initialize.value = true
     }
 
-    function handleOpenPopup() {
-      updateZIndex(foothold.value!)
-      dom.value = getRelativeDOMPosition(trigger.value)
-      loadScrollListener()
-      loadResizeListener()
-    }
-
-    function handleClose() {
-      unloadScrollListener()
-      unloadResizeListener()
-    }
-
     function handleEnter(el: Element, done: Fn) {
       updatePosition()
       props.onEnter?.(el, done)
@@ -128,84 +128,14 @@ const Popup = defineComponent({
       props.onAfterLeave?.(el)
     }
 
-    function getPopupToViewPosition(type: PopupProps['placement']) {
-      const style = getPopupPosition(type)
-      const { scrollTop, scrollLeft } = document.documentElement
-      const { width: viewWidth, height: viewHeight } = ensureViewBoundingRect()
-      const { offsetHeight: popupHeight, offsetWidth: popupWidth } = withAttrs(popup.value)
-  
-      return {
-        top: style.top - scrollTop,
-        left: style.left - scrollLeft,
-        right: viewWidth - (style.left - scrollLeft + popupWidth),
-        bottom: viewHeight - (style.top - scrollTop + popupHeight),
-      }
+    function handleScroll() {
+      dom.value = getRelativeDOMPosition(trigger.value)
+      updatePosition()
     }
-  
-    function getPopupPosition(type: PopupProps['placement'], options?: { width: number }) {
-      const popupMargin = toNumber(props.popupMargin)
-      const { top: domTop, left: domLeft } = dom.value
-      const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value)
-      const { offsetHeight: popupHeight } = withAttrs(popup.value)
-      const popupWidth = options?.width ?? withAttrs(popup.value).offsetWidth
-  
-      const topToTop = domTop - popupHeight - popupMargin
-      const leftToLeft = domLeft - popupWidth - popupMargin
-      const bottomToTop = domTop + triggerHeight + popupMargin
-      const rightToLeft = domLeft + triggerWidth + popupMargin
-  
-      const placementMap = {
-        'top-start': {
-          top: topToTop,
-          left: domLeft
-        },
-        'top': {
-          top: topToTop,
-          left: domLeft + triggerWidth / 2 - popupWidth / 2
-        },
-        'top-end': {
-          top: topToTop,
-          left: domLeft + triggerWidth - popupWidth
-        },
-        'left-start': {
-          top: domTop,
-          left: leftToLeft
-        },
-        'left': {
-          top: domTop + triggerHeight / 2 - popupHeight / 2 ,
-          left: leftToLeft
-        },
-        'left-end': {
-          top: domTop + triggerHeight - popupHeight ,
-          left: leftToLeft
-        },
-        'right-start': {
-          top: domTop,
-          left: rightToLeft
-        },
-        'right': {
-          top: domTop + triggerHeight / 2 - popupHeight / 2,
-          left: rightToLeft
-        },
-        'right-end': {
-          top: domTop + triggerHeight - popupHeight,
-          left: rightToLeft
-        },
-        'bottom-start': {
-          top: bottomToTop,
-          left: domLeft
-        },
-        'bottom': {
-          top: bottomToTop,
-          left: domLeft + triggerWidth / 2 - popupWidth / 2
-        },
-        'bottom-end': {
-          top: bottomToTop,
-          left: domLeft + triggerWidth - popupWidth
-        }
-      }
-  
-      return placementMap[type]
+
+    function updatePosition() {
+      updatePopupStyle()
+      updateRawPlacement()
     }
 
     function updatePopupStyle() {
@@ -214,15 +144,15 @@ const Popup = defineComponent({
 
       popupStyle.value = {
         width: toPx(width),
-        top: `${style.top}px`,
-        left: `${style.left}px`,
-        transformOrigin: originMap[rawPlacement.value]
+        top: toPx(style.top),
+        left: toPx(style.left),
+        transformOrigin: transformOriginMap[rawPlacement.value]
       }
 
       props.onUpdateStyle?.(popupStyle.value)
     }
   
-    function updatePlacement() {
+    function updateRawPlacement() {
       const { top, bottom, left, right } = getPopupToViewPosition(props.placement)
       const { offsetWidth: popupWidth, offsetHeight: popupHeight } = withAttrs(popup.value) 
       const { offsetWidth: triggerWidth, offsetHeight: triggerHeight } = withAttrs(trigger.value) 
@@ -464,8 +394,88 @@ const Popup = defineComponent({
         updatePopupStyle()
       }
     }
+
+    function getPopupToViewPosition(type: PopupProps['placement']) {
+      const style = getPopupPosition(type)
+      const { scrollTop, scrollLeft } = document.documentElement
+      const { width: viewWidth, height: viewHeight } = ensureViewBoundingRect()
+      const { offsetHeight: popupHeight, offsetWidth: popupWidth } = withAttrs(popup.value)
   
-    function handleDomResize() {
+      return {
+        top: style.top - scrollTop,
+        left: style.left - scrollLeft,
+        right: viewWidth - (style.left - scrollLeft + popupWidth),
+        bottom: viewHeight - (style.top - scrollTop + popupHeight),
+      }
+    }
+  
+    function getPopupPosition(type: PopupProps['placement'], options?: { width: number }) {
+      const popupMargin = toNumber(props.popupMargin)
+      const { top: domTop, left: domLeft } = dom.value
+      const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value)
+      const { offsetHeight: popupHeight } = withAttrs(popup.value)
+      const popupWidth = options?.width ?? withAttrs(popup.value).offsetWidth
+  
+      const topToTop = domTop - popupHeight - popupMargin
+      const leftToLeft = domLeft - popupWidth - popupMargin
+      const bottomToTop = domTop + triggerHeight + popupMargin
+      const rightToLeft = domLeft + triggerWidth + popupMargin
+  
+      const placementMap = {
+        'top-start': {
+          top: topToTop,
+          left: domLeft
+        },
+        'top': {
+          top: topToTop,
+          left: domLeft + triggerWidth / 2 - popupWidth / 2
+        },
+        'top-end': {
+          top: topToTop,
+          left: domLeft + triggerWidth - popupWidth
+        },
+        'left-start': {
+          top: domTop,
+          left: leftToLeft
+        },
+        'left': {
+          top: domTop + triggerHeight / 2 - popupHeight / 2 ,
+          left: leftToLeft
+        },
+        'left-end': {
+          top: domTop + triggerHeight - popupHeight ,
+          left: leftToLeft
+        },
+        'right-start': {
+          top: domTop,
+          left: rightToLeft
+        },
+        'right': {
+          top: domTop + triggerHeight / 2 - popupHeight / 2,
+          left: rightToLeft
+        },
+        'right-end': {
+          top: domTop + triggerHeight - popupHeight,
+          left: rightToLeft
+        },
+        'bottom-start': {
+          top: bottomToTop,
+          left: domLeft
+        },
+        'bottom': {
+          top: bottomToTop,
+          left: domLeft + triggerWidth / 2 - popupWidth / 2
+        },
+        'bottom-end': {
+          top: bottomToTop,
+          left: domLeft + triggerWidth - popupWidth
+        }
+      }
+  
+      return placementMap[type]
+    }
+  
+    function handleResizeDom() {
       dom.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
@@ -478,36 +488,26 @@ const Popup = defineComponent({
         scrollableNodes.push(scrollNode)
       }
       for (const el of scrollableNodes) {
-        on(el, 'scroll', onScroll)
+        on(el, 'scroll', handleScroll)
       }
     }
 
     function unloadScrollListener() {
       for (const el of scrollableNodes) {
-        off(el, 'scroll', onScroll)
+        off(el, 'scroll', handleScroll)
       }
       scrollableNodes = []
     }
 
     function loadResizeListener() {
-      on(window, 'resize', handleDomResize)
+      on(window, 'resize', handleResizeDom)
     }
 
     function unloadResizeListener() {
-      off(window, 'resize', handleDomResize)
+      off(window, 'resize', handleResizeDom)
     }
 
-    function onScroll() {
-      dom.value = getRelativeDOMPosition(trigger.value)
-      updatePosition()
-    }
-
-    function updatePosition() {
-      updatePopupStyle()
-      updatePlacement()
-    }
-
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
       if (foothold.value) {
         zindexable.elementZIndex.delete(foothold.value)
         footholdApp.value!.unmount()
@@ -519,35 +519,5 @@ const Popup = defineComponent({
     return () => context.slots?.trigger && h(context.slots.trigger?.()[0], { ref: triggerEl })
   }
 })
-
-const reOverflowScroll = /(auto|scroll|overlay)/
-
-function getParentNode(node: Node): Node | null {
-  // document type === 9
-  return node.nodeType === 9 ? null : node.parentNode
-}
-
-function getScrollParent(node: Node | null): HTMLElement | Document | null {
-  if (node === null) return null
-
-  const parentNode = getParentNode(node) as HTMLElement
-
-  if (parentNode === null) {
-    return null
-  }
-
-  if (parentNode.nodeType === 9) {
-    return document
-  }
-
-  if (parentNode?.nodeType === 1) {
-    const { overflow, overflowX, overflowY } = getComputedStyle(parentNode)    
-    if (reOverflowScroll.test(overflow + overflowX + overflowY)) {
-      return parentNode
-    }
-  }
-
-  return getScrollParent(parentNode)
-}
 
 export default Popup

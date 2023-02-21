@@ -28,47 +28,26 @@ const Pagination = defineComponent({
   setup(props, context) {
     const { emit } = context
     const totalPages = computed(() => Math.ceil(props.total / props.pageSize))
-    const pagings = computed(() => {
-      const { current } = props
-      const result = [{ value: 1, type: 0 }]
-      const start = current <= 5
-        ? 2
-        : current >= (totalPages.value - 4)
-          ? totalPages.value - 7
-          : current - 3
-      let count = start
-      let index = -1
-      while (++index <= 6) {
-        if ((current - 5) >= 1 && index === 0) {
-          result.push({ value: count, type: -1 })
-        } else if ((current + 5) <= totalPages.value && index === 6) {
-          result.push({ value: count, type: 1 })
-        } else {
-          result.push({ value: count, type: 0 })
-        }
-        count += 1
-      }
-      result.push({ value: totalPages.value, type: 0 })
-      return result
-    })
+    const pagings = computed(() => getPagings(props.current, { totalPages: totalPages.value }))
 
-    const handleCurrent = (item: PagingItem) => {
+    function handleCurrent(item: PagingItem) {
       emit('update:current', item.value)
     }
 
-    const handlePrev = () => {
+    function handlePrev() {
       const prev = props.current - 1
       if (prev >= 1) {
         emit('update:current', prev >= 1 ? prev : 1)
       }
     }
 
-    const handleNext = () => {
+    function handleNext() {
       const next = props.current + 1
       if (next <= totalPages.value) {
         emit('update:current', next <= totalPages.value ? next : totalPages.value)
       }
     }
+
     return () => (
       <div class="tu-pagination">
         <button class="tu-pagination-button tu-pagination-prev" disabled={props.current <= 1} onClick={handlePrev}>
@@ -95,5 +74,28 @@ const Pagination = defineComponent({
     )
   }
 })
+
+function getPagings(current: number, { totalPages }: { totalPages: number }) {
+  const result = [{ value: 1, type: 0 }]
+  const start = current <= 5
+    ? 2
+    : current >= (totalPages - 4)
+      ? totalPages - 7
+      : current - 3
+  let count = start
+  let index = -1
+  while (++index <= 6) {
+    if ((current - 5) >= 1 && index === 0) {
+      result.push({ value: count, type: -1 })
+    } else if ((current + 5) <= totalPages && index === 6) {
+      result.push({ value: count, type: 1 })
+    } else {
+      result.push({ value: count, type: 0 })
+    }
+    count += 1
+  }
+  result.push({ value: totalPages, type: 0 })
+  return result
+}
 
 export default Pagination

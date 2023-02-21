@@ -24,67 +24,92 @@ line-color(color)
   {$base}__state-border
     border-color color
 
-type(base, light, dark)
-  --ripple-color base
+type(default, hover, pressed)
+  --ripple-color default
   color #fff
-  background-color base
+  background-color default
   &:hover, &:focus
-    background-color light
+    background-color hover
   &:active
-    background-color dark
+    background-color pressed
   &{$base}--loading, &{$base}--disabled
-    background-color light
+    opacity 0.5
+    cursor not-allowed
+    background-color default
 
-dashed(base, light, dark)
-  color base
+dashed(default, hover, pressed)
+  color default
   background-color #0000
-  border-default(base, dashed)
+  border-default(default, dashed)
   &:hover, &:focus
-    line-color(light)
+    line-color(hover)
   &:active
-    line-color(dark)
+    line-color(pressed)
   &{$base}--loading, &{$base}--disabled
-    line-color(light)
+    opacity 0.5
+    cursor not-allowed
+    line-color(default)
 
-ghost(base, light, dark)
-  color base
+ghost(default, hover, pressed)
+  color default
   background-color #0000
-  border-default(base)
+  border-default(default)
   &:hover, &:focus
-    line-color(light)
+    line-color(hover)
   &:active
-    line-color(dark)
+    line-color(pressed)
   &{$base}--loading, &{$base}--disabled
-    line-color(light)
+    opacity 0.5
+    cursor not-allowed
+    line-color(default)
 
-text(base, light, dark)
-  color base
+text(default, hover, pressed)
+  color default
   &:hover, &:focus
-    color light
+    color hover
     background-color #0000
   &:active
-    color dark
+    color pressed
     background-color #0000
   &{$base}--loading, &{$base}--disabled
-    color light
+    opacity 0.5
+    cursor not-allowed
+    color default
     background-color #0000
 
-type-style(base, light, dark)
-  type(base, light, dark)
+type-style(default, hover, pressed)
+  type(default, hover, pressed)
   &{$base}--dashed
-    dashed(base, light, dark)
+    dashed(default, hover, pressed)
   &{$base}--ghost
-    ghost(base, light, dark)
+    ghost(default, hover, pressed)
   &{$base}--text
-    text(base, light, dark)
+    text(default, hover, pressed)
+
+{$base}
+  --tu-height $button-height
+  --tu-padding 0 16px
+  --tu-font-size 14px
+  --tu-border-color #dcdfe6
+  --tu-icon-size 16px
+  &--small
+    --tu-height 28px
+    --tu-padding 0 14px
+    --tu-font-size 13px
+    --tu-icon-size 15px
+  &--large
+    --tu-height 40px
+    --tu-padding 0 18px
+    --tu-font-size 15px
+    --tu-icon-size 18px
 
 {$base}
   box-border()
-  px(4)
+  padding var(--tu-padding)
   border none
   position relative
-  min-height $button-height
-  font-size 14px
+  min-height var(--tu-height)
+  font-size var(--tu-font-size)
   color var(--tu-text-color)
   background-color #ffffff
   border-radius var(--tu-border-radius)
@@ -98,14 +123,14 @@ type-style(base, light, dark)
   text-decoration none
   line-height 1
   &__content
-    display inline-flex
+    display flex
     align-items center
     flex-wrap nowrap
   &__border
     width 100%
   &__border, &__state-border
     box-border()
-    insets(0)
+    inset 0
     position absolute
     border-radius inherit
     pointer-events none
@@ -113,8 +138,8 @@ type-style(base, light, dark)
     transition var(--tu-border-color-transition)
   &__icon
     box-border()
-    width var(--tu-button-icon-size)
-    height var(--tu-button-icon-size)
+    width var(--tu-icon-size)
+    height var(--tu-icon-size)
     display inline-flex
     justify-content center
     align-items center
@@ -135,20 +160,29 @@ type-style(base, light, dark)
 {$base}
   &--default
     --ripple-color var(--tu-primary-color)
-    border-default(var(--tu-button-border-color))
+    border-default(var(--tu-border-color))
     &:hover, &:focus
       line-color(var(--tu-primary-color))
     &:active
-      line-color(var(--tu-primary-color-dark))
+      line-color(var(--tu-primary-color-pressed))
+
     &{$base}--dashed
       background-color #0000
       {$base}__border, {$base}__state-border
         border-style dashed
+
     &{$base}--ghost
       background-color #0000
 
+    &{$base}--disabled
+      opacity 0.5
+      cursor not-allowed
+      color var(--tu-text-color)
+      {$base}__state-border
+        border-color var(--tu-border-color)
+
   &--primary
-    type-style(var(--tu-primary-color), var(--tu-primary-color-light), var(--tu-primary-color-dark))
+    type-style(var(--tu-primary-color), var(--tu-primary-color-hover), var(--tu-primary-color-pressed))
   &--success
     type-style(var(--tu-success-color), var(--tu-success-color-hover), var(--tu-success-color-pressed))
   &--info
@@ -165,28 +199,16 @@ type-style(base, light, dark)
     shape($circle-padding, $rounded-size)
 
   &--small
-    font-size var(--tu-button-small-font-size)
-    padding 0 var(--tu-button-small-padding)
-    min-height var(--tu-button-small-height)
-    {$base}__icon
-      width var(--tu-button-small-icon-size)
-      height var(--tu-button-small-icon-size)
     &{$base}--round
-      shape(var(--tu-button-small-padding-round), calc(var(--tu-button-small-height) / 2))
+      shape(18px, calc(var(--tu-height) / 2))
     &{$base}--circle
-      shape(var(--tu-button-small-padding-circle), calc(var(--tu-button-small-height) / 2))
+      shape(6.5px, calc(var(--tu-height) / 2))
 
   &--large
-    font-size var(--tu-button-large-font-size)
-    padding 0 var(--tu-button-large-padding)
-    min-height var(--tu-button-large-height)
-    {$base}__icon
-      width var(--tu-button-large-icon-size)
-      height var(--tu-button-large-icon-size)
     &{$base}--round
-      shape(var(--tu-button-large-padding-round), calc(var(--tu-button-large-height) / 2))
+      shape(25px, calc(var(--tu-height) / 2))
     &{$base}--circle
-      shape(var(--tu-button-large-padding-circle), calc(var(--tu-button-large-height) / 2))
+      shape(11px, calc(var(--tu-height) / 2))
 
   &--text
     background-color: #0000;

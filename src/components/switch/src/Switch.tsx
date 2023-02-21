@@ -1,9 +1,6 @@
-import { defineComponent } from 'vue'
-import { ref, computed } from 'vue'
+import { defineComponent, ref, computed, type PropType } from 'vue'
+import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
 import { isNil } from '../../../utils'
-import { TuBaseWave } from '../../base-wave'
-import type { PropType } from 'vue'
-import type { BaseWaveRef } from '../../base-wave'
 
 type SwitchValue = string | number | boolean
 

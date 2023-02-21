@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, toRef, watch, provide } from 'vue'
+import { defineComponent, ref, onMounted, toRef, watch } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall } from '../../../icons'
@@ -14,13 +14,13 @@ const Cascader = defineComponent({
   props: cascaderProps,
   emits: ['update:value'],
   setup(props, context) {
-    const triggerEl = ref<HTMLElement | null>(null)
+    const trigger = ref<HTMLElement | null>(null)
     const popup = ref<HTMLElement | null>(null)
     const input = ref('')
     const selected = ref<CascaderOption[] | []>([])
 
     const emitter = useEmitter()
-    const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
+    const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
 
     watch(toRef(props, 'value'), updateInput)
@@ -47,11 +47,11 @@ const Cascader = defineComponent({
       }
     }
 
-    function onEnter() {
+    function handleEnter() {
       emitter.emit('onEnter')
     }
 
-    function onAfterLeave() {
+    function handleAfterLeave() {
       const select = selected.value
       if (select[select.length - 1].children) {
         selected.value = getSelected(props.value)
@@ -113,13 +113,13 @@ const Cascader = defineComponent({
         visible={visible.value}
         placement="bottom-start"
         popupMargin="3"
-        onEnter={onEnter}
-        onAfterLeave={onAfterLeave}
+        onEnter={handleEnter}
+        onAfterLeave={handleAfterLeave}
       >
         {{
           trigger: () => (
-            <div ref={triggerEl} class="tu-cascader" onClick={onClick}>
-              <TuSelectionInput value={input.value} focus={visible.value}>
+            <div ref={trigger} class="tu-cascader" onClick={onClick}>
+              <TuSelectionInput value={input.value} placeholder={props.placeholder} focus={visible.value}>
                 {{ suffix:() => <TuBaseIcon is={ArrowBottomRoundSmall}/> }}
               </TuSelectionInput>
             </div>

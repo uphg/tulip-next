@@ -15,10 +15,6 @@ export const cascaderProps = {
     type: [Array, null] as PropType<SelectValue[]>,
     default: null
   },
-  defaultValue: {
-    type: [Array, null] as PropType<SelectValue[]>,
-    default: null
-  },
   options: Array as PropType<CascaderOption[]>,
   placeholder: String as PropType<string>
 }

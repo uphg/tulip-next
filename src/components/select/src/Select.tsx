@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, nextTick, type PropType, onMounted, type ComponentPublicInstance } from 'vue'
+import { computed, defineComponent, ref, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall, Tick } from '../../../icons'
@@ -34,11 +34,11 @@ const Select = defineComponent({
       close()
     }
 
-    function handleMousemoveOption(item: SelectOption) {
+    function handleMouseMoveOption(item: SelectOption) {
       checkmark.value = item.value
     }
 
-    function onEnter() {
+    function handleEnter() {
       if (selectedIndex.value && selectedIndex.value > 5) {
         const container = scrollbar.value?.container
         const { offsetHeight: containerHeight } = withAttrs(container)
@@ -47,7 +47,7 @@ const Select = defineComponent({
       }
     }
 
-    function onAfterLeave() {
+    function handleAfterLeave() {
       checkmark.value = getDefaultCheckmark()
       selectedIndex.value = null
     }
@@ -62,8 +62,8 @@ const Select = defineComponent({
         placement="bottom-start"
         popupMargin="3"
         width="trigger"
-        onEnter={onEnter}
-        onAfterLeave={onAfterLeave}
+        onEnter={handleEnter}
+        onAfterLeave={handleAfterLeave}
       >
         {{
           trigger: () => (
@@ -90,7 +90,7 @@ const Select = defineComponent({
                         }]}
                         key={index + 'opt'}
                         onClick={!item?.disabled ? (() => handleClickOption(item)) : void 0}
-                        onMousemove={() => handleMousemoveOption(item)}
+                        onMousemove={() => handleMouseMoveOption(item)}
                       >
                         <span class="tu-select-option__content">{item.label}</span>
                         {item.value === props.value ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}

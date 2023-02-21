@@ -1,5 +1,5 @@
 import { isNil } from '../../../utils'
-import { computed, defineComponent, ref, type StyleValue, type PropType } from 'vue'
+import { computed, defineComponent, ref, type StyleValue, type PropType, shallowRef } from 'vue'
 import { TuTooltip } from '../../tooltip'
 
 const ellipsisProps = {
@@ -22,14 +22,15 @@ const Ellipsis = defineComponent({
   props: ellipsisProps,
   inheritAttrs: false,
   setup(props, context) {
+    const container = shallowRef<HTMLElement | null>(null)
+    const text = shallowRef<HTMLElement | null>(null)
+
     const visible = ref(false)
-    const containerRef = ref<HTMLElement | null>(null)
-    const textRef = ref<HTMLElement | null>(null)
     const lineClamp = computed(() => isNil(props.lineClamp) ? 1 : Number(props.lineClamp))
     const tooltipDisabled = computed(() => (
       !props.tooltip || (lineClamp.value === 1
-        ? containerRef.value?.offsetWidth! >= textRef.value?.offsetWidth!
-        : containerRef.value?.offsetHeight! >= textRef.value?.offsetHeight!)
+        ? container.value?.offsetWidth! >= text.value?.offsetWidth!
+        : container.value?.offsetHeight! >= text.value?.offsetHeight!)
     ))
     const className = computed(() => ['tu-ellipsis', {
       'tu-ellipsis--line-clamp': lineClamp.value > 1,
@@ -43,7 +44,7 @@ const Ellipsis = defineComponent({
           : void 0
       : void 0)
 
-    const on = props.expandTrigger === 'click' ? { onClick: () => visible.value = !visible.value } : {}
+    const events = props.expandTrigger === 'click' ? { onClick: () => visible.value = !visible.value } : {}
 
     return () => (
       <TuTooltip trigger="hover" placement="top" disabled={tooltipDisabled.value}>
@@ -51,11 +52,11 @@ const Ellipsis = defineComponent({
           default: context.slots.tooltip || context.slots.default,
           trigger: () => (
             <span
-              ref={containerRef}
+              ref={container}
               class={className.value}
               style={style.value}
-              {...on} {...context.attrs}>
-              <span class="tu-ellipsis-text" ref={textRef}>{context.slots.default?.()}</span>
+              {...events} {...context.attrs}>
+              <span class="tu-ellipsis-text" ref={text}>{context.slots.default?.()}</span>
             </span>
           )
         }}

@@ -92,15 +92,15 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
       : rawRailScrollTop)
   }
 
-  function handleYScrollMouseDown(e: MouseEvent) {
+  function handleMouseDownYScroll(e: MouseEvent) {
     yTop = container.value?.scrollTop || 0
     mouseY = e.clientY
     yBarPressed.value = true
-    on(document, 'mousemove', handleYScrollMouseMove)
-    on(document, 'mouseup', handleYScrollMouseUp)
+    on(document, 'mousemove', handleMouseMoveYScroll)
+    on(document, 'mouseup', handleMouseUpYScroll)
   }
 
-  function handleYScrollMouseMove(e: MouseEvent) {
+  function handleMouseMoveYScroll(e: MouseEvent) {
     if (!yBarPressed.value || !content.value || !container.value || !yTrack.value) return
 
     const { offsetHeight: contentHeight } = content.value
@@ -121,11 +121,11 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     scrollToTop(scrollTop)
   }
 
-  function handleYScrollMouseUp() {
+  function handleMouseUpYScroll() {
     yBarPressed.value = false
 
-    off(document, 'mousemove', handleYScrollMouseMove)
-    off(document, 'mouseup', handleYScrollMouseUp)
+    off(document, 'mousemove', handleMouseMoveYScroll)
+    off(document, 'mouseup', handleMouseUpYScroll)
   }
 
   function updateXTrackScrollLeft() {
@@ -147,15 +147,15 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
       : rawRailScrollLeft)
   }
 
-  function handleXScrollMouseDown(e: MouseEvent) {
+  function handleMouseDownXScroll(e: MouseEvent) {
     xLeft = container.value?.scrollLeft ?? 0
     mouseX = e.clientX
     xBarPressed.value = true
-    on(document, 'mousemove', handleXScrollMouseMove)
-    on(document, 'mouseup', handleXScrollMouseUp)
+    on(document, 'mousemove', handleMouseMoveXScroll)
+    on(document, 'mouseup', handleMouseUpXScroll)
   }
 
-  function handleXScrollMouseMove(e: MouseEvent) {
+  function handleMouseMoveXScroll(e: MouseEvent) {
     if (!xBarPressed.value || !content.value || !container.value || !xTrack.value) return
     const { offsetWidth: contentWidth } = content.value
     const { offsetWidth: containerWidth } = container.value
@@ -175,11 +175,11 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
     scrollToLeft(scrollLeft)
   }
 
-  function handleXScrollMouseUp() {
+  function handleMouseUpXScroll() {
     xBarPressed.value = false
 
-    off(document, 'mousemove', handleXScrollMouseMove)
-    off(document, 'mouseup', handleXScrollMouseUp)
+    off(document, 'mousemove', handleMouseMoveXScroll)
+    off(document, 'mouseup', handleMouseUpXScroll)
   }
 
   function handleMouseEnter() {
@@ -221,12 +221,12 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   onBeforeUnmount(() => {
     contentResizeObserver.value?.stop()
     if (yBarPressed.value) {
-      off(document, 'mousemove', handleYScrollMouseMove)
-      off(document, 'mouseup', handleYScrollMouseUp)
+      off(document, 'mousemove', handleMouseMoveYScroll)
+      off(document, 'mouseup', handleMouseUpYScroll)
     }
     if (xBarPressed.value) {
-      off(document, 'mousemove', handleXScrollMouseMove)
-      off(document, 'mouseup', handleXScrollMouseUp)
+      off(document, 'mousemove', handleMouseMoveXScroll)
+      off(document, 'mouseup', handleMouseUpXScroll)
     }
   })
 
@@ -239,7 +239,7 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
         class={['tu-scrollbar-track__scrollbar', {
           'tu-scrollbar-track__scrollbar--hidden': yTrackBarHidden.value
         }]}
-        onMousedown={handleYScrollMouseDown}
+        onMousedown={handleMouseDownYScroll}
       ></div>
     )
 
@@ -249,7 +249,7 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
         class={['tu-scrollbar-track__scrollbar', {
           'tu-scrollbar-track__scrollbar--hidden': xTrackBarHidden.value
         }]}
-        onMousedown={handleXScrollMouseDown}
+        onMousedown={handleMouseDownXScroll}
       ></div>
     )
 

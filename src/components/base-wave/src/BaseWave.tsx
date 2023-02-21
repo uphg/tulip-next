@@ -1,4 +1,4 @@
-import { defineComponent, ref, nextTick, computed, type PropType } from 'vue'
+import { defineComponent, ref, nextTick, computed, type PropType, shallowRef } from 'vue'
 import type { Ref } from 'vue'
 
 const baseWaveProps = {
@@ -12,34 +12,31 @@ const BaseWave = defineComponent({
   name: 'TuBaseWave',
   props: baseWaveProps,
   setup(props, context) {
-    const isActive: Ref<boolean> = ref(false)
-    const selfRef = ref<HTMLElement | null>(null)
+    const wave = shallowRef<HTMLElement | null>(null)
+    const isActive = ref(false)
     const activeClass = computed(() => props.size === 'large' ? 'tu-base-wave--big-active' : 'tu-base-wave--active')
-    let animationTimerId: number | null = null
+    let timerId: number | null = null
 
-    const destroyTimeout = () => {
+    function stop() {
       isActive.value = false
-      typeof animationTimerId === 'number' && window.clearTimeout(animationTimerId)
-      animationTimerId = null
+      typeof timerId === 'number' && window.clearTimeout(timerId)
+      timerId = null
     }
 
-    const triggerWave = () => {
-      if (isActive.value) { destroyTimeout() }
+    function triggerWave() {
+      if (isActive.value) {
+        stop()
+      }
       nextTick(() => {
-        void selfRef.value?.offsetHeight
+        void wave.value?.offsetHeight
         isActive.value = true
-        animationTimerId = window.setTimeout(() => {
-          destroyTimeout()
-        }, 1000)
+        timerId = window.setTimeout(stop, 1000)
       })
     }
 
     context.expose({ triggerWave })
     return () => (
-      <span
-        ref={selfRef}
-        class={['tu-base-wave', { [activeClass.value]: isActive.value }]}
-      />
+      <span ref={wave} class={['tu-base-wave', { [activeClass.value]: isActive.value }]}/>
     )
   }
 })

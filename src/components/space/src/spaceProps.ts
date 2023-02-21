@@ -1,4 +1,4 @@
-import { h, type PropType } from 'vue'
+import type { PropType } from 'vue'
 import { includes,  alignTypes, justifyTypes, type AlignTypes, type JustifyTypes } from '../../../utils'
 
 export const spaceProps = {
@@ -33,5 +33,3 @@ export const spaceProps = {
   itemStyle: Object as PropType<Record<string, unknown>>,
   itemClass: Object as PropType<Record<string, unknown>>
 }
-
-h('div', {  })

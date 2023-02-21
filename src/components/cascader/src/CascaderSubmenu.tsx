@@ -1,4 +1,4 @@
-import { defineComponent, inject, ref, type PropType } from 'vue'
+import { defineComponent, onBeforeUnmount, ref, type PropType } from 'vue'
 import { TuBaseIcon } from '../../base-icon'
 import { Tick, ArrowRightRoundSmall } from '../../../icons'
 import type { CascaderOption } from './cascaderProps'
@@ -20,7 +20,7 @@ const CascaderSubmenu = defineComponent({
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
 
-    function onEnter() {
+    function handleEnter() {
       if (selectedIndex.value && selectedIndex.value > 5) {
         const container = scrollbar.value?.container
         const { offsetHeight: containerHeight } = withAttrs(container)
@@ -29,12 +29,17 @@ const CascaderSubmenu = defineComponent({
       }
     }
 
-    function onAfterLeave() {
+    function handleAfterLeave() {
       selectedIndex.value = null
     }
 
-    props.emitter?.on('onEnter', onEnter)
-    props.emitter?.on('onAfterLeave', onAfterLeave)
+    props.emitter?.on('onEnter', handleEnter)
+    props.emitter?.on('onAfterLeave', handleAfterLeave)
+
+    onBeforeUnmount(() => {
+      props.emitter?.off('onEnter', handleEnter)
+      props.emitter?.off('onAfterLeave', handleAfterLeave)
+    })
 
     return () => (
       <div class="tu-cascader-submenu">
