@@ -8,11 +8,6 @@
 
 <script setup lang="ts">
 
-const sidebars = [
-  {
-    title: ''
-  }
-]
 </script>
 
 <style scoped>

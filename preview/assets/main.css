@@ -17,6 +17,14 @@ a,
   }
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h2, h3 {
+  margin-top: 2.4em;
+}
+
 
 .flex {
   display: flex;

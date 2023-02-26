@@ -20,8 +20,12 @@
       <!-- <TestCascader /> -->
       <!-- <TestSelect /> -->
       <!-- <TestSelectionInput /> -->
-      <TestButton />
-      <TestInput />
+      <!-- <TestButton />
+      <TestInput /> -->
+      <!-- <ScrollbarWidth /> -->
+      <!--
+      <TestDialog /> -->
+      <TestRadio />
     </div>
   </main>
 </template>
@@ -43,11 +47,14 @@ import TestImage from './TestImage.vue'
 import TestImage2 from './TestImage2.vue'
 import TestDraggable from './TestDraggable.vue'
 import TestPopupScroll from './TestPopupScroll.vue'
-import TestCascader from './TestCascader.vue'
+import TestCascader from './CascaderDemo.vue'
 import TestSelectionInput from './TestSelectionInput.vue'
 import TestSelect from './TestSelect.vue'
 import TestButton from './TestButton.vue'
 import TestInput from './TestInput.vue'
+import ScrollbarWidth from './ScrollbarWidth.vue'
+import TestDialog from './TestDialog.vue'
+import TestRadio from './TestRadio.vue'
 </script>
 
 <style lang="stylus">
