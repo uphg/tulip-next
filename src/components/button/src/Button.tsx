@@ -1,8 +1,9 @@
 import { computed, defineComponent, ref, Transition, type Component, type PropType } from 'vue'
-import LoadingIcon from './LoadingIcon'
+import { Loading as LoadingIcon } from '../../../icons'
 import { TuIcon } from '../../icon/index'
 import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
 import { TuExpandTransition } from '../../expand-transition'
+import { useNameScope } from '../../../composables/useNameScope'
 
 const buttonStatekeys = ['text', 'dashed', 'ghost', 'circle', 'round', 'disabled'] as const
 
@@ -48,6 +49,7 @@ const Button = defineComponent({
   name: 'TuButton',
   props: buttonProps,
   setup(props, context) {
+    const ns = useNameScope('button')
     const button = ref<Element | null>()
     const wave = ref<BaseWaveRef | null>(null)
     const className = computed(getButtonClass)
@@ -61,13 +63,14 @@ const Button = defineComponent({
       const other: Record<string, unknown> = {}
       
       for (const key of buttonStatekeys) {
-        other[`tu-button--${key}`] = props[key]
+        other[ns.is(key)] = props[key]
       }
+
       return [
         'tu-button',
         {
-          [`tu-button--${hue}`]: hue,
-          [`tu-button--${size}`]: size,
+          [ns.is(hue)]: hue,
+          [ns.is(size)]: size,
           ...other
         }
       ]
@@ -82,13 +85,10 @@ const Button = defineComponent({
           <TuExpandTransition>
             {icon ?? loading ? (
               <span
-                class={[
-                  'tu-button__icon',
-                  {
-                    [`tu-icon--${iconPosition}`]: iconPosition,
-                    'tu-icon--empty': !slots.default
-                  }
-                ]}
+                class={[ns.el('icon'), {
+                  [`tu-icon--${iconPosition}`]: iconPosition,
+                  'tu-icon--empty': !slots.default
+                }]}
               >
                 <Transition name="tu-fade" mode="out-in">
                   { loading ? <LoadingIcon /> : <TuIcon is={icon} /> }
@@ -97,15 +97,15 @@ const Button = defineComponent({
               ) : null}
           </TuExpandTransition>
           {slots.default ? (
-            <span class="tu-button__content">
+            <span class={ns.el('content')}>
               {slots.default?.()}
             </span>
           ) : null}
           {!text ? (
             <>
               <TuBaseWave ref={wave} big={circle} />
-              <span class="tu-button__border" />
-              <span class="tu-button__state-border" />
+              <span class={ns.el('border')} />
+              <span class={ns.el('state-border')}/>
             </>
           ) : null}
         </button>
