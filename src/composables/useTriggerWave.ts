@@ -1,9 +1,9 @@
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, shallowRef } from 'vue'
 import type { Ref } from 'vue'
 
 export function useTriggerWave() {
   const isWave: Ref<boolean> = ref(false)
-  const selfRef = ref<HTMLElement | null>(null)
+  const selfRef = shallowRef<HTMLElement | null>(null)
   let animationTimerId: number | null = null
 
   const stop = () => {

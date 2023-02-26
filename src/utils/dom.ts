@@ -91,3 +91,15 @@ export function getScrollParent(node: Node | null): HTMLElement | Document | nul
 
   return getScrollParent(parentNode)
 }
+
+
+export function isScroll(el: Element) {
+  const { overflow, overflowX, overflowY } = getComputedStyle(el)
+  console.log('overflow')
+  console.log(overflow)
+  if (reOverflowScroll.test(overflow + overflowX + overflowY)) {
+    return true
+  }
+
+  return false
+}

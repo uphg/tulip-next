@@ -1,29 +1,35 @@
 import { isClient } from './isClient'
 
-let scrollBarWidth: number
+let scrollbarWidth: number | null = null
+let _devicePixelRatio: number | null = null
 
-export const getScrollBarWidth: () => number = () => {
-  if (isClient) return 0
-  if (scrollBarWidth !== undefined) return scrollBarWidth
+if (isClient) {
+  window.addEventListener('resize', () => {
+    // 页面缩放
+    if (_devicePixelRatio !== window.devicePixelRatio) {
+      _devicePixelRatio = window.devicePixelRatio
+      scrollbarWidth = null
+    }
+  })
+}
 
-  const outer = document.createElement('div')
-  outer.className = 'tu-scrollbar__wrap'
-  outer.style.visibility = 'hidden'
-  outer.style.width = '100px'
-  outer.style.position = 'absolute'
-  outer.style.top = '-9999px'
-  document.body.appendChild(outer)
+export function getScrollbarWidth() {
+  if (scrollbarWidth === null) {
+    if (typeof document === 'undefined') {
+      scrollbarWidth = 0
+      return scrollbarWidth
+    }
 
-  const widthNoScroll = outer.offsetWidth
-  outer.style.overflow = 'scroll'
+    const div = document.createElement('div')
+    div.style.position = 'fixed'
+    div.style.left = '0'
+    div.style.visibility = 'hidden'
+    div.style.overflowY = 'scroll'
+    document.body.appendChild(div)
+    const width = div.getBoundingClientRect().right
+    document.body.removeChild(div)
+    scrollbarWidth = width
+  }
 
-  const inner = document.createElement('div')
-  inner.style.width = '100%'
-  outer.appendChild(inner)
-
-  const widthWithScroll = inner.offsetWidth
-  outer.parentNode?.removeChild(outer)
-  scrollBarWidth = widthNoScroll - widthWithScroll
-
-  return scrollBarWidth
+  return scrollbarWidth
 }
