@@ -22,6 +22,10 @@ import { TuPopup } from './popup'
 import { TuCascader } from './cascader'
 import { TuSelectionInput } from './selection-input'
 import { TuSelect } from './select'
+import { TuModal } from './modal'
+import { TuRadio } from './radio'
+import { TuRadioGroup } from './radio-group'
+import { TuRadioButton } from './radio-button'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -52,7 +56,11 @@ const components = [
   TuPopup,
   TuCascader,
   TuSelectionInput,
-  TuSelect
+  TuSelect,
+  TuModal,
+  TuRadio,
+  TuRadioGroup,
+  TuRadioButton
 ]
 
 const { install } = makeInstaller(components)
@@ -85,6 +93,10 @@ export {
   TuCascader,
   TuSelectionInput,
   TuSelect,
+  TuModal,
+  TuRadio,
+  TuRadioGroup,
+  TuRadioButton,
 
   // utils
   useDialog,
