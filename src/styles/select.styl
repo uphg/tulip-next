@@ -1,5 +1,4 @@
 .tu-select
-  box-border()
   cursor pointer
   display flex
   position relative
@@ -8,7 +7,6 @@
     padding 4px
 
   &-option
-    box-border()
     cursor pointer
     min-height var(--tu-option-height)
     padding 5px var(--tu-select-column-padding)
@@ -18,7 +16,7 @@
     align-items center
     border-radius 3px
     font-size var(--tu-font-size)
-    transition background-color 0.25s
+    transition background-color 0.3s
     &--selected
       color var(--tu-primary-color)
     &--pending

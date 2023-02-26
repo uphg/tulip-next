@@ -46,29 +46,8 @@
   --tu-border-radius 3px
 
   // 过渡效果
-  --tu-transition-time 0.25s
-  --tu-transition-effect cubic-bezier(.645, .045, .355, 1)
-  --tu-all-transition all var(--tu-transition-time) var(--tu-transition-effect)
-  --tu-color-transition color var(--tu-transition-time) var(--tu-transition-effect)
-  --tu-bg-color-transition background-color var(--tu-transition-time) var(--tu-transition-effect)
-  --tu-border-color-transition border-color var(--tu-transition-time) var(--tu-transition-effect)
-  --tu-box-shadow-transition box-shadow var(--tu-transition-time) var(--tu-transition-effect)
-
+  --tu-bezier cubic-bezier(.645, .045, .355, 1)
   --tu-box-shadow 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)
-
-  /* Switch */
-  --tu-switch-height 22px
-  --tu-switch-padding 12px
-  --tu-switch-small-height 18px
-  --tu-switch-large-height 26px
-  --tu-switch-core-height calc(var(--tu-switch-height) - 4px)
-  --tu-switch-active-bg-color var(--tu-primary-color)
-  --tu-switch-bg-color rgba(0, 0, 0, 0.14)
-  --tu-switch-unfold 5px
-
-  /* Dialog */
-  --tu-dialog-border-radius var(--tu-border-radius)
-  --tu-animation-time var(--tu-transition-time)
 
   /* Collapse */
   /* Tabs */
@@ -90,6 +69,8 @@
   --tu-scrollbar-color-hover rgba(255, 255, 255, 0.35)
 
 // 默认变量
+$cubic-bezier = cubic-bezier(0.4, 0, 0.2, 1)
+
 $primary-box-shadow-focus = 0 0 0 2.2px rgba(68, 99, 209, 0.2)
 $success-box-shadow-focus = 0 0 0 2px rgba(24, 160, 88, 0.2)
 $warning-box-shadow-focus = 0 0 0 2px rgba(240, 160, 32, 0.2)

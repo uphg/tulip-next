@@ -1,16 +1,6 @@
 e(n)
   return n * 0.25rem
 
-// --- BoxSizing
-box-border()
-  box-sizing border-box
-
-insets(n)
-  top e(n)
-  right e(n)
-  bottom e(n)
-  left e(n)
-
 // --- Padding
 py(n)
   padding-top e(n)
@@ -54,16 +44,14 @@ mb(n)
   margin-bottom e(n)
 
 pop-fade(name, el)
-  .{name}-fade-enter-active {
-    animation: pop-overlay-fade-in var(--tu-animation-time);
-    {el} {
-      animation: pop-fade-in var(--tu-animation-time);
-    }
-  }
+  .{name}-fade-enter-active
+    animation pop-overlay-fade-in 0.3s
+    {el}
+      transition transform 0.3s
+      animation pop-fade-in 0.3s
 
-  .{name}-fade-leave-active {
-    animation: pop-overlay-fade-out var(--tu-animation-time);
-    {el} {
-      animation: pop-fade-out var(--tu-animation-time);
-    }
-  }
+  .{name}-fade-leave-active
+    animation pop-overlay-fade-out 0.3s
+    {el}
+      transition transform 0.3s
+      animation pop-fade-out 0.3s

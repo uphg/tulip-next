@@ -1,14 +1,11 @@
 @require './_mixins'
 
 $base = '.tu-input'
-$success-box-shadow-focus = 0 0 0 2px rgba(24, 160, 88, 0.2)
-$warning-box-shadow-focus = 0 0 0 2px rgba(240, 160, 32, 0.2)
-$error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
 
 {$base}
   --tu-border-color-hover var(--tu-primary-color)
   --tu-border-color-disabled rgb(224, 224, 230)
-  --tu-box-shadow-focus $wave-active-box-shadow
+  --tu-box-shadow-focus $primary-box-shadow-focus
   --tu-bg-color-disabled rgb(250, 250, 252)
   --tu-clear-color rgba(194, 194, 194, 1)
   --tu-clear-color-hover rgba(146, 146, 146, 1)
@@ -31,7 +28,6 @@ $error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
       --tu-loading-color var(--tu-error-color)
 
 {$base}
-  box-border()
   display inline-flex
   border-radius var(--tu-border-radius)
   position relative
@@ -48,13 +44,12 @@ $error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
     flex-grow 1
 
   &__border
-    box-border()
     position absolute
     inset 0
     pointer-events none
     border-radius inherit
     border 1px solid var(--tu-border-color)
-    transition var(--tu-box-shadow-transition), var(--tu-border-color-transition)
+    transition box-shadow 0.3s $cubic-bezier, border-color 0.3s $cubic-bezier
   &:hover
     {$base}__border
       border-color var(--tu-border-color-hover)
@@ -90,7 +85,7 @@ $error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
       transform translateX(-50%) translateY(-50%)
       font-size 16px
       color var(--tu-clear-color)
-      transition color 0.25s
+      transition color 0.3s
       &:hover
         color var(--tu-clear-color-hover)
 
@@ -130,7 +125,6 @@ $error-box-shadow-focus = 0 0 0 2px rgba(208, 48, 80, 0.2)
   flex-grow 1
 
 {$base}__inner
-  box-border()
   width 100%
   display inline-flex
   border none

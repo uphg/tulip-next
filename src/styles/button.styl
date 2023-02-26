@@ -104,7 +104,6 @@ type-style(default, hover, pressed)
     --tu-icon-size 18px
 
 {$base}
-  box-border()
   padding var(--tu-padding)
   border none
   position relative
@@ -119,7 +118,7 @@ type-style(default, hover, pressed)
   align-items center
   flex-wrap nowrap
   white-space nowrap
-  transition var(--tu-color-transition), var(--tu-bg-color-transition)
+  transition color 0.3s, background-color 0.3s $cubic-bezier
   text-decoration none
   line-height 1
   &__content
@@ -129,15 +128,13 @@ type-style(default, hover, pressed)
   &__border
     width 100%
   &__border, &__state-border
-    box-border()
     inset 0
     position absolute
     border-radius inherit
     pointer-events none
   &__state-border
-    transition var(--tu-border-color-transition)
+    transition border-color 0.3s $cubic-bezier
   &__icon
-    box-border()
     width var(--tu-icon-size)
     height var(--tu-icon-size)
     display inline-flex

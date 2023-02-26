@@ -4,9 +4,8 @@
 $base = '.tu-base-wave'
 
 {$base}
-  box-border()
-  insets(0)
   position absolute
+  inset 0
   border-radius inherit
   pointer-events none
   opacity 0
@@ -16,5 +15,5 @@ $base = '.tu-base-wave'
   animation-timing-function cubic-bezier(0, 0, 0.2, 1), cubic-bezier(0, 0, 0.2, 1)
   &{$base}--active
     animation-name wave-spread, wave-opacity
-  &{$base}--big-active
+  &{$base}--active-big
     animation-name big-wave-spread, big-wave-opacity

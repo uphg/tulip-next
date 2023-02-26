@@ -43,10 +43,9 @@ $base = '.tu-selection-input'
     inset 0
 
   &__border
-    box-border()
     position absolute
     inset 0
     pointer-events none
     border-radius inherit
     border 1px solid var(--tu-border-color)
-    transition var(--tu-box-shadow-transition), var(--tu-border-color-transition)
+    transition box-shadow 0.3s $cubic-bezier, border-color 0.3s $cubic-bezier

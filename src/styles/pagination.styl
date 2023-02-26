@@ -14,7 +14,7 @@ $pagin-gap = 0.5rem
     display flex
     align-items center
     justify-content center
-    transition color 0.25s, border-color 0.25s
+    transition color 0.3s, border-color 0.3s
     &.active, &:hover
       color  var(--tu-primary-color)
       border-color  var(--tu-primary-color)
@@ -27,10 +27,7 @@ $pagin-gap = 0.5rem
       position relative
       & > .tu-icon
         position absolute
-        top 0
-        left 0
-        right 0
-        bottom 0
+        inset 0
         width 100%
         height 100%
         display flex
@@ -45,11 +42,11 @@ $pagin-gap = 0.5rem
     width 1em
     height 1em
     opacity 1
-    transition opacity 0.25s
+    transition opacity 0.3s
   .tu-icon__fast-rewind, .tu-icon__fast-forward
     width 12px
     height 12px 
     opacity 0
-    transition opacity 0.25s
+    transition opacity 0.3s
 
 
