@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, toRef, watch } from 'vue'
+import { defineComponent, ref, shallowRef, onMounted, toRef, watch } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall } from '../../../icons'
@@ -14,8 +14,8 @@ const Cascader = defineComponent({
   props: cascaderProps,
   emits: ['update:value'],
   setup(props, context) {
-    const trigger = ref<HTMLElement | null>(null)
-    const popup = ref<HTMLElement | null>(null)
+    const trigger = shallowRef<HTMLElement | null>(null)
+    const popup = shallowRef<HTMLElement | null>(null)
     const input = ref('')
     const selected = ref<CascaderOption[] | []>([])
 

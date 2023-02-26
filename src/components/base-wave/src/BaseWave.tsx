@@ -14,7 +14,7 @@ const BaseWave = defineComponent({
   setup(props, context) {
     const wave = shallowRef<HTMLElement | null>(null)
     const isActive = ref(false)
-    const activeClass = computed(() => props.size === 'large' ? 'tu-base-wave--big-active' : 'tu-base-wave--active')
+    const activeClass = computed(() => props.size === 'large' ? 'tu-base-wave--active-big' : 'tu-base-wave--active')
     let timerId: number | null = null
 
     function stop() {

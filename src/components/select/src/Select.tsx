@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, type PropType } from 'vue'
+import { computed, defineComponent, ref, shallowRef, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { ArrowBottomRoundSmall, Tick } from '../../../icons'
@@ -21,8 +21,8 @@ const Select = defineComponent({
   setup(props, context) {
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
-    const triggerEl = ref<HTMLElement | null>(null)
-    const popup = ref<HTMLElement | null>(null)
+    const triggerEl = shallowRef<HTMLElement | null>(null)
+    const popup = shallowRef<HTMLElement | null>(null)
     const checkmark = ref(getDefaultCheckmark())
     const input = computed(() => props.options?.find((item) => item.value === props.value)?.label)
 

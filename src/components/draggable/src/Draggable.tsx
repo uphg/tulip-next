@@ -1,4 +1,4 @@
-import { defineComponent, ref, type PropType } from 'vue'
+import { defineComponent, shallowRef, type PropType } from 'vue'
 import { useDraggable } from '../../../composables/useDraggable'
 import type { MaybeElement, Position } from '../../../types'
 
@@ -11,7 +11,7 @@ const Draggable = defineComponent({
   name: 'TuDraggable',
   props: draggableProps,
   setup(props, context) {
-    const drag = ref<HTMLElement | null>(null)
+    const drag = shallowRef<HTMLElement | null>(null)
     const { x, y, style } = useDraggable(drag, props)
 
     return () => (

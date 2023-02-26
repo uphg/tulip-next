@@ -1,6 +1,6 @@
 import { computed, defineComponent, h } from 'vue'
 import { spaceProps } from './spaceProps'
-import { toPx, toFlexPrefix } from '../../../utils'
+import { toPx, toFlexPrefix, flattenSlots, getSlot } from '../../../utils'
 
 type SizeTypes = 'small' | 'medium' | 'large' 
 
@@ -34,21 +34,24 @@ const Space = defineComponent({
       }
     )
 
-    return () => (
-      <div class="tu-space" style={{
-        display: display.value,
-        flexFlow: flexFlow.value,
-        justifyContent: justifyContent.value,
-        alignItems: alignItems.value,
-        gap: gap.value
-      }}>
-        {props.wrapItem
-          ? context.slots.default?.().map(
-              (item) => h('div', { class: ['tu-space-item', props.itemClass], style: props.itemStyle }, [item])
-            )
-          : context.slots.default?.()}
-      </div>
-    )
+    return () => {
+      const slots = flattenSlots(getSlot(context))
+      return (
+        <div class="tu-space" style={{
+          display: display.value,
+          flexFlow: flexFlow.value,
+          justifyContent: justifyContent.value,
+          alignItems: alignItems.value,
+          gap: gap.value
+        }}>
+          {props.wrapItem
+            ? slots.map(
+                (item) => h('div', { class: ['tu-space-item', props.itemClass], style: props.itemStyle }, [item])
+              )
+            : slots}
+        </div>
+      )
+    }
   }
 })
 

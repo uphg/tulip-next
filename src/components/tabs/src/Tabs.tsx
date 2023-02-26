@@ -1,5 +1,5 @@
-import { defineComponent, ref, watchEffect, type PropType, type SetupContext, type VNode } from 'vue'
-import { renderComponent, setStyle } from '../../../utils'
+import { defineComponent, shallowRef, watchEffect, type PropType, type SetupContext, type VNode } from 'vue'
+import { filterComponent, setStyle } from '../../../utils'
 
 const tabsProps = {
   value: {
@@ -17,9 +17,9 @@ const Tabs = defineComponent({
   props: tabsProps,
   setup(props, context: SetupContext<{}>) {
     const { slots } = context
-    const bar = ref<HTMLElement | null>(null)
-    const checked = ref<HTMLElement | null>(null)
-    const tabWrap = ref<HTMLElement | null>(null)
+    const bar = shallowRef<HTMLElement | null>(null)
+    const checked = shallowRef<HTMLElement | null>(null)
+    const tabWrap = shallowRef<HTMLElement | null>(null)
 
     const handleTabClick = (item: VNode) => {
       context.emit('update:value', item.props?.name)
@@ -37,7 +37,7 @@ const Tabs = defineComponent({
     watchEffect(updateBar)
 
     return () => {
-      const tabPanes = renderComponent(slots.default?.(), 'TabPane')
+      const tabPanes = filterComponent(slots.default?.(), 'TabPane')
       return (
         <div class="tu-tabs">
           <div class={['tu-tabs-nav', { 'tu-tabs-nav--segment': props.type === 'segment' }]}>

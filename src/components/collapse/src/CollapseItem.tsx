@@ -4,6 +4,7 @@ import { TuIcon } from '../../icon'
 import { TuCollapseTransition } from '../../collapse-transition'
 import { isNil } from '../../../utils'
 import { ArrowRightRoundSmall } from '../../../icons'
+import { useNameScope } from '../../../composables/useNameScope'
 
 const collapseItemProps = {
   title: [String, Number],
@@ -14,6 +15,7 @@ const CollapseItem = defineComponent({
   name: 'TuCollapseItem',
   props: collapseItemProps,
   setup(props, context) {
+    const ns = useNameScope('tu-collapse-item')
     const collapse = inject<Ref<CollapseContent>>(collapseInjectionKey)
     const isActive = computed(() => {
       if (isNil(props.name)) return false
@@ -24,17 +26,17 @@ const CollapseItem = defineComponent({
     })
 
     return () => (
-      <div class="tu-collapse-item">
-        <div class="tu-collapse-item__header" onClick={() => collapse?.value.triggerCollapseItem(props.name)}>
-          <span class={['tu-collapse-item-arrow', { active: isActive.value }]}>
+      <div class={ns.base}>
+        <div class={ns.el('header')} onClick={() => collapse?.value.triggerCollapseItem(props.name)}>
+          <span class={[ns.suffix('arrow'), { active: isActive.value }]}>
             <TuIcon><ArrowRightRoundSmall/></TuIcon>
           </span>
           {props.title}
         </div>
         <TuCollapseTransition>
           {isActive.value ? (
-            <div class="tu-collapse-item__content-wrap">
-              <div class="tu-collapse-item__content">{context.slots.default?.()}</div>
+            <div class={ns.el('content-wrap')}>
+              <div class={ns.el('content')}>{context.slots.default?.()}</div>
             </div>
           ) : null}
         </TuCollapseTransition>

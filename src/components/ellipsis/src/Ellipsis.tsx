@@ -1,6 +1,7 @@
 import { isNil } from '../../../utils'
 import { computed, defineComponent, ref, type StyleValue, type PropType, shallowRef } from 'vue'
 import { TuTooltip } from '../../tooltip'
+import { useNameScope } from 'tulpcomposables/useNameScope'
 
 const ellipsisProps = {
   lineClamp: {
@@ -22,6 +23,7 @@ const Ellipsis = defineComponent({
   props: ellipsisProps,
   inheritAttrs: false,
   setup(props, context) {
+    const ns = useNameScope('ellipsis')
     const container = shallowRef<HTMLElement | null>(null)
     const text = shallowRef<HTMLElement | null>(null)
 
@@ -32,9 +34,9 @@ const Ellipsis = defineComponent({
         ? container.value?.offsetWidth! >= text.value?.offsetWidth!
         : container.value?.offsetHeight! >= text.value?.offsetHeight!)
     ))
-    const className = computed(() => ['tu-ellipsis', {
-      'tu-ellipsis--line-clamp': lineClamp.value > 1,
-      'tu-ellipsis--cursor-pointer': props.expandTrigger === 'click'
+    const className = computed(() => [ns.base, {
+      [ns.is('line-clamp')]: lineClamp.value > 1,
+      [ns.is('cursor-pointer')]: props.expandTrigger === 'click'
     }])
     const style = computed(() => isNil(props.expandTrigger) || (props.expandTrigger === 'click' && visible.value)
       ? lineClamp.value <= 1
@@ -56,7 +58,7 @@ const Ellipsis = defineComponent({
               class={className.value}
               style={style.value}
               {...events} {...context.attrs}>
-              <span class="tu-ellipsis-text" ref={text}>{context.slots.default?.()}</span>
+              <span class={ns.suffix('text')} ref={text}>{context.slots.default?.()}</span>
             </span>
           )
         }}

@@ -15,14 +15,16 @@ const Col = defineComponent({
   name: 'TuCol',
   props: colProps,
   setup(props, context) {
+    const prefix = 'tu-col'
     const gutter = inject<Readonly<Ref<{ row: number | string, column: number | string }>>>('tu.row.gutter')
+
     return () => (
       <div
-        class={['tu-col', {
-          [`tu-col--span-${props.span}`]: props.span,
-          [`tu-col--offset-${props.offset}`]: props.offset,
-          [`tu-col--push-${props.push}`]: props.push,
-          [`tu-col--pull-${props.pull}`]: props.pull,
+        class={[prefix, {
+          [`${prefix}--span-${props.span}`]: props.span,
+          [`${prefix}--offset-${props.offset}`]: props.offset,
+          [`${prefix}--push-${props.push}`]: props.push,
+          [`${prefix}--pull-${props.pull}`]: props.pull,
         }]}
         style={{
           paddingTop: toPx(gutter?.value.row),
