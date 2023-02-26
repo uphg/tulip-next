@@ -1,30 +1,14 @@
-import { createApp, nextTick, ref, h, onMounted, type Component } from 'vue'
-import Dialog from './Dialog'
-import { TuButton } from '../../button/index'
-import { TuIcon } from '../../icon/index'
-import { CheckCircle, CloseCircle, WarningCircle, InfoCircle } from '../../../icons'
-
-interface DialogOptions {
-  icon?: Component,
-  title?: string
-  content?: string,
-  confirm?: () => void,
-  cancel?: () => void
-}
+import { createApp, nextTick, ref, onMounted } from 'vue'
+import TuDialog from './Dialog'
+import TuModal from '../../modal/src/Modal'
+import type { DialogProps } from './dialogProps'
 
 interface DialogApi {
-  [key: string]: (options: DialogOptions) => { destroy: () => void }
+  [key: string]: (options: DialogProps) => { destroy: () => void }
 }
 
-const typeMap: [string, Component][] = [
-  ['success', CheckCircle],
-  ['warning', WarningCircle],
-  ['info', InfoCircle],
-  ['error', CloseCircle],
-]
-
-function createDialog(options: DialogOptions) {
-  const { icon, title, content, cancel, confirm } = options
+function createDialog(options?: DialogProps) {
+  const { status, title, content, confirmText, cancelText, onCancel, onConfirm } = options || {}
   const div = document.createElement('div')
   document.body.appendChild(div)
 
@@ -32,13 +16,30 @@ function createDialog(options: DialogOptions) {
     setup() {
       const visible = ref(false)
 
-      function handleCancel() {
-        visible.value = false
-        cancel?.()
+      function handleCancel(e: MouseEvent) {
+        if (onCancel) {
+          void Promise.resolve(onCancel(e)).then((result) => {
+            if (result === false) return
+            close()
+          })
+        } else {
+          close()
+        }
       }
-      function handleConfirm() {
+
+      function handleConfirm(e: MouseEvent) {
+        if (onConfirm) {
+          void Promise.resolve(onConfirm(e)).then((result) => {
+            if (result === false) return
+            close()
+          })
+        } else {
+          close()
+        }
+      }
+
+      function close() {
         visible.value = false
-        confirm?.()
       }
 
       onMounted(() => {
@@ -46,44 +47,18 @@ function createDialog(options: DialogOptions) {
       })
 
       return () => (
-        <Dialog
-          title={title}
-          v-model={[visible.value, 'visible']}
-          onClosed={destroy}
-        >
-          {{
-            header: () => [
-              <TuIcon class="prefix-icon" is={icon} />,
-              <span class="tu-dialog__title">{() => title}</span>,
-              <span
-                class="tu-dialog__close"
-                onClick={() => {
-                  visible.value = false
-                }}
-              />
-            ],
-            default: () => content,
-            footer: () => [
-              h(
-                TuButton,
-                {
-                  size: 'small',
-                  onClick: handleCancel
-                },
-                { default: () => '取消' }
-              ),
-              h(
-                TuButton,
-                {
-                  hue: 'primary',
-                  size: 'small',
-                  onClick: handleConfirm
-                },
-                { default: () => '确定' }
-              )
-            ]
-          }}
-        </Dialog>
+        <TuModal v-model={[visible.value, 'visible']} onAfterClose={destroy}>
+          <TuDialog
+            title={title}
+            content={content}
+            status={status}
+            confirmText={confirmText}
+            cancelText={cancelText}
+            onClose={close}
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+        </TuModal>
       )
     }
   })
@@ -104,18 +79,12 @@ function createDialog(options: DialogOptions) {
   }
 }
 
-function createTypeApi(icon: Component) {
-  return (options?: DialogOptions) => {
-    return createDialog({ icon, ...options })
-  }
-}
+const statusList = ['success', 'warning', 'error'] as const
 
 export function useDialog() {
-  const api: DialogApi = {} 
-
-  typeMap.forEach((item) => {
-    const [type, icon] = item
-    api[type] = createTypeApi(icon)
+  const api: DialogApi = {}
+  statusList.forEach((status) => {
+    api[status] = (options: DialogProps) => createDialog({ status, ...options})
   })
 
   return api

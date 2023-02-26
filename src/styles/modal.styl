@@ -1,0 +1,64 @@
+$base = '.tu-modal'
+$z-index = 2000
+
+// 防止执行动画时内容抖动
+translateZ0()
+  transform translateZ(0)
+
+{$base}
+  position relative
+  width 446px
+  margin 30vh auto 0 auto
+  display flex
+  flex-direction column
+
+  &__container
+    width 0
+    height 0
+    position fixed
+    top 0
+    left 0
+    z-index $z-index
+
+  &-wrapper
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+
+  &__content
+    translateZ0()
+    background-color #fff
+    border-radius var(--tu-border-radius)
+    box-shadow 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03)
+
+  &__overlay
+    position absolute
+    inset 0
+    background-color rgba(0, 0, 0, .45)
+    transition background-color 0.3s
+
+.tu-disable-scrolling
+  overflow-y hidden
+  width calc(100% - var(--tu-scrollbar-width))
+
+.tu-modal-fade-in-scale-up-enter-active
+  transition transform 0.3s
+
+.tu-modal-fade-in-scale-up-leave-active
+  transition transform 0.3s
+
+.tu-modal-fade-enter-active
+  animation pop-overlay-fade-in 0.3s
+
+.tu-modal-fade-leave-active
+  animation pop-overlay-fade-out 0.3s
+
+.tu-modal-fade-scale-up-enter-active
+  transition transform 0.3s
+  animation pop-fade-in 0.3s
+
+.tu-modal-fade-scale-up-leave-active
+  transition transform 0.3s
+  animation pop-fade-out 0.3s

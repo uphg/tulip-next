@@ -1,112 +1,73 @@
 
 // 防止执行动画时内容抖动
-stable()
-  transform: translateZ(0);
+translateZ0()
+  transform translateZ(0)
 
-$z-index = 100
+$base = '.tu-dialog'
 
-.tu-dialog {
-  position relative
-  width: 446px;
-  margin: 30vh auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  &__container {
-    position fixed
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: $z-index;
-  }
-  &__overlay {
-    position absolute
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, .45);
-    transition: background-color 0.25s;
-  }
-}
+.tu-dialog
+  &__content
+    padding 16px 20px 20px
 
-/* --- 默认组件样式 */
-.tu-dialog__content {
-  stable()
-  background-color: #fff;
-  border-radius: var(--tu-dialog-border-radius);
-  box-shadow: 0 6px 16px -9px rgba(0, 0, 0, 0.08), 0 9px 28px 0 rgba(0, 0, 0, 0.05), 0 12px 48px 16px rgba(0, 0, 0, 0.03);
-}
-.tu-dialog {
-  .tu-dialog__header {
-    padding: 18px 20px;
-    border-radius: var(--tu-dialog-border-radius) var(--tu-dialog-border-radius) 0 0;
-    display: flex;
-    align-items: center;
-    .prefix-icon {
-      margin-right: 6px;
-      width: 1.5em;
-      height: 1.5em;
-      &.tu-icon-success {
-        fill: var(--tu-success-color);
-      }
-      &.tu-icon-warning {
-        fill: var(--tu-warning-color);
-      }
-      &.tu-icon-info {
-        fill: var(--tu-info-color);
-      }
-      &.tu-icon-error {
-        fill: var(--tu-error-color);
-      }
-    }
-  }
-  .tu-dialog__close {
-    margin-left: auto;
-    position: relative;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      height: 1px;
-      background-color: #000000;
-      width: 100%;
-      top: 50%;
-      left: 50%;
-    }
-    &::before {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-    &::after {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-  }
-  .tu-dialog__title {
-    line-height: 1;
-  }
-  .tu-dialog__body {
-    padding: 0 20px;
-  }
-  .tu-dialog__footer {
-    padding: 16px 20px;
-    // border-top: 1px solid #e8e8e8;
-    border-radius: 0 0 var(--tu-dialog-border-radius) var(--tu-dialog-border-radius);
-    text-align: right;
-    .tu-button:not(:last-child) {
-      margin-right: 10px;
-    }
-  }
-}
+  &__header
+    border-radius var(--tu-border-radius) var(--tu-border-radius) 0 0
+    display flex
+    align-items center
 
-.tu-scrollbar-width {
+  &__header &__prefix-icon
+    margin-right 6px
+    width 1.5em
+    height 1.5em
+    color var(--tu-icon-color)
+
+  &--success
+    {$base}__prefix-icon
+      --tu-icon-color var(--tu-success-color)
+  &--info
+    {$base}__prefix-icon
+      --tu-icon-color var(--tu-info-color)
+  &--warning
+    {$base}__prefix-icon
+      --tu-icon-color var(--tu-warning-color)
+  &--error
+    {$base}__prefix-icon
+      --tu-icon-color var(--tu-error-color)
+
+  &__close
+    width 22px
+    height 22px
+    color #666666
+    border none
+    border-radius 3px
+    padding 0
+    cursor pointer
+    display flex
+    justify-content center
+    align-items center
+    margin-left auto
+    background-color transparent
+    transition background-color 0.3s
+    & > .tu-base-icon
+      width 18px
+      height 18px
+    &:hover, &:focus
+      background-color rgba(0, 0, 0, 0.09)
+
+  &__title
+    font-size 18px
+    line-height 1
+
+  &__body
+    font-size 14px
+    margin-top 8px
+
+  &__footer
+    margin-top 12px
+    border-radius 0 0 var(--tu-border-radius) var(--tu-border-radius)
+    text-align right
+    .tu-button:not(:last-child)
+      margin-right 10px
+
+.tu-scrollbar-width
   overflow hidden
   margin-right var(--tu-scrollbar-width)
-}
-
-
-/* --- 动画样式 */
-pop-fade('tu-dialog', '.tu-dialog')

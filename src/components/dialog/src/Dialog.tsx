@@ -1,115 +1,55 @@
-import { defineComponent, withDirectives, vShow, Teleport, Transition, watch, toRef } from 'vue'
-import { offBodyScroll, onBodyScroll } from '../../../utils'
-import type { PropType } from 'vue'
+import { defineComponent, type PropType, type Component, computed, h  } from 'vue'
+import { useNameScope } from '../../../composables/useNameScope'
+import type { Fn } from '../../../types'
+import { CheckCircle, CloseCircle, WarningCircle, InfoCircle, CloseSmall } from '../../../icons'
+import TuButton from '../../button/src/Button'
+import TuBaseIcon from '../../base-icon/src/BaseIcon'
+import { dialogProps } from './dialogProps'
+
+const statusMap: { [key: string]: Component } = {
+  success: CheckCircle,
+  warning: WarningCircle,
+  info: InfoCircle,
+  error: CloseCircle,
+}
 
 export default defineComponent({
   name: 'TuDialog',
-  emits: ['update:visible', 'open', 'opened', 'close', 'closed', 'maskClick'],
-  props: {
-    visible: Boolean as PropType<boolean>,
-    title: String as PropType<string>,
-    maskClosable: {
-      type: Boolean as PropType<boolean>,
-      default: true
-    },
-    renderDirective: {
-      type: String as PropType<'if' | 'show'>,
-      default: 'if'
-    },
-    wrap: Boolean as PropType<boolean>,
-    custom: Boolean as PropType<boolean>
-  },
-  setup(props, context) {
-    const { emit } = context
+  emits: ['update:visible'],
+  props: dialogProps,
+  setup(props) {
+    const ns = useNameScope('dialog')
+    const statusIcon = computed(() => props.status ? statusMap?.[props.status] : null)
 
-    function close() {
-      emit('update:visible', false)
-    }
-
-    function handleOpen() {
-      emit('open')
-      offBodyScroll()
-    }
-
-    function handleClose() {
-      emit('close')
-    }
-
-    function onAfterEnter() {
-      emit('opened')
-    }
-
-    function onAfterLeave() {
-      emit('closed')
-      onBodyScroll()
-    }
-
-    function handleMaskClick(event: Event) {
-      emit('maskClick', event)
-      props.maskClosable && close()
-    }
-
-    watch(toRef(props, 'visible'), value => {
-      value ? handleOpen() : handleClose()
-    })
-
-    return () => {
-      const { attrs, slots } = context
-      const content = (
-        <div
-          class="tu-dialog__container"
-          {...attrs}
-        >
-          <div
-            class="tu-dialog__overlay"
-            onClick={handleMaskClick}
-          ></div>
-          <div class="tu-dialog">
-            {!props.custom ? (
-              <div class="tu-dialog__content">
-                <div class="tu-dialog__header">
-                  {!slots.header ? (
-                      <>
-                        <span class="tu-dialog__title">{props.title}</span>
-                        <span class="tu-dialog__close" onClick={close}></span>
-                      </>
-                    ) : (slots.header?.())}
-                </div>
-                <div class="tu-dialog__body">
-                  {slots.default?.()}
-                </div>
-                <div class="tu-dialog__footer">
-                  {slots.footer?.()}
-                </div>
-              </div>
-              ) : (props.custom ? slots.default?.() : null)}
+    return () => (
+      <div class={[ns.base, { [ns.is(props.status)]: !!props.status }]}>
+        <div class={ns.el('content')}>
+          <div class={ns.el('header')}>
+            <>
+              {statusIcon.value ? (
+                <TuBaseIcon class={ns.el('prefix-icon')} is={statusIcon.value}/>
+              ) : null }
+              <span class={ns.el('title')}>{props.title}</span>
+              <button class={ns.el('close')} tabindex="0" onClick={props.onClose}>
+                <TuBaseIcon is={CloseSmall}/>
+              </button>
+            </>
           </div>
+          <div class={ns.el('body')}>
+            {props.content}
+          </div>
+          {props.cancelText || props.confirmText ? (
+            <div class={ns.el('footer')}>
+              {props.cancelText ? (
+                <TuButton size="small" onClick={props.onCancel}>{props.cancelText}</TuButton>
+              ) : null}
+              {props.confirmText ? (
+                <TuButton size="small" hue={props.status} onClick={props.onConfirm}>{props.confirmText}</TuButton>
+              ) : null}
+            </div>
+          ) : null}
         </div>
-      )
-      return (
-        <Teleport to="body" disabled={props.wrap}>
-          <Transition
-            name="tu-dialog-fade"
-            onAfterEnter={onAfterEnter}
-            onAfterLeave={onAfterLeave}
-          >
-            {{
-              default: () => {
-                if (props.renderDirective === 'if') {
-                  return (props.visible ? content : null)
-                } else if (props.renderDirective === 'show') {
-                  return withDirectives(
-                    content,
-                    [
-                      [vShow, props.visible]
-                    ]
-                  )
-                }
-              }
-            }}
-          </Transition>
-        </Teleport>
-      )
-    }
+      </div>
+    )
   }
 })
