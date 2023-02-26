@@ -4,29 +4,11 @@ Dialog 弹出对话框组件
 
 ## 基本用法
 
+用函数调用的方式快捷打开
+
 ::: demo
 
 dialog/base
-
-:::
-
-## 自定义模板
-
-可以添加自定义模板
-
-::: demo
-
-dialog/custom
-
-:::
-
-## 快捷打开
-
-可以用函数调用的方式快捷打开
-
-::: demo
-
-dialog/quick
 
 :::
 
@@ -55,13 +37,4 @@ dialog/quick
 
 <script setup lang="ts">
 import DialogBase from '../examples/dialog/base.vue'
-import DialogCustom from '../examples/dialog/custom.vue'
-import DialogQuick from '../examples/dialog/quick.vue'
 </script>
-
-<style lang="stylus">
-
-.dialog__quick .component .tu-button
-    margin-right 10px
-
-</style>
