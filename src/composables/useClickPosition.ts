@@ -14,7 +14,7 @@ let usedCount = 0
 let onEnterModal: Fn | null = null
 
 export function useClickPosition() {
-  if (!isClient) return
+  if (!isClient) return {}
   if (usedCount === 0) {
     emitter.on('enterModal', handleEnterModal)
     on(document, 'click', handleClick)
@@ -46,6 +46,7 @@ function handleClick(e: MouseEvent) {
   }
 
   if (onEnterModal) {
+    console.log('点击时触发 onEnterModal')
     onEnterModal()
     onEnterModal = null
   }

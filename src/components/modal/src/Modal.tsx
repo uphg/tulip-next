@@ -13,7 +13,7 @@ export default defineComponent({
     const { emit } = context
     const ns = useNameScope('modal')
     const isMounted = useIsMounted()
-    const { emitter, mousePosition } = useClickPosition() || {}
+    const { emitter, mousePosition } = useClickPosition()
 
     const modal = shallowRef<HTMLDivElement | null>(null)
     const wrapperVisible = ref(props.visible)
@@ -55,9 +55,9 @@ export default defineComponent({
 
     function updateTransformOrigin(el: Element) {
       if (!mousePosition?.value) return
-      const { top, left } = el.getBoundingClientRect()
-      transformOriginX.value = (left - mousePosition.value.x) * -1
-      transformOriginY.value = (top - mousePosition.value.y) * -1
+      const { offsetLeft, offsetTop } = el as HTMLElement
+      transformOriginX.value = (offsetLeft - mousePosition.value.x) * -1
+      transformOriginY.value = (offsetTop - mousePosition.value.y) * -1
     }
 
     function close() {
@@ -66,6 +66,10 @@ export default defineComponent({
 
     onMounted(() => {
       props.visible && props.disableScroll && disableBodyScroll()
+    })
+
+    context.expose({
+      modal
     })
 
     return () => {
