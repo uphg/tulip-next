@@ -1,7 +1,7 @@
 import { isNil } from '../../../utils'
 import { computed, defineComponent, ref, type StyleValue, type PropType, shallowRef } from 'vue'
 import { TuTooltip } from '../../tooltip'
-import { useNameScope } from 'tulpcomposables/useNameScope'
+import { useNameScope } from '../../../composables/useNameScope'
 
 const ellipsisProps = {
   lineClamp: {
