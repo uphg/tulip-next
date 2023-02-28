@@ -1,5 +1,5 @@
-import type { Fn } from 'tulptypes'
 import type { ExtractPropTypes, PropType } from 'vue'
+import type { Fn } from '../../../types'
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>
 
@@ -14,8 +14,8 @@ export const modalProps = {
     type: String as PropType<'if' | 'show'>,
     default: 'if'
   },
-  onAfterOpen: Function as PropType<Fn>,
-  onAfterClose: Function as PropType<Fn>,
+  onAfterEnter: Function as PropType<Fn>,
+  onAfterLeave: Function as PropType<Fn>,
   disabled: Boolean as PropType<boolean>,
   disableScroll: {
     type: Boolean as PropType<boolean>,

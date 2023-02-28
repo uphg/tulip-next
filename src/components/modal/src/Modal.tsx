@@ -1,7 +1,7 @@
 import { defineComponent, withDirectives, vShow, Teleport, Transition, watch, toRef, onMounted, computed, ref, nextTick, shallowRef } from 'vue'
+import { modalProps } from './modalProps'
 import { disableBodyScroll, enableBodyScroll } from '../../../utils'
 import { useNameScope } from '../../../composables/useNameScope'
-import { modalProps } from './modalProps'
 import { useClickPosition } from '../../../composables/useClickPosition'
 import { useIsMounted } from '../../../composables/useIsMounted'
 
@@ -28,29 +28,25 @@ export default defineComponent({
       if (value) wrapperVisible.value = true
     })
 
-    function handleBeforeEnterWrapper() {
+    function handleEnterModal(el: Element) {
+      emitter?.emit('enterModal', () => {
+        updateTransformOrigin(el)
+      })
+    }
+
+    function handleBeforeEnterModal() {
       props.disableScroll && disableBodyScroll()
     }
 
-    function handleAfterEnterWrapper() {
-      props.onAfterOpen?.()
-    }
-
-    function handleAfterLeaveWrapper() {
+    function handleAfterLeaveModal() {
       props.disableScroll && enableBodyScroll()
       wrapperVisible.value = false
-      props.onAfterClose?.()
+      props.onAfterLeave?.()
     }
 
     function handleClickMask(event: Event) {
       emit('maskClick', event)
       props.maskClosable && close()
-    }
-
-    function handleEnterModal(el: Element) {
-      emitter?.emit('enterModal', () => {
-        updateTransformOrigin(el)
-      })
     }
 
     function updateTransformOrigin(el: Element) {
@@ -68,9 +64,7 @@ export default defineComponent({
       props.visible && props.disableScroll && disableBodyScroll()
     })
 
-    context.expose({
-      modal
-    })
+    context.expose({ modal })
 
     return () => {
       const { attrs, slots } = context
@@ -84,33 +78,18 @@ export default defineComponent({
       )
       const ModalWrapper = (
         <div class={ns.suffix('wrapper')}>
+          <Transition name={ns.suffix('fade')} appear={isMounted.value}>
+            {withDirectives(Overlay, [[vShow, props.visible]])}
+          </Transition>
           <Transition
-            name={ns.suffix('fade')}
-            onBeforeEnter={handleBeforeEnterWrapper}
-            onAfterEnter={handleAfterEnterWrapper}
-            onAfterLeave={handleAfterLeaveWrapper}
+            name={ns.suffix('fade-in-scale-up')}
+            onBeforeEnter={handleBeforeEnterModal}
+            onEnter={handleEnterModal}
+            onAfterEnter={props.onAfterEnter}
+            onAfterLeave={handleAfterLeaveModal}
             appear={isMounted.value}
           >
-            {{
-              default: () => {
-                if (props.renderDirective === 'if') {
-                  return (props.visible ? Overlay : null)
-                } else if (props.renderDirective === 'show') {
-                  return withDirectives(Overlay, [[vShow, props.visible]])
-                }
-              }
-            }}
-          </Transition>
-          <Transition name="tu-modal-fade-scale-up" onEnter={handleEnterModal} appear={isMounted.value}>
-            {{
-              default: () => {
-                if (props.renderDirective === 'if') {
-                  return (props.visible ? Modal : null)
-                } else if (props.renderDirective === 'show') {
-                  return withDirectives(Modal, [[vShow, props.visible]])
-                }
-              }
-            }}
+            {withDirectives(Modal, [[vShow, props.visible]])}
           </Transition>
         </div>
       )
@@ -118,7 +97,9 @@ export default defineComponent({
       return (
         <Teleport to="body" disabled={props.disabled}>
           <div class={ns.el('container')} {...attrs}>
-            {wrapperVisible.value ? ModalWrapper : null}
+            {props.renderDirective === 'if'
+              ? wrapperVisible.value ? ModalWrapper : null
+              : withDirectives(Modal, [[vShow, wrapperVisible.value]])}
           </div>
         </Teleport>
       )
