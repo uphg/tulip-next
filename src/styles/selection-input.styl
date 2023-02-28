@@ -1,6 +1,7 @@
 $base = '.tu-selection-input'
 
 {$base}
+  cursor pointer
   display flex
   position relative
   width 100%
@@ -8,7 +9,7 @@ $base = '.tu-selection-input'
   line-height 34px
   border-radius 3px
   padding 0 12px
-  &:hover
+  &:hover, &--hover
     {$base}__border
       border-color var(--tu-primary-color)
   &--focus
@@ -29,11 +30,23 @@ $base = '.tu-selection-input'
   &__suffix
     display flex
     align-items center
-    .tu-base-icon
-      width 16px
-      height 16px
-      margin-right -2px
-      color var(--tu-text-color-placeholder)
+
+  &__icon-wrap
+    width 16px
+    height 16px
+    margin-right -2px
+    position relative
+    color var(--tu-text-color-placeholder)
+
+  &-clear
+    transition color 0.25s
+    &:hover, &:active
+      color rgba(146, 146, 146, 1)
+    & > .tu-base-icon
+      position absolute
+      inset 0
+      width 100%
+      height 100%
 
   &__placeholder
     color var(--tu-text-color-placeholder)
