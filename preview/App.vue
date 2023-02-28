@@ -10,6 +10,13 @@ import RadioDemo from './views/RadioDemo.vue'
 import CheckboxDemo from './views/CheckboxDemo.vue'
 import ModalDemo from './views/ModalDemo.vue'
 import CascaderDemo from './views/CascaderDemo.vue'
+import SelectDemo from './views/SelectDemo.vue'
+import SelectionInputDemo from './views/SelectionInputDemo.vue'
+import CardDemo from './views/CardDemo.vue'
+
+import TransitionDemo from './views/TransitionDemo'
+import TransitionDemo2 from './views/TransitionDemo.vue'
+import TestTransition from './views/TestTransition'
 import { shallowRef } from 'vue'
 
 const sidebar = [
@@ -28,8 +35,44 @@ const sidebar = [
   {
     title: 'Cascader 级联选择器',
     component: CascaderDemo
+  },
+  {
+    title: 'SelectInput 选择器输入框',
+    component: SelectionInputDemo
+  },
+  {
+    title: 'Select 选择器',
+    component: SelectDemo
+  },
+  {
+    title: 'Card 卡片',
+    component: CardDemo
   }
+  // {
+  //   title: '过渡1',
+  //   component: TransitionDemo
+  // },
+  // {
+  //   title: '过渡2',
+  //   component: TestTransition
+  // },
+  // {
+  //   title: '过渡3',
+  //   component: TransitionDemo2
+  // }
 ]
 
-const current = shallowRef(sidebar[2])
+const current = shallowRef(sidebar[6])
 </script>
+
+<style>
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+</style>

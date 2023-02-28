@@ -23,8 +23,8 @@
       <!-- <TestButton />
       <TestInput /> -->
       <!-- <ScrollbarWidth /> -->
-      <!--
-      <TestDialog /> -->
+      
+      <!--<TestDialog /> -->
       <TestRadio />
     </div>
   </main>
@@ -48,8 +48,8 @@ import TestImage2 from './TestImage2.vue'
 import TestDraggable from './TestDraggable.vue'
 import TestPopupScroll from './TestPopupScroll.vue'
 import TestCascader from './CascaderDemo.vue'
-import TestSelectionInput from './TestSelectionInput.vue'
-import TestSelect from './TestSelect.vue'
+import TestSelectionInput from './SelectionInputDemo.vue'
+import TestSelect from './SelectDemo.vue'
 import TestButton from './TestButton.vue'
 import TestInput from './TestInput.vue'
 import ScrollbarWidth from './ScrollbarWidth.vue'

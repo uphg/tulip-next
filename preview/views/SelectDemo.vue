@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 30px">
     <br v-for="item in 10" :key="item"/>
-    <div><tu-select v-model:value="value" :options="options"/></div>
+    <div><tu-select v-model:value="value" :options="options" clearable/></div>
     <br />
     <div><tu-select v-model:value="value2" :options="options"/></div>
   </div>

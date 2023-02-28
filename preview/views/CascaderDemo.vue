@@ -1,6 +1,6 @@
 <template>
   <div class="cascader-demo">
-    <div><tu-cascader v-model:value="value" :options="options"/></div>
+    <div><tu-cascader v-model:value="value" :options="options" clearable/></div>
     <br />
     <div><tu-cascader v-model:value="value2" :options="options"/></div>
     <br />

@@ -10,7 +10,7 @@
     <div style="position: absolute; bottom: 20px; left: 20px;">
       <tu-button @click="visible = true">点我打开</tu-button>
     </div>
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div style="position: absolute; top: 50%; left: 620px; transform: translate(-50%, -50%);">
       <tu-button @click="visible = true">点我打开</tu-button>
     </div>
     <tu-modal v-model:visible="visible">
@@ -23,15 +23,10 @@
         :onCancel="onCancel"
       />
     </tu-modal>
-    <tu-modal v-model:visible="visible2">
-      <tu-dialog
-        title="模态框"
-        content="内容"
-        status=""
-        :onClose="onClose2"
-        :onConfirm="onConfirm2"
-        :onCancel="onCancel2"
-      />
+    <tu-modal ref="modalRef" v-model:visible="visible2">
+      <div style="padding: 12px 16px;">
+        <tu-button @click="clickModalButton">点我查看当前元素</tu-button>
+      </div>
     </tu-modal>
     <tu-modal v-model:visible="visible3">
       <tu-dialog
@@ -50,6 +45,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const modalRef = ref<{ modal: HTMLElement } | null>(null)
 const visible = ref(true)
 const visible2 = ref(false)
 const visible3 = ref(false)
@@ -87,6 +83,12 @@ function onConfirm3() {
 
 function onCancel3() {
   visible3.value = false
+}
+
+function clickModalButton() {
+  console.log('modalRef.value')
+  const modal = modalRef.value?.modal as HTMLElement
+  console.log(modal.getBoundingClientRect())
 }
 
 </script>
