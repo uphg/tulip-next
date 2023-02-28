@@ -5,7 +5,7 @@ import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import { Tick, ArrowRightRoundSmall } from '../../../icons'
 import type { SelectValue, Scrollbar } from '../../../types'
 import { useNameScope } from '../../../composables/useNameScope'
-import { withAttrs } from '../../../utils'
+import { withAttrs, map } from '../../../utils'
 import type Emitter from '../../../utils/emitter'
 
 const CascaderSubmenu = defineComponent({
@@ -23,11 +23,12 @@ const CascaderSubmenu = defineComponent({
     const selectedIndex = ref<number | null>(null)
 
     function handleEnter() {
-      if (selectedIndex.value && selectedIndex.value > 5) {
-        const container = scrollbar.value?.container
-        const { offsetHeight: containerHeight } = withAttrs(container)
-        const height = (selectedIndex.value) * 34 - containerHeight
-        scrollbar.value?.scrollTo({ top: height })
+      const container = scrollbar.value?.container
+      if (!container || !selectedIndex.value) return
+      if (selectedIndex.value > 5) {
+        const { offsetHeight: containerHeight } = container
+        const top = (selectedIndex.value + 1) * 34 - containerHeight
+        scrollbar.value?.scrollTo({ top })
       }
     }
 
@@ -47,7 +48,7 @@ const CascaderSubmenu = defineComponent({
       <div class="tu-cascader-submenu">
         <TuScrollbar ref={scrollbar}>
           <div class="tu-cascader-options">
-            {props.options?.map((item, index) => {
+            {map(props.options, (item, index) => {
               if (!item) return null
               if (!item.children && item.value === props.value) {
                 selectedIndex.value = index
