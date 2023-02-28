@@ -1,5 +1,5 @@
-import { defineComponent, shallowRef, watchEffect, type PropType, type SetupContext, type VNode } from 'vue'
-import { filterComponent, setStyle } from '../../../utils'
+import { defineComponent, onMounted, shallowRef, watchEffect, nextTick, type PropType, type SetupContext, type VNode } from 'vue'
+import { addClass, filterComponent, setStyle } from '../../../utils'
 
 const tabsProps = {
   value: {
@@ -35,6 +35,12 @@ const Tabs = defineComponent({
     }
 
     watchEffect(updateBar)
+
+    onMounted(() => {
+      nextTick(() => {
+        addClass(bar.value, 'tu-tabs-bar--transition')
+      })
+    })
 
     return () => {
       const tabPanes = filterComponent(slots.default?.(), 'TabPane')

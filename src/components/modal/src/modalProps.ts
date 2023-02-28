@@ -5,7 +5,9 @@ export type ModalProps = ExtractPropTypes<typeof modalProps>
 
 export const modalProps = {
   visible: Boolean as PropType<boolean>,
-  title: String as PropType<string>,
+  onAfterEnter: Function as PropType<Fn>,
+  onAfterLeave: Function as PropType<Fn>,
+  disabled: Boolean as PropType<boolean>,
   maskClosable: {
     type: Boolean as PropType<boolean>,
     default: true
@@ -14,9 +16,6 @@ export const modalProps = {
     type: String as PropType<'if' | 'show'>,
     default: 'if'
   },
-  onAfterEnter: Function as PropType<Fn>,
-  onAfterLeave: Function as PropType<Fn>,
-  disabled: Boolean as PropType<boolean>,
   disableScroll: {
     type: Boolean as PropType<boolean>,
     default: true

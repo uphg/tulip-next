@@ -2,12 +2,11 @@ import { defineComponent, ref, shallowRef, Transition } from 'vue'
 import type { PropType } from 'vue'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
 import { Loading, Clear } from '../../../icons'
-import { emit } from 'process'
 
 const inputProps = {
   value: {
     type: String as PropType<string | null>,
-    default: ''
+    default: null
   },
   type: {
     type: String as PropType<'text' | 'password' | 'textarea'>,
@@ -71,7 +70,7 @@ const Input = defineComponent({
     }
 
     function handleClickClear() {
-      context.emit('update:value', '')
+      context.emit('update:value', null)
     }
 
     return () => {

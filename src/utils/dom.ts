@@ -10,7 +10,8 @@ const reOverflowScroll = /(auto|scroll|overlay)/
 
 type Styles = { [key: string]: string | number }
 
-export function addClass(el: Element, ...args: string[] | string[][]) {
+export function addClass(el: Element | null, ...args: string[] | string[][]) {
+  if (!el) return
   const classNames = mergeClass(args)
   if (el.classList) {
     el.classList.add(...classNames)
