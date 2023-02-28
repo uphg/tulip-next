@@ -1,13 +1,11 @@
 import { defineComponent, ref, shallowRef, onMounted, toRef, watch } from 'vue'
-import TuPopup from '../../popup/src/Popup'
-import TuSelectionInput from '../../selection-input/src/SelectionInput'
-import { ArrowBottomRoundSmall } from '../../../icons'
-import { TuBaseIcon } from '../../base-icon'
-import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
-import type { Fn, SelectValue } from '../../../types'
 import { cascaderProps, type CascaderOption } from './cascaderProps'
 import CascaderSubmenu from './CascaderSubmenu'
-import { useEmitter } from '../../../utils'
+import TuPopup from '../../popup/src/Popup'
+import TuSelectionInput from '../../selection-input/src/SelectionInput'
+import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
+import type { Fn, SelectValue } from '../../../types'
+import { isArray, useEmitter } from '../../../utils'
 
 const Cascader = defineComponent({
   name: 'TuCascader',
@@ -18,6 +16,7 @@ const Cascader = defineComponent({
     const popup = shallowRef<HTMLElement | null>(null)
     const input = ref('')
     const selected = ref<CascaderOption[] | []>([])
+    const isHover = ref(false)
 
     const emitter = useEmitter()
     const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popup, triggerMode: 'click' })
@@ -58,7 +57,7 @@ const Cascader = defineComponent({
       }
     }
 
-    function getSelected(value: SelectValue[]) {
+    function getSelected(value: SelectValue[] | null) {
       if (!value?.length) {
         return getDefaultSelected()
       }
@@ -103,6 +102,20 @@ const Cascader = defineComponent({
       input.value = selected.value.map(item => item.label).join(' / ')
     }
 
+    function handleMouseEnter() {
+      isHover.value = true
+    }
+
+    function handleMouseLeave() {
+      isHover.value = false
+    }
+
+    function handleClickClear() {
+      const result: [] | null = isArray(props.value) ? [] : null 
+      context.emit('update:value', result)
+      selected.value = getSelected(result)
+    }
+
     onMounted(() => {
       selected.value = getSelected(props.value)
       updateInput()
@@ -118,10 +131,18 @@ const Cascader = defineComponent({
       >
         {{
           trigger: () => (
-            <div ref={trigger} class="tu-cascader" onClick={onClick}>
-              <TuSelectionInput value={input.value} placeholder={props.placeholder} focus={visible.value}>
-                {{ suffix:() => <TuBaseIcon is={ArrowBottomRoundSmall}/> }}
-              </TuSelectionInput>
+            <div ref={trigger} class="tu-cascader">
+              <TuSelectionInput
+                value={input.value}
+                placeholder={props.placeholder}
+                isHover={isHover.value}
+                isFocus={visible.value}
+                clearable={props.clearable}
+                onClick={onClick}
+                onMouseenter={handleMouseEnter}
+                onMouseleave={handleMouseLeave}
+                onClickClear={handleClickClear}
+              />
             </div>
           ),
           default: () => (

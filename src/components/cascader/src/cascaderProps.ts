@@ -16,5 +16,6 @@ export const cascaderProps = {
     default: null
   },
   options: Array as PropType<CascaderOption[]>,
-  placeholder: String as PropType<string>
+  placeholder: String as PropType<string>,
+  clearable: Boolean as PropType<boolean>
 }

@@ -1,7 +1,7 @@
-import { computed, defineComponent, ref, shallowRef, type PropType } from 'vue'
+import { computed, defineComponent, ref, toRef, watch, shallowRef, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
-import { ArrowBottomRoundSmall, Tick } from '../../../icons'
+import { Tick } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import type { Fn, SelectValue, Scrollbar } from '../../../types'
@@ -15,16 +15,24 @@ const Select = defineComponent({
   inheritAttrs: false,
   props: {
     value: [String, Number, Symbol] as PropType<SelectValue>,
-    options: Array as PropType<SelectOption[]>
+    options: Array as PropType<SelectOption[]>,
+    clearable: Boolean as PropType<boolean>
   },
   emits: ['update:value'],
   setup(props, context) {
-    const scrollbar = ref<Scrollbar | null>(null)
-    const selectedIndex = ref<number | null>(null)
     const triggerEl = shallowRef<HTMLElement | null>(null)
     const popup = shallowRef<HTMLElement | null>(null)
+
+    const scrollbar = ref<Scrollbar | null>(null)
+    const selectedIndex = ref<number | null>(null)
     const checkmark = ref(getDefaultCheckmark())
+    const isHover = ref(false)
+
     const input = computed(() => props.options?.find((item) => item.value === props.value)?.label)
+
+    watch(toRef(props, 'value'), (newValue) => {
+      checkmark.value = newValue
+    })
 
     const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
@@ -52,6 +60,18 @@ const Select = defineComponent({
       selectedIndex.value = null
     }
 
+    function handleMouseEnter() {
+      isHover.value = true
+    }
+
+    function handleMouseLeave() {
+      isHover.value = false
+    }
+
+    function handleClickClear() {
+      context.emit('update:value', '')
+    }
+
     function getDefaultCheckmark() {
       return props.value ?? props.options?.[0]?.value
     }
@@ -67,10 +87,17 @@ const Select = defineComponent({
       >
         {{
           trigger: () => (
-            <div ref={triggerEl} class="tu-select" onClick={onClick}>
-              <TuSelectionInput value={input.value} focus={visible.value}>
-                {{ suffix:() => <TuBaseIcon is={ArrowBottomRoundSmall}/> }}
-              </TuSelectionInput>
+            <div ref={triggerEl} class="tu-select">
+              <TuSelectionInput
+                value={input.value}
+                isFocus={visible.value}
+                isHover={isHover.value}
+                clearable={props.clearable}
+                onClick={onClick}
+                onMouseenter={handleMouseEnter}
+                onMouseleave={handleMouseLeave}
+                onClickClear={handleClickClear}
+              />
             </div>
           ),
           default: () => (
