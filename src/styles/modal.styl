@@ -1,7 +1,6 @@
 $base = '.tu-modal'
 $z-index = 2000
 
-// 防止执行动画时内容抖动
 translateZ0()
   transform translateZ(0)
 
@@ -37,28 +36,30 @@ translateZ0()
     position absolute
     inset 0
     background-color rgba(0, 0, 0, .45)
-    transition background-color 0.3s
 
 .tu-disable-scrolling
   overflow-y hidden
   width calc(100% - var(--tu-scrollbar-width))
 
-.tu-modal-fade-in-scale-up-enter-active
-  transition transform 0.3s
+// overlay
+$fade = '.tu-modal-fade'
 
-.tu-modal-fade-in-scale-up-leave-active
-  transition transform 0.3s
+{$fade}-enter-active,
+{$fade}-leave-active
+  transition opacity 0.25s ease
 
-.tu-modal-fade-enter-active
-  animation pop-overlay-fade-in 0.3s
+{$fade}-enter-from,
+{$fade}-leave-active
+  opacity 0
 
-.tu-modal-fade-leave-active
-  animation pop-overlay-fade-out 0.3s
+// modal
+$scale = '.tu-modal-fade-in-scale-up'
 
-.tu-modal-fade-scale-up-enter-active
-  transition transform 0.3s
-  animation pop-fade-in 0.3s
+{$scale}-enter-active,
+{$scale}-leave-active
+  transition opacity 0.25s ease, transform 0.25s ease
 
-.tu-modal-fade-scale-up-leave-active
-  transition transform 0.3s
-  animation pop-fade-out 0.3s
+{$scale}-enter-from,
+{$scale}-leave-active
+  transform scale3d(0.6, 0.6, 1)
+  opacity 0

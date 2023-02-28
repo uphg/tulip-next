@@ -1,13 +1,14 @@
-export function map<T, U>(
-  array: T[] | number,
-  callback: (value: T | number, index: number, array: T[] | number) => U
+export function map<T extends unknown, U extends unknown>(
+  array: T[] | undefined,
+  callback: (value: T, index: number, array: T[] | number) => U
 ): U[] {
-  const isNumber = typeof array === 'number'
-  const length = isNumber ? array : array.length
+  if (!array) return []
+  const length = array.length
   const result = []
   let index = -1
+
   while (++index < length) {
-    const item = isNumber ? index + 1 : array[index]
+    const item = array[index]
     result[index] = callback(item, index, array)
   }
 

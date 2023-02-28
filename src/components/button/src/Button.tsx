@@ -90,8 +90,8 @@ const Button = defineComponent({
                   'tu-icon--empty': !slots.default
                 }]}
               >
-                <Transition name="tu-fade" mode="out-in">
-                  { loading ? <LoadingIcon /> : <TuIcon is={icon} /> }
+                <Transition name="tu-zoom" mode="out-in">
+                  {loading ? <LoadingIcon /> : <TuIcon is={icon} />}
                 </Transition>
               </span>
               ) : null}

@@ -32,9 +32,9 @@ const Popup = defineComponent({
   setup(props, context) {
     const popup = shallowRef<HTMLElement | null>(null)
     const triggerEl = shallowRef<HTMLElement | VueInstance | null>(null)
-    const foothold = shallowRef<HTMLElement | null>(null)
+    const container = shallowRef<HTMLElement | null>(null)
 
-    const footholdApp = ref<App<Element> | null>(null)
+    const containerApp = ref<App<Element> | null>(null)
     const dom = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle & ElementStyle>({})
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
@@ -57,7 +57,7 @@ const Popup = defineComponent({
     }
 
     function handleOpenPopup() {
-      updateZIndex(foothold.value!)
+      updateZIndex(container.value!)
       dom.value = getRelativeDOMPosition(trigger.value)
       loadScrollListener()
       loadResizeListener()
@@ -65,11 +65,11 @@ const Popup = defineComponent({
 
     function initPopup() {
       const div = document.createElement('div')
-      div.className = 'tu-foothold'
-      foothold.value = div
+      div.className = 'tu-popup-container'
+      container.value = div
       document.body.appendChild(div)
 
-      footholdApp.value = createApp({
+      containerApp.value = createApp({
         setup() {
           const visible = ref(false)
           const stopWatchHandle = watch(toRef(props, 'visible'), (value) => {
@@ -84,6 +84,7 @@ const Popup = defineComponent({
           onBeforeUnmount(stopWatchHandle)
           return () => props.disabled ? null : (
             <Transition
+              name="tu-zoom"
               onBeforeEnter={props.onBeforeEnter}
               onEnter={handleEnter}
               onAfterEnter={props.onAfterEnter}
@@ -92,7 +93,6 @@ const Popup = defineComponent({
               onLeave={props.onLeave}
               onAfterLeave={handleAfterLeave}
               onLeaveCancelled={props.onLeaveCancelled}
-              name="tu-zoom"
             >
               {{
                 default: () => (
@@ -113,7 +113,7 @@ const Popup = defineComponent({
         }
       })
 
-      footholdApp.value.mount(div)
+      containerApp.value.mount(div)
       zindexable.elementZIndex.set(div, zindexable.nextZIndex)
       initialize.value = true
     }
@@ -508,9 +508,9 @@ const Popup = defineComponent({
     }
 
     onBeforeUnmount(() => {
-      if (foothold.value) {
-        zindexable.elementZIndex.delete(foothold.value)
-        footholdApp.value!.unmount()
+      if (container.value) {
+        zindexable.elementZIndex.delete(container.value)
+        containerApp.value!.unmount()
       }
     })
 

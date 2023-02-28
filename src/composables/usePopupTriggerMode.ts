@@ -1,7 +1,7 @@
-import { computed, nextTick, ref, watch, type Ref } from 'vue'
+import { computed, nextTick, ref, type Ref } from 'vue'
 import { on, off, isTarget } from '../utils'
 import { unrefElement } from './unrefElement'
-import type { Fn, MaybeElementRef, VueInstance, MaybeElement, PopupTrigger } from '../types'
+import type { Fn, MaybeElementRef, PopupTrigger } from '../types'
 
 export type UsePopupTriggerOptions = {
   popup: MaybeElementRef,
