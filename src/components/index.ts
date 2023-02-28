@@ -26,6 +26,7 @@ import { TuModal } from './modal'
 import { TuRadio } from './radio'
 import { TuRadioGroup } from './radio-group'
 import { TuRadioButton } from './radio-button'
+import { TuCard } from './card'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -60,7 +61,8 @@ const components = [
   TuModal,
   TuRadio,
   TuRadioGroup,
-  TuRadioButton
+  TuRadioButton,
+  TuCard
 ]
 
 const { install } = makeInstaller(components)
@@ -97,6 +99,7 @@ export {
   TuRadio,
   TuRadioGroup,
   TuRadioButton,
+  TuCard,
 
   // utils
   useDialog,
