@@ -1,16 +1,6 @@
 # Transition 过渡
 
-Tulp 内置了几种常用的过渡动画
-
-## 展开/折叠
-
-使用 `tu-collapse-transition` 组件实现展开/折叠效果
-
-::: demo
-
-transition/collapse
-
-:::
+内置了几种常用的过渡 CSS
 
 ## 缩放
 
@@ -34,7 +24,7 @@ transition/slide
 
 ## 淡出/淡入
 
-使用 `tu-fade` 添加淡出/淡入过渡
+只有淡出/淡入的过渡
 
 ::: demo
 
@@ -46,7 +36,6 @@ transition/fade
 import TransitionFade from '../examples/transition/fade.vue'
 import TransitionZoom from '../examples/transition/zoom.vue'
 import TransitionSlide from '../examples/transition/slide.vue'
-import TransitionCollapse from '../examples/transition/collapse.vue'
 </script>
 
 <style>

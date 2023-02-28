@@ -62,6 +62,15 @@ switch/shape
 | uncheckedValue | 关闭时的默认值 | `string \| number \| boolean`         | `false` |
 | square         | 是否为方形     | `boolean`                             | `false` |
 
+## Switch 插槽
+
+| 名称      | 说明           | 参数 |
+| --------- | -------------- | ---- |
+| checked   | 开关开启时内容 | `()` |
+| unchecked | 开关关闭时内容 | `()` |
+
+
+
 
 <script setup lang="ts">
 import SwitchBase from '../examples/switch/base.vue'

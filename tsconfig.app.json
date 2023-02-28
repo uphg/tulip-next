@@ -9,11 +9,6 @@
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
-    "paths": {
-      "tulp*": ["./src/*"],
-      "docs": ["./docs/*"],
-      "preview": ["./preview/*"]
-    }
+    "baseUrl": "."
   }
 }

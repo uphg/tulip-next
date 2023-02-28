@@ -64,6 +64,32 @@ input/size
 
 :::
 
+
+
+## Input 属性
+
+
+
+| 名称        | 说明           | 类型                               | 默认值      |
+| ----------- | -------------- | ---------------------------------- | ----------- |
+| value       | 文本输入的值   | `string | null`                    | `null`      |
+| type        | 输入框类型     | `'text' | 'password' | 'textarea'` | `'text'`    |
+| status      | 验证状态       | `'success' |'warning' |'error'`    | `undefined` |
+| size        | 输入框尺寸     | `'large' |'medium' |'small'`       | `'medium'`  |
+| placeholder | 输入框的占位符 | `'string'`                         | `undefined` |
+| disabled    | 是否禁用       | `boolean`                          | `false`     |
+| loading     | 加载状态       | `boolean`                          | `false`     |
+| clearable   | 是否可清空     | `boolean`                          | `false`     |
+
+## Input 插槽
+
+| 名称   | 说明           | 参数 |
+| ------ | -------------- | ---- |
+| prefix | Input 前缀内容 | `()` |
+| suffix | Input 后缀内容 | `()` |
+
+
+
 <script setup lang="ts">
 import InputBase from '../examples/input/base.vue'
 import InputPrefixAndSuffix from '../examples/input/prefix-and-suffix.vue'
