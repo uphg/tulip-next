@@ -1,6 +1,6 @@
 {
-  "name": "tulp",
-  "version": "0.0.0",
+  "name": "tulip",
+  "version": "1.0.0-alpha.1",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
