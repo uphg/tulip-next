@@ -1,4 +1,5 @@
-import { defineComponent, computed, withDirectives, vModelDynamic, type PropType, h, ref } from 'vue'
+import { defineComponent, computed, type PropType, h, ref } from 'vue'
+import type { EventHandler } from '../../../types'
 import { toPx } from '../../../utils'
 import ImagePreview from './ImagePreview'
 
@@ -15,6 +16,8 @@ export const imageProps = {
   },
   width: [String, Number] as PropType<string | number>,
   height: [String, Number] as PropType<string | number>,
+  onError: Function as PropType<EventHandler>,
+  onLoad: Function as PropType<EventHandler>,
 } 
 
 const Image = defineComponent({
@@ -35,8 +38,16 @@ const Image = defineComponent({
       previewVisible.value = value
     }
 
+
     return () => {
-      const Image = <img style={{ objectFit: props.objectFit }} src={props.src} alt={props.alt}/>
+      const Image = (
+        <img
+          style={{ objectFit: props.objectFit }}
+          src={props.src}
+          alt={props.alt}
+          onError={props.onError}
+          onLoad={props.onLoad}/>
+      )
       return (
         <>
           <div class="tu-image" style={styles.value} onClick={openPreview}>

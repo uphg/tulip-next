@@ -1,19 +1,38 @@
 import { defineComponent, onBeforeUnmount, ref, type PropType } from 'vue'
-import type { CascaderOption } from './cascaderProps'
+import type { CascaderOption, CascaderBaseValue } from './cascaderProps'
 import { TuBaseIcon } from '../../base-icon'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import { Tick, ArrowRightRoundSmall } from '../../../icons'
-import type { SelectValue, Scrollbar } from '../../../types'
+import type { Scrollbar } from '../../../types'
 import { useNameScope } from '../../../composables/useNameScope'
-import { withAttrs, map } from '../../../utils'
+import { map } from '../../../utils'
 import type Emitter from '../../../utils/emitter'
 
 const CascaderSubmenu = defineComponent({
   name: 'TuCascaderSubmenu',
   props: {
-    value: [String, Number, null] as PropType<SelectValue>,
+    value: {
+      type: [String, Number, null] as PropType<CascaderBaseValue>,
+      default: null
+    },
     options: Array as PropType<CascaderOption[]>,
     onUpdateValue: Function as PropType<(item: CascaderOption) => void>,
+    valueField: {
+      type: String as PropType<string>,
+      default: 'value' as const
+    },
+    labelField: {
+      type: String as PropType<string>,
+      default: 'label' as const
+    },
+    childrenField: {
+      type: String as PropType<string>,
+      default: 'children' as const
+    },
+    disabledField: {
+      type: String as PropType<string>,
+      default: 'disabled' as const
+    },
     emitter: Object as PropType<Emitter>
   },
   emits: ['update:value'],
@@ -21,6 +40,7 @@ const CascaderSubmenu = defineComponent({
     const ns = useNameScope('cascader-option')
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
+    const { labelField, valueField, childrenField, disabledField } = props
 
     function handleEnter() {
       const container = scrollbar.value?.container
@@ -50,23 +70,23 @@ const CascaderSubmenu = defineComponent({
           <div class="tu-cascader-options">
             {map(props.options, (item, index) => {
               if (!item) return null
-              if (!item.children && item.value === props.value) {
+              if (!item[childrenField] && item[valueField] === props.value) {
                 selectedIndex.value = index
               }
               return (
                 <div
                   class={[ns.base, {
-                    [ns.is('pending')]: props.value === item.value,
-                    [ns.is('disabled')]: !!item.disabled
+                    [ns.is('pending')]: item[valueField] === props.value,
+                    [ns.is('disabled')]: !!item[disabledField]
                   }]}
                   key={index}
-                  onClick={item.disabled ? void 0 : () => props.onUpdateValue?.(item)}
+                  onClick={item[disabledField] ? void 0 : () => props.onUpdateValue?.(item)}
                 >
-                  <div class={ns.el('label')}>{item.label}</div>
+                  <div class={ns.el('label')}>{item[labelField]}</div>
                   <div class={ns.el('suffix')}>
-                    {item.children?.length
+                    {(item[childrenField] as CascaderOption[])?.length
                       ? <TuBaseIcon class={[ns.el('icon')]} is={ArrowRightRoundSmall} />
-                      : item.value === props.value
+                      : item[valueField] === props.value 
                         ? <TuBaseIcon class={[ns.el('icon'), ns.el('icon--checkmark')]} is={Tick} />
                         : null}
                   </div>

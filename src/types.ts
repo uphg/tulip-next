@@ -9,7 +9,7 @@ export interface Position {
   y: number
 }
 
-export interface EventHandler<T, Evt extends Event = any> {
+export interface EventHandler<T extends Element | Document | Window = Element, Evt extends Event = Event> {
   (this: T, ev: Evt): void
 }
 
@@ -40,7 +40,7 @@ export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
 
 export type PopupTrigger = 'hover' | 'click' | 'focus' | 'manual'
 export type ElementStyle = undefined | Record<string, string | undefined>
-export type SelectValue = number | string | symbol | null
+export type SelectValue = number | string | null
 
 export type Scrollbar = {
   container: HTMLElement | null,

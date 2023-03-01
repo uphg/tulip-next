@@ -1,21 +1,39 @@
 import type { SelectValue } from '../../../types'
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
-export type CascaderValue = string | number | symbol | Array<number | string | symbol> | null
+export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
 
+export type CascaderBaseValue = string | number | null
+export type CascaderValue = CascaderBaseValue[] | CascaderOption[]
 export interface CascaderOption {
-  label: string | number | null,
-  value: string | number | symbol | null,
-  disabled?: boolean,
-  children?: CascaderOption[]
+  [k: string]: CascaderBaseValue | CascaderOption[]
 }
 
 export const cascaderProps = {
   value: {
-    type: [Array, null] as PropType<SelectValue[]>,
+    type: [Array, null] as PropType<CascaderValue>,
     default: null
   },
-  options: Array as PropType<CascaderOption[]>,
+  options: {
+    type: Array as PropType<CascaderOption[]>,
+    default: () => []
+  },
+  valueField: {
+    type: String as PropType<string>,
+    default: 'value' as const
+  },
+  labelField: {
+    type: String as PropType<string>,
+    default: 'label' as const
+  },
+  childrenField: {
+    type: String as PropType<string>,
+    default: 'children' as const
+  },
+  disabledField: {
+    type: String as PropType<string>,
+    default: 'disabled' as const
+  },
   placeholder: String as PropType<string>,
   clearable: Boolean as PropType<boolean>
 }

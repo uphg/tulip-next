@@ -1,9 +1,11 @@
 import { defineComponent, onMounted, shallowRef, watchEffect, nextTick, type PropType, type SetupContext, type VNode } from 'vue'
 import { addClass, filterComponent, setStyle } from '../../../utils'
 
+export type TabsValue = string | number
+
 const tabsProps = {
   value: {
-    type: [String, Number, Boolean, Symbol(), null] as PropType<string | number | boolean | symbol | null>,
+    type: [String, Number] as PropType<TabsValue>,
     default: void 0
   },
   type: {

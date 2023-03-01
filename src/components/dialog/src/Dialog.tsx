@@ -15,7 +15,6 @@ const statusMap: { [key: string]: Component } = {
 
 export default defineComponent({
   name: 'TuDialog',
-  emits: ['update:visible'],
   props: dialogProps,
   setup(props) {
     const ns = useNameScope('dialog')

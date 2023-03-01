@@ -1,16 +1,17 @@
 import { defineComponent, type ExtractPropTypes, type PropType } from 'vue'
 import { TAGKEY } from '../../../shared'
+import type { TabsValue } from './Tabs'
 
 export type TabPaneProps = ExtractPropTypes<typeof tabPaneProps>
 
 export const tabPaneProps = {
   name: {
-    type: [String, Number, Boolean] as PropType<string | number | boolean>,
-    default: null
+    type: [String, Number] as PropType<TabsValue>,
+    default: void 0
   },
   label: {
-    type: [String, Number, Boolean] as PropType<string | number | boolean>,
-    default: null
+    type: [String, Number] as PropType<string | number>,
+    default: void 0
   }
 }
 

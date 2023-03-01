@@ -1,5 +1,5 @@
 import { defineComponent, ref, shallowRef, onMounted, toRef, watch } from 'vue'
-import { cascaderProps, type CascaderOption } from './cascaderProps'
+import { cascaderProps, type CascaderBaseValue, type CascaderOption, type CascaderProps } from './cascaderProps'
 import CascaderSubmenu from './CascaderSubmenu'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
@@ -22,22 +22,24 @@ const Cascader = defineComponent({
     const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popup, triggerMode: 'click' })
     const { onClick } = events as { onClick: Fn }
 
+    const { labelField, valueField, childrenField, disabledField } = props
+
     watch(toRef(props, 'value'), updateInput)
 
     function handleClickOption(index: number, option: CascaderOption) {
       const nextIndex = index + 1
-      selected.value[index].value = option.value
-      selected.value[index].label = option.label
+      selected.value[index][valueField] = option[valueField]
+      selected.value[index][labelField] = option[labelField]
 
       if (selected.value.length > nextIndex) {
         selected.value.splice(nextIndex, selected.value.length - nextIndex)
       }
 
-      if (option.children?.length) {
+      if ((option[childrenField] as CascaderOption[])?.length) {
         selected.value[nextIndex] = {
-          value: null,
-          label: null,
-          children: option.children
+          [valueField]: null,
+          [labelField]: null,
+          [childrenField]: option[childrenField]
         }
       } else {
         // last
@@ -52,12 +54,12 @@ const Cascader = defineComponent({
 
     function handleAfterLeave() {
       const select = selected.value
-      if (select[select.length - 1].children) {
+      if (select[select.length - 1][childrenField]) {
         selected.value = getSelected(props.value)
       }
     }
 
-    function getSelected(value: SelectValue[] | null) {
+    function getSelected(value: CascaderProps['value'] | null) {
       if (!value?.length) {
         return getDefaultSelected()
       }
@@ -71,12 +73,12 @@ const Cascader = defineComponent({
         const option = options?.find((option) => option?.value === value)
         if (option) {
           const newOption: CascaderOption = {
-            value: option.value,
-            label: option.label,
-            children: options!
+            [valueField]: option[valueField],
+            [labelField]: option[labelField],
+            [childrenField]: options!
           }
           result.push(newOption)
-          options = option?.children
+          options = option?.[childrenField] as CascaderOption[]
           if (!options) {
             return result
           }
@@ -88,9 +90,9 @@ const Cascader = defineComponent({
 
     function getDefaultSelected() {
       return [{
-        value: null,
-        label: null,
-        children: props.options ? [...props.options] : []
+        [valueField]: null,
+        [labelField]: null,
+        [childrenField]: props.options ? [...props.options] : []
       }]
     }
 
@@ -149,8 +151,12 @@ const Cascader = defineComponent({
             <div ref={popup} class="tu-cascader-menu">
               {selected.value?.map((item, index) => (
                 <CascaderSubmenu
-                  value={selected.value[index].value}
-                  options={item.children}
+                  value={selected.value[index][valueField] as CascaderBaseValue}
+                  options={item[childrenField] as CascaderOption[]}
+                  labelField={labelField}
+                  valueField={valueField}
+                  childrenField={childrenField}
+                  disabledField={disabledField}
                   emitter={emitter}
                   onUpdateValue={(option: CascaderOption) => handleClickOption(index, option)}
                 />

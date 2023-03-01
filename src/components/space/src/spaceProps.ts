@@ -30,6 +30,6 @@ export const spaceProps = {
     type: Boolean as PropType<boolean>,
     default: true
   },
-  itemStyle: Object as PropType<Record<string, unknown>>,
-  itemClass: Object as PropType<Record<string, unknown>>
+  itemStyle: [String, Object] as PropType<string | Record<string, string>>,
+  itemClass: [String, Object] as PropType<string | Record<string, string>>
 }

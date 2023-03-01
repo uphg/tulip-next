@@ -16,6 +16,17 @@ function createDialog(options?: DialogProps) {
     setup() {
       const visible = ref(false)
 
+      function handleClickClose(e: MouseEvent) {
+        if (onCancel) {
+          void Promise.resolve(onCancel(e)).then((result) => {
+            if (result === false) return
+            close()
+          })
+        } else {
+          close()
+        }
+      }
+
       function handleCancel(e: MouseEvent) {
         if (onCancel) {
           void Promise.resolve(onCancel(e)).then((result) => {
@@ -54,7 +65,7 @@ function createDialog(options?: DialogProps) {
             status={status}
             confirmText={confirmText}
             cancelText={cancelText}
-            onClose={close}
+            onClose={handleClickClose}
             onConfirm={handleConfirm}
             onCancel={handleCancel}
           />

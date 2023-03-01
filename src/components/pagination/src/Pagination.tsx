@@ -7,14 +7,11 @@ const paginationProps = {
     type: Number as PropType<number>,
     default: 1
   },
-  total: {
-    type: Number as PropType<number>,
-    default: 0
-  },
   pageSize: {
     type: Number as PropType<number>,
     default: 10
-  }
+  },
+  total: Number as PropType<number>,
 }
 
 type PagingItem = {
@@ -27,7 +24,7 @@ const Pagination = defineComponent({
   emits: ['update:current'],
   setup(props, context) {
     const { emit } = context
-    const totalPages = computed(() => Math.ceil(props.total / props.pageSize))
+    const totalPages = computed(() => Math.ceil((props.total ?? 0) / props.pageSize))
     const pagings = computed(() => getPagings(props.current, { totalPages: totalPages.value }))
 
     function handleCurrent(item: PagingItem) {

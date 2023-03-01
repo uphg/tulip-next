@@ -14,8 +14,11 @@ const Select = defineComponent({
   name: 'TuSelect',
   inheritAttrs: false,
   props: {
-    value: [String, Number, Symbol] as PropType<SelectValue>,
-    options: Array as PropType<SelectOption[]>,
+    value: [String, Number] as PropType<SelectValue>,
+    options: {
+      type: Array as PropType<SelectOption[]>,
+      default: () => []
+    },
     clearable: Boolean as PropType<boolean>
   },
   emits: ['update:value'],
@@ -25,7 +28,7 @@ const Select = defineComponent({
 
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
-    const checkmark = ref(getDefaultCheckmark())
+    const checkmark = ref<SelectValue | undefined>(getDefaultCheckmark())
     const isHover = ref(false)
 
     const input = computed(() => props.options?.find((item) => item.value === props.value)?.label)

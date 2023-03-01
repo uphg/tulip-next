@@ -2,10 +2,7 @@ import { defineComponent, inject, type PropType, type Ref } from 'vue'
 import { toPx } from '../../../utils'
 
 export const colProps = {
-  span: {
-    type: [String, Number] as PropType<string | number>,
-    default: 1
-  },
+  span: [String, Number] as PropType<string | number>,
   offset: [String, Number] as PropType<string | number>,
   push: [String, Number] as PropType<string | number>,
   pull: [String, Number] as PropType<string | number>,
