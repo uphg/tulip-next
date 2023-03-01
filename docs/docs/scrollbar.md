@@ -42,6 +42,18 @@ scrollbar/size
 
 :::
 
+
+
+## Scrollbar 属性
+
+| 名称     | 说明                     | 类型                  | 默认值      |
+| -------- | ------------------------ | --------------------- | ----------- |
+| trigger  | scrollbar 显示的触发方式 | `'hover' \| 'none'`   | `'hover'`   |
+| size     | scrollbar 尺寸           | `'medium' \| 'large'` | `'medium'`  |
+| onScroll | 滚动监听事件             | `(e: Event) => void`  | `undefined` |
+
+
+
 <script setup lang="ts">
 import ScrollbarBase from '../examples/scrollbar/base.vue'
 import ScrollbarHorizontal from '../examples/scrollbar/horizontal.vue'

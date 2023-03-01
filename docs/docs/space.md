@@ -58,6 +58,22 @@ space/align
 
 :::
 
+## Space 属性
+
+| 名称       | 说明                                       | 类型                                                         | 默认值      |
+| ---------- | ------------------------------------------ | ------------------------------------------------------------ | ----------- |
+| inline     | 是否为行内元素                             | `boolean`                                                    | `false`     |
+| vertical   | 是否垂直布局                               | `boolean`                                                    | `false`     |
+| nowrap     | 是否不超出换行（vertical 时默认为 `true`） | `boolean`                                                    | `undefined` |
+| justify    | 水平排列方式                               | `'start' \| 'end' \| 'center' \| 'space-around' \| 'space-between' \| 'space-evenly'` | `'start'`   |
+| align      | 垂直排列方式                               | `'start' \| 'end' \| 'center' \| 'baseline' \| 'stretch'`    | `'start'`   |
+| size       | 间隙尺寸                                   | `'small' \|'medium' \|'large' \|number \|[number, number]`   | `[8, 12]`   |
+| wrap-item  | 是否存在包裹子元素的 div                   | `boolean`                                                    | `true`      |
+| item-style | 子元素样式                                 | `string \| Record<string, string>`                           | `undefined` |
+| item-class | 子元素 class                               | `string \| Record<string, string>`                           | `undefined` |
+
+
+
 <script setup lang="ts">
 import SpaceBase from '../examples/space/base.vue'
 import SpaceVertical from '../examples/space/vertical.vue'

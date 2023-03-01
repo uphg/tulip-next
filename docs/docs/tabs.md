@@ -32,6 +32,33 @@ tabs/segment
 
 :::
 
+## Tabs 属性
+
+| 名称  | 说明               | 类型                     | 默认值      |
+| ----- | ------------------ | ------------------------ | ----------- |
+| value | 激活标签的 name 值 | `string \| number`       | `undefined` |
+| type  | Tabs 外观类型      | `'default' \| 'segment'` | `'default'` |
+
+
+
+## Tabs 插槽
+
+| 名称   | 说明     | 参数 |
+| ------ | -------- | ---- |
+| prefix | 标签前缀 | `()` |
+| suffix | 标签后缀 | `()` |
+
+
+
+## TabPane 属性
+
+| 名称  | 说明                 | 类型               | 默认值      |
+| ----- | -------------------- | ------------------ | ----------- |
+| name  | 绑定 name 值（必填） | `string \| number` | `undefined` |
+| label | 标签名称             | `string \| number` | `undefined` |
+
+
+
 <script setup lang="ts">
 import TabsBase from '../examples/tabs/base.vue'
 import TabsPrefixSuffix from '../examples/tabs/prefix-suffix.vue'

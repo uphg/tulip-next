@@ -36,6 +36,14 @@ tooltip/placement
 
 :::
 
+## Tooltip 属性
+
+见 [Popover 属性](./popover.md#popover-属性)
+
+## Tooltip 插槽
+
+见 [Popover 插槽](./popover.md#popover-插槽)
+
 <script setup lang="ts">
 import TooltipBase from '../examples/tooltip/base.vue'
 import TooltipTrigger from '../examples/tooltip/trigger.vue'

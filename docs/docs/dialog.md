@@ -12,27 +12,20 @@ dialog/base
 
 :::
 
-## 属性
+## useDialog 参数 & Dialog 属性
 
-| 名称            | 说明                                         | 类型                    | 默认值      |
-| --------------- | -------------------------------------------- | ----------------------- | ----------- |
-| renderDirective | 渲染指令                                     | `'if' \| 'show'`        | `'if'`      |
-| visible         | 是否显示 Dialog                              | `boolean`               | `false`     |
-| maskClosable    | 是否可点击遮罩关闭弹框                       | `boolean`               | `true`      |
-| title           | 弹框的标题（只在默认布局下生效）             | `string`                | `undefined` |
-| wrap            | 弹框是否被父元素包裹，默认插入至 body 元素上 | `boolean`               | `false`     |
-| custom          | 预设模板                                     | `'default' \| 'custom'` | `'default'` |
+| 名称        | 说明                   | 类型                                                    | 默认值      |
+| ----------- | ---------------------- | ------------------------------------------------------- | ----------- |
+| title       | 标题                   | `string`                                                | `undefined` |
+| content     | 内容                   | `string`                                                | `undefined` |
+| status      | 状态                   | `'success' \|'warning' \|'info' \|'error'`              | `undefined` |
+| confirmText | 确认按钮文本内容       | `string`                                                | `undefined` |
+| cancelText  | 取消按钮文本内容       | `string`                                                | `undefined` |
+| onClose     | 点击右上角关闭按钮触发 | `(e: MouseEvent) => boolean \| Promise<boolean> \| any` | `undefined` |
+| onConfirm   | 点击确认按钮触发       | `(e: MouseEvent) => boolean \| Promise<boolean> \| any` | `undefined` |
+| onCancel    | 点击取消按钮触发       | `(e: MouseEvent) => boolean \| Promise<boolean> \| any` | `undefined` |
 
-## 事件
 
-| 名称           | 说明                    | 回调参数    |
-| -------------- | ----------------------- | ----------- |
-| open           | 打开弹框时执行          | `undefined` |
-| opened         | 打开弹框动画结束时执行  | `undefined` |
-| close          | 关闭弹框时执行          | `undefined` |
-| closed         | 关闭弹框动画结束时执行  | `undefined` |
-| maskClick      | 点击遮罩时触发          | `Event`     |
-| update:visible | 更新 visible 状态时触发 | `boolean`   |
 
 
 <script setup lang="ts">
