@@ -10,9 +10,9 @@ const Card = defineComponent({
       default: true
     },
     hoverable: Boolean as PropType<boolean>,
-    headerStyle: [Object, String] as PropType<Record<string, string> | string>,
-    contentStyle: [Object, String] as PropType<Record<string, string> | string>,
-    footerStyle: [Object, String] as PropType<Record<string, string> | string>,
+    headerStyle: [String, Object] as PropType<string | Record<string, string>>,
+    contentStyle: [String, Object] as PropType<string | Record<string, string>>,
+    footerStyle: [String, Object] as PropType<string | Record<string, string>>,
   },
   setup(props, context) {
     const ns = useNameScope('card')
@@ -28,7 +28,7 @@ const Card = defineComponent({
             [ns.is('hoverable')]: hoverable
           }]}
         >
-          {slots.header || title || headerExtra ? (
+          {slots.header || title ? (
             <div class={ns.el('header')} style={headerStyle}>
               <div class={ns.el('header-wrap')}>
                 <div class={ns.el('header-main')}>
