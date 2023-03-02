@@ -134,15 +134,6 @@ import ButtonGhost from '../examples/button/ghost.vue'
 import ButtonLoading from '../examples/button/loading.vue'
 import ButtonGroup from '../examples/button/group.vue'
 import ButtonDisabled from '../examples/button/disabled.vue'
-
-const propList = [
-  {
-    name: 'hue',
-    description: '按钮的色调',
-    type: `'default' \| 'primary' \| 'success' \| 'warning' \| 'info' \| 'error'` | `'default'`,
-    default: `'default'`
-  }
-]
 </script>
 
 <style lang="stylus">
