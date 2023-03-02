@@ -62,7 +62,7 @@ const sidebar = [
   // }
 ]
 
-const current = shallowRef(sidebar[6])
+const current = shallowRef(sidebar[1])
 </script>
 
 <style>

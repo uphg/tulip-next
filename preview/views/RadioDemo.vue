@@ -4,7 +4,7 @@
   <h2>Radio</h2>
   <div>
     <tu-radio :checked="value === '1'" value="1" @change="handleChange">标签1</tu-radio>
-    <tu-radio :checked="value === '2'" value="2" @change="handleChange" disabled>标签2</tu-radio>
+    <tu-radio :checked="value === '2'" value="2" @change="handleChange"/>
     <tu-radio :checked="value === '3'" value="3" @change="handleChange" disabled>禁用</tu-radio>
   </div>
 

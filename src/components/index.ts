@@ -27,6 +27,8 @@ import { TuRadio } from './radio'
 import { TuRadioGroup } from './radio-group'
 import { TuRadioButton } from './radio-button'
 import { TuCard } from './card'
+import { TuCheckbox } from './checkbox'
+import { TuCheckboxGroup } from './checkbox-group'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -62,7 +64,9 @@ const components = [
   TuRadio,
   TuRadioGroup,
   TuRadioButton,
-  TuCard
+  TuCard,
+  TuCheckbox,
+  TuCheckboxGroup
 ]
 
 const { install } = makeInstaller(components)
@@ -100,6 +104,8 @@ export {
   TuRadioGroup,
   TuRadioButton,
   TuCard,
+  TuCheckbox,
+  TuCheckboxGroup,
 
   // utils
   useDialog,
