@@ -35,7 +35,7 @@ const Radio = defineComponent({
         <div class={ns.el('dot-wrap')}>
           <div class={[ns.el('dot'), { [ns.el('dot--checked')]: checked.value }]}></div>
         </div>
-        <div class={ns.el('label')}>{context.slots.default?.()}</div>
+        {context.slots.default ? <div class={ns.el('label')}>{context.slots.default()}</div> : null}
       </label>
     )
   }

@@ -63,7 +63,7 @@ function renderRadioButtons(defaultSlot: VNode[], { value, filling, buttons }: {
   const children: VNode[] = []
   const slot = filterComponent(defaultSlot, 'RadioButton')
   if (slot.length < 1) {
-    return { children, isButton:false }
+    return { children, isButton: false }
   }
   let index = -1
   while (++index < slot.length) {
