@@ -11,5 +11,6 @@ export const radioProps = {
     type: Boolean as PropType<boolean>,
     default: void 0
   },
+  label: String as PropType<string>,
   disabled: Boolean as PropType<boolean>
 }

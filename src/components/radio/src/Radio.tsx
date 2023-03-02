@@ -1,6 +1,5 @@
 import { useNameScope } from '../../../composables/useNameScope'
-import { computed, defineComponent, inject, ref, watch, type PropType } from 'vue'
-import { radioGroupInjectionKey, type RadioGroupRef } from './RadioGroup'
+import { defineComponent } from 'vue'
 import { radioProps } from './radioProps'
 import { useRadio } from './useRadio'
 
@@ -13,31 +12,38 @@ const Radio = defineComponent({
     const ns = useNameScope('radio')
     const { isFocus, checked, handleChange, handleFocus, handleBlur } = useRadio(props)
 
-    return () => (
-      <label
-        class={[ns.base, {
-          [ns.is('checked')]: checked.value,
-          [ns.is('focus')]: isFocus.value,
-          [ns.is('disabled')]: props.disabled
-        }]}
-      >
-        <input
-          class={[ns.suffix('input')]}
-          type="radio"
-          value={props.value}
-          checked={checked.value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          disabled={props.disabled}
-          {...context.attrs}
-        />
-        <div class={ns.el('dot-wrap')}>
-          <div class={[ns.el('dot'), { [ns.el('dot--checked')]: checked.value }]}></div>
-        </div>
-        {context.slots.default ? <div class={ns.el('label')}>{context.slots.default()}</div> : null}
-      </label>
-    )
+    return () => {
+      const { value, label: _label, disabled } = props
+      const { slots } = context
+      const label = slots.default ? slots.default() : _label
+
+      return (
+        <label
+          class={[ns.base, {
+            [ns.is('checked')]: checked.value,
+            [ns.is('focus')]: isFocus.value,
+            [ns.is('disabled')]: disabled
+          }]}
+        >
+          <input
+            class={[ns.suffix('input')]}
+            type="radio"
+            value={value}
+            checked={checked.value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            disabled={disabled}
+            {...context.attrs}
+          />
+          <div class={ns.el('dot-wrap')}>
+            <div class={[ns.el('dot'), { [ns.el('dot--checked')]: checked.value }]}></div>
+          </div>
+          {label ? <div class={ns.el('label')}>{label}</div> : null}
+        </label>
+      )
+
+    }
   }
 })
 
