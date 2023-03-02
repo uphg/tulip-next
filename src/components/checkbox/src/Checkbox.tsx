@@ -1,9 +1,9 @@
-import { useNameScope } from 'src/composables/useNameScope'
-import { isNil } from 'src/utils'
-import { computed, defineComponent, inject, ref, Transition, type PropType } from 'vue'
-import { Checked as CheckedIcon, Line as LineIcon } from '../../../icons'
+import { computed, defineComponent, inject, ref, Transition } from 'vue'
 import { checkboxGroupInjectionKey, type CheckboxGroupRef } from './CheckboxGroup'
 import { checkboxProps } from './checkboxProps'
+import { useNameScope } from '../../../composables/useNameScope'
+import { Checked as CheckedIcon, Line as LineIcon } from '../../../icons'
+import { isNil } from '../../../utils'
 
 const Checkbox = defineComponent({
   name: 'TuCheckbox',

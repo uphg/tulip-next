@@ -1,5 +1,5 @@
-import { isNil, isNumber } from 'src/utils'
 import { defineComponent, computed, provide, type Ref, ref } from 'vue'
+import { isNil, isNumber } from '../../../utils'
 import { type CheckboxProps, checkboxGroupProps, type CheckboxGroupProps } from './checkboxProps'
 
 export type CheckboxGroupRef = {
