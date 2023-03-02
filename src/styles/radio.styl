@@ -1,14 +1,14 @@
 $base = '.tu-radio'
 
 {$base}
-  --tu-label-line-height 1.6
-  --tu-box-shadow-focus $primary-box-shadow-focus
+  --tu-line-height 1.6
+  --tu-box-shadow-focus 0 0 0 2.2px rgba(68, 99, 209, 0.3)
   cursor pointer
   user-select none
   position relative
   display inline-flex
   font-size var(--tu-font-size)
-  line-height var(--tu-label-line-height)
+  line-height var(--tu-line-height)
 
   &-input
     cursor pointer
@@ -55,7 +55,7 @@ $base = '.tu-radio'
   &__label
     padding 0 8px
 
-  &--focus:not(&--disabled)
+  &:not(&--disabled)&--focus:not(:active)
     {$base}__dot
       box-shadow var(--tu-box-shadow-focus)
   
