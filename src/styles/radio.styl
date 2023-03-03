@@ -25,6 +25,7 @@ $base = '.tu-radio'
     transition border-color 0.3s, box-shadow 0.3s
     border-radius 50%
     border 1px solid rgb(224, 224, 230)
+
     &::before
       content ''
       position absolute
@@ -41,9 +42,10 @@ $base = '.tu-radio'
     &-wrap
       display flex
       align-items center
-    
+
     &--checked
       border-color var(--tu-primary-color)
+
       &::before
         opacity 1
         transform scale(1)
@@ -58,15 +60,19 @@ $base = '.tu-radio'
   &:not(&--disabled)&--focus:not(:active)
     {$base}__dot
       box-shadow var(--tu-box-shadow-focus)
-  
+
   &&--disabled
     cursor not-allowed
+
     {$base}-input
       cursor not-allowed
+
     {$base}__dot
       border-color rgb(224, 224, 230)
+
       &::before
         background-color rgb(224, 224, 230)
+
     {$base}__label
       color rgba(194, 194, 194, 1)
 
@@ -81,25 +87,32 @@ $button = '.tu-radio-button'
   user-select none
   position relative
   padding 0 14px
+
   &:first-child
     border-top-left-radius 3px
     border-bottom-left-radius 3px
+
     {$button}__border, {$button}__status-border
       border-top-left-radius 3px
       border-bottom-left-radius 3px
+
     {$button}__border
       border-left 1px solid var(--tu-border-color)
+
     {$button}__status-border
       left 0
 
   &:last-child
     border-top-right-radius 3px
     border-bottom-right-radius 3px
+
     {$button}__border, {$button}__status-border
       border-top-right-radius 3px
       border-bottom-right-radius 3px
+
     {$button}__border
       border-right 1px solid var(--tu-border-color)
+
     {$button}__status-border
       right 0
 
@@ -118,7 +131,7 @@ $button = '.tu-radio-button'
     position absolute
     top 0
     bottom 0
-  
+
   &__border
     left 0
     right 0
@@ -130,7 +143,7 @@ $button = '.tu-radio-button'
     right -1px
     border 1px solid #0000
     z-index 1
-    transition border-color .3s $cubic-bezier, box-shadow .3s $cubic-bezier
+    transition border-color 0.3s $cubic-bezier, box-shadow 0.3s $cubic-bezier
 
   &:hover:not(&--disabled), &--checked, &--focus
     {$button}__status-border
@@ -141,20 +154,25 @@ $button = '.tu-radio-button'
     border-top 1px solid var(--tu-border-color)
     border-bottom 1px solid var(--tu-border-color)
     transition color 0.3s, border-color 0.3s, background-color 0.3s
+
     &:first-child
       border-left 1px solid var(--tu-border-color)
+
     &:last-child
       border-right 1px solid var(--tu-border-color)
+
     &:hover:not({$button}--disabled):not({$button}--checked):not({$button}--focus)
       color var(--tu-primary-color)
+
     &{$button}--disabled
       color inherit
       background-color #f2f2f2
+
     &{$button}--checked, &{$button}--focus
       color #fff
       border-color var(--tu-primary-color)
       background-color var(--tu-primary-color)
-  
+
   &--focus:not(&--disabled)
     {$button}__status-border
       box-shadow var(--tu-box-shadow-focus)
@@ -162,6 +180,7 @@ $button = '.tu-radio-button'
   &--disabled
     cursor not-allowed
     opacity 0.5
+
     {$button}-input
       cursor not-allowed
 
@@ -171,40 +190,44 @@ $divider = '.tu-radio-group__divider'
   --tu-height 34px
   display flex
   font-size var(--tu-font-size)
+
   &__divider
     display flex
     height var(--tu-height)
     min-width 1px
     transition background-color 0.3s, opacity 0.3s
     background-color var(--tu-border-color)
+
     &&--checked
       background-color #0000
+
     &&--disabled
       opacity 0.5
 
     &--filling&--checked
-      background-color var(--tu-primary-color)  
-    
+      background-color var(--tu-primary-color)
+
     &&--focus
       background-color var(--tu-primary-color)
 
     &--filling
       {$button}--checked + {$divider}
         background-color var(--tu-primary-color)
-  
+
     &--filling&&--disabled
       opacity 0.5
 
   {$button}--checked + {$divider}
     background-color #0000
 
-  {$button}--checked + {$divider}--filling,
-  {$button}--focus + {$divider}--filling
+  {$button}--checked + {$divider}--filling, {$button}--focus + {$divider}--filling
     background-color var(--tu-primary-color)
+
     &{$divider}--disabled
       opacity 1
 
   {$button}--disabled + {$divider}--filling
     opacity 0.5
+
     &{$divider}--checked
       opacity 1

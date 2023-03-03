@@ -1,4 +1,3 @@
-import type { StyleElement } from '../interfaces'
 import { isObject } from './isObject'
 import { camelize } from './camelize'
 import { each } from './each'
@@ -46,7 +45,7 @@ export function getStyle(el: Element, styleName: string): string {
 }
 
 export function setStyle(_el: Element, styles: Styles | string, value?: string) {
-  const el = _el as StyleElement
+  const el = _el as (Element & { style: any })
   if (isObject(styles)) {
     each(styles as Styles, (item, key) => setStyle(el, key as string, toString(item)))
     return
@@ -58,7 +57,7 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
 export function getRelativeDOMPosition(el: HTMLElement) {
   const { top, left } = el?.getBoundingClientRect?.() || {}
   const { scrollTop, scrollLeft } = document.documentElement
-  
+
   return {
     top: top + scrollTop,
     left: left + scrollLeft
@@ -84,7 +83,7 @@ export function getScrollParent(node: Node | null): HTMLElement | Document | nul
   }
 
   if (parentNode?.nodeType === 1) {
-    const { overflow, overflowX, overflowY } = getComputedStyle(parentNode)    
+    const { overflow, overflowX, overflowY } = getComputedStyle(parentNode)
     if (reOverflowScroll.test(overflow + overflowX + overflowY)) {
       return parentNode
     }

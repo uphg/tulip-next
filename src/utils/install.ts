@@ -1,5 +1,5 @@
 import type { App, Plugin } from 'vue'
-import type { SFCWithInstall } from '../interfaces'
+import type { SFCWithInstall } from '../types'
 
 interface Name {
   name: string;

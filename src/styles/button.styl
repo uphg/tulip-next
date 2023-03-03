@@ -3,7 +3,7 @@
 
 $base = '.tu-button'
 $button-height = 34px
-$rounded-size = $button-height / 2
+$rounded-size = ($button-height / 2)
 $round-padding = 21px
 $circle-padding = 9px
 
@@ -14,13 +14,16 @@ shape(padding, radius)
 border-default(color, style = solid)
   {$base}__border, {$base}__state-border
     border 1px style
+
   {$base}__border
     border-color color
+
   {$base}__state-border
     border-color #0000
 
 line-color(color)
   color color
+
   {$base}__state-border
     border-color color
 
@@ -28,10 +31,13 @@ type(default, hover, pressed)
   --ripple-color default
   color #fff
   background-color default
+
   &:hover, &:focus
     background-color hover
+
   &:active
     background-color pressed
+
   &{$base}--loading, &{$base}--disabled
     opacity 0.5
     cursor not-allowed
@@ -41,10 +47,13 @@ dashed(default, hover, pressed)
   color default
   background-color #0000
   border-default(default, dashed)
+
   &:hover, &:focus
     line-color(hover)
+
   &:active
     line-color(pressed)
+
   &{$base}--loading, &{$base}--disabled
     opacity 0.5
     cursor not-allowed
@@ -54,10 +63,13 @@ ghost(default, hover, pressed)
   color default
   background-color #0000
   border-default(default)
+
   &:hover, &:focus
     line-color(hover)
+
   &:active
     line-color(pressed)
+
   &{$base}--loading, &{$base}--disabled
     opacity 0.5
     cursor not-allowed
@@ -65,12 +77,15 @@ ghost(default, hover, pressed)
 
 text(default, hover, pressed)
   color default
+
   &:hover, &:focus
     color hover
     background-color #0000
+
   &:active
     color pressed
     background-color #0000
+
   &{$base}--loading, &{$base}--disabled
     opacity 0.5
     cursor not-allowed
@@ -79,10 +94,13 @@ text(default, hover, pressed)
 
 type-style(default, hover, pressed)
   type(default, hover, pressed)
+
   &{$base}--dashed
     dashed(default, hover, pressed)
+
   &{$base}--ghost
     ghost(default, hover, pressed)
+
   &{$base}--text
     text(default, hover, pressed)
 
@@ -92,11 +110,13 @@ type-style(default, hover, pressed)
   --tu-font-size 14px
   --tu-border-color #dcdfe6
   --tu-icon-size 16px
+
   &--small
     --tu-height 28px
     --tu-padding 0 14px
     --tu-font-size 13px
     --tu-icon-size 15px
+
   &--large
     --tu-height 40px
     --tu-padding 0 18px
@@ -121,35 +141,45 @@ type-style(default, hover, pressed)
   transition color 0.3s, background-color 0.3s $cubic-bezier
   text-decoration none
   line-height 1
+
   &__content
     display flex
     align-items center
     flex-wrap nowrap
+
   &__border
     width 100%
+
   &__border, &__state-border
     inset 0
     position absolute
     border-radius inherit
     pointer-events none
+
   &__state-border
     transition border-color 0.3s $cubic-bezier
+
   &__icon
     width var(--tu-icon-size)
     height var(--tu-icon-size)
     display inline-flex
     justify-content center
     align-items center
+
   .tu-icon
     &--left
       margin-right 4px
+
       &.tu-icon--empty
         margin-right 0
+
     &--right
       order 1
       margin-left 4px
+
       &.tu-icon--empty
         margin-left 0
+
   &__loading-icon
     width 1em
     height 1em
@@ -158,13 +188,16 @@ type-style(default, hover, pressed)
   &--default
     --ripple-color var(--tu-primary-color)
     border-default(var(--tu-border-color))
+
     &:hover, &:focus
       line-color(var(--tu-primary-color))
+
     &:active
       line-color(var(--tu-primary-color-pressed))
 
     &{$base}--dashed
       background-color #0000
+
       {$base}__border, {$base}__state-border
         border-style dashed
 
@@ -175,17 +208,22 @@ type-style(default, hover, pressed)
       opacity 0.5
       cursor not-allowed
       color var(--tu-text-color)
+
       {$base}__state-border
         border-color var(--tu-border-color)
 
   &--primary
     type-style(var(--tu-primary-color), var(--tu-primary-color-hover), var(--tu-primary-color-pressed))
+
   &--success
     type-style(var(--tu-success-color), var(--tu-success-color-hover), var(--tu-success-color-pressed))
+
   &--info
     type-style(var(--tu-info-color), var(--tu-info-color-hover), var(--tu-info-color-pressed))
+
   &--warning
     type-style(var(--tu-warning-color), var(--tu-warning-color-hover), var(--tu-warning-color-pressed))
+
   &--error
     type-style(var(--tu-error-color), var(--tu-error-color-hover), var(--tu-error-color-pressed))
 
@@ -197,21 +235,22 @@ type-style(default, hover, pressed)
 
   &--small
     &{$base}--round
-      shape(18px, calc(var(--tu-height) / 2))
+      shape(18px, calc((var(--tu-height) / 2)))
+
     &{$base}--circle
-      shape(6.5px, calc(var(--tu-height) / 2))
+      shape(6.5px, calc((var(--tu-height) / 2)))
 
   &--large
     &{$base}--round
-      shape(25px, calc(var(--tu-height) / 2))
+      shape(25px, calc((var(--tu-height) / 2)))
+
     &{$base}--circle
-      shape(11px, calc(var(--tu-height) / 2))
+      shape(11px, calc((var(--tu-height) / 2)))
 
   &--text
-    background-color: #0000;
+    background-color #0000
     padding 0
     min-height auto
+
     &--default
       color var(--tu-text-color)
-
-

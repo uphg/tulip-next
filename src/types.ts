@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance, ComputedRef, Ref } from 'vue'
+import type { ComponentPublicInstance, ComputedRef, Ref, Plugin } from 'vue'
 
 export type ObjectLike<T extends unknown = unknown> = Record<string | number | symbol, T>
 
@@ -46,3 +46,5 @@ export type Scrollbar = {
   container: HTMLElement | null,
   scrollTo: (options?: ScrollToOptions) => void
 }
+
+export type SFCWithInstall<T> = T & Plugin

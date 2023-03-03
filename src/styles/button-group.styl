@@ -6,38 +6,42 @@ $base = '.tu-button'
 
   & > {$base}
     border-radius 0
+
     &:hover, &:focus, &:active
       {$base}__state-border
         z-index 1
 
   &:not({$base}--vertical) > {$base}
-    &:not(:first-child{$base})
-    {$base}{$base}--default + {$base}{$base}--default
+    &:not(:first-child{$base}), {$base}{$base}--default + {$base}{$base}--default
       {$base}__border
         border-left-width 0
+
       {$base}__state-border, .tu-base-wave
         margin-left -1px
+
     &:first-child
       border-top-left-radius var(--tu-border-radius)
       border-bottom-left-radius var(--tu-border-radius)
+
     &:last-child
       border-top-right-radius var(--tu-border-radius)
       border-bottom-right-radius var(--tu-border-radius)
 
   &{$base}--vertical
     flex-direction column
+
     & > {$base}
       &:not(:first-child{$base})
         {$base}__border
           border-top-width 0
+
         {$base}__state-border, .tu-base-wave
           margin-top -1px
+
       &:first-child
         border-top-left-radius var(--tu-border-radius)
         border-top-right-radius var(--tu-border-radius)
+
       &:last-child
         border-bottom-left-radius var(--tu-border-radius)
         border-bottom-right-radius var(--tu-border-radius)
-
-
-
