@@ -20,15 +20,30 @@
       <tu-checkbox value="Shenzen" label="深圳" />
     </tu-space>
   </tu-checkbox-group>
+  <h2>聚焦</h2>
+  <div>
+    <tu-space item-style="display: flex;">
+      <tu-checkbox ref="checkbox" v-model:checked="checked" label="选项1"/>
+      <tu-button size="small" @click="onClick">聚焦 1 秒后取消</tu-button>
+    </tu-space>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 
+const checkbox = shallowRef(null)
 const checked = ref(false)
 const checked2 = ref(false)
 const indeterminate = ref(false)
 const cities = ref([])
+
+function onClick() {
+  checkbox.value.focus()
+  setTimeout(() => {
+    checkbox.value.blur()
+  }, 1000)
+}
 
 function clickChecked() {
   checked.value = !checked.value

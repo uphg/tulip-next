@@ -52,16 +52,31 @@
     </tu-radio-group>
   </div>
   <tu-button @click="onClickButton">下一个</tu-button>
+  <h2>聚焦</h2>
+  <div>
+    <tu-space item-style="display: flex;">
+      <tu-radio ref="radio" label="选项1"/>
+      <tu-button size="small" @click="onClick">聚焦 1 秒后取消</tu-button>
+    </tu-space>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 
+const radio = shallowRef(null)
 const value = ref('3')
 const value2 = ref(2)
 const value3 = ref<number | null>(null)
 const value4 = ref(2)
 const value5 = ref(0)
+
+function onClick() {
+  radio.value.focus()
+  setTimeout(() => {
+    radio.value.blur()
+  }, 1000)
+}
 
 function handleChange(event: Event) {
   const target = event.target as HTMLInputElement
