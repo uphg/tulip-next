@@ -4,6 +4,7 @@ $base = '.tu-checkbox'
   --tu-size 16px
   --tu-border-radius 2px
   --tu-box-shadow-focus 0 0 0 2px rgba(68, 99, 209, 0.3)
+  --tu-text-color-disabled rgba(#c2c2c2, 1)
   cursor pointer
   user-select none
   display inline-flex
@@ -12,6 +13,12 @@ $base = '.tu-checkbox'
   &:hover:not(&--disabled)
     {$base}-box
       border-color var(--tu-primary-color)
+
+  &--small
+    --tu-size 14px
+
+  &--large
+    --tu-size 18px
 
   &-input
     cursor pointer
@@ -64,9 +71,14 @@ $base = '.tu-checkbox'
       transform scale(1)
   
   &--disabled
+    cursor not-allowed
+    {$base}-input
+      cursor not-allowed
     {$base}-box
       border-color var(--tu-border-color)
       background-color rgb(250, 250, 252)
+    {$base}__label
+      color var(--tu-text-color-disabled)
     .check-icon, .line-icon
       fill rgba(194, 194, 194, 1)
 
