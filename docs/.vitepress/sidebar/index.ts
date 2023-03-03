@@ -22,6 +22,8 @@ export const sidebar = {
         { text: 'Scrollbar 滚动条', link: '/docs/scrollbar' },
         { text: 'Cascader 级联选择', link: '/docs/cascader' },
         { text: 'Select 级联选择', link: '/docs/select' },
+        { text: 'Radio 单选', link: '/docs/radio' },
+        { text: 'Checkbox 多选框', link: '/docs/checkbox' },
         { text: 'Ellipsis 文本省略', link: '/docs/ellipsis' },
         { text: 'Image 图片', link: '/docs/image' },
         { text: 'Space 间距', link: '/docs/space' },

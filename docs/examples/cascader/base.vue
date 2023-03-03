@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { CascaderOption } from '../../../src/components/cascader/src/cascaderProps'
+import type { CascaderOption } from '../../../src/components/cascader/src/props'
 
 function createOptions(depth = 3, iterator = 1, prefix = '') {
   let i = -1
