@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { popoverProps } from '../../popover/src/popoverProps'
+import { popoverProps } from '../../popover/src/props'
 import { usePopover } from '../../popover/src/usePopover'
 
 const Tooltip = defineComponent({

@@ -9,7 +9,7 @@ export interface Position {
   y: number
 }
 
-export interface EventHandler<T extends Element | Document | Window = Element, Evt extends Event = Event> {
+export interface EventHandler<T extends Element | Document | Window = Element, Evt extends Event = any> {
   (this: T, ev: Evt): void
 }
 

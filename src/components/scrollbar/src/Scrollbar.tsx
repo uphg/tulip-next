@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { scrollbarProps } from './scrollbarProps'
+import { scrollbarProps } from './props'
 import { useScrollbar } from './useScrollbar'
 
 const Scrollbar = defineComponent({

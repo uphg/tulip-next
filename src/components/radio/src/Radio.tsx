@@ -1,7 +1,7 @@
-import { computed, defineComponent } from 'vue'
-import { useNameScope } from '../../../composables/useNameScope'
-import { radioProps } from './radioProps'
+import { defineComponent } from 'vue'
+import { radioProps } from './props'
 import { useRadio } from './useRadio'
+import { useNameScope } from '../../../composables/useNameScope'
 
 const Radio = defineComponent({
   name: 'TuRadio',

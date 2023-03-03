@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { PlacementTypes } from '../../popover/src/popoverProps'
-import type { Fn, PopupTrigger } from '../../../types'
+import type { PlacementTypes } from '../../popover/src/props'
+import type { Fn } from '../../../types'
 
 export type PopupProps = ExtractPropTypes<typeof popupProps>
 

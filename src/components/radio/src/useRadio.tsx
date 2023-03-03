@@ -1,7 +1,8 @@
-import { computed, defineComponent, inject, ref, watch, type PropType, type SetupContext } from 'vue'
-import { radioGroupInjectionKey, type RadioGroupRef } from './RadioGroup'
+import { computed, inject, ref } from 'vue'
+import { radioGroupInjectionKey } from './RadioGroup'
+import type { RadioGroupRef } from './types'
+import type { RadioProps } from './props'
 import { isNil } from '../../../utils'
-import type { RadioProps } from './radioProps'
 
 export function useRadio(props: RadioProps) {
   const isFocus = ref(false)
@@ -13,7 +14,7 @@ export function useRadio(props: RadioProps) {
     return props.checked
   })
 
-  const size = computed(() => radioGroup?.size.value ? radioGroup.size.value : props.size)
+  const size = computed(() => props.size ? props.size : radioGroup?.size.value)
 
   function handleChange() {
     radioGroup?.updateValue(props.value)

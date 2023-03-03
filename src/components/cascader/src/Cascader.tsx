@@ -1,5 +1,5 @@
 import { defineComponent, ref, shallowRef, onMounted, toRef, watch } from 'vue'
-import { cascaderProps, type CascaderBaseValue, type CascaderOption, type CascaderProps } from './cascaderProps'
+import { cascaderProps, type CascaderBaseValue, type CascaderOption, type CascaderProps } from './props'
 import CascaderSubmenu from './CascaderSubmenu'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'

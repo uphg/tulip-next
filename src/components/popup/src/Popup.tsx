@@ -1,5 +1,5 @@
-import { computed, createApp, defineComponent, h, onMounted, onBeforeUnmount, ref, shallowRef, toRef, Transition, watch, type App, type Ref } from 'vue'
-import { popupProps, type PopupProps, type UpdatePopupStyle } from './popupProps'
+import { computed, createApp, defineComponent, h, onMounted, onBeforeUnmount, ref, shallowRef, toRef, Transition, watch, type App } from 'vue'
+import { popupProps, type PopupProps, type UpdatePopupStyle } from './props'
 import zindexable, { updateZIndex } from './zindexble'
 import { getRelativeDOMPosition, getScrollParent, toNumber, withAttrs, on, off, toPx } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'

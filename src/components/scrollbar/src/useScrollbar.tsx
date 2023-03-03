@@ -1,5 +1,5 @@
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, Transition, vShow, withDirectives, type SetupContext } from 'vue'
-import type { ScrollbarProps } from './scrollbarProps'
+import type { ScrollbarProps } from './props'
 import { toPx, on, off } from '../../../utils'
 import { useResizeObserver, type UseResizeObserverReturn } from '../../../composables/useResizeObserver'
 

@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { popoverProps } from './popoverProps'
+import { popoverProps } from './props'
 import { usePopover } from './usePopover'
 
 const Popover = defineComponent({

@@ -1,7 +1,7 @@
+import { defineComponent, toRef } from 'vue'
 import { TAGKEY } from '../../../shared'
-import { computed, defineComponent, getCurrentInstance, toRef, toRefs, type PropType } from 'vue'
 import { useNameScope } from '../../../composables/useNameScope'
-import { radioProps } from './radioProps'
+import { radioProps } from './props'
 import { useRadio } from './useRadio'
 
 const RadioButton = defineComponent({

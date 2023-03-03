@@ -1,5 +1,5 @@
 import { defineComponent, onBeforeUnmount, ref, type PropType } from 'vue'
-import type { CascaderOption, CascaderBaseValue } from './cascaderProps'
+import type { CascaderOption, CascaderBaseValue } from './props'
 import { TuBaseIcon } from '../../base-icon'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import { Tick, ArrowRightRoundSmall } from '../../../icons'

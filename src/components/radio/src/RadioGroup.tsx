@@ -1,33 +1,10 @@
-import { computed, defineComponent, provide, ref, toRef, type ComponentInternalInstance, type ExtractPropTypes, type Prop, type PropType, type Ref, type SetupContext, type UnwrapRef, type VNode } from 'vue'
+import { computed, defineComponent, provide, ref, toRef } from 'vue'
+import type { UnwrapRef, VNode } from 'vue'
 import { filterComponent, flattenSlots, getSlot } from '../../../utils'
-import type { RadioProps } from './radioProps'
-
-export type RadioGroupRef = {
-  value: Ref<RadioGroupProps['value']>
-  filling: Ref<RadioGroupProps['filling']>
-  buttons: Ref<RadioButtonInstance[]>
-  size: Ref<RadioGroupProps['size']>
-  updateValue: (value: RadioGroupProps['value']) => void
-  setButton: (index: number, value: RadioButtonInstance) => void
-}
-
-export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>
+import { radioGroupProps, type RadioGroupProps } from './props'
+import type { RadioButtonInstance } from './types'
 
 export const radioGroupInjectionKey = Symbol('tu.radio.group')
-export const radioGroupProps = {
-  value: {
-    type: [String, Number, Boolean] as PropType<string | number | boolean | null>,
-    default: null
-  },
-  filling: Boolean as PropType<boolean>,
-  size: String as PropType<'small' | 'medium' | 'large'>,
-}
-
-type RadioButtonInstance = {
-  value: Ref<RadioProps['value']>
-  disabled: Ref<RadioProps['disabled']>
-  isFocus: Ref<boolean>
-} | null
 
 const RadioGroup = defineComponent({
   name: 'TuRadioGroup',

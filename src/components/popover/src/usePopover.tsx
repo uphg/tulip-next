@@ -1,5 +1,5 @@
 import { ref, h, computed, type SetupContext, unref, type Ref } from 'vue'
-import type { PlacementTypes, PopoverProps } from './popoverProps'
+import type { PlacementTypes, PopoverProps } from './props'
 import { toNumber, withAttrs } from '../../../utils'
 import TuPopup from '../../popup/src/Popup'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'

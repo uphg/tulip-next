@@ -1,4 +1,3 @@
-import type { SelectValue } from '../../../types'
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
