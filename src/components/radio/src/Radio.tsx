@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, ref, shallowRef } from 'vue'
 import { radioProps } from './props'
 import { useRadio } from './useRadio'
 import { useNameScope } from '../../../composables/useNameScope'
@@ -10,7 +10,10 @@ const Radio = defineComponent({
   emits: ['update:value'],
   setup(props, context) {
     const ns = useNameScope('radio')
-    const { isFocus, checked, size, handleChange, handleFocus, handleBlur } = useRadio(props)
+    const input = shallowRef<HTMLInputElement | null>(null)
+    const { isFocus, checked, size, handleChange, handleFocus, handleBlur, focus, blur } = useRadio(props, input)
+
+    context.expose({ focus, blur })
 
     return () => {
       const { value, label: _label, disabled } = props
@@ -27,6 +30,7 @@ const Radio = defineComponent({
           }]}
         >
           <input
+            ref={input}
             class={[ns.suffix('input')]}
             type="radio"
             value={value}

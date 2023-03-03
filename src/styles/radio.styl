@@ -6,6 +6,7 @@ $group = '.tu-radio-group'
   --tu-size 16px
   --tu-line-height 1.6
   --tu-box-shadow-focus 0 0 0 2.2px rgba(68, 99, 209, 0.3)
+  --tu-text-color-disabled rgba(#c2c2c2, 1)
   cursor pointer
   user-select none
   position relative
@@ -69,6 +70,7 @@ $group = '.tu-radio-group'
 
   &:not(&--disabled)&--focus:not(:active)
     {$base}__dot
+      border-color var(--tu-primary-color)
       box-shadow var(--tu-box-shadow-focus)
 
   &&--disabled
@@ -84,7 +86,7 @@ $group = '.tu-radio-group'
         background-color rgb(224, 224, 230)
 
     {$base}__label
-      color rgba(194, 194, 194, 1)
+      color var(--tu-text-color-disabled)
 
 {$button}
   --tu-height 34px

@@ -1,4 +1,4 @@
-import { defineComponent, toRef } from 'vue'
+import { defineComponent, ref, shallowRef, toRef } from 'vue'
 import { TAGKEY } from '../../../shared'
 import { useNameScope } from '../../../composables/useNameScope'
 import { radioProps } from './props'
@@ -11,7 +11,8 @@ const RadioButton = defineComponent({
   [TAGKEY]: 'RadioButton',
   setup(props, context) {
     const ns = useNameScope('radio-button')
-    const { isFocus, checked, size, radioGroup, handleChange, handleFocus, handleBlur } = useRadio(props)
+    const input = shallowRef<HTMLInputElement | null>(null)
+    const { isFocus, checked, size, radioGroup, handleChange, handleFocus, handleBlur, focus, blur } = useRadio(props, input)
 
     if (radioGroup) {
       radioGroup.setButton(radioGroup.buttons.value.length, {
@@ -20,6 +21,8 @@ const RadioButton = defineComponent({
         isFocus: isFocus
       })
     }
+
+    context.expose({ focus, blur })
 
     return () => (
       <label class={[ns.base, {
@@ -30,6 +33,7 @@ const RadioButton = defineComponent({
         [ns.is('filling')]: radioGroup?.filling.value,
       }]}>
         <input
+          ref={input}
           class={[ns.suffix('input')]}
           type="radio"
           value={props.value}

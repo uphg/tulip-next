@@ -1,10 +1,10 @@
-import { computed, inject, ref } from 'vue'
+import { computed, inject, ref, type Ref } from 'vue'
 import { radioGroupInjectionKey } from './RadioGroup'
 import type { RadioGroupRef } from './types'
 import type { RadioProps } from './props'
 import { isNil } from '../../../utils'
 
-export function useRadio(props: RadioProps) {
+export function useRadio(props: RadioProps, input: Ref<HTMLInputElement | null>) {
   const isFocus = ref(false)
   const radioGroup = inject<RadioGroupRef | null>(radioGroupInjectionKey, null)
   const checked = computed(() => {
@@ -27,6 +27,14 @@ export function useRadio(props: RadioProps) {
     isFocus.value = false
   }
 
+  function focus() {
+    input.value?.focus()
+  }
+
+  function blur() {
+    input.value?.blur()
+  }
+
   return {
     isFocus,
     radioGroup,
@@ -35,5 +43,7 @@ export function useRadio(props: RadioProps) {
     handleChange,
     handleFocus,
     handleBlur,
+    focus,
+    blur
   }
 }
