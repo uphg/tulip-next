@@ -13,6 +13,8 @@ export function useRadio(props: RadioProps) {
     return props.checked
   })
 
+  const size = computed(() => radioGroup?.size.value ? radioGroup.size.value : props.size)
+
   function handleChange() {
     radioGroup?.updateValue(props.value)
   }
@@ -28,6 +30,7 @@ export function useRadio(props: RadioProps) {
     isFocus,
     radioGroup,
     checked,
+    size,
     handleChange,
     handleFocus,
     handleBlur,

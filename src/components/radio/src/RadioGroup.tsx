@@ -6,19 +6,21 @@ export type RadioGroupRef = {
   value: Ref<RadioGroupProps['value']>
   filling: Ref<RadioGroupProps['filling']>
   buttons: Ref<RadioButtonInstance[]>
+  size: Ref<RadioGroupProps['size']>
   updateValue: (value: RadioGroupProps['value']) => void
   setButton: (index: number, value: RadioButtonInstance) => void
 }
 
 export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>
 
-export const radioGroupInjectionKey = Symbol('tu.radio.group') 
+export const radioGroupInjectionKey = Symbol('tu.radio.group')
 export const radioGroupProps = {
   value: {
     type: [String, Number, Boolean] as PropType<string | number | boolean | null>,
     default: null
   },
-  filling: Boolean as PropType<boolean>
+  filling: Boolean as PropType<boolean>,
+  size: String as PropType<'small' | 'medium' | 'large'>,
 }
 
 type RadioButtonInstance = {
@@ -33,10 +35,13 @@ const RadioGroup = defineComponent({
   emits: ['update:value'],
   setup(props, context) {
     const buttons = ref<UnwrapRef<RadioButtonInstance>[]>([])
+    const size = computed(() => props.size)
+
     provide(radioGroupInjectionKey, {
       value: computed(() => props.value),
       buttons,
       filling: toRef(props, 'filling'),
+      size,
       updateValue(value: RadioGroupProps['value']) {
         context.emit('update:value', value)
       },
@@ -49,7 +54,7 @@ const RadioGroup = defineComponent({
       const slot = flattenSlots(getSlot(context))
       const { children, isButton } = renderRadioButtons(slot, { value: props.value, filling: props.filling, buttons: buttons.value })
       return (
-        <div class="tu-radio-group">{ isButton ? children : slot}</div>
+        <div class={['tu-radio-group', { [`tu-radio-group--${size.value}`]: size.value }]}>{isButton ? children : slot}</div>
       )
     }
   }

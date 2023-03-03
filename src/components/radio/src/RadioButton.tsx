@@ -11,7 +11,7 @@ const RadioButton = defineComponent({
   [TAGKEY]: 'RadioButton',
   setup(props, context) {
     const ns = useNameScope('radio-button')
-    const { isFocus, checked, radioGroup, handleChange, handleFocus, handleBlur } = useRadio(props)
+    const { isFocus, checked, size, radioGroup, handleChange, handleFocus, handleBlur } = useRadio(props)
 
     if (radioGroup) {
       radioGroup.setButton(radioGroup.buttons.value.length, {
@@ -20,13 +20,14 @@ const RadioButton = defineComponent({
         isFocus: isFocus
       })
     }
-    
+
     return () => (
       <label class={[ns.base, {
+        [ns.is(size.value)]: size.value,
         [ns.is('checked')]: checked.value,
         [ns.is('focus')]: isFocus.value,
         [ns.is('disabled')]: props.disabled,
-        [ns.is('filling')]: radioGroup?.filling.value
+        [ns.is('filling')]: radioGroup?.filling.value,
       }]}>
         <input
           class={[ns.suffix('input')]}

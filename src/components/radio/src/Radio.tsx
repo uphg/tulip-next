@@ -1,5 +1,5 @@
+import { computed, defineComponent } from 'vue'
 import { useNameScope } from '../../../composables/useNameScope'
-import { defineComponent } from 'vue'
 import { radioProps } from './radioProps'
 import { useRadio } from './useRadio'
 
@@ -10,7 +10,7 @@ const Radio = defineComponent({
   emits: ['update:value'],
   setup(props, context) {
     const ns = useNameScope('radio')
-    const { isFocus, checked, handleChange, handleFocus, handleBlur } = useRadio(props)
+    const { isFocus, checked, size, handleChange, handleFocus, handleBlur } = useRadio(props)
 
     return () => {
       const { value, label: _label, disabled } = props
@@ -20,9 +20,10 @@ const Radio = defineComponent({
       return (
         <label
           class={[ns.base, {
+            [ns.is(size.value)]: size.value,
             [ns.is('checked')]: checked.value,
             [ns.is('focus')]: isFocus.value,
-            [ns.is('disabled')]: disabled
+            [ns.is('disabled')]: disabled,
           }]}
         >
           <input
