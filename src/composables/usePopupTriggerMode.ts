@@ -10,7 +10,7 @@ export type UsePopupTriggerOptions = {
 
 export type UsePopupTriggerModeReturn = {
   visible: Ref<boolean>,
-  events: { [k: string]: Fn },
+  events: { [k: string]: (e: Event) => void },
   open: Fn,
   close: Fn,
   [k: string]: unknown
