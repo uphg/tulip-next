@@ -68,7 +68,7 @@ $group = '.tu-radio-group'
   &__label
     padding 0 8px
 
-  &:not(&--disabled)&--focus:not(:active)
+  &--focus:not(:active):not(&--disabled)
     {$base}__dot
       border-color var(--tu-primary-color)
       box-shadow var(--tu-box-shadow-focus)
@@ -163,7 +163,7 @@ $group = '.tu-radio-group'
     z-index 1
     transition border-color 0.3s $cubic-bezier, box-shadow 0.3s $cubic-bezier
 
-  &:hover:not(&--disabled)
+  &:hover:not(&--disabled):not(&--filling)
     color var(--tu-primary-color)
 
   &--checked, &--focus
