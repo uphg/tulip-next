@@ -17,7 +17,7 @@ const RadioGroup = defineComponent({
     provide(radioGroupInjectionKey, {
       value: computed(() => props.value),
       buttons,
-      filling: toRef(props, 'filling'),
+      buttonStyle: computed(() => props.buttonStyle),
       size,
       updateValue(value: RadioGroupProps['value']) {
         context.emit('update:value', value)
@@ -28,10 +28,14 @@ const RadioGroup = defineComponent({
     })
 
     return () => {
-      const slot = flattenSlots(getSlot(context))
-      const { children, isButton } = renderRadioButtons(slot, { value: props.value, filling: props.filling, buttons: buttons.value })
+      const slot = flattenSlots(getSlot<['update:value']>(context))
+      const { children, isButton } = renderRadioButtons(slot, { value: props.value, filling: props.buttonStyle === 'solid', buttons: buttons.value })
       return (
-        <div class={['tu-radio-group', { [`tu-radio-group--${size.value}`]: size.value }]}>{isButton ? children : slot}</div>
+        <div
+          class={['tu-radio-group', {
+            [`tu-radio-group--${size.value}`]: size.value
+          }]}
+        >{isButton ? children : slot}</div>
       )
     }
   }

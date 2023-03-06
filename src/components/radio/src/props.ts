@@ -22,6 +22,9 @@ export const radioGroupProps = {
     type: [String, Number, Boolean] as PropType<string | number | boolean>,
     default: void 0
   },
-  filling: Boolean as PropType<boolean>,
+  buttonStyle: {
+    type: String as PropType<'outline' | 'solid'>,
+    default: 'outline'
+  },
   size: String as PropType<'small' | 'medium' | 'large'>,
 }

@@ -5,13 +5,12 @@ import { useNameScope } from '../../../composables/useNameScope'
 
 const Radio = defineComponent({
   name: 'TuRadio',
-  inheritAttrs: false,
   props: radioProps,
-  emits: ['update:value'],
+  emits: ['update:checked'],
   setup(props, context) {
     const ns = useNameScope('radio')
     const input = shallowRef<HTMLInputElement | null>(null)
-    const { isFocus, checked, size, handleChange, handleFocus, handleBlur, focus, blur } = useRadio(props, input)
+    const { isFocus, checked, size, handleChange, handleFocus, handleBlur, focus, blur } = useRadio(props, context, input)
 
     context.expose({ focus, blur })
 
@@ -39,7 +38,6 @@ const Radio = defineComponent({
             onBlur={handleBlur}
             onChange={handleChange}
             disabled={disabled}
-            {...context.attrs}
           />
           <div class={ns.el('dot-wrap')}>
             <div class={[ns.el('dot'), { [ns.el('dot--checked')]: checked.value }]}></div>

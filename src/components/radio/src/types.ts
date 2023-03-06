@@ -1,9 +1,9 @@
 import type { Ref } from 'vue'
-import type { RadioProps, RadioGroupProps } from './radioProps'
+import type { RadioProps, RadioGroupProps } from './props'
 
 export type RadioGroupRef = {
   value: Ref<RadioGroupProps['value']>
-  filling: Ref<RadioGroupProps['filling']>
+  buttonStyle: Ref<RadioGroupProps['buttonStyle']>
   buttons: Ref<RadioButtonInstance[]>
   size: Ref<RadioGroupProps['size']>
   updateValue: (value: RadioGroupProps['value']) => void
