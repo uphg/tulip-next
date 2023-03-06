@@ -15,7 +15,7 @@ export const CheckboxGroup = defineComponent({
   props: checkboxGroupProps,
   emits: ['update:value'],
   setup(props, context) {
-    const ns = useNameScope('tu-checkbox-group')
+    const ns = useNameScope('checkbox-group')
 
     provide(checkboxGroupInjectionKey, {
       value: computed(() => props.value),
@@ -23,15 +23,15 @@ export const CheckboxGroup = defineComponent({
       updateValue(value: CheckboxProps['value']) {
         if (isNil(value)) return
         const index = props.value?.findIndex((item) => item === value)
+        let result = []
         if (isNumber(index) && index >= 0) {
           const befor = props.value!.slice(0, index)
           const after = props.value!.slice(index! + 1)
-          const result = [...befor, ...after]
-          context.emit('update:value', result)
+          result = [...befor, ...after]
         } else {
-          const result = [...(props.value || []), value]
-          context.emit('update:value', result)
+          result = [...(props.value || []), value]
         }
+        context.emit('update:value', result)
       }
     })
 

@@ -15,7 +15,7 @@ const CollapseItem = defineComponent({
   name: 'TuCollapseItem',
   props: collapseItemProps,
   setup(props, context) {
-    const ns = useNameScope('tu-collapse-item')
+    const ns = useNameScope('collapse-item')
     const collapse = inject<Ref<CollapseContent>>(collapseInjectionKey)
     const isActive = computed(() => {
       if (isNil(props.name)) return false
