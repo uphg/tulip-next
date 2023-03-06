@@ -1,11 +1,11 @@
 import { computed, defineComponent, ref, toRef, watch, shallowRef, type PropType } from 'vue'
 import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
+import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import { Tick } from '../../../icons'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
-import type { Fn, SelectValue, Scrollbar } from '../../../types'
-import TuScrollbar from '../../scrollbar/src/Scrollbar'
+import type { SelectValue, Scrollbar } from '../../../types'
 import { withAttrs } from '../../../utils'
 
 export type SelectOption = { label: string, value: SelectValue, disabled?: boolean }
@@ -38,7 +38,7 @@ const Select = defineComponent({
     })
 
     const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
-    const { onClick } = events as { onClick: Fn }
+    const { onClick } = events as { onClick: (e: Event) => void }
 
     function handleClickOption(item: SelectOption) {
       context.emit('update:value', item.value)

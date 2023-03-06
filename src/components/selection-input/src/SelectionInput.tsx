@@ -47,8 +47,7 @@ const SelectionInput = defineComponent({
             [ns.is('focus')]: isFocus,
             [ns.is('hover')]: isHover,
             [ns.is('disabled')]: disabled
-          }]} 
-          disabled={disabled}
+          }]}
           tabindex="0"
           onFocus={handleFocus}
           onBlur={handleBlur}
