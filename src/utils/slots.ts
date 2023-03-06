@@ -1,7 +1,7 @@
-import { Fragment, type SetupContext, type VNode, type VNodeChild } from 'vue'
+import { Fragment, type EmitsOptions, type SetupContext, type VNode, type VNodeChild } from 'vue'
 import { isNil } from './isNil'
 
-export function getSlot<T extends any>(context: SetupContext<T>, slotName = 'default') {
+export function getSlot<E = EmitsOptions>(context: SetupContext<E>, slotName = 'default') {
   const slot = context.slots[slotName]
   return slot ? slot() : []
 }
