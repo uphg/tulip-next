@@ -1,0 +1,34 @@
+$base = '.tu-divider'
+
+$title-prefix = '.tu-divider--title-position'
+
+{$base}
+  --tu-color var(--tu-border-color)
+  --tu-border-style solid
+  display flex
+  margin 16px 0
+
+  &--dashed
+    --tu-border-style dashed
+
+  &:not(&--title-position-left, &--title-position-center, &--title-position-right)
+    border-block-start 1px var(--tu-border-style) var(--tu-color)
+
+  &--vertical
+    display inline-flex
+    margin -0.06em 8px 0
+    height 1em
+    line-height inherit
+    writing-mode vertical-lr
+    vertical-align middle
+
+  &--title-position-left, &--title-position-right, &--title-position-center
+    border-block-start none
+    align-items center
+
+  &__title
+    padding 0 8px
+
+  &__line
+    height 0
+    border-block-start 1px var(--tu-border-style) var(--tu-color)
