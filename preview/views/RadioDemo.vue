@@ -39,13 +39,13 @@
       </tu-radio-button>
     </tu-radio-group>
     <hr>
-    <tu-radio-group v-model:value="value3" filling>
+    <tu-radio-group v-model:value="value3" button-style="solid">
       <tu-radio-button v-for="option in options" :key="option.value" :value="option.value" :disabled="option.value === 4">
         {{ option.label }}
       </tu-radio-button>
     </tu-radio-group>
     <hr>
-    <tu-radio-group v-model:value="value3" filling>
+    <tu-radio-group v-model:value="value3" button-style="solid">
       <tu-radio-button v-for="option in options" :key="option.value" :value="option.value" :disabled="option.value === 0 || option.value === 2">
         {{ option.label }}
       </tu-radio-button>

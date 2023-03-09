@@ -13,11 +13,15 @@ import CascaderDemo from './views/CascaderDemo.vue'
 import SelectDemo from './views/SelectDemo.vue'
 import SelectionInputDemo from './views/SelectionInputDemo.vue'
 import CardDemo from './views/CardDemo.vue'
+import DividerDemo from './views/DividerDemo.vue'
+import LayoutDemo from './views/LayoutDemo.vue'
+import TreeDemo from './views/TreeDemo.vue'
 
 import TransitionDemo from './views/TransitionDemo'
 import TransitionDemo2 from './views/TransitionDemo.vue'
 import TestTransition from './views/TestTransition'
 import { shallowRef } from 'vue'
+import CollapseTransitionDemo from './views/CollapseTransitionDemo.vue'
 
 const sidebar = [
   {
@@ -47,6 +51,22 @@ const sidebar = [
   {
     title: 'Card 卡片',
     component: CardDemo
+  },
+  {
+    title: 'Divider 分割线',
+    component: DividerDemo
+  },
+  {
+    title: 'Layout 布局',
+    component: LayoutDemo
+  },
+  {
+    title: 'Tree 树',
+    component: TreeDemo
+  },
+  {
+    title: 'CollapseTransition 过渡',
+    component: CollapseTransitionDemo
   }
   // {
   //   title: '过渡1',
@@ -62,7 +82,7 @@ const sidebar = [
   // }
 ]
 
-const current = shallowRef(sidebar[1])
+const current = shallowRef(sidebar[sidebar.length - 1])
 </script>
 
 <style>

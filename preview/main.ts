@@ -6,5 +6,8 @@ import './assets/main.css'
 
 const app = createApp(App)
 
+console.log('Tulp')
+console.log(Tulp)
+
 app.use(Tulp)
 app.mount('#app')
