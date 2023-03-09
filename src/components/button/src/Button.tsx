@@ -2,7 +2,7 @@ import { computed, defineComponent, ref, Transition, type Component, type PropTy
 import { Loading as LoadingIcon } from '../../../icons'
 import { TuIcon } from '../../icon/index'
 import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
-import { TuExpandTransition } from '../../expand-transition'
+import TuExpandTransition from '../../expand-transition/src/ExpandTransition'
 import { useNameScope } from '../../../composables/useNameScope'
 
 const buttonStatekeys = ['text', 'dashed', 'ghost', 'circle', 'round', 'disabled'] as const
@@ -82,7 +82,7 @@ const Button = defineComponent({
 
       return (
         <button ref={button} class={className.value} type={type} disabled={disabled} onClick={handleClick}>
-          <TuExpandTransition>
+          <TuExpandTransition withWidth>
             {icon ?? loading ? (
               <span
                 class={[ns.el('icon'), {

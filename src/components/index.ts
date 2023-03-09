@@ -1,4 +1,6 @@
 import { makeInstaller } from '../utils'
+import { TuCollapseTransition } from './collapse-transition'
+import { TuExpandTransition } from './expand-transition'
 import { TuButton } from './button'
 import { TuButtonGroup } from './button-group'
 import { TuInput } from './input'
@@ -6,10 +8,8 @@ import { TuInputGroup } from './input-group'
 import { TuInputGroupLabel } from './input-group-label'
 import { TuSwitch } from './switch'
 import { TuDialog, useDialog } from './dialog'
-import { TuCollapseTransition } from './collapse-transition'
 import { TuTabs } from './tabs'
 import { TuTabPane } from './tab-pane'
-import { TuExpandTransition } from './expand-transition'
 import { TuPagination } from './pagination'
 import { TuPopover } from './popover'
 import { TuTooltip } from './tooltip'
@@ -40,6 +40,7 @@ import { TuSidebar } from './sidebar'
 import { TuHeader } from './header'
 import { TuContent } from './content'
 import { TuFooter } from './footer'
+import { TuTree } from './tree'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -83,7 +84,8 @@ const components = [
   TuSidebar,
   TuHeader,
   TuContent,
-  TuFooter
+  TuFooter,
+  TuTree
 ]
 
 const { install } = makeInstaller(components)
@@ -129,6 +131,7 @@ export {
   TuHeader,
   TuContent,
   TuFooter,
+  TuTree,
 
   // utils
   useDialog,
