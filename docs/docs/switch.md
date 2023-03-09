@@ -54,13 +54,13 @@ switch/shape
 
 ## Switch 属性
 
-| 名称           | 说明           | 类型                                  | 默认值  |
-| -------------- | -------------- | ------------------------------------- | ------- |
-| value          | 开关的状态     | `string \| number \| boolean`         | `false` |
-| size           | 开关的大小     | `'' \| large' \| 'medium' \| 'small'` | `''`    |
-| checkedValue   | 开启时的默认值 | `string \| number \| boolean`         | `false` |
-| uncheckedValue | 关闭时的默认值 | `string \| number \| boolean`         | `false` |
-| square         | 是否为方形     | `boolean`                             | `false` |
+| 名称            | 说明           | 类型                            | 默认值     |
+| --------------- | -------------- | ------------------------------- | ---------- |
+| value           | 开关的状态     | `string \| number \| boolean`   | `false`    |
+| size            | 开关的大小     | `large' \| 'medium' \| 'small'` | `'medium'` |
+| checked-value   | 开启时的默认值 | `string \| number \| boolean`   | `false`    |
+| unchecked-value | 关闭时的默认值 | `string \| number \| boolean`   | `false`    |
+| square          | 是否为方形     | `boolean`                       | `false`    |
 
 ## Switch 插槽
 
