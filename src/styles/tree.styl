@@ -1,0 +1,25 @@
+$tree-node = '.tu-tree-node'
+
+{$tree-node}
+  padding 3px 0
+  border-radius 2px
+  transition background-color 0.3s
+  display flex
+  &:hover
+    background-color rgb(243, 243, 245)
+  &__label
+    display flex
+    align-items center
+    font-size var(--tu-font-size)
+    padding 0 4px
+  &__switch
+    width 24px
+    height 24px
+    display flex
+    justify-content center
+    align-items center
+    transition transform 0.15s
+    &--expanded
+      transform rotate(90deg)
+    &--hide
+      visibility hidden
