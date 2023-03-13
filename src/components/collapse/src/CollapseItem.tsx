@@ -1,10 +1,11 @@
-import { computed, defineComponent, inject, type Ref } from 'vue'
-import { collapseInjectionKey, type CollapseContent } from './Collapse'
+import { computed, defineComponent, inject } from 'vue'
+import { collapseInjectionKey } from './Collapse'
 import { TuIcon } from '../../icon'
 import { TuCollapseTransition } from '../../collapse-transition'
 import { isNil } from '../../../utils'
 import { ArrowRightRoundSmall } from '../../../icons'
 import { useNameScope } from '../../../composables/useNameScope'
+import type { CollapseItemName, CollapseContent } from './types'
 
 const collapseItemProps = {
   title: [String, Number],
@@ -16,18 +17,18 @@ const CollapseItem = defineComponent({
   props: collapseItemProps,
   setup(props, context) {
     const ns = useNameScope('collapse-item')
-    const collapse = inject<Ref<CollapseContent>>(collapseInjectionKey)
+    const collapse = inject<CollapseContent>(collapseInjectionKey)
     const isActive = computed(() => {
       if (isNil(props.name)) return false
 
-      return collapse?.value.props.accordion
-        ? props.name === collapse.value.activeNames
-        : (collapse?.value.activeNames as (string | number)[]).includes(props.name)
+      return collapse?.props.accordion
+        ? props.name === collapse.activeNames.value
+        : (collapse?.activeNames.value as CollapseItemName[]).includes(props.name)
     })
 
     return () => (
       <div class={ns.base}>
-        <div class={ns.el('header')} onClick={() => collapse?.value.triggerCollapseItem(props.name)}>
+        <div class={ns.el('header')} onClick={() => collapse?.triggerCollapseItem(props.name)}>
           <span class={[ns.suffix('arrow'), { active: isActive.value }]}>
             <TuIcon><ArrowRightRoundSmall/></TuIcon>
           </span>

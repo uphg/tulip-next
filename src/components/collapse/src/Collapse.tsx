@@ -1,20 +1,15 @@
-import { defineComponent, provide, ref, type ExtractPropTypes, type PropType } from 'vue'
-import type { CollapseActiveNames, CollapseItemName, TriggerCollapseItem } from './types'
-import { isNil } from '../../../utils'
+import { defineComponent, provide, ref, watch, type ExtractPropTypes, type PropType, type Ref } from 'vue'
+import type { CollapseItemName } from './types'
+import { isNil, remove } from '../../../utils'
 
 export type CollapseProps = ExtractPropTypes<typeof collapseProps>
-export type CollapseContent = {
-  activeNames: CollapseActiveNames,
-  triggerCollapseItem: TriggerCollapseItem,
-  props: CollapseProps
-}
 
 export const collapseInjectionKey = 'tu.collapse'
 
 const collapseProps = {
-  active: {
-    type: [String, Number, Array] as PropType<CollapseActiveNames>,
-    default: ''
+  activeNames: {
+    type: [String, Number, Array, null] as PropType<string | number | Array<string | number> | null>,
+    default: null
   },
   accordion: Boolean as PropType<boolean>
 }
@@ -22,30 +17,35 @@ const collapseProps = {
 const Collapse = defineComponent({
   name: 'TuCollapse',
   props: collapseProps,
+  emits: ['update:activeNames'],
   setup(props: CollapseProps, context) {
-    const collapse = ref<CollapseContent>({
-      activeNames: [],
-      triggerCollapseItem,
-      props
+    const _activeNames = ref<CollapseProps['activeNames']>(props.accordion ? null : [])
+
+    watch(_activeNames, (newValue) => {
+      context.emit('update:activeNames', props.accordion ? newValue : [...newValue])
     })
 
     function triggerCollapseItem(name: CollapseItemName | undefined) {
       if (isNil(name)) return
 
-      const { activeNames } = collapse.value
       if (props.accordion) {
-        collapse.value.activeNames = activeNames === name ? '' : name
+        _activeNames.value = _activeNames.value === name ? null : name
       } else {
-        const index = (activeNames as CollapseItemName[]).indexOf(name)
+        const activeNames = (_activeNames.value as CollapseItemName[])
+        const index = activeNames.indexOf(name)
         if (index > -1) {
-          (activeNames as CollapseItemName[]).splice(index, 1)
+          (_activeNames.value as CollapseItemName[]).splice(index, 1)
         } else {
-          (activeNames as CollapseItemName[]).push(name)
+          (_activeNames.value as CollapseItemName[]).push(name)
         }
       }
     }
 
-    provide(collapseInjectionKey, collapse)
+    provide(collapseInjectionKey, {
+      activeNames: _activeNames,
+      triggerCollapseItem,
+      props
+    })
 
     return () => (
       <div class="tu-collapse">
