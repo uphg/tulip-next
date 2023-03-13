@@ -46,7 +46,7 @@ function onClick() {
 }
 
 function clickChecked() {
-  checked.value = !checked.value
+  checked2.value = !checked2.value
 }
 
 function clickIndeterminate() {
