@@ -1,12 +1,21 @@
 $tree-node = '.tu-tree-node'
 
 {$tree-node}
+  --tu-arrow-color rgb(118, 124, 130)
   padding 3px 0
   border-radius 2px
   transition background-color 0.3s
   display flex
-  &:hover
+  &:hover:not(&--selected)
     background-color rgb(243, 243, 245)
+  &:active:not(&--selected)
+    background-color rgb(237, 237, 239)
+  &--selected
+    background-color rgba($primary-color, 0.1)
+  &-checkbox
+    display flex
+    align-items center
+    margin-right 4px
   &__label
     display flex
     align-items center
@@ -19,6 +28,7 @@ $tree-node = '.tu-tree-node'
     justify-content center
     align-items center
     transition transform 0.15s
+    color var(--tu-arrow-color)
     &--expanded
       transform rotate(90deg)
     &--hide

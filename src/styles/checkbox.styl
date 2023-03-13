@@ -20,12 +20,6 @@ $base = '.tu-checkbox'
   &--large
     --tu-size 18px
 
-  &-input
-    cursor pointer
-    position absolute
-    inset 0
-    opacity 0
-
   &-box-wrap
     display inline-flex
     align-items center
@@ -36,6 +30,7 @@ $base = '.tu-checkbox'
     height var(--tu-size)
     border 1px solid var(--tu-border-color)
     border-radius var(--tu-border-radius)
+    background-color #fff
     transition background-color 0.3s $cubic-bezier, border-color 0.3s $cubic-bezier, box-shadow 0.3s $cubic-bezier
   
   &-box__icon

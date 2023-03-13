@@ -11,19 +11,20 @@ const Checkbox = defineComponent({
   emits: ['update:checked'],
   setup(props, context) {
     const ns = useNameScope('checkbox')
-    const input = shallowRef<HTMLInputElement | null>(null)
+    const checkbox = shallowRef<HTMLInputElement | null>(null)
     const isFocus = ref(false)
     const checkboxGroup = inject<CheckboxGroupRef | null>(checkboxGroupInjectionKey, null)
     const checked = computed(() => isNil(checkboxGroup) ? props.checked : checkboxGroup.value.value?.includes(props.value!))
     const size = computed(() => props.size ? props.size : checkboxGroup?.size.value)
 
-    function handleChange() {
+    function handleClick(e: Event) {
       if (checkboxGroup) {
         checkboxGroup?.updateValue(props.value)
         return
       }
 
       context.emit('update:checked', !props.checked)
+      props.onClick?.(e as MouseEvent, { value: props.value, checked: props.checked })
     }
 
     function handleFocus() {
@@ -35,11 +36,11 @@ const Checkbox = defineComponent({
     }
 
     function focus() {
-      input.value?.focus()
+      checkbox.value?.focus()
     }
 
     function blur() {
-      input.value?.blur()
+      checkbox.value?.blur()
     }
 
     context.expose({ focus, blur })
@@ -49,7 +50,7 @@ const Checkbox = defineComponent({
       const { slots } = context
       const label = slots.default ? slots.default() : _label
       return (
-        <label
+        <div
           class={[ns.base, {
             [ns.is(size.value)]: size.value,
             [ns.is('checked')]: checked.value,
@@ -57,18 +58,16 @@ const Checkbox = defineComponent({
             [ns.is('disabled')]: disabled,
             [ns.is('indeterminate')]: indeterminate
           }]}
+          ref={checkbox}
+          type="checkbox"
+          value={props.value}
+          checked={checked.value}
+          disabled={disabled}
+          onClick={handleClick}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          tabindex="0"
         >
-          <input
-            ref={input}
-            class={ns.suffix('input')}
-            type="checkbox"
-            value={props.value}
-            checked={checked.value}
-            disabled={disabled}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
           <div class={ns.suffix('box-wrap')}>
             <div class={ns.suffix('box')}>
               <Transition name="tu-checkbox-zoom">
@@ -85,7 +84,7 @@ const Checkbox = defineComponent({
             </div>
           </div>
           {label ? <div class={ns.el('label')}>{label}</div> : null}
-        </label>
+        </div>
       )
     }
   }
