@@ -19,17 +19,17 @@ const TreeNode = defineComponent({
     const indeterminate = computed(() => {
       if (!tree?.cascade.value || !props.item?.children?.length) return false
       const currentCheckedKeys = props.item.children.filter((item) => tree?.checkedKeys.value?.includes(item?.meta?.[props.keyField] as TreeNodeMetaKey))
-      return currentCheckedKeys.length > 0 && currentCheckedKeys.length < props.item.children.length
+      return (currentCheckedKeys.length > 0 && currentCheckedKeys.length < props.item.children.length)
     })
     const expanded = computed(() => tree?.expandedKeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
 
     function onClickTreeNode(e: Event) {
       tree?.setSelectedKey(props.item?.meta?.key as TreeNodeMetaKey)
-      tree?.setExpandedKeys(props.item?.meta?.key as TreeNodeMetaKey)
+      tree?.onExpandedChange(props.item?.meta?.key as TreeNodeMetaKey)
     }
 
     function onUpdateChecked(value: CheckboxValue) {
-      tree?.onUpdateChecked(props.item?.meta?.key as TreeNodeMetaKey, props.levels)
+      tree?.onCheckedChange(props.item?.meta?.key as TreeNodeMetaKey, props.levels)
     }
 
     return () => {
@@ -63,6 +63,7 @@ const TreeNode = defineComponent({
                   {(props.item.children as TreeNodeMeta[])?.map((item, index) => (
                     <TreeNode
                       item={item}
+                      indeterminate={indeterminate.value}
                       parent={props.item}
                       key={item?.key as TreeNodeMetaKey}
                       levels={[...props.levels!, index]}

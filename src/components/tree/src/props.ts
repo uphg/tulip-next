@@ -50,7 +50,8 @@ export const treeNodeProps = {
   disabledField: {
     type: String as PropType<string>,
     default: 'disabled'
-  }
+  },
+  indeterminate: Boolean as PropType<boolean>
 }
 
 export const treeNodeCheckboxProps = {
