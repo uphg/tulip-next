@@ -10,22 +10,24 @@ export type TreeRef = {
   selectedKey: Ref<TreeNodeMetaKey>,
   checkedKeys: Ref<TreeProps['checkedKeys']>
   expandedKeys: Ref<TreeProps['expandedKeys']>
+  indeterminatekeys: Ref<TreeProps['indeterminatekeys']>
   cascade: Ref<TreeProps['cascade']>
-  getTreeNode: (levels: number[]) => TreeNode | undefined
   setSelectedKey: (value: TreeNodeMetaKey) => void
   onExpandedChange: (value: TreeNodeMetaKey) => void
   onCheckedChange: (value: TreeNodeMetaKey, levels: TreeNodeProps['levels']) => void
+  getLevelsToTreeNode: (levels: number[]) => TreeNode | undefined
 }
 
 const Tree = defineComponent({
   name: 'TuTree',
   props: treeProps,
-  emits: ['update:checkedKeys', 'update:expandedKeys'],
+  emits: ['update:checkedKeys', 'update:expandedKeys', 'update:indeterminatekeys'],
   setup(props, context) {
     const treeNodes = ref(generateTreeNodes(props.data))
     const selectedKey = ref<TreeNodeMetaKey>()
     const rawCheckedKeys = ref(props.checkedKeys ? [...props.checkedKeys] : [])
     const rawExpandedKeys = ref(props.expandedKeys ? [...props.expandedKeys] : [])
+    const rawIndeterminatekeys = ref(props.indeterminatekeys ? [...props.indeterminatekeys] : [])
 
     watch(toRef(props, 'checkedKeys'), (newValue) => {
       rawCheckedKeys.value = newValue!
@@ -39,8 +41,9 @@ const Tree = defineComponent({
       selectedKey,
       checkedKeys: rawCheckedKeys,
       expandedKeys: rawExpandedKeys,
+      indeterminatekeys: rawIndeterminatekeys,
       cascade: toRef(props, 'cascade'),
-      getTreeNode,
+      getLevelsToTreeNode,
       setSelectedKey,
       onCheckedChange,
       onExpandedChange
@@ -49,25 +52,8 @@ const Tree = defineComponent({
     function onCheckedChange(value: TreeNodeMetaKey, levels: TreeNodeProps['levels']) {
       if (props.cascade) {
         // 级联选择
-        const currentNode = getTreeNode(levels)!
-        if (rawCheckedKeys.value?.includes(value)) {
-          let uncheckedKeys = getDeepTreeNodeKeys(currentNode)
-          const siblingCheckedKeys = currentNode.parent?.children?.filter(
-            (item) => rawCheckedKeys.value.includes(item.meta?.[props.keyField] as TreeNodeMetaKey)
-          )
-
-          if (siblingCheckedKeys?.length! >= currentNode.parent?.children?.length!) {
-            uncheckedKeys = uncheckedKeys.concat(getUpperLayerAssociatedKeys(currentNode))
-          }
-
-          setCheckedKeys(rawCheckedKeys.value.filter((item) => !uncheckedKeys.includes(item)))
-        } else {
-          const newCheckedKeys = getDeepTreeNodeKeys(currentNode)
-          const upperCheckedKeys = getUpperLayerNeedToCheckedKeys(currentNode)
-          const otherCheckedKeys = newCheckedKeys.concat(upperCheckedKeys).filter((key) => !rawCheckedKeys.value.includes(key))
-
-          setCheckedKeys(rawCheckedKeys.value.concat(otherCheckedKeys))
-        }
+        const currentNode = getLevelsToTreeNode(levels)!
+        rawCheckedKeys.value?.includes(value) ? updateUncheckedState(currentNode) : updateCheckedState(currentNode)
       } else {
         setCheckedKeys(rawCheckedKeys.value?.includes(value)
           ? remove(rawCheckedKeys.value, (item) => item === value)
@@ -76,16 +62,145 @@ const Tree = defineComponent({
       }
     }
 
+    function updateUncheckedState(currentNode: TreeNode) {
+      let uncheckedKeys = getDeepTreeNodeKeys(currentNode)
+      const parentCheckedKeys = currentNode.parent?.children?.filter(
+        (item) => rawCheckedKeys.value.includes(item.meta?.[props.keyField] as TreeNodeMetaKey)
+      )
+
+      if (parentCheckedKeys?.length! >= currentNode.parent?.children?.length!) {
+        uncheckedKeys = uncheckedKeys.concat(getUpperLayerAssociatedKeys(currentNode))
+      }
+
+      const nextCheckedKeys = rawCheckedKeys.value.filter((item) => !uncheckedKeys.includes(item))
+      setCheckedKeys(nextCheckedKeys)
+      updateUncheckedIndeterminateKeys(currentNode, nextCheckedKeys)
+    }
+
+    function updateCheckedState(currentNode: TreeNode) {
+      const newCheckedKeys = getDeepTreeNodeKeys(currentNode)
+      const upperCheckedKeys = getUpperLayerNeedToCheckedKeys(currentNode)
+      const otherCheckedKeys = newCheckedKeys.concat(upperCheckedKeys).filter((key) => !rawCheckedKeys.value.includes(key))
+      const nextCheckedKeys = rawCheckedKeys.value.concat(otherCheckedKeys)
+
+      setCheckedKeys(nextCheckedKeys)
+      updateCheckedIndeterminateKeys(currentNode, nextCheckedKeys)
+    }
+
+    function updateUncheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[]) {
+      let nextIndeterminatekeys = [...rawIndeterminatekeys.value]
+      let parent: TreeNode | undefined | null = currentNode.parent
+
+      while (parent) {
+        const parentKey = parent?.meta?.key as TreeNodeMetaKey 
+        const checkeds = parent?.children?.filter(item => nextCheckedKeys.includes(item?.meta?.key as TreeNodeMetaKey))!
+        const indeterminates = parent?.children?.filter(item => nextIndeterminatekeys.includes(item?.meta?.key as TreeNodeMetaKey))
+
+        if (!checkeds?.length && !indeterminates?.length) {
+          if (nextIndeterminatekeys.includes(parentKey)) {
+            nextIndeterminatekeys = nextIndeterminatekeys.filter((item) => item !== parentKey)
+          }
+        } else {
+          if (!nextIndeterminatekeys.includes(parentKey)) {
+            nextIndeterminatekeys.push(parentKey)
+          }
+        }
+
+        parent = parent.parent ? parent.parent : null
+
+      }
+
+      setIndeterminatekeys(nextIndeterminatekeys)
+    }
+
+    function updateCheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[]) {
+      let indeterminatekeys = [...rawIndeterminatekeys.value]
+      const currentKey = currentNode?.meta?.key as TreeNodeMetaKey
+      if (indeterminatekeys.includes(currentKey)) {
+        const checkedKeys = getDeepTreeNodeKeys(currentNode)
+        indeterminatekeys = indeterminatekeys.filter((item) => !checkedKeys.includes(item))
+      }
+
+      indeterminatekeys = getCheckedIndeterminateKeys(currentNode, nextCheckedKeys, indeterminatekeys)
+
+      setIndeterminatekeys(indeterminatekeys)
+    }
+
+    function getCheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[], indeterminatekeys: TreeNodeMetaKey[]) {
+      let parent: TreeNode | undefined | null = currentNode.parent
+
+      while (parent) {
+        const parentKey = parent?.meta?.key as TreeNodeMetaKey
+        const checkedNodes = parent?.children?.filter(item => nextCheckedKeys.includes(item?.meta?.key as TreeNodeMetaKey))!
+        const indeterminateNodes = parent?.children?.filter(item => indeterminatekeys.includes(item?.meta?.key as TreeNodeMetaKey))
+        const childrenLength = parent.children?.length!
+        const checkedsLength = checkedNodes.length
+
+        if (checkedsLength > 0 && checkedsLength < childrenLength || indeterminateNodes?.length) {
+          if (!indeterminatekeys.includes(parentKey)) {
+            indeterminatekeys.push(parentKey)
+          }
+          parent = parent.parent
+        } else if (checkedsLength >= childrenLength) {
+          indeterminatekeys = indeterminatekeys.filter((item) => item !== parentKey)
+          parent = parent.parent
+        } else {
+          parent = null
+        }
+      }
+
+      return indeterminatekeys
+    }
+
+    function setIndeterminatekeys(keys: TreeNodeMetaKey[]) {
+      if (typeof props.indeterminatekeys === 'undefined') {
+        rawIndeterminatekeys.value = keys
+      }
+      context.emit('update:indeterminatekeys', keys)
+    }
+
+    function getIndeterminateKeys(treeNodes: TreeNode[], { keyField } = { keyField: 'key' }) {
+      const result: TreeNodeMetaKey[] = [...rawIndeterminatekeys.value]
+      const stack = [treeNodes]
+      while (stack.length) {
+        const currentNodes = stack.shift()
+
+        currentNodes?.forEach((currentNode) => {
+          if (!currentNode?.children?.length) return
+          const childrenCheckedkeys = currentNode?.children?.filter(item => rawCheckedKeys.value.includes(item?.meta?.[keyField] as TreeNodeMetaKey))!
+          const childrenIndeterminatekeys = currentNode?.children?.filter(item => result.includes(item?.meta?.[keyField] as TreeNodeMetaKey))!
+
+          if (childrenIndeterminatekeys.length || childrenCheckedkeys.length > 0 && childrenCheckedkeys.length < currentNode?.children?.length) {
+            result.push(currentNode?.meta?.[keyField] as TreeNodeMetaKey)
+
+            // 查看父级是否半选
+            let parent: TreeNode | null | undefined = currentNode.parent
+            while (parent) {
+              const parentKey = parent?.meta?.[keyField] as TreeNodeMetaKey
+              if (result.includes(parentKey)) {
+                parent = null
+              } else {
+                result.push(parentKey)
+                parent = parent.parent
+              }
+            }
+            
+          }
+
+          if (currentNode.children) {
+            stack.push(currentNode.children)
+          }
+        })
+      }
+
+      return result
+    }
+
     function setCheckedKeys(keys: TreeNodeMetaKey[]) {
       if (typeof props.checkedKeys === 'undefined') {
         rawCheckedKeys.value = keys
       }
-
       context.emit('update:checkedKeys', keys)
-    }
-
-    function setSelectedKey(value: TreeNodeMetaKey) {
-      selectedKey.value = value
     }
 
     function onExpandedChange(value: TreeNodeMetaKey) {
@@ -99,8 +214,11 @@ const Tree = defineComponent({
       if (typeof props.expandedKeys === 'undefined') {
         rawExpandedKeys.value = keys
       }
-
       context.emit('update:expandedKeys', keys)
+    }
+
+    function setSelectedKey(value: TreeNodeMetaKey) {
+      selectedKey.value = value
     }
 
     // 获取当前节点下所有关联的 key（包括当前节点、后代节点）
@@ -136,17 +254,6 @@ const Tree = defineComponent({
       return result
     }
 
-    // 获取所有需要取消选中的 key
-    // function getUncheckedKeys(currentNode: TreeNode) {
-    //   let uncheckedKeys = getDeepTreeNodeKeys(currentNode)
-    //   const siblingCheckedKeys = currentNode.parent?.children?.filter(
-    //     item => rawCheckedKeys.value.includes(item.meta?.[props.keyField] as TreeNodeMetaKey)
-    //   )
-    //   if (siblingCheckedKeys?.length! >= currentNode.parent?.children?.length!) {
-    //     uncheckedKeys = uncheckedKeys.concat(getUpperLayerAssociatedKeys(currentNode))
-    //   }
-    // }
-
     // 获取上层所有需要勾选的 checkbox key
     function getUpperLayerNeedToCheckedKeys(treeNode: TreeNode) {
       const result = []
@@ -164,7 +271,8 @@ const Tree = defineComponent({
       return result
     }
 
-    function getTreeNode(rawLevels: number[]) {
+    // 根据 levels 获取指定节点
+    function getLevelsToTreeNode(rawLevels: number[]) {
       if (!treeNodes.value?.length || !rawLevels.length) return
       const levels = [...rawLevels]
       let current: TreeNode | undefined = treeNodes.value[levels.shift()!]
@@ -174,6 +282,8 @@ const Tree = defineComponent({
       }
       return current
     }
+
+    rawIndeterminatekeys.value = getIndeterminateKeys(treeNodes.value)
 
     return () => (
       <div>

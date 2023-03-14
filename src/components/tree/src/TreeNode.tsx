@@ -16,11 +16,7 @@ const TreeNode = defineComponent({
     const ns = useNameScope('tree-node')
     const tree = inject<TreeRef>('tu.tree')
     const checked = computed(() => tree?.checkedKeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
-    const indeterminate = computed(() => {
-      if (!tree?.cascade.value || !props.item?.children?.length) return false
-      const currentCheckedKeys = props.item.children.filter((item) => tree?.checkedKeys.value?.includes(item?.meta?.[props.keyField] as TreeNodeMetaKey))
-      return (currentCheckedKeys.length > 0 && currentCheckedKeys.length < props.item.children.length)
-    })
+    const indeterminate = computed(() => tree?.indeterminatekeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
     const expanded = computed(() => tree?.expandedKeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
 
     function onClickTreeNode(e: Event) {
@@ -63,7 +59,6 @@ const TreeNode = defineComponent({
                   {(props.item.children as TreeNodeMeta[])?.map((item, index) => (
                     <TreeNode
                       item={item}
-                      indeterminate={indeterminate.value}
                       parent={props.item}
                       key={item?.key as TreeNodeMetaKey}
                       levels={[...props.levels!, index]}

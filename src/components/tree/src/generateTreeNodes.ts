@@ -1,6 +1,6 @@
 import type { TreeNode, TreeData, TreeNodeMeta } from './types'
 
-export function generateTreeNodes(data?: TreeData, { childrenField } = { childrenField: 'children' }) {
+export function generateTreeNodes(data: TreeData | undefined, { childrenField } = { childrenField: 'children' }) {
   if (!data) return []
   const current = data
   const result: TreeNode[] = []
