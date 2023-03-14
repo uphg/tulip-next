@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [VueJSX()],
   resolve: {
     alias: {
-      'tulp': fileURLToPath(new URL('../src', import.meta.url))
+      'tulip': fileURLToPath(new URL('../src', import.meta.url))
     }
   }
 })

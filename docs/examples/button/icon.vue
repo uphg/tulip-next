@@ -4,5 +4,5 @@
 </template>
 
 <script setup lang="ts">
-import { CheckCircle, WarningCircle } from 'tulp/icons'
+import { CheckCircle, WarningCircle } from 'tulip/icons'
 </script>

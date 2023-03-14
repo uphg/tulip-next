@@ -71,8 +71,6 @@ grid/align
 | nowrap  | 是否不自动换行 | `boolean`                                                    | `false`     |
 
 
-
-
 <script setup lang="ts">
 import GridBase from '../examples/grid/base.vue'
 import GridGutter from '../examples/grid/gutter.vue'

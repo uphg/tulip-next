@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CheckCircle } from 'tulp/icons'
+import { CheckCircle } from 'tulip/icons'
 
 const loading = ref<boolean>(false)
 const onClick = () => loading.value = !loading.value

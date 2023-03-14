@@ -1,5 +1,5 @@
 <template>
-  <tu-button :icon="CheckCircle" text>默认按钮</tu-button>
+  <tu-icon :is="CheckCircle"/>
 </template>
 
 <script setup lang="ts">

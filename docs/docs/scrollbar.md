@@ -52,6 +52,14 @@ scrollbar/size
 | size     | scrollbar 尺寸           | `'medium' \| 'large'` | `'medium'`  |
 | onScroll | 滚动监听事件             | `(e: Event) => void`  | `undefined` |
 
+## Scrollbar 方法
+
+| 名称     | 说明                | 参数                          |
+| -------- | ------------------- | ----------------------------- |
+| update   | 更新 scrollbar 状态 | `()`                          |
+| scrollTo | 滚动内容            | `(options?: ScrollToOptions)` |
+| scrollBy | 滚动特定距离        | `(options?: ScrollToOptions)` |
+
 
 
 <script setup lang="ts">
