@@ -9,7 +9,7 @@
   <tu-tree :data="data" v-model:checked-keys="checkedKeys" checkable/>
 
   <h2>Tree 复选框（级联选择）</h2>
-  <tu-tree :data="data" v-model:checked-keys="checkedKeys" checkable cascade/>
+  <tu-tree :data="data" v-model:checked-keys="checkedKeys2" checkable cascade/>
 
   <h2>Tree 组件 level</h2>
   <tu-tree :data="data2" />
@@ -19,6 +19,7 @@
 import { ref } from 'vue'
 
 const checkedKeys = ref([])
+const checkedKeys2 = ref([])
 const data = ref([
   {
     label: '第1层',
@@ -47,6 +48,20 @@ const data = ref([
           {
             label: '第1-4-2层',
             key: '1-4-2',
+            children: [
+              {
+                label: '第1-4-2-1层',
+                key: '1-4-2-1',
+              },
+              {
+                label: '第1-4-2-2层',
+                key: '1-4-2-2',
+              },
+              {
+                label: '第1-4-2-3层',
+                key: '1-4-2-3',
+              }
+            ]
           },
           {
             label: '第1-4-3层',

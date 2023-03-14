@@ -16,6 +16,7 @@ import CardDemo from './views/CardDemo.vue'
 import DividerDemo from './views/DividerDemo.vue'
 import LayoutDemo from './views/LayoutDemo.vue'
 import TreeDemo from './views/TreeDemo.vue'
+import CollapseDemo from './views/CollapseDemo.vue'
 
 import TransitionDemo from './views/TransitionDemo'
 import TransitionDemo2 from './views/TransitionDemo.vue'
@@ -67,6 +68,10 @@ const sidebar = [
   {
     title: 'CollapseTransition 过渡',
     component: CollapseTransitionDemo
+  },
+  {
+    title: 'Collapse 折叠面板',
+    component: CollapseDemo
   }
   // {
   //   title: '过渡1',
@@ -82,7 +87,7 @@ const sidebar = [
   // }
 ]
 
-const current = shallowRef(sidebar[sidebar.length - 2])
+const current = shallowRef(sidebar[sidebar.length - 3])
 </script>
 
 <style>
