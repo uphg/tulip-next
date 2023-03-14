@@ -1,4 +1,5 @@
 import { makeInstaller } from '../utils'
+import { TuIcon } from './icon'
 import { TuCollapseTransition } from './collapse-transition'
 import { TuExpandTransition } from './expand-transition'
 import { TuButton } from './button'
@@ -44,6 +45,7 @@ import { TuTree } from './tree'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
+  TuIcon,
   TuButton,
   TuButtonGroup,
   TuInput,
@@ -91,6 +93,7 @@ const components = [
 const { install } = makeInstaller(components)
 
 export {
+  TuIcon,
   TuButton,
   TuButtonGroup,
   TuInput,
