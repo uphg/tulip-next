@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, inject, type PropType } from 'vue'
 import { collapseInjectionKey } from './Collapse'
 import { TuIcon } from '../../icon'
 import { TuCollapseTransition } from '../../collapse-transition'
@@ -8,8 +8,8 @@ import { useNameScope } from '../../../composables/useNameScope'
 import type { CollapseItemName, CollapseContent } from './types'
 
 const collapseItemProps = {
-  title: [String, Number],
-  name: [String, Number],
+  title: [String, Number] as PropType<string | number>,
+  name: [String, Number] as PropType<string | number>,
 }
 
 const CollapseItem = defineComponent({
