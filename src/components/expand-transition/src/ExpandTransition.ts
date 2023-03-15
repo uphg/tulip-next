@@ -6,8 +6,7 @@ export const ExpandTransition = defineComponent({
     mode: String as PropType<'in-out' | 'out-in' | 'default'>,
     appear: Boolean as PropType<boolean>,
     withWidth: Boolean as PropType<boolean>,
-    withGroup: Boolean as PropType<boolean>,
-
+    withGroup: Boolean as PropType<boolean>
   },
   setup(props, context) {
     const leaving = ref(false)
