@@ -1,4 +1,4 @@
-import { defineComponent, nextTick, ref, shallowRef, Transition, watch, type ExtractPropTypes } from 'vue'
+import { computed, defineComponent, nextTick, ref, shallowRef, Transition, watch, type ExtractPropTypes } from 'vue'
 import type { PropType } from 'vue'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
 import { Loading, Clear, Eye, EyeDisabled } from '../../../icons'
@@ -42,6 +42,11 @@ const Input = defineComponent({
     const isHover = ref(false)
     const passwordVisible = ref(false)
 
+    const suffixVisible = computed(() => {
+      const { type, loading, visibilityToggle, clearable } = props
+      return clearable || context.slots.suffix || loading || type === 'password' && visibilityToggle
+    })
+
     watch(() => props.value, (newValue) => {
       rawValue.value = newValue
     })
@@ -80,7 +85,7 @@ const Input = defineComponent({
     }
 
     function handleClickClear() {
-      context.emit('update:value', null)
+      setValue(null)
     }
 
     function handleClickEye() {
@@ -115,6 +120,40 @@ const Input = defineComponent({
     return () => {
       const { type, status, disabled, placeholder, loading, visibilityToggle, clearable, size } = props
       const { slots } = context
+
+      const Suffix = (
+        <div class="tu-input__suffix">
+          {clearable ? (
+            <div class="tu-input-clear">
+              <div class="tu-input-clear__inner">
+                <Transition name="tu-zoom">
+                  {rawValue.value && (isHover.value || isFocus.value)
+                    ? <TuBaseIcon
+                        class="tu-input-icon"
+                        is={Clear}
+                        onClick={handleClickClear}/>
+                    : null}
+                </Transition>
+              </div>
+            </div>
+          ) : null}
+          {slots.suffix?.()}
+          {loading ? (
+            <div class="tu-input-loading">
+              <TuBaseIcon class="tu-input-icon" is={Loading}/>
+            </div>
+          ) : null}
+          {visibilityToggle ? (
+            <div class="tu-input-eye">
+              <TuBaseIcon
+                class="tu-input-icon"
+                onClick={handleClickEye}
+                onMousedown={handleMouseDownEye}
+                is={passwordVisible.value ? Eye : EyeDisabled}/>
+            </div>
+          ) : null}
+        </div>
+      )
 
       return (
         <div
@@ -151,39 +190,7 @@ const Input = defineComponent({
                   onInput={handleInput}
                 />
               </div>
-              {clearable || slots.suffix || loading ? (
-                <div class="tu-input__suffix">
-                  {clearable ? (
-                    <div class="tu-input-clear">
-                      <div class="tu-input-clear__inner">
-                        <Transition name="tu-zoom">
-                          {rawValue.value && (isHover.value || isFocus.value)
-                            ? <TuBaseIcon
-                                class="tu-input-icon"
-                                is={Clear}
-                                onClick={handleClickClear}/>
-                            : null}
-                        </Transition>
-                      </div>
-                    </div>
-                  ) : null}
-                  {slots.suffix?.()}
-                  {loading ? (
-                    <div class="tu-input-loading">
-                      <TuBaseIcon class="tu-input-icon" is={Loading}/>
-                    </div>
-                  ) : null}
-                  {visibilityToggle ? (
-                    <div class="tu-input-eye">
-                      <TuBaseIcon
-                        class="tu-input-icon"
-                        onClick={handleClickEye}
-                        onMousedown={handleMouseDownEye}
-                        is={passwordVisible.value ? Eye : EyeDisabled}/>
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
+              {suffixVisible.value ? Suffix : null}
             </div>
           ) : (
             <div class="tu-textarea">
