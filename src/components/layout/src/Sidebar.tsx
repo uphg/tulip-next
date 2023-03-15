@@ -1,5 +1,5 @@
 import { isBoolean, toPx } from '../../../utils'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, type StyleValue } from 'vue'
 import { sidebarProps } from './props'
 import { toCSSValue } from './toCSSValue'
 
@@ -13,14 +13,16 @@ const Sidebar = defineComponent({
         : toCSSValue(props.width)
     })
 
+    const style = computed(() => ({
+      '--tu-width': width.value,
+      height: toCSSValue(props.height),
+      flexDirection: props.direction,
+      flexWrap: props.wrap ? 'wrap' : 'nowrap',
+      flexGrow: props.grow
+    }) as StyleValue)
+
     return () => (
-      <div class="tu-layout-sidebar" style={{
-        '--tu-width': width.value,
-        height: toCSSValue(props.height),
-        flexDirection: props.flexDirection,
-        flexWrap: props.flexWrap,
-        flexGrow: props.flexGrow
-      }}>
+      <div class="tu-layout-sidebar" style={style.value}>
         {context.slots.default?.()}
       </div>
     )

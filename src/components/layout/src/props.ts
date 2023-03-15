@@ -1,22 +1,28 @@
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 type GlabelType = 'inherit' | 'initial' | 'unset'
 type FlexDirection = 'column' | 'column-reverse' | 'row' | 'row-reverse' | GlabelType
-type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse' | 'revert' | GlabelType
+// type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse' | 'revert' | GlabelType
 type FlexGrow = number | 'revert' | GlabelType
 
-const flexDirection = String as PropType<FlexDirection>
+const direction = String as PropType<FlexDirection>
+export type CommonLayoutProps = ExtractPropTypes<typeof commonLayoutProps>
 
 const baseLayoutProps = {
-  flexWrap: String as PropType<FlexWrap>,
-  flexGrow: [String, Number] as PropType<FlexGrow>,
   width: [String, Number] as PropType<string | number>, 
-  height: [String, Number] as PropType<string | number>
+  height: [String, Number] as PropType<string | number>,
+  wrap: Boolean as PropType<boolean>,
+  grow: [String, Number] as PropType<FlexGrow>,
+}
+
+export const commonLayoutProps = {
+  direction,
+  ...baseLayoutProps
 }
 
 export const layoutProps = {
-  flexDirection: {
-    type: flexDirection,
+  direction: {
+    type: direction,
     default: 'column'
   },
   ...baseLayoutProps
@@ -31,19 +37,10 @@ export const sidebarProps = {
     type: [String, Number] as PropType<string | number>,
     default: 64
   },
-  flexDirection,
+  direction,
   ...baseLayoutProps
 }
 
-export const headerProps = {
-  flexDirection,
-  ...baseLayoutProps
-}
-export const contentProps = {
-  flexDirection,
-  ...baseLayoutProps
-}
-export const footerProps = {
-  flexDirection,
-  ...baseLayoutProps
-}
+export const headerProps = commonLayoutProps
+export const contentProps = commonLayoutProps
+export const footerProps = commonLayoutProps
