@@ -19,6 +19,7 @@ import TreeDemo from './views/TreeDemo.vue'
 import CollapseDemo from './views/CollapseDemo.vue'
 import { shallowRef } from 'vue'
 import CollapseTransitionDemo from './views/CollapseTransitionDemo.vue'
+import InputDemo from './views/InputDemo.vue'
 
 const sidebar = [
   {
@@ -68,6 +69,10 @@ const sidebar = [
   {
     title: 'Collapse 折叠面板',
     component: CollapseDemo
+  },
+  {
+    title: 'Input 输入框',
+    component: InputDemo
   }
   // {
   //   title: '过渡1',
@@ -83,7 +88,7 @@ const sidebar = [
   // }
 ]
 
-const current = shallowRef(sidebar[sidebar.length - 3])
+const current = shallowRef(sidebar[sidebar.length - 1])
 </script>
 
 <style>
