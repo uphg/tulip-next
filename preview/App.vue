@@ -17,10 +17,6 @@ import DividerDemo from './views/DividerDemo.vue'
 import LayoutDemo from './views/LayoutDemo.vue'
 import TreeDemo from './views/TreeDemo.vue'
 import CollapseDemo from './views/CollapseDemo.vue'
-
-import TransitionDemo from './views/TransitionDemo'
-import TransitionDemo2 from './views/TransitionDemo.vue'
-import TestTransition from './views/TestTransition'
 import { shallowRef } from 'vue'
 import CollapseTransitionDemo from './views/CollapseTransitionDemo.vue'
 
