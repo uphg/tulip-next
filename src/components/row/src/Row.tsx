@@ -17,7 +17,10 @@ export const rowProps = {
       return includes(alignTypes, value)
     }
   },
-  nowrap: Boolean as PropType<boolean>
+  wrap: {
+    type: Boolean as PropType<boolean>,
+    default: true
+  }
 }
 
 const Row = defineComponent({
@@ -26,7 +29,7 @@ const Row = defineComponent({
   setup(props, context) {
     const justifyContent = computed(() => toFlexPrefix(props.justify))
     const alignItems = computed(() => toFlexPrefix(props.align))
-    const flexFlow = computed(() => `row ${props.nowrap ? 'nowrap' : 'wrap'}`)
+    const flexFlow = computed(() => `row ${props.wrap ? 'wrap' : 'nowrap'}`)
     const gutter = computed(() => ({
       row: ((
         props.gutter && (isArray(props.gutter) ? props.gutter?.[0] : props.gutter)

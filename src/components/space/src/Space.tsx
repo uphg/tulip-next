@@ -17,22 +17,17 @@ const Space = defineComponent({
     const display = computed(() => `${props.inline ? 'inline-' : ''}flex`)
     const justifyContent = computed(() => toFlexPrefix(props.justify))
     const alignItems = computed(() => toFlexPrefix(props.align))
-    const nowrap = computed(
-      () => typeof props.nowrap === 'boolean'
-        ? props.nowrap
-        : props.vertical ? true : false
-    )
-    const flexFlow = computed(() => `${props.vertical ? 'column' : 'row'} ${nowrap.value ? 'nowrap' : 'wrap'}`)
-    const gap = computed(
-      () => {
-        const defaults = sizeMap?.[props.size as SizeTypes]
-        return (defaults
+    const flexFlow = computed(() => `${props.vertical ? 'column' : 'row'} ${(props.vertical || !props.wrap) ? 'nowrap' : 'wrap'}`)
+    const gap = computed(() => {
+      const defaults = sizeMap?.[props.size as SizeTypes]
+      return (
+        defaults
           ? toGapAttr(defaults)
           : Array.isArray(props.size)
             ? toGapAttr(props.size)
-            : toPx(props.size))
-      }
-    )
+            : toPx(props.size)
+      )
+    })
 
     return () => {
       const slots = flattenSlots(getSlot(context))

@@ -4,9 +4,9 @@ import { includes,  alignTypes, justifyTypes, type AlignTypes, type JustifyTypes
 export const spaceProps = {
   inline: Boolean as PropType<boolean>,
   vertical: Boolean as PropType<boolean>,
-  nowrap: {
+  wrap: {
     type: Boolean as PropType<boolean>,
-    default: void 0
+    default: true
   },
   justify: {
     type: String as PropType<JustifyTypes>,
@@ -17,7 +17,7 @@ export const spaceProps = {
   },
   align: {
     type: String as PropType<AlignTypes>,
-    default: 'start',
+    default: void 0,
     validator(value: string) {
       return includes(alignTypes, value)
     }
