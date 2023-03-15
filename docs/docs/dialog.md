@@ -26,8 +26,6 @@ dialog/base
 | onCancel    | 点击取消按钮触发       | `(e: MouseEvent) => boolean \| Promise<boolean> \| any` | `undefined` |
 
 
-
-
 <script setup lang="ts">
 import DialogBase from '../examples/dialog/base.vue'
 </script>

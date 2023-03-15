@@ -63,12 +63,12 @@ grid/align
 
 ## Row 属性
 
-| 名称    | 说明           | 类型                                                         | 默认值      |
-| ------- | -------------- | ------------------------------------------------------------ | ----------- |
-| gutter  | 栅格间隙       | `number \|[number, number]`                                  | `undefined` |
-| justify | 水平排列方式   | `'start' \|'end' \|'center' \|'space-around' \|'space-between' \|'space-evenly'` \|`'start'` | `'start'`   |
-| align   | 垂直排列方式   | `'start' \|'end' \|'center' \|'baseline' \|'stretch'`        | `'start'`   |
-| nowrap  | 是否不自动换行 | `boolean`                                                    | `false`     |
+| 名称    | 说明         | 类型                                                         | 默认值      |
+| ------- | ------------ | ------------------------------------------------------------ | ----------- |
+| gutter  | 栅格间隙     | `number \|[number, number]`                                  | `undefined` |
+| justify | 水平排列方式 | `'start' \|'end' \|'center' \|'space-around' \|'space-between' \|'space-evenly'` \|`'start'` | `'start'`   |
+| align   | 垂直排列方式 | `'start' \|'end' \|'center' \|'baseline' \|'stretch'`        | `'start'`   |
+| wrap    | 是否自动换行 | `boolean`                                                    | `true`      |
 
 
 <script setup lang="ts">

@@ -19,15 +19,6 @@ export const sidebar = {
       ]
     },
     {
-      text: '布局',
-      items: [
-        { text: 'Space 间距', link: '/docs/space' },
-        { text: 'Grid 栅格', link: '/docs/grid' },
-        { text: 'Layout 布局', link: '/docs/layout' },
-        { text: 'Divider 分割线', link: '/docs/divider'}
-      ]
-    },
-    {
       text: '数据录入',
       items: [
         { text: 'Input 输入框', link: '/docs/input' },
@@ -56,7 +47,15 @@ export const sidebar = {
         { text: 'Dialog 弹框', link: '/docs/dialog' },
       ]
     },
-
+    {
+      text: '布局',
+      items: [
+        { text: 'Space 间距', link: '/docs/space' },
+        { text: 'Grid 栅格', link: '/docs/grid' },
+        { text: 'Layout 布局', link: '/docs/layout' },
+        { text: 'Divider 分割线', link: '/docs/divider'}
+      ]
+    },
     {
       text: '工具组件',
       items: [

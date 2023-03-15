@@ -2,9 +2,9 @@
 
 一个 Vue3 的组件库
 
-## 主题变量
+## 主题
 
-提供 CSS 变量来覆盖默认颜色样式调整，不用使用 less、sass 变量，也不需要 webpack 等打包工具的 loader
+使用 CSS 变量来覆盖默认颜色样式调整，不需要 less、sass 变量、webpack 等打包工具的 loader
 
 ## TypeScript
 
