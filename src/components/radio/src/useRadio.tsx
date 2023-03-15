@@ -6,7 +6,7 @@ import { isNil } from '../../../utils'
 
 export function useRadio(
   props: RadioProps, 
-  context: SetupContext<['update:checked']>, 
+  context: SetupContext<'update:checked'[]>, 
   input: Ref<HTMLInputElement | null>
 ) {
   const isFocus = ref(false)

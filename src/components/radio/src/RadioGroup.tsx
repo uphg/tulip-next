@@ -1,4 +1,4 @@
-import { computed, defineComponent, provide, ref, toRef } from 'vue'
+import { computed, defineComponent, provide, ref, toRef, type SetupContext } from 'vue'
 import type { UnwrapRef, VNode } from 'vue'
 import { filterComponent, flattenSlots, getSlot } from '../../../utils'
 import { radioGroupProps, type RadioGroupProps } from './props'
@@ -28,7 +28,7 @@ const RadioGroup = defineComponent({
     })
 
     return () => {
-      const slot = flattenSlots(getSlot<['update:value']>(context))
+      const slot = flattenSlots(getSlot<'update:value'[]>(context))
       const { children, isButton } = renderRadioButtons(slot, { value: props.value, filling: props.buttonStyle === 'solid', buttons: buttons.value })
       return (
         <div
