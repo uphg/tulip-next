@@ -1,10 +1,9 @@
-import { defineComponent, type PropType, type Component, computed, h  } from 'vue'
+import { defineComponent, type Component, computed } from 'vue'
 import { useNameScope } from '../../../composables/useNameScope'
-import type { Fn } from '../../../types'
 import { CheckCircle, CloseCircle, WarningCircle, InfoCircle, CloseSmall } from '../../../icons'
 import TuButton from '../../button/src/Button'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
-import { dialogProps } from './dialogProps'
+import { dialogProps } from './props'
 
 const statusMap: { [key: string]: Component } = {
   success: CheckCircle,

@@ -1,7 +1,7 @@
 import { createApp, nextTick, ref, onMounted } from 'vue'
 import TuDialog from './Dialog'
+import type { DialogProps } from './props'
 import TuModal from '../../modal/src/Modal'
-import type { DialogProps } from './dialogProps'
 
 interface DialogApi {
   [key: string]: (options: DialogProps) => { destroy: () => void }
