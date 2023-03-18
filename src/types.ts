@@ -1,4 +1,5 @@
 import type { ComponentPublicInstance, ComputedRef, Ref, Plugin } from 'vue'
+import type { PopupProps } from './components/popup/src/props'
 
 export type ObjectLike<T extends unknown = unknown> = Record<string | number | symbol, T>
 
@@ -15,7 +16,8 @@ export interface EventHandler<T extends Element | Document | Window = Element, E
 
 export type VueInstance = ComponentPublicInstance
 export type MaybeElement = HTMLElement | SVGElement | VueInstance | undefined | null
-export type MaybeElementRef = MaybeRef<MaybeElement>
+export type RawElement =  Exclude<MaybeElement, VueInstance>
+export type MaybeElementRef<T extends MaybeElement = MaybeElement> = MaybeRef<T>
 export type MaybeRef<T> = T | Ref<T>
 export type Arrayable<T> = T[] | T
 
@@ -47,4 +49,15 @@ export type Scrollbar = {
   scrollTo: (options?: ScrollToOptions) => void
 }
 
+export type Popup = {
+  updatePosition: () => void,
+  rawPlacement: Ref<PopupProps['placement']>,
+  popup: Ref<HTMLElement | null>,
+  trigger: ComputedRef<HTMLElement | null>
+}
+
+// context.expose({ updatePosition, rawPlacement, popup, trigger })
+
 export type SFCWithInstall<T> = T & Plugin
+
+export type Hue = 'default' | 'primary' | 'success' | 'warning' | 'info' | 'error'

@@ -4,6 +4,7 @@ import { each } from './each'
 import { toString } from './toString'
 import { mergeClass } from './internal/mergeClass'
 import { splitClass } from './internal/splitClass'
+import type { RawElement } from '../types'
 
 const reOverflowScroll = /(auto|scroll|overlay)/
 
@@ -54,8 +55,9 @@ export function setStyle(_el: Element, styles: Styles | string, value?: string) 
   el.style[styleName] = value
 }
 
-export function getRelativeDOMPosition(el: HTMLElement) {
-  const { top, left } = el?.getBoundingClientRect?.() || {}
+export function getRelativeDOMPosition<T extends RawElement>(el?: T) {
+  if (!el) return { top: 0, left: 0 }
+  const { top, left } = el?.getBoundingClientRect?.()
   const { scrollTop, scrollLeft } = document.documentElement
 
   return {
@@ -69,7 +71,9 @@ export function getParentNode(node: Node): Node | null {
   return node.nodeType === 9 ? null : node.parentNode
 }
 
-export function getScrollParent(node: Node | null): HTMLElement | Document | null {
+export type GetScrollParentNode = Element | HTMLElement | Document | null
+
+export function getScrollParent<T extends Node>(node: T): GetScrollParentNode {
   if (node === null) return null
 
   const parentNode = getParentNode(node) as HTMLElement
@@ -95,8 +99,7 @@ export function getScrollParent(node: Node | null): HTMLElement | Document | nul
 
 export function isScroll(el: Element) {
   const { overflow, overflowX, overflowY } = getComputedStyle(el)
-  console.log('overflow')
-  console.log(overflow)
+
   if (reOverflowScroll.test(overflow + overflowX + overflowY)) {
     return true
   }

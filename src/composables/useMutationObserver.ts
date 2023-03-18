@@ -17,7 +17,7 @@ export function useMutationObserver(
 
   const stopWatch = watch(
     () => unrefElement(target),
-    (el: Element | undefined) => {
+    (el) => {
       cleanup()
 
       if (window && el) {

@@ -23,7 +23,7 @@ export function useResizeObserver(
 
   const stopWatch = watch(
     () => unrefElement(target),
-    (el: Element | undefined) => {
+    (el) => {
       cleanup()
 
       if (window && el) {

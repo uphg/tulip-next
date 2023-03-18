@@ -1,7 +1,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, Transition, vShow, withDirectives, type SetupContext } from 'vue'
 import type { ScrollbarProps } from './props'
 import { toPx, on, off } from '../../../utils'
-import { useResizeObserver, type UseResizeObserverReturn } from '../../../composables/useResizeObserver'
+import { useResize } from '../../../composables/useResize'
 
 export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   const container = shallowRef<HTMLElement | null>(null)
@@ -19,7 +19,6 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
   const hover = ref(false)
   const xBarPressed = ref(false)
   const yBarPressed = ref(false)
-  const contentResizeObserver = ref<UseResizeObserverReturn | null>(null)
   
   let yTop = 0
   let xLeft = 0
@@ -215,11 +214,10 @@ export function useScrollbar(props: ScrollbarProps, context: SetupContext) {
 
   onMounted(() => {
     updateBarSize()
-    contentResizeObserver.value = useResizeObserver(content, update)
+    useResize(content, update)
   })
 
   onBeforeUnmount(() => {
-    contentResizeObserver.value?.stop()
     if (yBarPressed.value) {
       off(document, 'mousemove', handleMouseMoveYScroll)
       off(document, 'mouseup', handleMouseUpYScroll)

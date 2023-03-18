@@ -1,10 +1,12 @@
-import { computed, createApp, defineComponent, h, onMounted, onBeforeUnmount, ref, shallowRef, toRef, Transition, watch, type App } from 'vue'
+import { computed, createApp, defineComponent, h, onMounted, onBeforeUnmount, ref, shallowRef, toRef, Transition, watch, type App, type Ref } from 'vue'
 import { popupProps, type PopupProps, type UpdatePopupStyle } from './props'
 import zindexable, { updateZIndex } from './zindexble'
-import { getRelativeDOMPosition, getScrollParent, toNumber, withAttrs, on, off, toPx } from '../../../utils'
+import { getRelativeDOMPosition, getScrollParent, toNumber, withAttrs, on, off, toPx, type GetScrollParentNode } from '../../../utils'
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
 import type { ElementStyle, Fn, VueInstance } from '../../../types'
 import { unrefElement } from '../../../composables/unrefElement'
+import { useMutationObserver } from '../../../composables/useMutationObserver'
+import { useResize } from '../../../composables/useResize'
 
 const transformOriginMap = {
   'top-start': 'bottom left',
@@ -35,11 +37,11 @@ const Popup = defineComponent({
     const container = shallowRef<HTMLElement | null>(null)
 
     const containerApp = ref<App<Element> | null>(null)
-    const dom = ref({ top: 0, left: 0 })
+    const domPosition = ref({ top: 0, left: 0 })
     const popupStyle = ref<UpdatePopupStyle & ElementStyle>({})
     const rawPlacement = ref<PopupProps['placement']>(props.placement)
     const initialize = ref(false)
-    const trigger = computed(() => unrefElement(triggerEl))
+    const trigger = computed(() => unrefElement(triggerEl as Ref<HTMLElement>))
 
     let scrollableNodes: Array<Element | Document> = [] // p, div, document
 
@@ -58,7 +60,7 @@ const Popup = defineComponent({
 
     function handleOpenPopup() {
       updateZIndex(container.value!)
-      dom.value = getRelativeDOMPosition(trigger.value)
+      domPosition.value = getRelativeDOMPosition(trigger.value)
       loadScrollListener()
       loadResizeListener()
     }
@@ -129,17 +131,19 @@ const Popup = defineComponent({
     }
 
     function handleScroll() {
-      dom.value = getRelativeDOMPosition(trigger.value)
+      domPosition.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
 
     function updatePosition() {
+      if (!props.visible) return
       updatePopupStyle()
       updateRawPlacement()
     }
 
     function updatePopupStyle() {
-      const width = props.width === 'trigger' ? trigger.value.offsetWidth : props.width
+      if (!trigger.value) return
+      const width = Number(props.width === 'trigger' ? trigger.value.offsetWidth : props.width)
       const style = getPopupPosition(rawPlacement.value, { width })
 
       popupStyle.value = {
@@ -409,9 +413,9 @@ const Popup = defineComponent({
       }
     }
   
-    function getPopupPosition(type: PopupProps['placement'], options?: { width: number }) {
+    function getPopupPosition(type: PopupProps['placement'], options?: { width?: number }) {
       const popupMargin = toNumber(props.popupMargin)
-      const { top: domTop, left: domLeft } = dom.value
+      const { top: domTop, left: domLeft } = domPosition.value
       const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value)
       const { offsetHeight: popupHeight } = withAttrs(popup.value)
       const popupWidth = options?.width ?? withAttrs(popup.value).offsetWidth
@@ -476,12 +480,12 @@ const Popup = defineComponent({
     }
   
     function handleResizeDom() {
-      dom.value = getRelativeDOMPosition(trigger.value)
+      domPosition.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
 
     function loadScrollListener() {
-      let scrollNode: Element | Document | null = trigger.value
+      let scrollNode: GetScrollParentNode = trigger.value as HTMLElement
       while (true) {
         scrollNode = getScrollParent(scrollNode)
         if (scrollNode === null) break
@@ -506,6 +510,8 @@ const Popup = defineComponent({
     function unloadResizeListener() {
       off(window, 'resize', handleResizeDom)
     }
+
+    useResize(trigger, handleResizeDom)
 
     onBeforeUnmount(() => {
       if (container.value) {
