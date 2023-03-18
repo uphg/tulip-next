@@ -1,7 +1,7 @@
 <template>
   <tu-space vertical>
-    <tu-select v-model:value="value" :options="options"/>
-    <tu-select v-model:value="value" :options="options" disabled/>
+    <tu-select v-model:value="value" :options="options" multiple clearable/>
+    <tu-select v-model:value="value" :options="options" multiple clearable disabled/>
   </tu-space>
 </template>
 
@@ -27,9 +27,3 @@ function createOptions() {
 
 createOptions()
 </script>
-
-<style>
-.demo-select .tu-select {
-  width: 240px;
-}
-</style>

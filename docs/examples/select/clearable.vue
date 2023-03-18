@@ -1,8 +1,5 @@
 <template>
-  <tu-space vertical>
-    <tu-select v-model:value="value" :options="options"/>
-    <tu-select v-model:value="value" :options="options" disabled/>
-  </tu-space>
+  <tu-select v-model:value="value" :options="options" clearable/>
 </template>
 
 <script setup lang="ts">

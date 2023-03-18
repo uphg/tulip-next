@@ -1,8 +1,5 @@
 <template>
-  <tu-space vertical>
-    <tu-cascader v-model:value="value" :options="options"/>
-    <tu-cascader v-model:value="value" :options="options" disabled/>
-  </tu-space>
+  <tu-cascader v-model:value="value" :options="options" clearable/>
 </template>
 
 <script setup lang="ts">

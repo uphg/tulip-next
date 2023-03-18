@@ -1,7 +1,8 @@
 <template>
   <tu-space vertical>
+    <tu-select v-model:value="value" :options="options" size="small"/>
     <tu-select v-model:value="value" :options="options"/>
-    <tu-select v-model:value="value" :options="options" disabled/>
+    <tu-select v-model:value="value" :options="options" size="large"/>
   </tu-space>
 </template>
 

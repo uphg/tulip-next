@@ -12,6 +12,22 @@ cascader/base
 
 :::
 
+## 可清空
+
+::: demo
+
+cascader/clearable
+
+:::
+
+## 尺寸
+
+::: demo
+
+cascader/size
+
+:::
+
 ## Cascader 属性
 
 | 名称          | 说明                                | 类型                             | 默认值       |
@@ -26,7 +42,8 @@ cascader/base
 | clearable     | 是否可清空                          | `boolean`                        | `false`      |
 
 
-
 <script setup lang="ts">
 import CascaderBase from '../examples/cascader/base.vue'
+import CascaderClearable from '../examples/cascader/clearable.vue'
+import CascaderSize from '../examples/cascader/size.vue'
 </script>
