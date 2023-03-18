@@ -1,5 +1,7 @@
 <template>
   <div class="cascader-demo">
+    <div><tu-cascader :options="options" clearable/></div>
+    <br />
     <div><tu-cascader v-model:value="value" :options="options" clearable/></div>
     <br />
     <div><tu-cascader v-model:value="value2" :options="options"/></div>
@@ -726,5 +728,6 @@ const options = ref([
 
 <style lang="stylus">
 .cascader-demo
+  width 380px
   padding 36px
 </style>

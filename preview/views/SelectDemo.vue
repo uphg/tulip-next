@@ -1,9 +1,16 @@
 <template>
-  <div style="padding: 30px">
-    <br v-for="item in 10" :key="item"/>
-    <div><tu-select v-model:value="value" :options="options" clearable/></div>
-    <br />
-    <div><tu-select v-model:value="value2" :options="options"/></div>
+  <div style="padding-top: 300px; width: 300px;">
+    <tu-space vertical>
+      <tu-select v-model:value="value" :options="options" clearable/>
+      <tu-select v-model:value="value2" :options="options"/>
+      <tu-select v-model:value="value2" :options="options" disabled/>
+
+      <tu-select v-model:value="value3" :options="options" multiple clearable/>
+      <h2>尺寸</h2>
+      <tu-select v-model:value="value3" :options="options" size="small" multiple clearable/>
+      <tu-select v-model:value="value3" :options="options" multiple clearable/>
+      <tu-select v-model:value="value3" :options="options" size="large" multiple clearable/>
+    </tu-space>
   </div>
 </template>
 
@@ -12,6 +19,7 @@ import { ref } from 'vue'
 
 const value = ref(9)
 const value2 = ref(null)
+const value3 = ref(void 0)
 
 const options = ref([
   { label: '选项1', value: 0 },

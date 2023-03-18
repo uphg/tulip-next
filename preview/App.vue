@@ -20,6 +20,9 @@ import CollapseDemo from './views/CollapseDemo.vue'
 import { shallowRef } from 'vue'
 import CollapseTransitionDemo from './views/CollapseTransitionDemo.vue'
 import InputDemo from './views/InputDemo.vue'
+import TagDemo from './views/TagDemo.vue'
+import PopoverScrollDemo from './views/PopoverScrollDemo.vue'
+import PopoverDemo from './views/PopoverDemo.vue'
 
 const sidebar = [
   {
@@ -73,6 +76,18 @@ const sidebar = [
   {
     title: 'Input 输入框',
     component: InputDemo
+  },
+  {
+    title: 'Tag 标签',
+    component: TagDemo
+  },
+  {
+    title: 'Popover 弹框',
+    component: PopoverDemo
+  },
+  {
+    title: 'Popover Scroll 测试',
+    component: PopoverScrollDemo
   }
   // {
   //   title: '过渡1',
@@ -88,7 +103,7 @@ const sidebar = [
   // }
 ]
 
-const current = shallowRef(sidebar[sidebar.length - 1])
+const current = shallowRef(sidebar[sidebar.length - 4])
 </script>
 
 <style>
