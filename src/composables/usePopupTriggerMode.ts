@@ -46,11 +46,11 @@ type TriggerModeOptions = {
 
 function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   const { isPopup, isTrigger } = options
-  const hovered = ref(false)
-  const closeTimerId = ref<NodeJS.Timeout | null>(null)
+  const hover = ref(false)
+  const closeTimerId = ref<number | null>(null)
 
   function onMouseover() {
-    hovered.value = true
+    hover.value = true
     if (!visible.value) {
       // 进入
       visible.value = true
@@ -59,7 +59,7 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   }
 
   function handleHoverMoveOut() {
-    if (!hovered.value) return
+    if (!hover.value) return
     if (visible.value) {
       closeTimerId.value = setTimeout(() => {
         if (closeTimerId.value) {
@@ -70,7 +70,7 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
         }
       }, 200)
     }
-    hovered.value = false
+    hover.value = false
   }
 
   function handleDomMouseover(e: MouseEvent){
@@ -81,7 +81,7 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
     if (!closeTimerId.value) return
     window.clearTimeout(closeTimerId.value!)
     closeTimerId.value = null
-    hovered.value = true
+    hover.value = true
   }
 
   const events = { onMouseover }
@@ -94,11 +94,7 @@ function useClickTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   const mousedown = ref(false)
 
   function onClick() {
-    if (visible.value) {
-      visible.value = false
-    } else {
-      open()
-    }
+    visible.value ? close() : open()
   }
 
   function handleDomMousedown(event: MouseEvent) {
@@ -136,9 +132,17 @@ function useClickTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
 
 function useFocusTrigger(visible: Ref<boolean>) {
   const { open, close } = generateSwitch(visible)
-  return { visible, events: { onFocus: open, onBlur: close }, open, close }
+  return {
+    visible,
+    events: { onFocus: open, onBlur: close },
+    open,
+    close
+  }
 }
 
 function generateSwitch(visible: Ref<boolean>) {
-  return { open() { visible.value = true }, close() { visible.value = false } }
+  return {
+    open() { visible.value = true },
+    close() { visible.value = false }
+  }
 }
