@@ -3,6 +3,7 @@ import { useNameScope } from '../../../composables/useNameScope'
 import { CheckCircle, CloseCircle, WarningCircle, InfoCircle, CloseSmall } from '../../../icons'
 import TuButton from '../../button/src/Button'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
+import { TuBaseClose } from '../../base-close'
 import { dialogProps } from './props'
 
 const statusMap: { [key: string]: Component } = {
@@ -28,9 +29,7 @@ export default defineComponent({
                 <TuBaseIcon class={ns.el('prefix-icon')} is={statusIcon.value}/>
               ) : null }
               <span class={ns.el('title')}>{props.title}</span>
-              <button class={ns.el('close')} tabindex="0" onClick={props.onClose}>
-                <TuBaseIcon is={CloseSmall}/>
-              </button>
+              <TuBaseClose  onClick={props.onClose} />
             </>
           </div>
           <div class={ns.el('body')}>

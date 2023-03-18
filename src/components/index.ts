@@ -42,6 +42,7 @@ import { TuHeader } from './header'
 import { TuContent } from './content'
 import { TuFooter } from './footer'
 import { TuTree } from './tree'
+import { TuTag } from './tag'
 import { useDraggable } from '../composables/useDraggable'
 
 const components = [
@@ -87,7 +88,8 @@ const components = [
   TuHeader,
   TuContent,
   TuFooter,
-  TuTree
+  TuTree,
+  TuTag
 ]
 
 const { install } = makeInstaller(components)
@@ -135,6 +137,7 @@ export {
   TuContent,
   TuFooter,
   TuTree,
+  TuTag,
 
   // utils
   useDialog,

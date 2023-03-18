@@ -4,16 +4,16 @@ import { TuIcon } from '../../icon/index'
 import { TuBaseWave, type BaseWaveRef } from '../../base-wave'
 import TuExpandTransition from '../../expand-transition/src/ExpandTransition'
 import { useNameScope } from '../../../composables/useNameScope'
+import { hueTypes } from '../../../common'
+import type { Hue } from '../../../types'
 
 const buttonStatekeys = ['text', 'dashed', 'ghost', 'circle', 'round', 'disabled'] as const
 
 const buttonProps = {
   hue: {
-    type: String as PropType<'default' | 'primary' | 'success' | 'warning' | 'info' | 'error'>,
+    type: String as PropType<Hue>,
     default: 'default',
-    validator: (value: string) => {
-      return ['default', 'primary', 'success', 'warning', 'info', 'error'].includes(value)
-    }
+    validator: (value: string) => hueTypes.includes(value)
   },
   size: {
     type: String as PropType<'' | 'large' | 'medium' | 'small'>,

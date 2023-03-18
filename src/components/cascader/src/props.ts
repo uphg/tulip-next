@@ -3,16 +3,13 @@ import type { ExtractPropTypes, PropType } from 'vue'
 export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
 
 export type CascaderBaseValue = string | number | null
-export type CascaderValue = CascaderBaseValue[] | CascaderOption[]
+export type CascaderValue = CascaderBaseValue[]
 export interface CascaderOption {
   [k: string]: CascaderBaseValue | CascaderOption[]
 }
 
 export const cascaderProps = {
-  value: {
-    type: [Array, null] as PropType<CascaderValue>,
-    default: null
-  },
+  value: Array as PropType<CascaderValue>,
   options: {
     type: Array as PropType<CascaderOption[]>,
     default: () => []
@@ -33,6 +30,13 @@ export const cascaderProps = {
     type: String as PropType<string>,
     default: 'disabled' as const
   },
+  size: {
+    type: String as PropType<'' | 'large' | 'medium' | 'small'>,
+    validator: (value: string) => {
+      return ['', 'large', 'medium', 'small'].includes(value)
+    }
+  },
   placeholder: String as PropType<string>,
-  clearable: Boolean as PropType<boolean>
+  clearable: Boolean as PropType<boolean>,
+  disabled: Boolean as PropType<boolean>
 }

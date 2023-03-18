@@ -1,0 +1,63 @@
+$base = '.tu-tag'
+
+{$base}
+  --tu-height 28px
+  --tu-padding 0 8px
+  --tu-border-radius 2px
+  --tu-bg-color rgb(250, 250, 252)
+  &--primary
+    --tu-bg-color rgba($primary-color, 0.1)
+    --tu-border-color rgba($primary-color, 0.3)
+    & > .tu-base-close
+      --tu-bg-color-hover rgba($primary-color, 0.12)
+  &--success
+    --tu-bg-color rgba($success-color, 0.1)
+    --tu-border-color rgba($success-color, 0.3)
+    & > .tu-base-close
+      --tu-bg-color-hover rgba($success-color, 0.12)
+  &--warning
+    --tu-bg-color rgba($warning-color, 0.1)
+    --tu-border-color rgba($warning-color, 0.3)
+    & > .tu-base-close
+      --tu-bg-color-hover rgba($warning-color, 0.12)
+  &--error
+    --tu-bg-color rgba($error-color, 0.1)
+    --tu-border-color rgba($error-color, 0.3)
+    & > .tu-base-close
+      --tu-bg-color-hover rgba($error-color, 0.12)
+  &--info
+    --tu-bg-color rgba($info-color, 0.1)
+    --tu-border-color rgba($info-color, 0.3)
+    & > .tu-base-close
+      --tu-bg-color-hover rgba($info-color, 0.12)
+  
+  &--small
+    --tu-height 22px
+  &--large
+    --tu-height 34px
+
+{$base}
+  cursor default
+  height var(--tu-height)
+  position relative
+  display inline-flex
+  align-items center
+  padding var(--tu-padding)
+  line-height 1
+  font-size var(--tu-font-size)
+  border-radius var(--tu-border-radius)
+  background-color var(--tu-bg-color)
+  &--disabled
+    cursor not-allowed
+    opacity 0.5
+  & > .tu-base-close
+    margin-left 2px
+    margin-right -4px
+  &__border
+    pointer-events none
+    position absolute
+    inset 0
+    border 1px solid var(--tu-border-color)
+    border-radius inherit
+    transition border-color 0.3s $cubic-bezier;
+  

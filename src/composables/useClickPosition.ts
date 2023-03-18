@@ -46,7 +46,6 @@ function handleClick(e: MouseEvent) {
   }
 
   if (onEnterModal) {
-    console.log('点击时触发 onEnterModal')
     onEnterModal()
     onEnterModal = null
   }

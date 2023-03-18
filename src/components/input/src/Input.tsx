@@ -7,10 +7,7 @@ import { off, on } from '../../../utils'
 export type InputProps = ExtractPropTypes<typeof inputProps>
 
 const inputProps = {
-  value: {
-    type: String as PropType<string | null>,
-    default: null
-  },
+  value: String as PropType<string | null>,
   type: {
     type: String as PropType<'text' | 'password' | 'textarea'>,
     default: 'text'
@@ -48,13 +45,14 @@ const Input = defineComponent({
     })
 
     watch(() => props.value, (newValue) => {
+      if (typeof newValue === 'undefined') return
       rawValue.value = newValue
     })
 
     function handleInput(e: Event) {
       const newValue = (e.target as HTMLInputElement).value
       if (newValue === props.value) return
-      setValue(newValue)
+      updateValue(newValue)
     }
 
     function handleBlur() {
@@ -85,7 +83,7 @@ const Input = defineComponent({
     }
 
     function handleClickClear() {
-      setValue(null)
+      updateValue(null)
     }
 
     function handleClickEye() {
@@ -112,8 +110,10 @@ const Input = defineComponent({
       })
     }
 
-    function setValue(newValue: InputProps['value']) {
-      rawValue.value = newValue
+    function updateValue(newValue: InputProps['value']) {
+      if (typeof props.value === 'undefined') {
+        rawValue.value = newValue
+      }
       context.emit('update:value', newValue)
     }
 

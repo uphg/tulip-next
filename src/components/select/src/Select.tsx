@@ -1,51 +1,80 @@
-import { computed, defineComponent, ref, toRef, watch, shallowRef, type PropType } from 'vue'
-import TuPopup from '../../popup/src/Popup'
+import { computed, defineComponent, ref, toRef, watch, shallowRef, type PropType, type ExtractPropTypes, nextTick } from 'vue'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
-import { Tick } from '../../../icons'
+import TuPopup from '../../popup/src/Popup'
 import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
-import type { SelectValue, Scrollbar } from '../../../types'
-import { withAttrs } from '../../../utils'
+import { isArray, remove, withAttrs } from '../../../utils'
+import { Tick } from '../../../icons'
+import type { SelectValue, Scrollbar, Popup } from '../../../types'
+import type { SelectOption } from './types'
 
-export type SelectOption = { label: string, value: SelectValue, disabled?: boolean }
+export type SelectProps = ExtractPropTypes<typeof selectProps>
+
+const selectProps = {
+  value: [String, Number, Array] as PropType<SelectValue | SelectValue[]>,
+  options: {
+    type: Array as PropType<SelectOption[]>,
+    default: () => []
+  },
+  size: {
+    type: String as PropType<'' | 'large' | 'medium' | 'small'>,
+    validator: (value: string) => {
+      return ['', 'large', 'medium', 'small'].includes(value)
+    }
+  },
+  clearable: Boolean as PropType<boolean>,
+  disabled: Boolean as PropType<boolean>,
+  multiple: Boolean as PropType<boolean>
+}
 
 const Select = defineComponent({
   name: 'TuSelect',
   inheritAttrs: false,
-  props: {
-    value: [String, Number] as PropType<SelectValue>,
-    options: {
-      type: Array as PropType<SelectOption[]>,
-      default: () => []
-    },
-    clearable: Boolean as PropType<boolean>
-  },
+  props: selectProps,
   emits: ['update:value'],
   setup(props, context) {
-    const triggerEl = shallowRef<HTMLElement | null>(null)
-    const popup = shallowRef<HTMLElement | null>(null)
+    const popup = shallowRef<Popup | null>(null)
+    const trigger = shallowRef<HTMLElement | null>(null)
+    const selectMenu = shallowRef<HTMLElement | null>(null)
 
+    const _value = ref<SelectProps['value']>(props.value ? props.value : props.multiple ? [] : null)
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
-    const checkmark = ref<SelectValue | undefined>(getDefaultCheckmark())
+    const checkmark = ref<SelectProps['value']>(getDefaultCheckmark())
     const isHover = ref(false)
 
-    const input = computed(() => props.options?.find((item) => item.value === props.value)?.label)
+    const input = computed(() => props.multiple
+      ? getMultipleValues()
+      : props.options?.find((item) => item.value === props.value)?.label
+    )
+
+    const { visible, close, open } = usePopupTriggerMode(trigger, { popup: selectMenu, triggerMode: 'click' })
 
     watch(toRef(props, 'value'), (newValue) => {
-      checkmark.value = newValue
+      checkmark.value = (props.multiple && isArray(newValue)) ? newValue[newValue.length - 1] : newValue
+      _value.value = newValue
     })
 
-    const { events, visible, close } = usePopupTriggerMode(triggerEl, { popup: popup, triggerMode: 'click' })
-    const { onClick } = events as { onClick: (e: Event) => void }
-
-    function handleClickOption(item: SelectOption) {
-      context.emit('update:value', item.value)
-      close()
+    function handleClickOption(option: SelectOption) {
+      if (props.multiple) {
+        setMultipleValues(option)
+      } else {
+        setValue(option.value)
+        close()
+      }
     }
 
-    function handleMouseMoveOption(item: SelectOption) {
+    function handleInputClick() {
+      if (visible.value) {
+        if (props.multiple) return
+        close()
+      } else {
+        open()
+      }
+    }
+
+    function handleOptionMouseMove(item: SelectOption) {
       checkmark.value = item.value
     }
 
@@ -71,16 +100,55 @@ const Select = defineComponent({
       isHover.value = false
     }
 
-    function handleClickClear() {
-      context.emit('update:value', '')
+    function handleClearClick() {
+      setValue(props.multiple ? [] : '')
+    }
+
+    function handleTagClose(option: SelectOption) {
+      setMultipleValues(option)
     }
 
     function getDefaultCheckmark() {
-      return props.value ?? props.options?.[0]?.value
+      const value = isArray(props.value) ? props.value[0] : props.value
+      return value ?? props.options?.[0]?.value
+    }
+
+    function isSelected(value: SelectValue) {
+      return props.multiple ? isArray(props.value) && props.value.includes(value) : value === props.value
+    }
+
+    function getMultipleValues() {
+      const prevValue = props.value as SelectValue[]
+      if (!prevValue?.length) return []
+
+      const result = []
+      for (const item of prevValue) {
+        const index = (props.options as SelectOption[])?.findIndex(option => option.value === item)
+        if (index >= 0) {
+          result.push(props.options[index])
+        }
+      }
+
+      return result
+    }
+
+    function setMultipleValues(option: SelectOption) {
+      const prevValue = _value.value as SelectValue[]
+      const newValue = prevValue.includes(option.value)
+        ? remove(prevValue!, (item) => item === option.value)
+        : [...prevValue, option.value]
+
+      setValue(newValue)
+    }
+
+    function setValue(newValue: SelectProps['value']) {
+      _value.value = newValue
+      context.emit('update:value', newValue)
     }
 
     return () => (
       <TuPopup
+        ref={popup}
         visible={visible.value}
         placement="bottom-start"
         popupMargin="3"
@@ -90,21 +158,25 @@ const Select = defineComponent({
       >
         {{
           trigger: () => (
-            <div ref={triggerEl} class="tu-select">
+            <div ref={trigger} class="tu-select">
               <TuSelectionInput
                 value={input.value}
                 isFocus={visible.value}
                 isHover={isHover.value}
                 clearable={props.clearable}
-                onClick={onClick}
+                disabled={props.disabled}
+                multiple={props.multiple}
+                size={props.size}
+                onClick={handleInputClick}
                 onMouseenter={handleMouseEnter}
                 onMouseleave={handleMouseLeave}
-                onClickClear={handleClickClear}
+                onClearClick={handleClearClick}
+                onTagClose={handleTagClose}
               />
             </div>
           ),
           default: () => (
-            <div ref={popup} class="tu-select-menu">
+            <div ref={selectMenu} class="tu-select-menu">
               <TuScrollbar ref={scrollbar}>
                 <div class="tu-select-options">
                   {props.options?.map((item, index) => {
@@ -115,15 +187,15 @@ const Select = defineComponent({
                       <div
                         class={['tu-select-option', {
                           'tu-select-option--disabled': !!item?.disabled,
-                          'tu-select-option--selected': item.value === props.value,
+                          'tu-select-option--selected': isSelected(item.value),
                           'tu-select-option--pending': item.value === checkmark.value && !item?.disabled
                         }]}
                         key={index + 'opt'}
                         onClick={!item?.disabled ? (() => handleClickOption(item)) : void 0}
-                        onMousemove={() => handleMouseMoveOption(item)}
+                        onMousemove={() => handleOptionMouseMove(item)}
                       >
                         <span class="tu-select-option__content">{item.label}</span>
-                        {item.value === props.value ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}
+                        {isSelected(item.value) ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}
                       </div>
                     )
                   })}

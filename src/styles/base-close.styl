@@ -1,0 +1,26 @@
+.tu-base-close
+  --tu-size 22px
+  --tu-icon-size 18px
+  --tu-bg-color-hover rgba(0, 0, 0, 0.09)
+  width var(--tu-size)
+  height var(--tu-size)
+  color #666666
+  border none
+  border-radius 3px
+  padding 0
+  cursor pointer
+  display flex
+  justify-content center
+  align-items center
+  margin-left auto
+  background-color transparent
+  transition background-color 0.3s
+  &--small
+    --tu-size 18px
+    --tu-icon-size 14px
+  & > .tu-base-icon
+    font-size var(--tu-icon-size)
+  &--disabled
+    cursor not-allowed
+  &:hover:not(&--disabled), &:focus:not(&--disabled)
+    background-color var(--tu-bg-color-hover)
