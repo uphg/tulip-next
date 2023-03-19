@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, toRef, watch, shallowRef, type PropType, type ExtractPropTypes, nextTick } from 'vue'
+import { computed, defineComponent, ref, shallowRef } from 'vue'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import TuScrollbar from '../../scrollbar/src/Scrollbar'
 import TuPopup from '../../popup/src/Popup'
@@ -8,25 +8,8 @@ import { isArray, remove, withAttrs } from '../../../utils'
 import { Tick } from '../../../icons'
 import type { SelectValue, Scrollbar, Popup } from '../../../types'
 import type { SelectOption } from './types'
-
-export type SelectProps = ExtractPropTypes<typeof selectProps>
-
-const selectProps = {
-  value: [String, Number, Array] as PropType<SelectValue | SelectValue[]>,
-  options: {
-    type: Array as PropType<SelectOption[]>,
-    default: () => []
-  },
-  size: {
-    type: String as PropType<'' | 'large' | 'medium' | 'small'>,
-    validator: (value: string) => {
-      return ['', 'large', 'medium', 'small'].includes(value)
-    }
-  },
-  clearable: Boolean as PropType<boolean>,
-  disabled: Boolean as PropType<boolean>,
-  multiple: Boolean as PropType<boolean>
-}
+import { useCachedValue } from '../../../composables/useCachedValue'
+import { selectProps, type SelectProps } from './props'
 
 const Select = defineComponent({
   name: 'TuSelect',
@@ -38,11 +21,12 @@ const Select = defineComponent({
     const trigger = shallowRef<HTMLElement | null>(null)
     const selectMenu = shallowRef<HTMLElement | null>(null)
 
-    const _value = ref<SelectProps['value']>(props.value ? props.value : props.multiple ? [] : null)
     const scrollbar = ref<Scrollbar | null>(null)
     const selectedIndex = ref<number | null>(null)
     const checkmark = ref<SelectProps['value']>(getDefaultCheckmark())
     const isHover = ref(false)
+
+    const rawValue = useCachedValue(props, 'value', { context, watchCallback })
 
     const input = computed(() => props.multiple
       ? getMultipleValues()
@@ -51,16 +35,15 @@ const Select = defineComponent({
 
     const { visible, close, open } = usePopupTriggerMode(trigger, { popup: selectMenu, triggerMode: 'click' })
 
-    watch(toRef(props, 'value'), (newValue) => {
+    function watchCallback(newValue: SelectProps['value']) {
       checkmark.value = (props.multiple && isArray(newValue)) ? newValue[newValue.length - 1] : newValue
-      _value.value = newValue
-    })
+    }
 
     function handleClickOption(option: SelectOption) {
       if (props.multiple) {
         setMultipleValues(option)
       } else {
-        setValue(option.value)
+        rawValue.value = option.value
         close()
       }
     }
@@ -101,7 +84,7 @@ const Select = defineComponent({
     }
 
     function handleClearClick() {
-      setValue(props.multiple ? [] : '')
+      rawValue.value = props.multiple ? [] : ''
     }
 
     function handleTagClose(option: SelectOption) {
@@ -133,17 +116,12 @@ const Select = defineComponent({
     }
 
     function setMultipleValues(option: SelectOption) {
-      const prevValue = _value.value as SelectValue[]
-      const newValue = prevValue.includes(option.value)
+      const prevValue = (rawValue.value as SelectValue[] | undefined) || []
+      const newValue = prevValue?.includes(option.value)
         ? remove(prevValue!, (item) => item === option.value)
         : [...prevValue, option.value]
 
-      setValue(newValue)
-    }
-
-    function setValue(newValue: SelectProps['value']) {
-      _value.value = newValue
-      context.emit('update:value', newValue)
+      rawValue.value = newValue
     }
 
     return () => (

@@ -1,5 +1,5 @@
 import { unref, watch } from 'vue'
-import { isArray } from '../utils'
+import { isArray, flatMap } from '../utils'
 import type { Arrayable, MaybeComputedRef, MaybeElementRef, VueInstance } from '../types'
 import { unrefElement } from './unrefElement'
 import { tryOnScopeDispose } from './tryOnScopeDispose'
@@ -7,24 +7,23 @@ import { tryOnScopeDispose } from './tryOnScopeDispose'
 export type UseEventListenerReturn = ReturnType<typeof useEventListener>
 
 export function useEventListener(
-  target:  MaybeComputedRef<EventTarget | VueInstance | null | undefined>,
+  target: MaybeElementRef,
   eventName: Arrayable<string>,
   listener: Arrayable<EventListenerOrEventListenerObject | Function>,
   options?: boolean | AddEventListenerOptions
 ) {
   const eventNames = isArray(eventName) ? eventName : typeof eventName === 'string' ? [eventName] : []
   const listeners = isArray(listener) ? listener : typeof listener === 'function' ? [listener] : []
-  const cleanups: Function[] = []
+  const cleanups: unknown[] = []
 
   const stopWatch = watch(
-    () => unrefElement(target as unknown as MaybeElementRef),
-    (el: EventTarget) => {
+    () => unrefElement(target),
+    (el) => {
       cleanup()
       if (!el) return
-
       cleanups.push(
-        ...(eventNames as string[]).flatMap((eventName) => {
-          return listeners.map(listener => register(el, eventName, listener as EventListenerOrEventListenerObject))
+        flatMap(eventNames, (eventName) => {
+          return listeners.map(listener => register(el, eventName, listener))
         })
       )
     },

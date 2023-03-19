@@ -1,6 +1,7 @@
-import { defineComponent, provide, ref, toRef, watch, type ExtractPropTypes, type PropType, type Ref } from 'vue'
+import { defineComponent, provide, type ExtractPropTypes, type PropType } from 'vue'
 import type { CollapseItemName } from './types'
 import { isNil, remove } from '../../../utils'
+import { useCachedValue } from '../../../composables/useCachedValue'
 
 export type CollapseProps = ExtractPropTypes<typeof collapseProps>
 
@@ -16,39 +17,27 @@ const Collapse = defineComponent({
   props: collapseProps,
   emits: ['update:activeNames'],
   setup(props: CollapseProps, context) {
-    const rawActiveNames = ref<CollapseProps['activeNames']>(props.accordion ? null : [])
-
-    watch(toRef(props, 'activeNames'), (newValue) => {
-      rawActiveNames.value = newValue
-    })
+    const activeNames = useCachedValue(props, 'activeNames', { context, defaultValue: props.accordion ? null : [] })
 
     function triggerCollapseItem(name?: CollapseItemName) {
       if (isNil(name)) return
 
       if (props.accordion) {
-        rawActiveNames.value = rawActiveNames.value === name ? null : name
+        activeNames.value = activeNames.value === name ? null : name
       } else {
-        const activeNames = (rawActiveNames.value as CollapseItemName[])
-        const index = activeNames.indexOf(name)
+        const prevNames = (activeNames.value as CollapseItemName[])
+        const index = prevNames.indexOf(name)
 
         if (index > -1) {
-          setActiveNames(remove(activeNames, (_, i) => i === index))
+          activeNames.value = remove(prevNames, (_, i) => i === index)
         } else {
-          setActiveNames([...activeNames, name])
+          activeNames.value = [...prevNames, name]
         }
       }
     }
 
-    function setActiveNames(newValue: CollapseProps['activeNames']) {
-      if (isNil(props.activeNames)) {
-        rawActiveNames.value = newValue
-      }
-
-      context.emit('update:activeNames', props.accordion ? newValue : [...newValue as Array<string | number>])
-    }
-
     provide(collapseInjectionKey, {
-      activeNames: rawActiveNames,
+      activeNames: activeNames,
       triggerCollapseItem,
       props
     })

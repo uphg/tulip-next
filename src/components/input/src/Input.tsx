@@ -1,8 +1,9 @@
-import { computed, defineComponent, nextTick, ref, shallowRef, Transition, watch, type ExtractPropTypes } from 'vue'
+import { computed, defineComponent, nextTick, ref, shallowRef, toRef, Transition, watch, type ExtractPropTypes } from 'vue'
 import type { PropType } from 'vue'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
 import { Loading, Clear, Eye, EyeDisabled } from '../../../icons'
 import { off, on } from '../../../utils'
+import { useCachedValue } from 'src/composables/useCachedValue'
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
 
@@ -34,25 +35,20 @@ const Input = defineComponent({
   emits: ['update:value'],
   setup(props, context) {
     const input = shallowRef<HTMLElement | null>(null)
-    const rawValue = ref<InputProps['value']>(null)
     const isFocus = ref(false)
     const isHover = ref(false)
     const passwordVisible = ref(false)
+    const rawValue = useCachedValue(props, 'value', { context })
 
     const suffixVisible = computed(() => {
       const { type, loading, visibilityToggle, clearable } = props
       return clearable || context.slots.suffix || loading || type === 'password' && visibilityToggle
     })
 
-    watch(() => props.value, (newValue) => {
-      if (typeof newValue === 'undefined') return
-      rawValue.value = newValue
-    })
-
     function handleInput(e: Event) {
       const newValue = (e.target as HTMLInputElement).value
       if (newValue === props.value) return
-      updateValue(newValue)
+      rawValue.value = newValue
     }
 
     function handleBlur() {
@@ -83,7 +79,7 @@ const Input = defineComponent({
     }
 
     function handleClickClear() {
-      updateValue(null)
+      rawValue.value = null
     }
 
     function handleClickEye() {
@@ -108,13 +104,6 @@ const Input = defineComponent({
       nextTick(() => {
         input.value?.focus()
       })
-    }
-
-    function updateValue(newValue: InputProps['value']) {
-      if (typeof props.value === 'undefined') {
-        rawValue.value = newValue
-      }
-      context.emit('update:value', newValue)
     }
 
     return () => {

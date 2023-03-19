@@ -1,6 +1,6 @@
-export function flatMap<T>(array: T[], callback: Function) {
+export function flatMap<T, U>(array: T[], callback: (value: T, index: number, array: T[]) => U): U[] {
   const length = array?.length || 0
-  const result = []
+  const result: U[] = []
   for (let i = 0; i < length; i++) {
     const item = callback(array[i], i, array)
     if (Array.isArray(item)) {
@@ -11,3 +11,4 @@ export function flatMap<T>(array: T[], callback: Function) {
   }
   return result
 }
+

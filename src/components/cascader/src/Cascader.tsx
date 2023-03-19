@@ -6,6 +6,7 @@ import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import { useEmitter } from '../../../utils'
+import { useCachedValue } from 'src/composables/useCachedValue'
 
 const Cascader = defineComponent({
   name: 'TuCascader',
@@ -14,24 +15,22 @@ const Cascader = defineComponent({
   setup(props, context) {
     const trigger = shallowRef<HTMLElement | null>(null)
     const popup = shallowRef<HTMLElement | null>(null)
-
-    const _value = ref<CascaderProps['value'] | null>(props.value ? [...props.value] : [])
     const selectedOptions = ref<CascaderOption[] | []>([])
     const input = ref('')
     const isHover = ref(false)
+    const rawValue = useCachedValue(props, 'value', {
+      context,
+      watchCallback(newValue) {
+        selectedOptions.value = getSelectedOptions(newValue)
+        updateInput()
+      }
+    })
 
     const emitter = useEmitter()
     const { events, visible, close } = usePopupTriggerMode(trigger, { popup: popup, triggerMode: 'click' })
     const { onClick: handlePopupClick } = events
 
     const { labelField, valueField, childrenField, disabledField } = props
-
-    watch(toRef(props, 'value'), (value) => {
-      if (typeof value === 'undefined') return
-      _value.value = value
-      selectedOptions.value = getSelectedOptions(value)
-      updateInput()
-    })
 
     function handleOptionClick(level: number, option: CascaderOption) {
       const nextIndex = level + 1
@@ -51,7 +50,7 @@ const Cascader = defineComponent({
       } else {
         // last option
         const newValues = selectedOptions.value.map(item => item.value) as CascaderBaseValue[]
-        updateValue(newValues)
+        rawValue.value = newValues
         updateInput()
         close()
       }
@@ -63,7 +62,7 @@ const Cascader = defineComponent({
 
     function handleClearClick() {
       selectedOptions.value = getDefaultSelectedOptions()
-      updateValue([])
+      rawValue.value = []
       updateInput()
     }
 
@@ -73,13 +72,6 @@ const Cascader = defineComponent({
 
     function handleMouseLeave() {
       isHover.value = false
-    }
-
-    function updateValue(newValue: CascaderProps['value'] | null) {
-      if (typeof props.value === 'undefined') {
-        _value.value = newValue
-      }
-      context.emit('update:value', newValue)
     }
 
     function getSelectedOptions(value: CascaderProps['value'] | null) {
