@@ -143,7 +143,7 @@ const Popup = defineComponent({
 
     function updatePopupStyle() {
       if (!trigger.value) return
-      const width = Number(props.width === 'trigger' ? trigger.value.offsetWidth : props.width)
+      const width = props.width === 'trigger' ? trigger.value.offsetWidth : props.width
       const style = getPopupPosition(rawPlacement.value, { width })
 
       popupStyle.value = {
@@ -413,12 +413,12 @@ const Popup = defineComponent({
       }
     }
   
-    function getPopupPosition(type: PopupProps['placement'], options?: { width?: number }) {
+    function getPopupPosition(type: PopupProps['placement'], options?: { width?: string | number }) {
       const popupMargin = toNumber(props.popupMargin)
       const { top: domTop, left: domLeft } = domPosition.value
       const { offsetHeight: triggerHeight, offsetWidth: triggerWidth } = withAttrs(trigger.value)
       const { offsetHeight: popupHeight } = withAttrs(popup.value)
-      const popupWidth = options?.width ?? withAttrs(popup.value).offsetWidth
+      const popupWidth = Number(options?.width ?? withAttrs(popup.value).offsetWidth)
   
       const topToTop = domTop - popupHeight - popupMargin
       const leftToLeft = domLeft - popupWidth - popupMargin
@@ -479,7 +479,7 @@ const Popup = defineComponent({
       return placementMap[type]
     }
   
-    function handleResizeDom() {
+    function handleDomResize() {
       domPosition.value = getRelativeDOMPosition(trigger.value)
       updatePosition()
     }
@@ -504,14 +504,14 @@ const Popup = defineComponent({
     }
 
     function loadResizeListener() {
-      on(window, 'resize', handleResizeDom)
+      on(window, 'resize', handleDomResize)
     }
 
     function unloadResizeListener() {
-      off(window, 'resize', handleResizeDom)
+      off(window, 'resize', handleDomResize)
     }
 
-    useResize(trigger, handleResizeDom)
+    useResize(trigger, handleDomResize)
 
     onBeforeUnmount(() => {
       if (container.value) {
