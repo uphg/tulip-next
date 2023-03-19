@@ -8,7 +8,7 @@
     </tu-collapse>
 
     <h2>Collapse 手风琴</h2>
-    <tu-collapse v-model:active-names="activeNames" accordion>
+    <tu-collapse v-model:active-names="activeNames2" accordion>
       <tu-collapse-item title="标题1" name="1">内容1</tu-collapse-item>
       <tu-collapse-item title="标题2" name="2">内容2</tu-collapse-item>
       <tu-collapse-item title="标题3" name="3">内容3</tu-collapse-item>
@@ -21,6 +21,7 @@
 import { ref, watch } from 'vue'
 
 const activeNames = ref([])
+const activeNames2 = ref(null)
 
 console.log(activeNames)
 
