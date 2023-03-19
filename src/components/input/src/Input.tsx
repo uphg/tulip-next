@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import TuBaseIcon from '../../base-icon/src/BaseIcon'
 import { Loading, Clear, Eye, EyeDisabled } from '../../../icons'
 import { off, on } from '../../../utils'
-import { useCachedValue } from 'src/composables/useCachedValue'
+import { useCachedValue } from '../../../composables/useCachedValue'
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
 

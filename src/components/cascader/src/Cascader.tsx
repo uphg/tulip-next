@@ -6,7 +6,7 @@ import TuPopup from '../../popup/src/Popup'
 import TuSelectionInput from '../../selection-input/src/SelectionInput'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import { useEmitter } from '../../../utils'
-import { useCachedValue } from 'src/composables/useCachedValue'
+import { useCachedValue } from '../../../composables/useCachedValue'
 
 const Cascader = defineComponent({
   name: 'TuCascader',

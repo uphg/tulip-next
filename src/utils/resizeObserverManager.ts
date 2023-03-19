@@ -1,4 +1,4 @@
-import type { RawElement } from 'src/types'
+import type { RawElement } from '../types'
 
 type ResizeHandler = (entry: ResizeObserverEntry) => void
 
