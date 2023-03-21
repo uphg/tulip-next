@@ -1,6 +1,6 @@
 <template>
   <h2>Tree 组件</h2>
-  <tu-tree :data="data" />
+  <tu-tree :data="data"/>
 
   <h2>Tree 复选框</h2>
   <tu-tree :data="data" checkable/>
@@ -28,6 +28,7 @@ const data = ref([
       {
         label: '第1-1层',
         key: '1-1',
+        disabled: true,
       },
       {
         label: '第1-2层',
@@ -56,6 +57,7 @@ const data = ref([
               {
                 label: '第1-4-2-2层',
                 key: '1-4-2-2',
+                disabled: true,
               },
               {
                 label: '第1-4-2-3层',
@@ -78,6 +80,7 @@ const data = ref([
   {
     label: '第2层',
     key: '2',
+    disabled: true,
     children: [
       {
         label: '第2-1层',
@@ -94,6 +97,7 @@ const data = ref([
       {
         label: '第2-4层',
         key: '2-4',
+        disabled: true,
         children: [
           {
             label: '第2-4-1层',
