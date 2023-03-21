@@ -10,7 +10,9 @@ export const treeProps = {
   checkable: Boolean as PropType<boolean>,
   checkedKeys: Array as PropType<TreeNodeMetaKey[]>,
   expandedKeys: Array as PropType<TreeNodeMetaKey[]>,
-  indeterminatekeys: Array as PropType<TreeNodeMetaKey[]>,
+  indeterminateKeys: Array as PropType<TreeNodeMetaKey[]>,
+  defaultCheckedKeys: Array as PropType<TreeNodeMetaKey[]>,
+  defaultExpandedKeys: Array as PropType<TreeNodeMetaKey[]>,
   labelField: {
     type: String as PropType<string>,
     default: 'label'
@@ -35,7 +37,6 @@ export const treeNodeProps = {
     type: Array as PropType<number[]>,
     default: () => []
   },
-  checkable: Boolean as PropType<boolean>,
   labelField: {
     type: String as PropType<string>,
     default: 'label'
@@ -57,5 +58,6 @@ export const treeNodeProps = {
 export const treeNodeCheckboxProps = {
   checked: Boolean as PropType<boolean>,
   indeterminate: Boolean as PropType<boolean>,
+  disabled: Boolean as PropType<boolean>,
   onUpdateChecked: Function as PropType<(value: boolean) => void>
 }

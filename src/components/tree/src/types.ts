@@ -7,7 +7,7 @@ export type TreeNode = {
 }
 
 export type TreeNodeMeta = {
-  [k: string]: TreeNodeMetaLabel | TreeNodeMetaKey | TreeNodeMeta[]
+  [k: string]: TreeNodeMetaLabel | TreeNodeMetaKey | boolean | TreeNodeMeta[]
 }
 
 export type TreeNodeMetaLabel = string | number

@@ -1,14 +1,26 @@
 import type { PropType, ExtractPropTypes } from 'vue'
 import type { SelectOption } from './types'
-import type { SelectValue } from '../../../types'
+import type { SelectBaseValue } from './types'
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>
 
 export const selectProps = {
-  value: [String, Number, Array] as PropType<SelectValue | SelectValue[]>,
+  value: [String, Number, Array] as PropType<SelectBaseValue | SelectBaseValue[]>,
   options: {
     type: Array as PropType<SelectOption[]>,
     default: () => []
+  },
+  valueField: {
+    type: String as PropType<string>,
+    default: 'value' as const
+  },
+  labelField: {
+    type: String as PropType<string>,
+    default: 'label' as const
+  },
+  disabledField: {
+    type: String as PropType<string>,
+    default: 'disabled' as const
   },
   size: {
     type: String as PropType<'' | 'large' | 'medium' | 'small'>,

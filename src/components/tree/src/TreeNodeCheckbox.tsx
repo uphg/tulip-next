@@ -16,8 +16,10 @@ const TreeNodeCheckbox = defineComponent({
         <TuCheckbox
           checked={props.checked}
           indeterminate={props.indeterminate}
+          disabled={props.disabled}
+          onClick={handleClick}
           onUpdate:checked={props.onUpdateChecked}
-          onClick={handleClick}/>
+        />
       </div>
     )
   }

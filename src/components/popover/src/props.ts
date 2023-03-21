@@ -43,7 +43,8 @@ export const popoverProps = {
     type: [String, Number] as PropType<string | number>,
     default: 8
   },
-  arrowMargin: {
+  // 箭头元素一侧对齐时距离侧边的间隙
+  arrowSideMargin: {
     type: [String, Number] as PropType<string | number>,
     default: 10
   },

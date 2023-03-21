@@ -14,7 +14,7 @@ type UseDraggableOptions = {
 export function useDraggable(target: MaybeElementRef, options?: UseDraggableOptions) {
   const position = ref(options?.initialValue ?? { x: 0, y: 0 })
   const pressedDelta = ref<Position>()
-  const draggingElement = options?.draggingElement ?? defaultWindow
+  const draggingElement = (options?.draggingElement ?? defaultWindow) as Element
   const cleanups: Fn[] = []
 
   function start(e: PointerEvent) {
@@ -38,7 +38,7 @@ export function useDraggable(target: MaybeElementRef, options?: UseDraggableOpti
   }
 
   function stop() {
-    cleanups.forEach(fn => fn())
+    cleanups.forEach(fn => fn?.())
   }
 
   if (isClient) {

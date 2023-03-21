@@ -6,8 +6,8 @@ import { TuBaseIcon } from '../../base-icon'
 import { usePopupTriggerMode } from '../../../composables/usePopupTriggerMode'
 import { isArray, remove, withAttrs } from '../../../utils'
 import { Tick } from '../../../icons'
-import type { SelectValue, Scrollbar, Popup } from '../../../types'
-import type { SelectOption } from './types'
+import type { Scrollbar, Popup } from '../../../types'
+import type { SelectBaseValue, SelectOption } from './types'
 import { useCachedValue } from '../../../composables/useCachedValue'
 import { selectProps, type SelectProps } from './props'
 
@@ -28,9 +28,11 @@ const Select = defineComponent({
 
     const rawValue = useCachedValue(props, 'value', { context, watchCallback })
 
-    const input = computed(() => props.multiple
-      ? getMultipleValues()
-      : props.options?.find((item) => item.value === props.value)?.label
+    const input = computed(() => (
+      props.multiple
+        ? getMultipleValues()
+        : props.options?.find((option) => option[props.valueField] === props.value)?.[props.labelField]
+      ) as SelectOption[] | string
     )
 
     const { visible, close, open } = usePopupTriggerMode(trigger, { popup: selectMenu, triggerMode: 'click' })
@@ -43,7 +45,7 @@ const Select = defineComponent({
       if (props.multiple) {
         setMultipleValues(option)
       } else {
-        rawValue.value = option.value
+        rawValue.value = option[props.valueField] as SelectProps['value']
         close()
       }
     }
@@ -58,7 +60,7 @@ const Select = defineComponent({
     }
 
     function handleOptionMouseMove(item: SelectOption) {
-      checkmark.value = item.value
+      checkmark.value = item.value as SelectBaseValue
     }
 
     function handleEnter() {
@@ -71,7 +73,7 @@ const Select = defineComponent({
     }
 
     function handleAfterLeave() {
-      checkmark.value = getDefaultCheckmark()
+      checkmark.value = getDefaultCheckmark() as SelectBaseValue
       selectedIndex.value = null
     }
 
@@ -93,20 +95,20 @@ const Select = defineComponent({
 
     function getDefaultCheckmark() {
       const value = isArray(props.value) ? props.value[0] : props.value
-      return value ?? props.options?.[0]?.value
+      return value ?? props.options?.[0]?.value as SelectBaseValue
     }
 
-    function isSelected(value: SelectValue) {
+    function isSelected(value: SelectBaseValue) {
       return props.multiple ? isArray(props.value) && props.value.includes(value) : value === props.value
     }
 
     function getMultipleValues() {
-      const prevValue = props.value as SelectValue[]
+      const prevValue = props.value as SelectBaseValue[]
       if (!prevValue?.length) return []
 
       const result = []
       for (const item of prevValue) {
-        const index = (props.options as SelectOption[])?.findIndex(option => option.value === item)
+        const index = props.options?.findIndex(option => option[props.valueField] === item)
         if (index >= 0) {
           result.push(props.options[index])
         }
@@ -116,74 +118,79 @@ const Select = defineComponent({
     }
 
     function setMultipleValues(option: SelectOption) {
-      const prevValue = (rawValue.value as SelectValue[] | undefined) || []
-      const newValue = prevValue?.includes(option.value)
-        ? remove(prevValue!, (item) => item === option.value)
-        : [...prevValue, option.value]
+      const { valueField } = props
+      const optionValue = option[valueField] as SelectBaseValue
+      const prevValue = (rawValue.value as SelectBaseValue[] | undefined) || []
+      const newValue = prevValue?.includes(optionValue)
+        ? remove(prevValue!, (item) => item === optionValue)
+        : [...prevValue, optionValue]
 
       rawValue.value = newValue
     }
 
-    return () => (
-      <TuPopup
-        ref={popup}
-        visible={visible.value}
-        placement="bottom-start"
-        popupMargin="3"
-        width="trigger"
-        onEnter={handleEnter}
-        onAfterLeave={handleAfterLeave}
-      >
-        {{
-          trigger: () => (
-            <div ref={trigger} class="tu-select">
-              <TuSelectionInput
-                value={input.value}
-                isFocus={visible.value}
-                isHover={isHover.value}
-                clearable={props.clearable}
-                disabled={props.disabled}
-                multiple={props.multiple}
-                size={props.size}
-                onClick={handleInputClick}
-                onMouseenter={handleMouseEnter}
-                onMouseleave={handleMouseLeave}
-                onClearClick={handleClearClick}
-                onTagClose={handleTagClose}
-              />
-            </div>
-          ),
-          default: () => (
-            <div ref={selectMenu} class="tu-select-menu">
-              <TuScrollbar ref={scrollbar}>
-                <div class="tu-select-options">
-                  {props.options?.map((item, index) => {
-                    if (item.value === props.value) {
-                      selectedIndex.value = index
-                    }
-                    return (
-                      <div
-                        class={['tu-select-option', {
-                          'tu-select-option--disabled': !!item?.disabled,
-                          'tu-select-option--selected': isSelected(item.value),
-                          'tu-select-option--pending': item.value === checkmark.value && !item?.disabled
-                        }]}
-                        key={index + 'opt'}
-                        onClick={!item?.disabled ? (() => handleClickOption(item)) : void 0}
-                        onMousemove={() => handleOptionMouseMove(item)}
-                      >
-                        <span class="tu-select-option__content">{item.label}</span>
-                        {isSelected(item.value) ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}
-                      </div>
-                    )
-                  })}
-                </div>
-              </TuScrollbar>
-            </div>
-          )
-        }} 
-      </TuPopup>
-    )
+    return () => {
+      const { clearable, disabled, multiple, size, options, valueField, labelField, disabledField } = props
+      return (
+        <TuPopup
+          ref={popup}
+          visible={visible.value}
+          placement="bottom-start"
+          popupMargin="3"
+          width="trigger"
+          onEnter={handleEnter}
+          onAfterLeave={handleAfterLeave}
+        >
+          {{
+            trigger: () => (
+              <div ref={trigger} class="tu-select">
+                <TuSelectionInput
+                  value={input.value}
+                  isFocus={visible.value}
+                  isHover={isHover.value}
+                  clearable={clearable}
+                  disabled={disabled}
+                  multiple={multiple}
+                  size={size}
+                  onClick={handleInputClick}
+                  onMouseenter={handleMouseEnter}
+                  onMouseleave={handleMouseLeave}
+                  onClearClick={handleClearClick}
+                  onTagClose={handleTagClose}
+                />
+              </div>
+            ),
+            default: () => (
+              <div ref={selectMenu} class="tu-select-menu">
+                <TuScrollbar ref={scrollbar}>
+                  <div class="tu-select-options">
+                    {options?.map((item, index) => {
+                      if (item[valueField] === rawValue.value) {
+                        selectedIndex.value = index
+                      }
+                      return (
+                        <div
+                          class={['tu-select-option', {
+                            'tu-select-option--disabled': !!item?.disabled,
+                            'tu-select-option--selected': isSelected(item[valueField] as SelectBaseValue),
+                            'tu-select-option--pending': item[valueField] === checkmark.value && !item?.[disabledField]
+                          }]}
+                          key={index + 'opt'}
+                          onClick={!item?.[disabledField] ? (() => handleClickOption(item)) : void 0}
+                          onMousemove={() => handleOptionMouseMove(item)}
+                        >
+                          <span class="tu-select-option__content">{item[labelField]}</span>
+                          {isSelected(item[valueField] as SelectBaseValue) ? <TuBaseIcon class="tu-select-option__icon--checkmark" is={Tick} /> : null}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </TuScrollbar>
+              </div>
+            )
+          }} 
+        </TuPopup>
+      )
+    }
   }
 })
 

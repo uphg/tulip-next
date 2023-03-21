@@ -1,17 +1,22 @@
 $tree-node = '.tu-tree-node'
 
 {$tree-node}
+  --tu-text-color-disabled rgba(194, 194, 194, 1)
   --tu-arrow-color rgb(118, 124, 130)
   padding 3px 0
   border-radius 2px
   transition background-color 0.3s
   display flex
-  &:hover:not(&--selected)
+  &:hover:not(&--selected, &--disabled)
     background-color rgb(243, 243, 245)
-  &:active:not(&--selected)
+  &:active:not(&--selected, &--disabled)
     background-color rgb(237, 237, 239)
-  &--selected
+  &--selected:not(&--disabled)
     background-color rgba($primary-color, 0.1)
+  &--disabled
+    cursor not-allowed
+    {$tree-node}__label
+      color var(--tu-text-color-disabled)
   &-checkbox
     display flex
     align-items center
@@ -22,6 +27,7 @@ $tree-node = '.tu-tree-node'
     font-size var(--tu-font-size)
     padding 0 4px
   &__switch
+    cursor pointer
     width 24px
     height 24px
     display flex

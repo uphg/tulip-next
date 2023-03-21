@@ -4,13 +4,15 @@ import TuTreeNode from './TreeNode'
 import type { TreeNodeMetaKey, TreeNode, TreeNodeMeta } from './types'
 import { isNil, remove } from '../../../utils'
 import { generateTreeNodes } from './generateTreeNodes'
+import { useCachedValue } from '../../../composables/useCachedValue'
 
 export type TreeRef = {
   treeNodes: Ref<TreeNode[]>
   selectedKey: Ref<TreeNodeMetaKey>,
   checkedKeys: Ref<TreeProps['checkedKeys']>
   expandedKeys: Ref<TreeProps['expandedKeys']>
-  indeterminatekeys: Ref<TreeProps['indeterminatekeys']>
+  indeterminateKeys: Ref<TreeProps['indeterminateKeys']>
+  checkable: Ref<TreeProps['checkable']>
   cascade: Ref<TreeProps['cascade']>
   setSelectedKey: (value: TreeNodeMetaKey) => void
   onExpandedChange: (value: TreeNodeMetaKey) => void
@@ -21,27 +23,20 @@ export type TreeRef = {
 const Tree = defineComponent({
   name: 'TuTree',
   props: treeProps,
-  emits: ['update:checkedKeys', 'update:expandedKeys', 'update:indeterminatekeys'],
+  emits: ['update:checkedKeys', 'update:expandedKeys', 'update:indeterminateKeys'],
   setup(props, context) {
     const treeNodes = ref(generateTreeNodes(props.data))
     const selectedKey = ref<TreeNodeMetaKey>()
-    const rawCheckedKeys = ref(props.checkedKeys ? [...props.checkedKeys] : [])
-    const rawExpandedKeys = ref(props.expandedKeys ? [...props.expandedKeys] : [])
-    const rawIndeterminatekeys = ref(props.indeterminatekeys ? [...props.indeterminatekeys] : [])
-
-    watch(toRef(props, 'checkedKeys'), (newValue) => {
-      rawCheckedKeys.value = newValue!
-    })
-
-    watch(toRef(props, 'expandedKeys'), (newValue) => {
-      rawExpandedKeys.value = newValue!
-    })
+    const checkedKeys = useCachedValue(props, 'checkedKeys', { context, defaultValue: props.checkedKeys ? [...props.checkedKeys] : props.defaultCheckedKeys ? [...props. defaultCheckedKeys] : [] }) as Ref<TreeNodeMetaKey[]>
+    const expandedKeys = useCachedValue(props, 'expandedKeys', { context, defaultValue: props.expandedKeys ? [...props.expandedKeys] : props.defaultExpandedKeys ? [...props. defaultExpandedKeys] : [] }) as Ref<TreeNodeMetaKey[]>
+    const indeterminateKeys = useCachedValue(props, 'indeterminateKeys', { context, defaultValue: props.indeterminateKeys ? [...props.indeterminateKeys] : [] }) as Ref<TreeNodeMetaKey[]>
 
     provide('tu.tree', {
       selectedKey,
-      checkedKeys: rawCheckedKeys,
-      expandedKeys: rawExpandedKeys,
-      indeterminatekeys: rawIndeterminatekeys,
+      checkedKeys: checkedKeys,
+      expandedKeys: expandedKeys,
+      indeterminateKeys: indeterminateKeys,
+      checkable: toRef(props, 'checkable'),
       cascade: toRef(props, 'cascade'),
       getLevelsToTreeNode,
       setSelectedKey,
@@ -49,50 +44,51 @@ const Tree = defineComponent({
       onExpandedChange
     })
 
-    function onCheckedChange(value: TreeNodeMetaKey, levels: TreeNodeProps['levels']) {
+    function onCheckedChange(value: TreeNodeMetaKey | undefined, levels: TreeNodeProps['levels']) {
+      if (isNil(value)) return
+      console.log('props.cascade')
+      console.log(props.cascade)
       if (props.cascade) {
         // 级联选择
         const currentNode = getLevelsToTreeNode(levels)!
-        rawCheckedKeys.value?.includes(value) ? updateUncheckedState(currentNode) : updateCheckedState(currentNode)
+        checkedKeys.value?.includes(value) ? updateUncheckedState(currentNode) : updateCheckedState(currentNode)
       } else {
-        setCheckedKeys(rawCheckedKeys.value?.includes(value)
-          ? remove(rawCheckedKeys.value, (item) => item === value)
-          : [...rawCheckedKeys.value, value]
-        )
+        checkedKeys.value = checkedKeys.value?.includes(value)
+          ? remove(checkedKeys.value, (item) => item === value)
+          : [...checkedKeys.value!, value]
       }
     }
 
     function updateUncheckedState(currentNode: TreeNode) {
       let uncheckedKeys = getDeepTreeNodeKeys(currentNode)
       const parentCheckedKeys = currentNode.parent?.children?.filter(
-        (item) => rawCheckedKeys.value.includes(item.meta?.[props.keyField] as TreeNodeMetaKey)
+        (item) => checkedKeys.value?.includes(item.meta?.[props.keyField] as TreeNodeMetaKey)
       )
 
       if (parentCheckedKeys?.length! >= currentNode.parent?.children?.length!) {
         uncheckedKeys = uncheckedKeys.concat(getUpperLayerAssociatedKeys(currentNode))
       }
 
-      const nextCheckedKeys = rawCheckedKeys.value.filter((item) => !uncheckedKeys.includes(item))
-      setCheckedKeys(nextCheckedKeys)
+      const nextCheckedKeys = checkedKeys.value?.filter((item) => !uncheckedKeys.includes(item))
+      checkedKeys.value = nextCheckedKeys
       updateUncheckedIndeterminateKeys(currentNode, nextCheckedKeys)
     }
 
     function updateCheckedState(currentNode: TreeNode) {
       const newCheckedKeys = getDeepTreeNodeKeys(currentNode)
       const upperCheckedKeys = getUpperLayerNeedToCheckedKeys(currentNode)
-      const otherCheckedKeys = newCheckedKeys.concat(upperCheckedKeys).filter((key) => !rawCheckedKeys.value.includes(key))
-      const nextCheckedKeys = rawCheckedKeys.value.concat(otherCheckedKeys)
-
-      setCheckedKeys(nextCheckedKeys)
+      const otherCheckedKeys = newCheckedKeys.concat(upperCheckedKeys).filter((key) => !checkedKeys.value?.includes(key))
+      const nextCheckedKeys = checkedKeys.value?.concat(otherCheckedKeys)
+      checkedKeys.value = nextCheckedKeys
       updateCheckedIndeterminateKeys(currentNode, nextCheckedKeys)
     }
 
     function updateUncheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[]) {
-      let nextIndeterminatekeys = [...rawIndeterminatekeys.value]
+      let nextIndeterminatekeys = [...indeterminateKeys.value!]
       let parent: TreeNode | undefined | null = currentNode.parent
 
       while (parent) {
-        const parentKey = parent?.meta?.key as TreeNodeMetaKey
+        const parentKey = parent?.meta?.[props.keyField] as TreeNodeMetaKey
         const checkeds = getCheckedNodes(parent?.children, nextCheckedKeys)
         const indeterminates = getCheckedNodes(parent?.children, nextIndeterminatekeys)
 
@@ -108,77 +104,68 @@ const Tree = defineComponent({
         parent = parent.parent ? parent.parent : null
       }
 
-      setIndeterminatekeys(nextIndeterminatekeys)
+      indeterminateKeys.value = nextIndeterminatekeys
     }
 
     function updateCheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[]) {
-      let indeterminatekeys = [...rawIndeterminatekeys.value]
-      const currentKey = currentNode?.meta?.key as TreeNodeMetaKey
-      if (indeterminatekeys.includes(currentKey)) {
+      let prevKeys = [...indeterminateKeys.value]
+      const currentKey = currentNode?.meta?.[props.keyField] as TreeNodeMetaKey
+      if (prevKeys.includes(currentKey)) {
         const checkedKeys = getDeepTreeNodeKeys(currentNode)
-        indeterminatekeys = indeterminatekeys.filter((item) => !checkedKeys.includes(item))
+        prevKeys = prevKeys.filter((item) => !checkedKeys.includes(item))
       }
 
-      indeterminatekeys = getCheckedIndeterminateKeys(currentNode, nextCheckedKeys, indeterminatekeys)
-
-      setIndeterminatekeys(indeterminatekeys)
+      indeterminateKeys.value = getCheckedIndeterminateKeys(currentNode, nextCheckedKeys, prevKeys)
     }
 
-    function getCheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[], indeterminatekeys: TreeNodeMetaKey[]) {
+    function getCheckedIndeterminateKeys(currentNode: TreeNode, nextCheckedKeys: TreeNodeMetaKey[], indeterminateKeys: TreeNodeMetaKey[]) {
       let parent: TreeNode | undefined | null = currentNode.parent
 
       while (parent) {
-        const parentKey = parent?.meta?.key as TreeNodeMetaKey
+        const parentKey = parent?.meta?.[props.keyField] as TreeNodeMetaKey
         const checkedNodes = getCheckedNodes(parent?.children, nextCheckedKeys)
-        const indeterminateNodes = getCheckedNodes(parent?.children, indeterminatekeys)
+        const indeterminateNodes = getCheckedNodes(parent?.children, indeterminateKeys)
         const childrenLength = parent.children?.length!
         const checkedsLength = checkedNodes.length
 
         if (checkedsLength > 0 && checkedsLength < childrenLength || indeterminateNodes?.length) {
-          if (!indeterminatekeys.includes(parentKey)) {
-            indeterminatekeys.push(parentKey)
+          if (!indeterminateKeys.includes(parentKey)) {
+            indeterminateKeys.push(parentKey)
           }
           parent = parent.parent
         } else if (checkedsLength >= childrenLength) {
-          indeterminatekeys = indeterminatekeys.filter((item) => item !== parentKey)
+          indeterminateKeys = indeterminateKeys.filter((item) => item !== parentKey)
           parent = parent.parent
         } else {
           parent = null
         }
       }
 
-      return indeterminatekeys
-    }
-
-    function setIndeterminatekeys(keys: TreeNodeMetaKey[]) {
-      if (isNil(props.indeterminatekeys)) {
-        rawIndeterminatekeys.value = keys
-      }
-      context.emit('update:indeterminatekeys', keys)
+      return indeterminateKeys
     }
 
     function getCheckedNodes(treeNodes: TreeNode[] | undefined, checkedKeys: TreeNodeMetaKey[]) {
-      return treeNodes?.filter(item => checkedKeys.includes(item?.meta?.key as TreeNodeMetaKey))!
+      return treeNodes?.filter(item => checkedKeys.includes(item?.meta?.[props.keyField] as TreeNodeMetaKey))!
     }
 
-    function getIndeterminateKeys(treeNodes: TreeNode[], { keyField } = { keyField: 'key' }) {
-      const result: TreeNodeMetaKey[] = [...rawIndeterminatekeys.value]
+    function getIndeterminateKeys(treeNodes: TreeNode[]) {
+      const result: TreeNodeMetaKey[] = [...indeterminateKeys.value]
       const stack = [treeNodes]
       while (stack.length) {
         const currentNodes = stack.shift()
 
         currentNodes?.forEach((currentNode) => {
           if (!currentNode?.children?.length) return
-          const childrenCheckedkeys = getCheckedNodes(currentNode?.children, rawCheckedKeys.value)
+          const childrenCheckedkeys = getCheckedNodes(currentNode?.children, checkedKeys.value)
           const childrenIndeterminatekeys = getCheckedNodes(currentNode?.children, result)
 
           if (childrenIndeterminatekeys.length || childrenCheckedkeys.length > 0 && childrenCheckedkeys.length < currentNode?.children?.length) {
-            result.push(currentNode?.meta?.[keyField] as TreeNodeMetaKey)
+            result.push(currentNode?.meta?.[props.keyField] as TreeNodeMetaKey)
 
             // 查看父级是否半选
             let parent: TreeNode | null | undefined = currentNode.parent
             while (parent) {
-              const parentKey = parent?.meta?.[keyField] as TreeNodeMetaKey
+              const parentKey = parent?.meta?.[props.keyField] as TreeNodeMetaKey
               if (result.includes(parentKey)) {
                 parent = null
               } else {
@@ -198,28 +185,16 @@ const Tree = defineComponent({
       return result
     }
 
-    function setCheckedKeys(keys: TreeNodeMetaKey[]) {
-      if (isNil(props.checkedKeys)) {
-        rawCheckedKeys.value = keys
-      }
-      context.emit('update:checkedKeys', keys)
+    function onExpandedChange(value?: TreeNodeMetaKey) {
+      if (isNil(value)) return
+
+      expandedKeys.value = expandedKeys.value?.includes(value)
+        ? remove(expandedKeys.value, (item) => item === value)
+        : [...expandedKeys.value, value]
     }
 
-    function onExpandedChange(value: TreeNodeMetaKey) {
-      setExpandedKeys(rawExpandedKeys.value?.includes(value)
-        ? remove(rawExpandedKeys.value, (item) => item === value)
-        : [...rawExpandedKeys.value, value]
-      )
-    }
-
-    function setExpandedKeys(keys: TreeNodeMetaKey[]) {
-      if (isNil(props.expandedKeys)) {
-        rawExpandedKeys.value = keys
-      }
-      context.emit('update:expandedKeys', keys)
-    }
-
-    function setSelectedKey(value: TreeNodeMetaKey) {
+    function setSelectedKey(value?: TreeNodeMetaKey) {
+      if (isNil(value)) return
       selectedKey.value = value
     }
 
@@ -232,7 +207,7 @@ const Tree = defineComponent({
       while (stack.length) {
         const children = stack.shift()
         children?.forEach((item) => {
-          result.push(item.meta?.key as TreeNodeMetaKey)
+          result.push(item.meta?.[props.keyField] as TreeNodeMetaKey)
           if (item.children) {
             stack.push(item.children as TreeNode[])
           }
@@ -250,7 +225,7 @@ const Tree = defineComponent({
       let parent: TreeNode | null = treeNode.parent
 
       while (parent) {
-        result.push(parent?.meta?.key as TreeNodeMetaKey)
+        result.push(parent?.meta?.[props.keyField]as TreeNodeMetaKey)
         parent = parent.parent ?? null
       }
       return result
@@ -261,7 +236,7 @@ const Tree = defineComponent({
       const result = []
       let parent: TreeNode | undefined = treeNode.parent
       while (parent) {
-        const siblingCheckedKeys = parent?.children?.filter(item => rawCheckedKeys.value.includes(item.meta?.[props.keyField] as TreeNodeMetaKey))
+        const siblingCheckedKeys = parent?.children?.filter(item => checkedKeys.value?.includes(item.meta?.[props.keyField] as TreeNodeMetaKey))
         if (siblingCheckedKeys?.length! >= (parent?.children?.length! - 1)) {
           result.push(parent.meta?.[props.keyField] as TreeNodeMetaKey)
           parent = parent.parent
@@ -285,29 +260,22 @@ const Tree = defineComponent({
       return current
     }
 
-    rawIndeterminatekeys.value = getIndeterminateKeys(treeNodes.value)
+    indeterminateKeys.value = getIndeterminateKeys(treeNodes.value)
 
     return () => (
-      <div>
+      <div class="tu-tree">
         {treeNodes.value?.map((item, index) => (
           <TuTreeNode
-            key={item.meta?.key as TreeNodeMetaKey}
+            key={item.meta?.[props.keyField] as TreeNodeMetaKey}
             item={item}
-            checkable={props.checkable}
-            levels={[index]}/>
+            levels={[index]}
+          />
         ))}
       </div>
     )
   }
 })
 
-function pull<T extends unknown>(array: T[], index: number) {
-  array.splice(index, 1)
-}
 
-function pullBy<T extends unknown>(array: T[], callback: (item: T) => boolean) {
-  const index = array.findIndex(callback)
-  pull(array, index)
-}
 
 export default Tree

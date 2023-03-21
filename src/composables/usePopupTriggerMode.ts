@@ -61,7 +61,7 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   function handleHoverMoveOut() {
     if (!hover.value) return
     if (visible.value) {
-      closeTimerId.value = setTimeout(() => {
+      closeTimerId.value = window.setTimeout(() => {
         if (closeTimerId.value) {
           window.clearTimeout(closeTimerId.value)
           closeTimerId.value = null

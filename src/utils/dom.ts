@@ -14,7 +14,7 @@ export function addClass(el: Element | null, ...args: string[] | string[][]) {
   if (!el) return
   const classNames = mergeClass(args)
   if (el.classList) {
-    el.classList.add(...classNames)
+    el.classList.add(...classNames as string[])
     return
   }
   const className = (el.getAttribute('class') || '') + ` ${classNames.join(' ')}`
@@ -24,7 +24,7 @@ export function addClass(el: Element | null, ...args: string[] | string[][]) {
 export function removeClass(el: Element, ...args: string[]) {
   const classNames = mergeClass(args)
   if (el.classList) {
-    el.classList.remove(...classNames)
+    el.classList.remove(...classNames as string[])
     return
   }
   let prev = el.getAttribute('class') || ''
@@ -38,11 +38,6 @@ export function removeClass(el: Element, ...args: string[]) {
 export function getStyle(el: Element, styleName: string): string {
   if (!el || !styleName) return ''
   return (el as HTMLElement).style[styleName as unknown as number]
-  // styleName = camelize(styleName)
-  // // see: https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle#defaultview
-  // const computed = document.defaultView?.getComputedStyle(el, '')
-  // // @ts-ignore
-  // return (computed ? computed?.[styleName] : el['style'][styleName]) || ''
 }
 
 export function setStyle(_el: Element, styles: Styles | string, value?: string) {

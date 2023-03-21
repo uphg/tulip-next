@@ -5,7 +5,6 @@ import { getRelativeDOMPosition, getScrollParent, toNumber, withAttrs, on, off, 
 import { ensureViewBoundingRect } from '../../../utils/viewMeasurer'
 import type { ElementStyle, Fn, VueInstance } from '../../../types'
 import { unrefElement } from '../../../composables/unrefElement'
-import { useMutationObserver } from '../../../composables/useMutationObserver'
 import { useResize } from '../../../composables/useResize'
 
 const transformOriginMap = {

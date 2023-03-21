@@ -1,7 +1,4 @@
-import type { SelectValue } from '../../../types'
-
+export type SelectBaseValue = string | number | null
 export type SelectOption = {
-  label: string,
-  value: SelectValue,
-  disabled?: boolean
+  [k: string]: SelectBaseValue | boolean,
 }

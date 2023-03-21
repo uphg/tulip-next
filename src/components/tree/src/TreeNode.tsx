@@ -7,7 +7,7 @@ import { ArrowDropRight } from '../../../icons'
 import TuTreeNodeCheckbox from './TreeNodeCheckbox'
 import type { TreeNodeMetaKey, TreeNodeMeta } from './types'
 import type { TreeRef } from './Tree'
-import type { CheckboxValue } from '../../checkbox/src/props'
+import { isNil } from '../../../utils'
 
 const TreeNode = defineComponent({
   name: 'TuTreeItem',
@@ -15,17 +15,37 @@ const TreeNode = defineComponent({
   setup(props, context) {
     const ns = useNameScope('tree-node')
     const tree = inject<TreeRef>('tu.tree')
-    const checked = computed(() => tree?.checkedKeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
-    const indeterminate = computed(() => tree?.indeterminatekeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
-    const expanded = computed(() => tree?.expandedKeys.value?.includes(props.item?.meta?.key as TreeNodeMetaKey))
+    const treeNode = computed(() => {
+      const { meta } = props.item!
+      return {
+        key: meta?.[props.keyField] as TreeNodeMetaKey,
+        label: meta?.[props.labelField] as string,
+        disabled: meta?.[props.disabledField] as boolean
+      }
+    })
+    const checked = computed(() => tree?.checkedKeys.value?.includes(treeNode.value.key))
+    const indeterminate = computed(() => tree?.indeterminateKeys.value?.includes(treeNode.value.key))
+    const expanded = computed(() => !isNil(treeNode.value.key) && tree?.expandedKeys.value?.length ? tree?.expandedKeys.value?.includes(treeNode.value.key) : false)
 
-    function onClickTreeNode(e: Event) {
-      tree?.setSelectedKey(props.item?.meta?.key as TreeNodeMetaKey)
-      tree?.onExpandedChange(props.item?.meta?.key as TreeNodeMetaKey)
+    function handleTreeNodeClick(e: Event) {
+      if (treeNode.value.disabled) return
+      tree?.setSelectedKey(treeNode.value.key)
+      tree?.onExpandedChange(treeNode.value.key)
     }
 
-    function onUpdateChecked(value: CheckboxValue) {
-      tree?.onCheckedChange(props.item?.meta?.key as TreeNodeMetaKey, props.levels)
+    function handleSwitchClick(e: MouseEvent) {
+      e.preventDefault()
+      e.stopPropagation()
+      tree?.onExpandedChange(treeNode.value.key)
+    }
+
+    function onUpdateChecked() {
+      tree?.onCheckedChange(treeNode.value.key, props.levels)
+    }
+
+    function isSelect(value: TreeNodeMetaKey) {
+      const selectedKey = tree?.selectedKey.value
+      return isNil(selectedKey) || isNil(value) ? false : selectedKey === value
     }
 
     return () => {
@@ -34,35 +54,44 @@ const TreeNode = defineComponent({
         <div class={ns.suffix('wrap')}>
           <div
             class={[ns.base, {
-              [ns.is('selected')]: tree?.selectedKey.value === props.item?.meta?.key
+              [ns.is('selected')]: isSelect(treeNode.value.key),
+              [ns.is('disabled')]: treeNode.value.disabled
             }]}
             style={{ paddingLeft: level ? `${level * 16}px` : void 0 }}
-            onClick={onClickTreeNode}
+            onClick={handleTreeNodeClick}
           >
-            <div class={[ns.el('switch'), {
-              [ns.el('switch--expanded')]: expanded.value,
-              [ns.el('switch--hide')]: !props.item?.children
-            }]}>
+            <div
+              class={[ns.el('switch'), {
+                [ns.el('switch--expanded')]: expanded.value,
+                [ns.el('switch--hide')]: !props.item?.children
+              }]}
+              onClick={handleSwitchClick}
+            >
               <TuBaseIcon is={ArrowDropRight}/>
             </div>
-            {props.checkable ? (
-              <TuTreeNodeCheckbox checked={checked.value} indeterminate={indeterminate.value} onUpdateChecked={onUpdateChecked}/>
+            {tree?.checkable.value || tree?.cascade.value ? (
+              <TuTreeNodeCheckbox
+                checked={checked.value}
+                indeterminate={indeterminate.value}
+                disabled={treeNode.value.disabled}
+                onUpdateChecked={onUpdateChecked}
+              />
             ) : null}
             <div class={ns.el('label')}>
-              <div class={ns.el('label-text')}>{props.item?.meta?.label}</div>
+              <div class={ns.el('label-text')}>{treeNode.value.label}</div>
             </div>
           </div>
           {props.item?.children ? (
             <CollapseTransition>
               {expanded.value ? (
                 <div class={ns.suffix('children')}>
-                  {(props.item.children as TreeNodeMeta[])?.map((item, index) => (
+                  {props.item.children.map((current, index) => (
                     <TreeNode
-                      item={item}
+                      item={current}
                       parent={props.item}
-                      key={item?.key as TreeNodeMetaKey}
+                      key={current.meta?.[props.keyField] as TreeNodeMetaKey}
                       levels={[...props.levels!, index]}
-                      checkable={props.checkable} />
+                    />
                   ))}
                 </div>
               ) : null}

@@ -42,32 +42,32 @@ export function usePopover(
 
   function getArrowPosition() {
     const { offsetWidth: popoverWidth, offsetHeight: popoverHeight } = withAttrs(popover.value)
-    const arrowMargin = toNumber(props.arrowMargin)
+    const arrowSideMargin = toNumber(props.arrowSideMargin)
     switch(rawPlacement.value) {
       case 'top-start':
-        return { right: `${popoverWidth - arrowMargin}px` }
+        return { right: `${popoverWidth - arrowSideMargin}px` }
       case 'top':
         return { left: `${popoverWidth / 2 - arrowHeight}px` }
       case 'top-end':
-        return { left: `${popoverWidth - 12 - arrowMargin}px` }
+        return { left: `${popoverWidth - 12 - arrowSideMargin}px` }
       case 'bottom-start':
-        return { top: `-${arrowHeight}px`, right: `${popoverWidth - arrowMargin}px` }
+        return { top: `-${arrowHeight}px`, right: `${popoverWidth - arrowSideMargin}px` }
       case 'bottom':
         return { top: `-${arrowHeight}px`, left: `${popoverWidth / 2 - arrowHeight}px` }
       case 'bottom-end':
-        return { top: `-${arrowHeight}px`, left: `${popoverWidth - 12 - arrowMargin}px` }
+        return { top: `-${arrowHeight}px`, left: `${popoverWidth - 12 - arrowSideMargin}px` }
       case 'left-start':
-        return { bottom: `${popoverHeight - arrowMargin}px` }
+        return { bottom: `${popoverHeight - arrowSideMargin}px` }
       case 'left':
         return { top: `${popoverHeight / 2 - arrowHeight}px` }
       case 'left-end':
-        return { top: `${popoverHeight - 12 - arrowMargin}px` }
+        return { top: `${popoverHeight - 12 - arrowSideMargin}px` }
       case 'right-start':
-        return { left: `-${arrowHeight}px`, bottom: `${popoverHeight - arrowMargin}px` }
+        return { left: `-${arrowHeight}px`, bottom: `${popoverHeight - arrowSideMargin}px` }
       case 'right':
         return { left: `-${arrowHeight}px`, top: `${popoverHeight / 2 - arrowHeight}px` }
       case 'right-end':
-        return { left: `-${arrowHeight}px`, top: `${popoverHeight - 12 - arrowMargin}px` }
+        return { left: `-${arrowHeight}px`, top: `${popoverHeight - 12 - arrowSideMargin}px` }
     }
   }
 
