@@ -1,8 +1,8 @@
-import { unref, watch } from 'vue'
-import { isArray, flatMap } from '../utils'
-import type { Arrayable, MaybeComputedRef, MaybeElementRef, VueInstance } from '../types'
+import { watch } from 'vue'
 import { unrefElement } from './unrefElement'
 import { tryOnScopeDispose } from './tryOnScopeDispose'
+import { isArray, flatMap } from '../utils'
+import type { Arrayable, Fn, MaybeElementRef } from '../types'
 
 export type UseEventListenerReturn = ReturnType<typeof useEventListener>
 
@@ -22,8 +22,8 @@ export function useEventListener(
       cleanup()
       if (!el) return
       cleanups.push(
-        flatMap(eventNames, (eventName) => {
-          return listeners.map(listener => register(el, eventName, listener))
+        ...flatMap(eventNames, (eventName) => {
+          return listeners.map(listener => register(el, eventName, listener as Fn))
         })
       )
     },
@@ -31,7 +31,8 @@ export function useEventListener(
   )
 
   function cleanup() {
-    cleanups.forEach(fn => fn())
+    if (!cleanups.length) return
+    (cleanups as Fn[]).forEach(fn => fn?.())
     cleanups.length = 0
   }
 
