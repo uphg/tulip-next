@@ -18,6 +18,7 @@ const Checkbox = defineComponent({
     const size = computed(() => props.size ? props.size : checkboxGroup?.size.value)
 
     function handleClick(e: Event) {
+      if (props.disabled) return
       if (checkboxGroup) {
         checkboxGroup?.updateValue(props.value)
         return
