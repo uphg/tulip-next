@@ -1,11 +1,14 @@
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import TuExpandTransition from '../../expand-transition/src/ExpandTransition'
 
 const CollapseTransition = defineComponent({
   name: 'TuCollapseTransition',
-  setup(_props, context) {
+  props: {
+    withWidth: Boolean as PropType<boolean>
+  },
+  setup(props, context) {
     return () => (
-      <TuExpandTransition>
+      <TuExpandTransition withWidth={props.withWidth}>
         {context.slots.default?.()}
       </TuExpandTransition>
     )
