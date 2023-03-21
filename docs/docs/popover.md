@@ -46,9 +46,9 @@ popover/raw
 | visible       | 是否显示 Popover           | `boolean`                                                    | `false`     |
 | placement     | Popover 的弹出位置         | `'top-start' \| 'top' \| 'top-end' \| 'right-start' \| 'right' \| 'right-end' \| 'bottom-start' \| 'bottom' \| 'bottom-end' \| 'left-start' \| 'left' \| 'left-end'` | `'top'`     |
 | content       | 展示的内容                 | `string`                                                     | `undefined` |
-| popoverMargin | Popover 与触发元素的距离   | `string \| number `        |`8`|
-| arrowMargin   | 箭头一侧对齐时与一侧的距离 | `string \| number`                                           | `10`        |
-| hideArrow | 是否隐藏箭头 | `boolean` | `false` |
+| popover-margin | Popover 与触发元素的距离   | `string \| number `        |`8`|
+| arrow-side-margin | 箭头一侧对齐时与一侧的距离 | `string \| number`                                           | `10`        |
+| hide-arrow | 是否隐藏箭头 | `boolean` | `false` |
 | disabled | 是否禁用 Popover 弹出 | `boolean` | `false` |
 
 ## Popover 插槽

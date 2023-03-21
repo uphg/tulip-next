@@ -1,7 +1,7 @@
 <template>
   <tu-button @click="visible = !visible">Toggle</tu-button>
 
-  <div style="overflow: hidden; height: 250px; padding: 20px 0;">
+  <div style="overflow: hidden; height: 210px; margin-top: 12px;">
     <tu-collapse-transition>
       <div v-show="visible">
         <div class="collapse-box">collapse-transition</div>
