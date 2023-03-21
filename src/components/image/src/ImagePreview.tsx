@@ -62,8 +62,12 @@ const ImagePreview = defineComponent({
     }
 
     function resetImage() {
-      scaleType.value = 3
+      resetImageSize()
       rotate.value = 0
+    }
+
+    function resetImageSize() {
+      scaleType.value = 3
     }
 
     function clockwiseRotation() {
@@ -133,7 +137,7 @@ const ImagePreview = defineComponent({
                 ]: null}
                 <TuBaseIcon is={ArrowClockwise} onClick={clockwiseRotation}/>
                 <TuBaseIcon is={ArrowCounterclockwise} onClick={anticlockwiseRotation}/>
-                <TuBaseIcon is={ExpandOutlined} onClick={resetImage}/>
+                <TuBaseIcon is={ExpandOutlined} onClick={resetImageSize}/>
                 <TuBaseIcon is={MagnifierMinus} onClick={zoomOut}/>
                 <TuBaseIcon is={MagnifierPlus} onClick={zoomIn}/>
                 <TuBaseIcon is={Close} onClick={close}/>
