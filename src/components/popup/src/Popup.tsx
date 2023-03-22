@@ -503,11 +503,11 @@ const Popup = defineComponent({
     }
 
     function loadResizeListener() {
-      on(window, 'resize', handleDomResize)
+      // on(window, 'resize', handleDomResize)
     }
 
     function unloadResizeListener() {
-      off(window, 'resize', handleDomResize)
+      // off(window, 'resize', handleDomResize)
     }
 
     useResize(trigger, handleDomResize)

@@ -1,5 +1,4 @@
 import { defineComponent, ref, nextTick, computed, type PropType, shallowRef } from 'vue'
-import type { Ref } from 'vue'
 
 const baseWaveProps = {
   size: {
@@ -19,7 +18,7 @@ const BaseWave = defineComponent({
 
     function stop() {
       isActive.value = false
-      typeof timerId === 'number' && window.clearTimeout(timerId)
+      typeof timerId === 'number' && window?.clearTimeout(timerId)
       timerId = null
     }
 
@@ -30,7 +29,7 @@ const BaseWave = defineComponent({
       nextTick(() => {
         void wave.value?.offsetHeight
         isActive.value = true
-        timerId = window.setTimeout(stop, 1000)
+        timerId = window?.setTimeout(stop, 1000)
       })
     }
 

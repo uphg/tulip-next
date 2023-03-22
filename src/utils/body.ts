@@ -3,7 +3,7 @@ let scrollbarWidth: number | null
 
 export function disableBodyScroll() {
   const { body } = document
-  scrollbarWidth = window.innerWidth - body.offsetWidth
+  scrollbarWidth = window?.innerWidth - body.offsetWidth
   if (scrollbarWidth > 0) {
     body.style.setProperty('--tu-scrollbar-width', `${scrollbarWidth}px`)
     addClass(body, 'tu-disable-scrolling')

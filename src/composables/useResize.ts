@@ -10,12 +10,12 @@ export function useResize(target: MaybeElementRef, onResize: (() => void) | unde
   onMounted(() => {
     const el = unrefElement(target)
     if (!el) return 
-    resizeObserverManager.addHandler(el, onResize)
+    resizeObserverManager?.addHandler(el, onResize)
   })
 
   tryOnScopeDispose(() => {
     const el = unrefElement(target)
     if (!el) return
-    resizeObserverManager.removeHandler(unrefElement(target))
+    resizeObserverManager?.removeHandler(unrefElement(target))
   })
 }

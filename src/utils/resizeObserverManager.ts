@@ -1,8 +1,11 @@
 import type { RawElement } from '../types'
+import { isClient } from './isClient'
 
 type ResizeHandler = (entry: ResizeObserverEntry) => void
 
 function createResizeObserverManager() {
+  if (!isClient) return
+
   const context = {
     observer: new (window.ResizeObserver)(handleResize),
     elHandlersMap: new Map()

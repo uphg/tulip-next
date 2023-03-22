@@ -61,9 +61,9 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
   function handleHoverMoveOut() {
     if (!hover.value) return
     if (visible.value) {
-      closeTimerId.value = window.setTimeout(() => {
+      closeTimerId.value = window?.setTimeout(() => {
         if (closeTimerId.value) {
-          window.clearTimeout(closeTimerId.value)
+          window?.clearTimeout(closeTimerId.value)
           closeTimerId.value = null
           off(document, 'mouseover', handleDomMouseover)
           visible.value = false
@@ -79,7 +79,7 @@ function useHoverTrigger(visible: Ref<boolean>, options: TriggerModeOptions) {
 
   function handleHoverMoveIn() {
     if (!closeTimerId.value) return
-    window.clearTimeout(closeTimerId.value!)
+    window?.clearTimeout(closeTimerId.value!)
     closeTimerId.value = null
     hover.value = true
   }
