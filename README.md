@@ -1,52 +1,41 @@
-# .
+# Tulip
 
-This template should help get you started developing with Vue 3 in Vite.
+一个使用 Vue3 和 TypeScript，搭配 Vite 打包工具构建的 UI 组件库。
 
-## Recommended IDE Setup
+## 安装
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+使用 npm 安装
 
 ```sh
-npm install
+npm install tulip-ui
 ```
 
-### Compile and Hot-Reload for Development
+## 全局引入
 
-```sh
-npm run dev
+```js
+import 'tulip-ui/styles/index.css'
+import { createApp } from 'vue'
+import tulip from 'tulip-ui'
+
+const app = createApp(App)
+app.use(tulip)
 ```
 
-### Type-Check, Compile and Minify for Production
+## 按需引入
 
-```sh
-npm run build
-```
+```js
+import { createApp } from 'vue'
+import { TuButton, TuInput, TuSpace } from 'tulip-ui'
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+import 'tulip-ui/styles/vars.css'
+import 'tulip-ui/styles/base.css'
+import 'tulip-ui/styles/button.css'
+import 'tulip-ui/styles/input.css'
+import 'tulip-ui/styles/space.css'
 
-```sh
-npm run test:unit
-```
+const app = createApp(App)
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+app.use(TuButton)
+app.use(TuInput)
+app.use(TuSpace)
 ```
