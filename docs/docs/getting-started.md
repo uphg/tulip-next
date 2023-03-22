@@ -11,6 +11,7 @@ npm install tulip-ui
 ## 全局引入
 
 ```js
+import 'tulip-ui/styles/index.css'
 import { createApp } from 'vue'
 import tulip from 'tulip-ui'
 
@@ -24,7 +25,14 @@ app.use(tulip)
 import { createApp } from 'vue'
 import { TuButton, TuInput, TuSpace } from 'tulip-ui'
 
+import 'tulip-ui/styles/vars.css'
+import 'tulip-ui/styles/base.css'
+import 'tulip-ui/styles/button.css'
+import 'tulip-ui/styles/input.css'
+import 'tulip-ui/styles/space.css'
+
 const app = createApp(App)
+
 app.use(TuButton)
 app.use(TuInput)
 app.use(TuSpace)
