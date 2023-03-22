@@ -1,6 +1,6 @@
 # Tulip
 
-一个使用 Vue3 和 TypeScript，搭配 Vite 打包工具构建的 UI 组件库。
+一个 Vue3 UI 组件库。
 
 ## 安装
 
