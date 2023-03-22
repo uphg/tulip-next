@@ -3,6 +3,7 @@ import mdPlugin from './plugins'
 import { sidebar } from './sidebar'
 
 export default defineConfig({
+  base: '/tulip/',
   title: 'Tulip',
   description: 'Vue3 UI 组件库',
 
@@ -13,7 +14,7 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/uphg/tulp-next' }
+      { icon: 'github', link: 'https://github.com/uphg/tulip' }
     ],
     nav: [
       { text: '首页', link: '/' },
