@@ -1,57 +1,13 @@
-e(n)
-  return n * 0.25rem
 
-// --- Padding
-py(n)
-  padding-top e(n)
-  padding-bottom e(n)
-
-px(n)
-  padding-left e(n)
-  padding-right e(n)
-
-pt(n)
-  padding-top e(n)
-
-pl(n)
-  padding-left e(n)
-
-pr(n)
-  padding-right e(n)
-
-pb(n)
-  padding-bottom e(n)
-
-// --- Margin
-my(n)
-  margin-top e(n)
-  margin-bottom e(n)
-
-mx(n)
-  margin-left e(n)
-  margin-right e(n)
-
-mt(n)
-  margin-top e(n)
-
-ml(n)
-  margin-left e(n)
-
-mr(n)
-  margin-right e(n)
-
-mb(n)
-  margin-bottom e(n)
-
-pop-fade(name, el)
+fade-in-scale-up(name, el)
   .{name}-fade-enter-active
-    animation pop-overlay-fade-in 0.3s
+    animation fade-in 0.3s
     {el}
       transition transform 0.3s
-      animation pop-fade-in 0.3s
+      animation fade-in-scale-up-in 0.3s
 
   .{name}-fade-leave-active
-    animation pop-overlay-fade-out 0.3s
+    animation fade-out 0.3s
     {el}
       transition transform 0.3s
-      animation pop-fade-out 0.3s
+      animation fade-in-scale-up-out 0.3s
